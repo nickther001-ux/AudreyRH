@@ -274,7 +274,7 @@ export default function Home() {
                 Beaucoup d'immigrants croient qu'un diplôme de maîtrise est la seule voie vers le succès. 
                 La réalité ? Le marché québécois recherche souvent des métiers spécialisés bien plus que des diplômes avancés.
               </p>
-              <Link href="#expertise">
+              <Link href="/book">
                 <Button variant="outline" size="lg" className="mt-4" data-testid="button-discover-services">
                   Découvrir comment je peux vous aider
                 </Button>
