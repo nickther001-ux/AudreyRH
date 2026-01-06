@@ -15,113 +15,113 @@ type ServiceKey = "strategy" | "credentials" | "employability" | "integration" |
 const serviceDetails = {
   strategy: {
     title: "Analyse stratégique du marché",
-    description: "Comprenez les réalités du marché de l'emploi québécois pour prendre des décisions éclairées.",
+    description: "Basée sur les données officielles du gouvernement du Québec (quebec.ca/emploi)",
     content: [
       {
-        heading: "Ce que vous obtiendrez",
+        heading: "Secteurs en forte demande au Québec",
         points: [
-          "Une cartographie des secteurs qui recrutent activement au Québec",
-          "Identification des métiers en demande dans votre domaine d'expertise",
-          "Analyse des salaires moyens et des perspectives d'évolution",
-          "Compréhension des exigences spécifiques des employeurs québécois"
+          "Santé : infirmiers, assistants en soins - pénurie critique (Source: Emploi-Québec)",
+          "Construction : électriciens, plombiers, soudeurs, électromécaniciens",
+          "Technologies : développeurs, analystes en cybersécurité, gestionnaires de réseau",
+          "Transport : chauffeurs poids lourds, logisticiens - forte demande liée au commerce en ligne"
         ]
       },
       {
-        heading: "Mon approche",
+        heading: "Données du marché 2024-2025",
         points: [
-          "Étude personnalisée basée sur votre profil et vos objectifs",
-          "Utilisation de données actuelles du marché (IMT, Emploi-Québec)",
-          "Identification des opportunités cachées dans les métiers spécialisés",
-          "Recommandations concrètes et réalistes pour votre situation"
+          "219 200 emplois à pourvoir dans la région de Montréal (2022-2026) - Quebec.ca",
+          "267 professions admissibles au traitement simplifié en 2024 (réduit à 76 en 2025)",
+          "50,7% des postes dus aux départs à la retraite, 49,3% à la croissance économique",
+          "Outils officiels : IMT en ligne, État d'équilibre du marché (516 professions analysées)"
         ]
       },
       {
-        heading: "Pourquoi c'est important",
-        text: "Beaucoup de nouveaux arrivants investissent temps et argent dans des formations qui ne correspondent pas aux besoins réels du marché. Mon analyse vous évite ces erreurs coûteuses en vous orientant vers les opportunités qui existent vraiment."
+        heading: "Sources officielles consultées",
+        text: "Mes analyses s'appuient sur les données de quebec.ca/emploi, l'État d'équilibre du marché du travail publié par le gouvernement, et les rapports de Services Québec. Je vous aide à interpréter ces données selon votre profil spécifique."
       }
     ]
   },
   credentials: {
     title: "Reconnaissance des acquis",
-    description: "Faites valoir vos compétences et expériences sans repartir à zéro.",
+    description: "Processus officiels du MIFI et du Ministère de l'Éducation du Québec",
     content: [
       {
-        heading: "Ce que vous obtiendrez",
+        heading: "Évaluation comparative des études (MIFI)",
         points: [
-          "Évaluation de vos diplômes et leur équivalence au Québec",
-          "Identification des démarches de reconnaissance professionnelle",
-          "Stratégie pour faire valoir votre expérience internationale",
-          "Accompagnement dans les processus de validation des acquis (RAC)"
+          "Document officiel comparant vos diplômes au système québécois (138$ en 2025)",
+          "Délai de traitement : environ 112-115 jours ouvrables (~5 mois)",
+          "Ce n'est PAS un diplôme - c'est un avis indicatif pour employeurs et institutions",
+          "Demande via quebec.ca/immigration - formulaire A-0361-F0"
         ]
       },
       {
-        heading: "Les pièges à éviter",
+        heading: "RAC - Reconnaissance des Acquis et Compétences",
         points: [
-          "Retourner aux études alors que vos compétences sont déjà reconnues",
-          "Ignorer les programmes de RAC qui peuvent vous faire économiser des années",
-          "Ne pas connaître les ordres professionnels et leurs exigences",
-          "Sous-estimer la valeur de votre expérience internationale"
+          "Obtenez un diplôme québécois (DEP, AEP, DEC) sans retourner aux études à temps plein",
+          "Gratuit ou faible coût dans les Centres de services scolaires",
+          "Processus : autoévaluation, portfolio, démonstration de compétences, formation ciblée si nécessaire",
+          "Disponible aux niveaux : secondaire professionnel, collégial (CEGEP), universitaire"
         ]
       },
       {
-        heading: "Le processus de RAC",
-        text: "La Reconnaissance des Acquis et des Compétences (RAC) vous permet d'obtenir un diplôme québécois en faisant reconnaître ce que vous savez déjà faire. Je vous guide à travers ce processus pour maximiser vos chances de succès et minimiser le temps requis."
+        heading: "Professions réglementées",
+        text: "46 ordres professionnels au Québec régissent des professions comme médecin, ingénieur, comptable, infirmier. Je vous aide à comprendre si votre profession est réglementée et les étapes spécifiques requises par chaque ordre (via Qualifications Québec - qualificationsquebec.com)."
       }
     ]
   },
   employability: {
     title: "Stratégie d'employabilité",
-    description: "Développez les compétences qui comptent vraiment pour les employeurs québécois.",
+    description: "Programmes officiels d'Emploi-Québec et Services Québec",
     content: [
       {
-        heading: "Ce que vous obtiendrez",
+        heading: "Programme PRIIME - Services Québec",
         points: [
-          "Plan d'action personnalisé pour améliorer votre employabilité",
-          "Identification des compétences clés recherchées dans votre secteur",
-          "Stratégies de réseautage adaptées au contexte québécois",
-          "Préparation aux entrevues selon les attentes locales"
+          "Programme d'aide pour immigrants sans expérience nord-américaine",
+          "Subvention salariale aux employeurs qui vous embauchent",
+          "Accompagnement personnalisé avec un conseiller Services Québec",
+          "Accès via les bureaux de Services Québec dans votre région"
         ]
       },
       {
-        heading: "Compétences pratiques vs diplômes",
+        heading: "Organismes d'aide reconnus (ROSINI)",
         points: [
-          "Le marché québécois valorise souvent l'expérience pratique",
-          "Les certifications courtes peuvent avoir plus d'impact qu'une maîtrise",
-          "Les soft skills québécoises : communication, travail d'équipe, autonomie",
-          "L'importance de la première expérience canadienne"
+          "CITIM : ateliers CV québécois, entrevues, codes culturels du travail",
+          "PROMIS : services multilingues d'intégration et emploi",
+          "Objectif Emploi : méthodes de recherche, plan d'action personnalisé",
+          "Carrefour BLE : insertion dans les secteurs agroalimentaire et environnement"
         ]
       },
       {
-        heading: "Ma philosophie",
-        text: "Oubliez les conseils génériques qu'on donne à tout le monde. Mon approche est basée sur la réalité du terrain : ce que les employeurs cherchent vraiment, comment ils recrutent, et ce qui fait la différence entre un CV qui passe et un qui reste dans la pile."
+        heading: "Première expérience canadienne",
+        text: "Le programme PRIIME d'Emploi-Québec (quebec.ca/emploi) offre une subvention aux employeurs pour vous donner votre première chance. Je vous aide à préparer votre dossier et à cibler les employeurs participants."
       }
     ]
   },
   integration: {
     title: "Intégration au marché",
-    description: "Maîtrisez les codes du marché québécois pour vous démarquer.",
+    description: "Ressources gouvernementales et programmes officiels d'intégration",
     content: [
       {
-        heading: "Ce que vous obtiendrez",
+        heading: "Services gouvernementaux disponibles",
         points: [
-          "Compréhension des normes professionnelles québécoises",
-          "Adaptation de votre CV au format et aux attentes locales",
-          "Stratégies pour décrocher votre première expérience canadienne",
-          "Connaissance des ressources et programmes d'aide à l'emploi"
+          "Services Québec : accompagnement gratuit avec conseiller en emploi",
+          "Francisation gratuite via le MIFI pour améliorer vos chances",
+          "Programme Interconnexion (Chambre de commerce) : réseautage avec employeurs",
+          "Place aux jeunes en région : opportunités hors des grands centres"
         ]
       },
       {
-        heading: "Les codes culturels du travail",
+        heading: "Programmes employeurs majeurs",
         points: [
-          "La culture du 'tu' et l'approche égalitaire au travail",
-          "L'importance du réseautage informel (5 à 7, événements)",
-          "Les attentes en matière de communication et de feedback",
-          "L'équilibre travail-vie personnelle au Québec"
+          "Hydro-Québec : Programme d'intégration nouveaux arrivants (30 semaines)",
+          "Ville de Québec/Montréal : stages pour nouveaux arrivants",
+          "Desjardins, Banque Nationale : programmes de diversité et inclusion",
+          "Emplois en régions (PROMIS + gouvernement) : aide à l'installation régionale"
         ]
       },
       {
-        heading: "Votre première expérience canadienne",
-        text: "C'est souvent le plus grand défi des nouveaux arrivants. Je vous aide à identifier les voies d'entrée : stages, bénévolat stratégique, emplois tremplins, et programmes de mentorat qui peuvent ouvrir les portes vers l'emploi que vous visez."
+        heading: "Changements importants 2025",
+        text: "Depuis février 2025, les travailleurs étrangers temporaires ne sont plus admissibles à certains services d'emploi. Je vous aide à naviguer ces changements et à identifier les programmes auxquels vous avez droit selon votre statut (résident permanent, réfugié, PVT, etc.)."
       }
     ]
   }
