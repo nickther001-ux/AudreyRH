@@ -15,113 +15,129 @@ type ServiceKey = "strategy" | "credentials" | "employability" | "integration" |
 const serviceDetails = {
   strategy: {
     title: "Analyse stratégique du marché",
-    description: "Basée sur les données officielles du gouvernement du Québec (quebec.ca/emploi)",
+    description: "Évitez les erreurs coûteuses avec une analyse basée sur les données réelles",
+    stats: [
+      { value: "42,6%", label: "des immigrants sont surqualifiés pour leur emploi (vs 24,9% des natifs)", source: "MIFI 2020" },
+      { value: "2x", label: "plus de chômage chez les immigrants (8%) vs natifs (4,1%)", source: "Institut du Québec 2024" },
+    ],
     content: [
       {
-        heading: "Secteurs en forte demande au Québec",
+        heading: "Le problème que je résous",
         points: [
-          "Santé : infirmiers, assistants en soins - pénurie critique (Source: Emploi-Québec)",
-          "Construction : électriciens, plombiers, soudeurs, électromécaniciens",
-          "Technologies : développeurs, analystes en cybersécurité, gestionnaires de réseau",
-          "Transport : chauffeurs poids lourds, logisticiens - forte demande liée au commerce en ligne"
+          "Beaucoup d'immigrants investissent dans des maîtrises inutiles pour le marché local",
+          "Les métiers spécialisés (construction, santé) recrutent plus que les postes de bureau",
+          "Sans bonne analyse, vous risquez des années d'études pour un emploi surqualifié",
+          "Je vous montre où sont les VRAIES opportunités selon votre profil"
         ]
       },
       {
-        heading: "Données du marché 2024-2025",
+        heading: "Secteurs qui recrutent activement",
         points: [
-          "219 200 emplois à pourvoir dans la région de Montréal (2022-2026) - Quebec.ca",
-          "267 professions admissibles au traitement simplifié en 2024 (réduit à 76 en 2025)",
-          "50,7% des postes dus aux départs à la retraite, 49,3% à la croissance économique",
-          "Outils officiels : IMT en ligne, État d'équilibre du marché (516 professions analysées)"
+          "Santé : infirmiers, préposés - pénurie critique persistante",
+          "Construction : 219 200 emplois à pourvoir à Montréal d'ici 2026",
+          "Technologies : développeurs, cybersécurité - demande constante",
+          "Transport : chauffeurs poids lourds - forte demande"
         ]
       },
       {
-        heading: "Sources officielles consultées",
-        text: "Mes analyses s'appuient sur les données de quebec.ca/emploi, l'État d'équilibre du marché du travail publié par le gouvernement, et les rapports de Services Québec. Je vous aide à interpréter ces données selon votre profil spécifique."
+        heading: "Mon approche",
+        text: "J'utilise les données officielles de quebec.ca/emploi et l'État d'équilibre du marché (516 professions analysées) pour vous donner des recommandations concrètes, pas des conseils génériques."
       }
     ]
   },
   credentials: {
     title: "Reconnaissance des acquis",
-    description: "Processus officiels du MIFI et du Ministère de l'Éducation du Québec",
+    description: "Ne repartez pas à zéro - faites valoir ce que vous savez déjà",
+    stats: [
+      { value: "10%", label: "des immigrants restent surqualifiés pendant 10+ ans", source: "Statistique Canada" },
+      { value: "14%", label: "des diplômés étrangers subissent une surqualification persistante", source: "StatCan 2016-2021" },
+    ],
     content: [
       {
-        heading: "Évaluation comparative des études (MIFI)",
+        heading: "Pourquoi c'est crucial",
         points: [
-          "Document officiel comparant vos diplômes au système québécois (138$ en 2025)",
-          "Délai de traitement : environ 112-115 jours ouvrables (~5 mois)",
-          "Ce n'est PAS un diplôme - c'est un avis indicatif pour employeurs et institutions",
-          "Demande via quebec.ca/immigration - formulaire A-0361-F0"
+          "Retourner aux études = années perdues si vos compétences sont déjà reconnues",
+          "Le programme RAC peut vous donner un diplôme québécois SANS retourner à l'école",
+          "L'évaluation comparative (138$ en 2025) n'est qu'un avis - pas une équivalence",
+          "47,9% des immigrants parrainés sont surqualifiés - la bonne stratégie fait la différence"
         ]
       },
       {
-        heading: "RAC - Reconnaissance des Acquis et Compétences",
+        heading: "La RAC : votre raccourci vers le diplôme",
         points: [
-          "Obtenez un diplôme québécois (DEP, AEP, DEC) sans retourner aux études à temps plein",
-          "Gratuit ou faible coût dans les Centres de services scolaires",
-          "Processus : autoévaluation, portfolio, démonstration de compétences, formation ciblée si nécessaire",
-          "Disponible aux niveaux : secondaire professionnel, collégial (CEGEP), universitaire"
+          "Reconnaissance des Acquis et Compétences - gratuit ou faible coût",
+          "Obtenez un DEP, AEP ou DEC en démontrant vos compétences existantes",
+          "Processus : portfolio, évaluation pratique, formation ciblée si nécessaire",
+          "Disponible dans les Centres de services scolaires partout au Québec"
         ]
       },
       {
-        heading: "Professions réglementées",
-        text: "46 ordres professionnels au Québec régissent des professions comme médecin, ingénieur, comptable, infirmier. Je vous aide à comprendre si votre profession est réglementée et les étapes spécifiques requises par chaque ordre (via Qualifications Québec - qualificationsquebec.com)."
+        heading: "Les 46 ordres professionnels",
+        text: "Médecin, ingénieur, comptable, infirmier... Je vous aide à naviguer les exigences spécifiques de chaque ordre via Qualifications Québec et à éviter les démarches inutiles."
       }
     ]
   },
   employability: {
     title: "Stratégie d'employabilité",
-    description: "Programmes officiels d'Emploi-Québec et Services Québec",
+    description: "Décrochez votre première expérience canadienne - le plus grand défi",
+    stats: [
+      { value: "68%", label: "des nouveaux travailleurs en 2024 sont des immigrants", source: "Institut du Québec" },
+      { value: "3x", label: "plus de chômage chez les immigrants temporaires (11,7%)", source: "StatCan 2024" },
+    ],
     content: [
       {
-        heading: "Programme PRIIME - Services Québec",
+        heading: "Le vrai obstacle",
         points: [
-          "Programme d'aide pour immigrants sans expérience nord-américaine",
-          "Subvention salariale aux employeurs qui vous embauchent",
-          "Accompagnement personnalisé avec un conseiller Services Québec",
-          "Accès via les bureaux de Services Québec dans votre région"
+          "Sans expérience canadienne, votre CV est souvent ignoré",
+          "Les employeurs cherchent des preuves que vous comprenez le marché local",
+          "Les conseils génériques (refaire son CV) ne suffisent pas",
+          "Il faut une stratégie ciblée selon votre secteur et votre statut"
         ]
       },
       {
-        heading: "Organismes d'aide reconnus (ROSINI)",
+        heading: "Programmes qui fonctionnent",
         points: [
-          "CITIM : ateliers CV québécois, entrevues, codes culturels du travail",
-          "PROMIS : services multilingues d'intégration et emploi",
-          "Objectif Emploi : méthodes de recherche, plan d'action personnalisé",
-          "Carrefour BLE : insertion dans les secteurs agroalimentaire et environnement"
+          "PRIIME : subvention salariale pour votre première embauche (Services Québec)",
+          "CITIM : ateliers intensifs CV québécois, entrevues, codes culturels",
+          "Interconnexion : réseautage direct avec employeurs (Chambre de commerce)",
+          "Mentorat professionnel : accès au réseau d'un professionnel établi"
         ]
       },
       {
-        heading: "Première expérience canadienne",
-        text: "Le programme PRIIME d'Emploi-Québec (quebec.ca/emploi) offre une subvention aux employeurs pour vous donner votre première chance. Je vous aide à préparer votre dossier et à cibler les employeurs participants."
+        heading: "Ma valeur ajoutée",
+        text: "Je vous aide à préparer un dossier PRIIME solide et à cibler les employeurs qui participent à ces programmes. Ensemble, on transforme votre expérience internationale en atout."
       }
     ]
   },
   integration: {
     title: "Intégration au marché",
-    description: "Ressources gouvernementales et programmes officiels d'intégration",
+    description: "Maîtrisez les codes invisibles qui font la différence",
+    stats: [
+      { value: "+3 pts", label: "hausse du chômage immigrant en 2 ans (5% à 8%)", source: "Institut du Québec" },
+      { value: "4M$", label: "investis par Québec pour la reconnaissance des diplômes", source: "Radio-Canada 2021" },
+    ],
     content: [
       {
-        heading: "Services gouvernementaux disponibles",
+        heading: "Ce que les employeurs ne disent pas",
         points: [
-          "Services Québec : accompagnement gratuit avec conseiller en emploi",
-          "Francisation gratuite via le MIFI pour améliorer vos chances",
-          "Programme Interconnexion (Chambre de commerce) : réseautage avec employeurs",
-          "Place aux jeunes en région : opportunités hors des grands centres"
+          "La culture du 'tu' et l'approche égalitaire au travail québécois",
+          "L'importance du réseautage informel (5 à 7, événements)",
+          "Les attentes en communication : direct mais diplomate",
+          "L'équilibre travail-vie personnelle est valorisé ici"
         ]
       },
       {
         heading: "Programmes employeurs majeurs",
         points: [
-          "Hydro-Québec : Programme d'intégration nouveaux arrivants (30 semaines)",
-          "Ville de Québec/Montréal : stages pour nouveaux arrivants",
-          "Desjardins, Banque Nationale : programmes de diversité et inclusion",
-          "Emplois en régions (PROMIS + gouvernement) : aide à l'installation régionale"
+          "Hydro-Québec : Programme d'intégration 30 semaines pour nouveaux arrivants",
+          "Ville de Québec/Montréal : stages rémunérés pour immigrants",
+          "Desjardins, Banque Nationale : programmes diversité active",
+          "Emplois en régions : opportunités hors Montréal avec aide à l'installation"
         ]
       },
       {
-        heading: "Changements importants 2025",
-        text: "Depuis février 2025, les travailleurs étrangers temporaires ne sont plus admissibles à certains services d'emploi. Je vous aide à naviguer ces changements et à identifier les programmes auxquels vous avez droit selon votre statut (résident permanent, réfugié, PVT, etc.)."
+        heading: "Changement 2025",
+        text: "Depuis février 2025, les travailleurs étrangers temporaires ne sont plus admissibles à certains services d'emploi. Je vous aide à identifier les programmes auxquels VOUS avez droit selon votre statut."
       }
     ]
   }
@@ -152,7 +168,20 @@ export default function Home() {
             </DialogDescription>
           </DialogHeader>
           
-          <div className="space-y-6 mt-4">
+          {/* Statistics Cards */}
+          {service.stats && (
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              {service.stats.map((stat, idx) => (
+                <div key={idx} className="bg-primary/5 border border-primary/20 rounded-lg p-4 text-center">
+                  <div className="text-3xl font-bold text-primary mb-1">{stat.value}</div>
+                  <div className="text-sm text-muted-foreground leading-tight">{stat.label}</div>
+                  <div className="text-xs text-muted-foreground/70 mt-2 italic">Source: {stat.source}</div>
+                </div>
+              ))}
+            </div>
+          )}
+          
+          <div className="space-y-6 mt-6">
             {service.content.map((section, idx) => (
               <div key={idx}>
                 <h4 className="font-bold text-lg mb-3 text-foreground">{section.heading}</h4>
