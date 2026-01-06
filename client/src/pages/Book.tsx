@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { insertAppointmentSchema, type InsertAppointment } from "@shared/schema";
+import { insertAppointmentSchema, type InsertAppointment, type AvailabilitySlot } from "@shared/schema";
 import { useCreateAppointment } from "@/hooks/use-appointments";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -9,23 +10,27 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Calendar } from "@/components/ui/calendar";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { format } from "date-fns";
+import { format, isSameDay } from "date-fns";
 import { fr } from "date-fns/locale";
-import { CalendarIcon, CreditCard, Loader2, CheckCircle2, XCircle, Clock, Video, FileText } from "lucide-react";
+import { CreditCard, Loader2, CheckCircle2, XCircle, Clock, Video, FileText, CalendarDays } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { SiZoom, SiGooglemeet } from "react-icons/si";
 import { useLocation } from "wouter";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function Book() {
   const [success, setSuccess] = useState(false);
   const [canceled, setCanceled] = useState(false);
+  const [selectedSlotId, setSelectedSlotId] = useState<number | null>(null);
   const { mutate, isPending } = useCreateAppointment();
   const [, setLocation] = useLocation();
+
+  const { data: availableSlots = [], isLoading: slotsLoading } = useQuery<AvailabilitySlot[]>({
+    queryKey: ['/api/availability'],
+  });
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -49,6 +54,21 @@ export default function Book() {
       platform: "zoom",
     },
   });
+
+  // Group slots by date
+  const groupedSlots = availableSlots.reduce((acc, slot) => {
+    const dateKey = format(new Date(slot.date), 'yyyy-MM-dd');
+    if (!acc[dateKey]) {
+      acc[dateKey] = [];
+    }
+    acc[dateKey].push(slot);
+    return acc;
+  }, {} as Record<string, AvailabilitySlot[]>);
+
+  const handleSlotSelect = (slot: AvailabilitySlot) => {
+    setSelectedSlotId(slot.id);
+    form.setValue('date', new Date(slot.date));
+  };
 
   const onSubmit = (data: InsertAppointment) => {
     mutate(data);
@@ -212,70 +232,84 @@ export default function Book() {
                       />
                     </div>
 
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <FormField
-                        control={form.control}
-                        name="phone"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Téléphone (optionnel)</FormLabel>
-                            <FormControl>
-                              <Input 
-                                placeholder="+1 (514) 000-0000" 
-                                className="h-12" 
-                                data-testid="input-phone"
-                                {...field} 
-                                value={field.value || ''} 
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Téléphone (optionnel)</FormLabel>
+                          <FormControl>
+                            <Input 
+                              placeholder="+1 (514) 000-0000" 
+                              className="h-12" 
+                              data-testid="input-phone"
+                              {...field} 
+                              value={field.value || ''} 
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                      <FormField
-                        control={form.control}
-                        name="date"
-                        render={({ field }) => (
-                          <FormItem className="flex flex-col">
-                            <FormLabel>Date souhaitée</FormLabel>
-                            <Popover>
-                              <PopoverTrigger asChild>
-                                <FormControl>
-                                  <Button
-                                    variant={"outline"}
-                                    className={cn(
-                                      "h-12 w-full pl-3 text-left font-normal",
-                                      !field.value && "text-muted-foreground"
-                                    )}
-                                    data-testid="button-date-picker"
-                                  >
-                                    {field.value ? (
-                                      format(field.value, "PPP", { locale: fr })
-                                    ) : (
-                                      <span>Choisir une date</span>
-                                    )}
-                                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                  </Button>
-                                </FormControl>
-                              </PopoverTrigger>
-                              <PopoverContent className="w-auto p-0" align="start">
-                                <Calendar
-                                  mode="single"
-                                  selected={field.value}
-                                  onSelect={field.onChange}
-                                  disabled={(date) =>
-                                    date < new Date() || date < new Date("1900-01-01")
-                                  }
-                                  initialFocus
-                                />
-                              </PopoverContent>
-                            </Popover>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                    </div>
+                    <FormField
+                      control={form.control}
+                      name="date"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="flex items-center gap-2">
+                            <CalendarDays className="h-4 w-4" />
+                            Choisir un créneau disponible
+                          </FormLabel>
+                          <FormControl>
+                            {slotsLoading ? (
+                              <div className="flex items-center justify-center p-8">
+                                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                              </div>
+                            ) : Object.keys(groupedSlots).length === 0 ? (
+                              <div className="p-6 bg-muted/50 rounded-lg text-center">
+                                <p className="text-muted-foreground" data-testid="text-no-availability">
+                                  Aucune disponibilité pour le moment. Veuillez revenir plus tard.
+                                </p>
+                              </div>
+                            ) : (
+                              <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2">
+                                {Object.entries(groupedSlots)
+                                  .sort(([a], [b]) => a.localeCompare(b))
+                                  .map(([dateKey, dateSlots]) => (
+                                    <div key={dateKey} className="space-y-2">
+                                      <p className="text-sm font-medium text-muted-foreground capitalize">
+                                        {format(new Date(dateKey), "EEEE d MMMM", { locale: fr })}
+                                      </p>
+                                      <div className="flex flex-wrap gap-2">
+                                        {dateSlots
+                                          .sort((a, b) => a.startTime.localeCompare(b.startTime))
+                                          .map((slot) => (
+                                            <Button
+                                              key={slot.id}
+                                              type="button"
+                                              variant={selectedSlotId === slot.id ? "default" : "outline"}
+                                              size="sm"
+                                              onClick={() => handleSlotSelect(slot)}
+                                              className={cn(
+                                                "transition-all",
+                                                selectedSlotId === slot.id && "ring-2 ring-primary ring-offset-2"
+                                              )}
+                                              data-testid={`button-slot-${slot.id}`}
+                                            >
+                                              {slot.startTime} - {slot.endTime}
+                                            </Button>
+                                          ))}
+                                      </div>
+                                    </div>
+                                  ))}
+                              </div>
+                            )}
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
                     <FormField
                       control={form.control}

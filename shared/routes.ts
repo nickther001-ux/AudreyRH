@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { insertAppointmentSchema, appointments } from './schema';
+import { insertAppointmentSchema, insertAvailabilitySlotSchema, appointments, availabilitySlots } from './schema';
 
 export const errorSchemas = {
   validation: z.object({
@@ -33,6 +33,32 @@ export const api = {
       path: '/api/appointments/:id',
       responses: {
         200: z.custom<typeof appointments.$inferSelect>(),
+        404: errorSchemas.notFound,
+      },
+    },
+  },
+  availability: {
+    create: {
+      method: 'POST' as const,
+      path: '/api/availability',
+      input: insertAvailabilitySlotSchema,
+      responses: {
+        201: z.custom<typeof availabilitySlots.$inferSelect>(),
+        400: errorSchemas.validation,
+      },
+    },
+    list: {
+      method: 'GET' as const,
+      path: '/api/availability',
+      responses: {
+        200: z.array(z.custom<typeof availabilitySlots.$inferSelect>()),
+      },
+    },
+    delete: {
+      method: 'DELETE' as const,
+      path: '/api/availability/:id',
+      responses: {
+        200: z.object({ success: z.boolean() }),
         404: errorSchemas.notFound,
       },
     },
