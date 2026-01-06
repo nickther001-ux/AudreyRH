@@ -100,6 +100,17 @@ export async function registerRoutes(
     }
   });
 
+  // Admin routes - get all appointments
+  app.get('/api/admin/appointments', async (req, res) => {
+    try {
+      const allAppointments = await storage.getAllAppointments();
+      res.json(allAppointments);
+    } catch (err) {
+      console.error('Error fetching appointments:', err);
+      res.status(500).json({ message: 'Failed to fetch appointments' });
+    }
+  });
+
   // Availability routes
   app.post(api.availability.create.path, async (req, res) => {
     try {

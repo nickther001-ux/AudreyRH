@@ -12,6 +12,7 @@ import { eq, gte, and } from "drizzle-orm";
 export interface IStorage {
   createAppointment(appointment: InsertAppointment): Promise<Appointment>;
   getAppointment(id: number): Promise<Appointment | undefined>;
+  getAllAppointments(): Promise<Appointment[]>;
   updateAppointmentPayment(id: number, paymentIntentId: string): Promise<Appointment>;
   // Availability
   createAvailabilitySlot(slot: InsertAvailabilitySlot): Promise<AvailabilitySlot>;
@@ -37,6 +38,13 @@ export class DatabaseStorage implements IStorage {
       .from(appointments)
       .where(eq(appointments.id, id));
     return appointment;
+  }
+
+  async getAllAppointments(): Promise<Appointment[]> {
+    return db
+      .select()
+      .from(appointments)
+      .orderBy(appointments.createdAt);
   }
 
   async updateAppointmentPayment(id: number, paymentIntentId: string): Promise<Appointment> {

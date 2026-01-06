@@ -29,8 +29,9 @@ import {
 } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
-import { insertAvailabilitySlotSchema, type AvailabilitySlot, type InsertAvailabilitySlot } from "@shared/schema";
-import { CalendarIcon, Plus, Trash2, Clock, ArrowLeft } from "lucide-react";
+import { insertAvailabilitySlotSchema, type AvailabilitySlot, type InsertAvailabilitySlot, type Appointment } from "@shared/schema";
+import { CalendarIcon, Plus, Trash2, Clock, ArrowLeft, Users, CheckCircle, XCircle } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Link } from "wouter";
 
@@ -46,6 +47,10 @@ export default function Admin() {
 
   const { data: slots = [], isLoading } = useQuery<AvailabilitySlot[]>({
     queryKey: ['/api/availability'],
+  });
+
+  const { data: allAppointments = [], isLoading: isLoadingAppointments } = useQuery<Appointment[]>({
+    queryKey: ['/api/admin/appointments'],
   });
 
   const form = useForm<InsertAvailabilitySlot>({
@@ -297,6 +302,67 @@ export default function Admin() {
             )}
           </Card>
         </div>
+
+        {/* Appointments Section */}
+        <Card className="p-6 mt-8">
+          <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
+            <Users className="h-5 w-5 text-primary" />
+            Réservations clients
+          </h2>
+
+          {isLoadingAppointments ? (
+            <p className="text-muted-foreground">Chargement...</p>
+          ) : allAppointments.length === 0 ? (
+            <p className="text-muted-foreground" data-testid="text-no-appointments">
+              Aucune réservation pour le moment.
+            </p>
+          ) : (
+            <div className="space-y-4">
+              {allAppointments
+                .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                .map((appt) => (
+                  <div
+                    key={appt.id}
+                    className="p-4 rounded-lg border bg-muted/30"
+                    data-testid={`appointment-${appt.id}`}
+                  >
+                    <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                      <div className="space-y-2 flex-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-semibold text-lg">{appt.name}</span>
+                          <Badge variant={appt.paymentStatus === "paid" ? "default" : "secondary"}>
+                            {appt.paymentStatus === "paid" ? (
+                              <><CheckCircle className="h-3 w-3 mr-1" /> Payé</>
+                            ) : (
+                              <><XCircle className="h-3 w-3 mr-1" /> Non payé</>
+                            )}
+                          </Badge>
+                          <Badge variant="outline">
+                            {appt.platform === "zoom" ? "Zoom" : "Google Meet"}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{appt.email}</p>
+                        {appt.phone && <p className="text-sm text-muted-foreground">{appt.phone}</p>}
+                        <div className="text-sm">
+                          <span className="font-medium">Date:</span>{" "}
+                          {format(new Date(appt.date), "EEEE d MMMM yyyy", { locale: fr })}
+                          {appt.startTime && appt.endTime && (
+                            <span className="ml-2">
+                              de {appt.startTime} à {appt.endTime}
+                            </span>
+                          )}
+                        </div>
+                        <div className="mt-2 p-3 bg-background rounded-md">
+                          <p className="text-sm font-medium mb-1">Raison de la consultation:</p>
+                          <p className="text-sm text-muted-foreground">{appt.reason}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+          )}
+        </Card>
       </div>
     </div>
   );
