@@ -52,7 +52,7 @@ export function Navbar() {
             className="text-2xl font-bold text-foreground tracking-tight"
             data-testid="link-logo"
           >
-            <span className="text-primary">Audrey</span> Mondesir
+            <span className="text-primary">Audrey</span> Mondesir<span className="text-yellow-400">.</span>
           </Link>
 
           {/* Desktop Nav */}
