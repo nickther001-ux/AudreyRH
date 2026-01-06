@@ -479,7 +479,7 @@ export default function Home() {
               <div className="pt-4">
                 <Link href="/book">
                   <Button size="lg" className="bg-accent text-primary font-bold px-10 h-14 text-lg shadow-xl" data-testid="button-cta-book">
-                    Réserver une consultation - 50$
+                    Réserver une consultation - 50$ USD
                   </Button>
                 </Link>
                 <p className="mt-4 text-sm text-primary-foreground/60">

@@ -141,7 +141,7 @@ export default function Book() {
                     <CreditCard className="w-5 h-5 text-primary mt-0.5" />
                     <div>
                       <p className="font-medium">Tarif</p>
-                      <p className="text-2xl font-bold text-primary" data-testid="text-price">50,00 $ CAD</p>
+                      <p className="text-2xl font-bold text-primary" data-testid="text-price">50,00 $ USD</p>
                     </div>
                   </div>
                 </div>
@@ -309,7 +309,7 @@ export default function Book() {
                         ) : (
                           <>
                             <CreditCard className="mr-2 h-5 w-5" />
-                            Procéder au paiement - 50,00 $ CAD
+                            Procéder au paiement - 50,00 $ USD
                           </>
                         )}
                       </Button>
