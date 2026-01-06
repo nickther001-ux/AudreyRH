@@ -18,7 +18,8 @@ export interface IStorage {
   getAvailableSlots(): Promise<AvailabilitySlot[]>;
   getAvailabilitySlot(id: number): Promise<AvailabilitySlot | undefined>;
   deleteAvailabilitySlot(id: number): Promise<void>;
-  bookSlot(id: number): Promise<AvailabilitySlot>;
+  bookSlot(id: number): Promise<AvailabilitySlot | null>;
+  unbookSlot(id: number): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -60,14 +61,39 @@ export class DatabaseStorage implements IStorage {
 
   async getAvailableSlots(): Promise<AvailabilitySlot[]> {
     const now = new Date();
-    return db
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    
+    // Get all unbooked slots from today onwards
+    const slots = await db
       .select()
       .from(availabilitySlots)
       .where(and(
         eq(availabilitySlots.isBooked, false),
-        gte(availabilitySlots.date, now)
+        gte(availabilitySlots.date, today)
       ))
       .orderBy(availabilitySlots.date);
+    
+    // Convert time string (HH:MM or H:MM) to minutes since midnight for comparison
+    const timeToMinutes = (time: string): number => {
+      const [hours, minutes] = time.split(':').map(Number);
+      return hours * 60 + minutes;
+    };
+    
+    const currentMinutes = now.getHours() * 60 + now.getMinutes();
+    
+    return slots.filter(slot => {
+      const slotDate = new Date(slot.date);
+      const isSameDay = slotDate.getFullYear() === now.getFullYear() && 
+                        slotDate.getMonth() === now.getMonth() && 
+                        slotDate.getDate() === now.getDate();
+      
+      // If same day, only show slots that haven't started yet
+      if (isSameDay) {
+        const slotStartMinutes = timeToMinutes(slot.startTime);
+        return slotStartMinutes > currentMinutes;
+      }
+      return true;
+    });
   }
 
   async getAvailabilitySlot(id: number): Promise<AvailabilitySlot | undefined> {
@@ -84,13 +110,24 @@ export class DatabaseStorage implements IStorage {
       .where(eq(availabilitySlots.id, id));
   }
 
-  async bookSlot(id: number): Promise<AvailabilitySlot> {
+  async bookSlot(id: number): Promise<AvailabilitySlot | null> {
+    // Only book if not already booked (atomic operation)
     const [slot] = await db
       .update(availabilitySlots)
       .set({ isBooked: true })
-      .where(eq(availabilitySlots.id, id))
+      .where(and(
+        eq(availabilitySlots.id, id),
+        eq(availabilitySlots.isBooked, false)
+      ))
       .returning();
-    return slot;
+    return slot || null;
+  }
+
+  async unbookSlot(id: number): Promise<void> {
+    await db
+      .update(availabilitySlots)
+      .set({ isBooked: false })
+      .where(eq(availabilitySlots.id, id));
   }
 }
 

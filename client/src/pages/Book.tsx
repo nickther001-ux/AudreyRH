@@ -68,9 +68,21 @@ export default function Book() {
   const handleSlotSelect = (slot: AvailabilitySlot) => {
     setSelectedSlotId(slot.id);
     form.setValue('date', new Date(slot.date));
+    form.setValue('slotId', slot.id);
+    form.setValue('startTime', slot.startTime);
+    form.setValue('endTime', slot.endTime);
   };
 
   const onSubmit = (data: InsertAppointment) => {
+    // Ensure slot info is included
+    if (selectedSlotId) {
+      const selectedSlot = availableSlots.find(s => s.id === selectedSlotId);
+      if (selectedSlot) {
+        data.slotId = selectedSlot.id;
+        data.startTime = selectedSlot.startTime;
+        data.endTime = selectedSlot.endTime;
+      }
+    }
     mutate(data);
   };
 

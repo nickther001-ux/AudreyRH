@@ -59,11 +59,7 @@ export default function Admin() {
 
   const { mutate: createSlot, isPending: isCreating } = useMutation({
     mutationFn: async (data: InsertAvailabilitySlot) => {
-      return apiRequest('/api/availability', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { 'Content-Type': 'application/json' },
-      });
+      return apiRequest('POST', '/api/availability', data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/availability'] });
@@ -88,9 +84,7 @@ export default function Admin() {
 
   const { mutate: deleteSlot } = useMutation({
     mutationFn: async (id: number) => {
-      return apiRequest(`/api/availability/${id}`, {
-        method: 'DELETE',
-      });
+      return apiRequest('DELETE', `/api/availability/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/availability'] });

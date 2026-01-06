@@ -13,6 +13,15 @@ export async function registerRoutes(
     try {
       const input = api.appointments.create.input.parse(req.body);
       
+      // If a slot was selected, verify it exists and try to book it atomically
+      if (input.slotId) {
+        const bookedSlot = await storage.bookSlot(input.slotId);
+        if (!bookedSlot) {
+          // Either slot doesn't exist or was already booked by another request
+          return res.status(400).json({ message: 'Ce créneau n\'est plus disponible. Veuillez en choisir un autre.' });
+        }
+      }
+      
       const appointment = await storage.createAppointment(input);
       
       let checkoutUrl: string | null = null;

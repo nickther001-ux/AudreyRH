@@ -9,6 +9,9 @@ export const appointments = pgTable("appointments", {
   phone: text("phone"),
   reason: text("reason").notNull(),
   date: timestamp("date").notNull(),
+  slotId: integer("slot_id"),
+  startTime: text("start_time"),
+  endTime: text("end_time"),
   platform: text("platform", { enum: ["zoom", "google_meet"] }).default("zoom").notNull(),
   status: text("status", { enum: ["pending", "confirmed", "completed", "cancelled"] }).default("pending").notNull(),
   paymentStatus: text("payment_status", { enum: ["unpaid", "paid"] }).default("unpaid").notNull(),
@@ -23,9 +26,12 @@ export const insertAppointmentSchema = createInsertSchema(appointments).omit({
   stripePaymentIntentId: true,
   createdAt: true 
 }).extend({
-  date: z.coerce.date().min(new Date(), "Date must be in the future"),
+  date: z.coerce.date(),
   email: z.string().email("Invalid email address"),
   platform: z.enum(["zoom", "google_meet"]).default("zoom"),
+  slotId: z.number().optional(),
+  startTime: z.string().optional(),
+  endTime: z.string().optional(),
 });
 
 export type Appointment = typeof appointments.$inferSelect;
@@ -49,6 +55,11 @@ export const insertAvailabilitySlotSchema = createInsertSchema(availabilitySlots
   date: z.coerce.date(),
   startTime: z.string().regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format (HH:MM)"),
   endTime: z.string().regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, "Invalid time format (HH:MM)"),
+}).refine((data) => {
+  return data.startTime < data.endTime;
+}, {
+  message: "End time must be after start time",
+  path: ["endTime"],
 });
 
 export type AvailabilitySlot = typeof availabilitySlots.$inferSelect;
