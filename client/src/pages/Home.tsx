@@ -225,14 +225,24 @@ export default function Home() {
       {renderServiceDialog("integration")}
 
       <main className="flex-grow">
-        {/* Hero Section - gorh.co style */}
-        <section className="relative pt-32 pb-24 md:pt-44 md:pb-32 bg-gradient-to-br from-primary/5 via-background to-accent/5" data-testid="section-hero">
-          <div className="container mx-auto px-4 md:px-6">
+        {/* Hero Section - Modern elegant style */}
+        <section className="relative pt-32 pb-24 md:pt-44 md:pb-32 overflow-hidden" data-testid="section-hero">
+          {/* Background gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-background to-accent/5" />
+          <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-accent/10 to-transparent rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl" />
+          
+          <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="max-w-4xl mx-auto text-center space-y-8">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight" data-testid="text-hero-title">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                <Award className="w-4 h-4" />
+                Conseillère en Relations Industrielles Agréée
+              </div>
+              
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight" data-testid="text-hero-title">
                 Une experte CRIA
                 <br />
-                <span className="text-primary relative inline-block min-w-[280px] md:min-w-[400px]">
+                <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent relative inline-block min-w-[280px] md:min-w-[400px]">
                   <span 
                     key={wordIndex}
                     className="inline-block animate-in fade-in slide-in-from-bottom-2 duration-200"
@@ -246,15 +256,15 @@ export default function Home() {
                 Réalisons ensemble votre potentiel de carrière au Québec. Audrey Mondesir, votre partenaire de confiance pour naviguer le marché de l'emploi.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4 flex-wrap">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 flex-wrap">
                 <Link href="/book">
-                  <Button size="lg" className="bg-primary text-white px-8 h-14 text-base shadow-xl shadow-primary/20" data-testid="button-hero-book">
+                  <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 text-white px-8 h-14 text-base shadow-xl shadow-primary/25 border-0" data-testid="button-hero-book">
                     Prendre rendez-vous
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 </Link>
                 <Link href="#services">
-                  <Button variant="outline" size="lg" className="px-8 h-14 text-base border-2" data-testid="button-hero-services">
+                  <Button variant="outline" size="lg" className="px-8 h-14 text-base border-2 backdrop-blur-sm" data-testid="button-hero-services">
                     Découvrir mes services
                   </Button>
                 </Link>
@@ -263,42 +273,50 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Question Section - like gorh.co */}
-        <section className="py-20 bg-card border-y border-border" data-testid="section-question">
-          <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-3xl mx-auto text-center space-y-6">
-              <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-question-title">
-                Où en êtes-vous dans votre parcours professionnel ?
-              </h2>
-              <p className="text-lg text-muted-foreground">
-                Beaucoup d'immigrants croient qu'un diplôme de maîtrise est la seule voie vers le succès. 
-                La réalité ? Le marché québécois recherche souvent des métiers spécialisés bien plus que des diplômes avancés.
-              </p>
-              <Link href="/book">
-                <Button variant="outline" size="lg" className="mt-4" data-testid="button-discover-services">
-                  Découvrir comment je peux vous aider
-                </Button>
-              </Link>
+        {/* Question Section - Modern glass style */}
+        <section className="py-24 relative overflow-hidden" data-testid="section-question">
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5" />
+          <div className="container mx-auto px-4 md:px-6 relative z-10">
+            <div className="max-w-3xl mx-auto">
+              <Card className="p-10 md:p-14 text-center bg-card/80 backdrop-blur-sm shadow-xl border-primary/10">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="text-question-title">
+                  Où en êtes-vous dans votre parcours professionnel ?
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                  Beaucoup d'immigrants croient qu'un diplôme de maîtrise est la seule voie vers le succès. 
+                  La réalité ? Le marché québécois recherche souvent des métiers spécialisés bien plus que des diplômes avancés.
+                </p>
+                <Link href="/book">
+                  <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg shadow-primary/20" data-testid="button-discover-services">
+                    Découvrir comment je peux vous aider
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </Link>
+              </Card>
             </div>
           </div>
         </section>
 
-        {/* Services Section - Grid like gorh.co */}
-        <section id="services" className="py-20" data-testid="section-services">
+        {/* Services Section - Modern cards */}
+        <section id="services" className="py-24 bg-muted/30" data-testid="section-services">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Un accompagnement sur mesure selon vos besoins
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+                <Target className="w-4 h-4" />
+                Services
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
+                Un accompagnement sur mesure
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 Des services adaptés à votre réalité et à vos objectifs de carrière
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* Analyse stratégique - Has dialog */}
-              <Card className="p-8 hover:shadow-lg transition-shadow border-border" data-testid="card-service-strategy">
-                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-strategy">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <TrendingUp className="w-7 h-7 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Analyse stratégique du marché</h3>
@@ -307,7 +325,7 @@ export default function Home() {
                 </p>
                 <button 
                   onClick={() => setOpenDialog("strategy")}
-                  className="text-primary font-medium hover:underline inline-flex items-center gap-1"
+                  className="text-primary font-medium inline-flex items-center gap-1"
                   data-testid="button-learn-more-strategy"
                 >
                   En savoir plus <ArrowRight className="w-4 h-4" />
@@ -315,8 +333,8 @@ export default function Home() {
               </Card>
 
               {/* Reconnaissance des acquis - Has dialog */}
-              <Card className="p-8 hover:shadow-lg transition-shadow border-border" data-testid="card-service-credentials">
-                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-credentials">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <GraduationCap className="w-7 h-7 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Reconnaissance des acquis</h3>
@@ -325,7 +343,7 @@ export default function Home() {
                 </p>
                 <button 
                   onClick={() => setOpenDialog("credentials")}
-                  className="text-primary font-medium hover:underline inline-flex items-center gap-1"
+                  className="text-primary font-medium inline-flex items-center gap-1"
                   data-testid="button-learn-more-credentials"
                 >
                   En savoir plus <ArrowRight className="w-4 h-4" />
@@ -333,8 +351,8 @@ export default function Home() {
               </Card>
 
               {/* Stratégie d'employabilité - Has dialog */}
-              <Card className="p-8 hover:shadow-lg transition-shadow border-border" data-testid="card-service-employability">
-                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-employability">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Briefcase className="w-7 h-7 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Stratégie d'employabilité</h3>
@@ -343,7 +361,7 @@ export default function Home() {
                 </p>
                 <button 
                   onClick={() => setOpenDialog("employability")}
-                  className="text-primary font-medium hover:underline inline-flex items-center gap-1"
+                  className="text-primary font-medium inline-flex items-center gap-1"
                   data-testid="button-learn-more-employability"
                 >
                   En savoir plus <ArrowRight className="w-4 h-4" />
@@ -351,36 +369,36 @@ export default function Home() {
               </Card>
 
               {/* Coaching de carrière - Links to booking (no dialog) */}
-              <Card className="p-8 hover:shadow-lg transition-shadow border-border" data-testid="card-service-coaching">
-                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-coaching">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Target className="w-7 h-7 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Coaching de carrière</h3>
                 <p className="text-muted-foreground leading-relaxed mb-4">
                   Un accompagnement personnalisé pour définir et atteindre vos objectifs professionnels au Québec.
                 </p>
-                <Link href="/book" className="text-primary font-medium hover:underline inline-flex items-center gap-1">
+                <Link href="/book" className="text-primary font-medium inline-flex items-center gap-1">
                   Réserver <ArrowRight className="w-4 h-4" />
                 </Link>
               </Card>
 
               {/* Orientation professionnelle - Links to booking (no dialog) */}
-              <Card className="p-8 hover:shadow-lg transition-shadow border-border" data-testid="card-service-orientation">
-                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-orientation">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Award className="w-7 h-7 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Orientation professionnelle</h3>
                 <p className="text-muted-foreground leading-relaxed mb-4">
                   Identifiez le meilleur chemin vers une carrière épanouissante basée sur vos expériences et compétences.
                 </p>
-                <Link href="/book" className="text-primary font-medium hover:underline inline-flex items-center gap-1">
+                <Link href="/book" className="text-primary font-medium inline-flex items-center gap-1">
                   Réserver <ArrowRight className="w-4 h-4" />
                 </Link>
               </Card>
 
               {/* Intégration au marché - Has dialog */}
-              <Card className="p-8 hover:shadow-lg transition-shadow border-border" data-testid="card-service-integration">
-                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-integration">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Users className="w-7 h-7 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Intégration au marché</h3>
@@ -389,7 +407,7 @@ export default function Home() {
                 </p>
                 <button 
                   onClick={() => setOpenDialog("integration")}
-                  className="text-primary font-medium hover:underline inline-flex items-center gap-1"
+                  className="text-primary font-medium inline-flex items-center gap-1"
                   data-testid="button-learn-more-integration"
                 >
                   En savoir plus <ArrowRight className="w-4 h-4" />

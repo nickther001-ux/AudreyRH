@@ -52,7 +52,7 @@ export function Navbar() {
             className="text-2xl font-bold text-foreground tracking-tight"
             data-testid="link-logo"
           >
-            <span className="text-primary">Audrey</span> Mondesir<span className="text-yellow-400">.</span>
+            <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Audrey</span> Mondesir<span className="text-accent">.</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -83,7 +83,7 @@ export function Navbar() {
             ))}
             
             <Link href="/book" data-testid="link-book-consultation">
-              <Button className="bg-primary text-white shadow-lg shadow-primary/20">
+              <Button className="bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg shadow-primary/25 border-0">
                 Prendre rendez-vous
               </Button>
             </Link>

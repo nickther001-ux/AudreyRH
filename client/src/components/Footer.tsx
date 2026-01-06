@@ -3,31 +3,31 @@ import { Linkedin, Mail, MapPin } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-foreground text-background pt-16 pb-8" data-testid="footer">
+    <footer className="bg-gradient-to-br from-foreground to-foreground/95 text-background pt-20 pb-10" data-testid="footer">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
-          <div className="md:col-span-2 space-y-4">
-            <h3 className="text-2xl font-bold">
-              <span className="text-primary">Audrey</span> Mondesir<span className="text-yellow-400">.</span>
+          <div className="md:col-span-2 space-y-5">
+            <h3 className="text-3xl font-bold tracking-tight">
+              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Audrey</span> Mondesir<span className="text-accent">.</span>
             </h3>
-            <p className="text-background/70 max-w-sm leading-relaxed">
+            <p className="text-background/60 max-w-sm leading-relaxed text-lg">
               Conseillère en relations industrielles agréée (CRIA). Experte en stratégie d'employabilité pour les nouveaux arrivants au Québec.
             </p>
             <div className="flex gap-3 pt-2 flex-wrap">
               <a 
                 href="#" 
-                className="w-10 h-10 bg-background/10 rounded-lg flex items-center justify-center hover:bg-primary transition-colors"
+                className="w-11 h-11 bg-background/10 rounded-xl flex items-center justify-center hover:bg-primary hover:scale-105 transition-all duration-300"
                 data-testid="link-linkedin"
               >
-                <Linkedin size={18} />
+                <Linkedin size={20} />
               </a>
               <a 
                 href="mailto:contact@audreymondesir.com" 
-                className="w-10 h-10 bg-background/10 rounded-lg flex items-center justify-center hover:bg-primary transition-colors"
+                className="w-11 h-11 bg-background/10 rounded-xl flex items-center justify-center hover:bg-primary hover:scale-105 transition-all duration-300"
                 data-testid="link-email-icon"
               >
-                <Mail size={18} />
+                <Mail size={20} />
               </a>
             </div>
           </div>
@@ -80,9 +80,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-background/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-background/50">
-          <p data-testid="text-copyright">&copy; {new Date().getFullYear()} Audrey Mondesir<span className="text-yellow-400">.</span> Tous droits réservés.</p>
-          <p>Consultation en relations industrielles</p>
+        <div className="pt-10 border-t border-background/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-background/40">
+          <p data-testid="text-copyright">&copy; {new Date().getFullYear()} Audrey Mondesir<span className="text-accent">.</span> Tous droits réservés.</p>
+          <p className="text-background/30">Consultation en relations industrielles</p>
         </div>
       </div>
     </footer>
