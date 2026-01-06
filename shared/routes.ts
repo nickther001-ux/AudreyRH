@@ -23,7 +23,7 @@ export const api = {
       responses: {
         201: z.object({
           appointment: z.custom<typeof appointments.$inferSelect>(),
-          clientSecret: z.string().optional(), // For Stripe
+          checkoutUrl: z.string().nullable().optional(),
         }),
         400: errorSchemas.validation,
       },

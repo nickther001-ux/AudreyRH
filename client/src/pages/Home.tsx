@@ -32,7 +32,7 @@ export default function Home() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+        <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden" data-testid="section-hero">
           {/* Background Elements */}
           <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl opacity-60" />
           <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-[400px] h-[400px] bg-primary/5 rounded-full blur-3xl opacity-60" />
@@ -50,22 +50,22 @@ export default function Home() {
                   CRIA Expert
                 </motion.div>
                 
-                <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1]">
+                <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1]" data-testid="text-hero-title">
                   Welcome to My <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80">Expertise</span>
                 </motion.h1>
                 
-                <motion.p variants={itemVariants} className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg">
+                <motion.p variants={itemVariants} className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg" data-testid="text-hero-description">
                   Navigating the Quebec job market requires more than a resume—it demands a strategy. I provide the essential guidance you need to succeed.
                 </motion.p>
                 
-                <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 pt-4">
+                <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 pt-4 flex-wrap">
                   <Link href="/book">
-                    <Button size="lg" className="bg-primary hover:bg-primary/90 text-white px-8 h-12 text-base shadow-xl shadow-primary/20 hover:shadow-2xl hover:-translate-y-1 transition-all">
+                    <Button size="lg" className="bg-primary text-white px-8 h-12 text-base shadow-xl shadow-primary/20 transition-all" data-testid="button-hero-book">
                       Book a Consultation
                     </Button>
                   </Link>
                   <Link href="#expertise">
-                    <Button variant="outline" size="lg" className="border-2 px-8 h-12 text-base hover:bg-accent/10 hover:text-primary hover:border-accent/50 transition-all">
+                    <Button variant="outline" size="lg" className="border-2 px-8 h-12 text-base transition-all" data-testid="button-hero-learn">
                       Learn More <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
                   </Link>
@@ -78,12 +78,12 @@ export default function Home() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative"
               >
-                <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
-                  {/* woman in professional business attire looking confident */}
+                <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-4 border-card">
                   <img 
                     src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80" 
                     alt="Audrey Mondesir" 
-                    className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
+                    className="w-full h-auto object-cover"
+                    data-testid="img-hero"
                   />
                 </div>
                 {/* Decorative squares */}
@@ -95,10 +95,10 @@ export default function Home() {
         </section>
 
         {/* Value Proposition / Intro */}
-        <section id="expertise" className="py-20 bg-white">
+        <section id="expertise" className="py-20 bg-card" data-testid="section-expertise">
           <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-3xl mx-auto text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">Why Choosing the Right Path Matters</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="text-expertise-title">Why Choosing the Right Path Matters</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
                 Many immigrants mistakenly believe that obtaining a Master's degree is the only way to succeed. 
                 But the reality is that the job market in Quebec often seeks skilled trades and technicians 
@@ -129,19 +129,19 @@ export default function Home() {
         </section>
 
         {/* Personal Statement */}
-        <section className="py-20 bg-secondary/5 border-y border-border">
+        <section className="py-20 bg-secondary/5 border-y border-border" data-testid="section-commitment">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="order-2 md:order-1">
-                {/* construction site or industrial background heavily blurred to represent industry expertise */}
                 <img 
                   src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80" 
                   alt="Industrial Expertise" 
                   className="rounded-2xl shadow-xl grayscale hover:grayscale-0 transition-all duration-500"
+                  data-testid="img-commitment"
                 />
               </div>
               <div className="order-1 md:order-2 space-y-6">
-                <h2 className="text-3xl md:text-4xl font-bold">My Commitment to You</h2>
+                <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-commitment-title">My Commitment to You</h2>
                 <p className="text-muted-foreground text-lg leading-relaxed">
                   As a CRIA (Expert in Industrial Relations), I understand the nuances of the job market. 
                   My background in construction and manufacturing gives me the insight to guide you effectively.
@@ -152,8 +152,8 @@ export default function Home() {
                   that lead to employment.
                 </p>
                 
-                <div className="pt-4 p-6 bg-white rounded-xl border-l-4 border-accent shadow-sm">
-                  <p className="italic text-primary font-medium">
+                <div className="pt-4 p-6 bg-card rounded-xl border-l-4 border-accent shadow-sm">
+                  <p className="italic text-foreground font-medium" data-testid="text-quote">
                     "I'll help you focus on getting your skills recognized so you can become a foreman and start earning sooner."
                   </p>
                 </div>
@@ -163,20 +163,20 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section id="services" className="py-24 bg-primary text-white text-center relative overflow-hidden">
+        <section id="services" className="py-24 bg-primary text-white text-center relative overflow-hidden" data-testid="section-cta">
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
           
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="max-w-2xl mx-auto space-y-8">
               <Users className="w-16 h-16 mx-auto text-accent mb-4" />
-              <h2 className="text-3xl md:text-5xl font-bold text-white">Ready to Strategize?</h2>
+              <h2 className="text-3xl md:text-5xl font-bold text-white" data-testid="text-cta-title">Ready to Strategize?</h2>
               <p className="text-xl text-primary-foreground/80">
                 Stop guessing and start planning. Book a one-on-one consultation to analyze your profile and create a roadmap for your career in Quebec.
               </p>
               
               <div className="pt-4">
                 <Link href="/book">
-                  <Button size="lg" className="bg-accent hover:bg-accent/90 text-primary font-bold px-10 h-14 text-lg shadow-xl hover:scale-105 transition-all">
+                  <Button size="lg" className="bg-accent text-primary font-bold px-10 h-14 text-lg shadow-xl transition-all" data-testid="button-cta-book">
                     Book Consultation - $50
                   </Button>
                 </Link>

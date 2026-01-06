@@ -1,14 +1,12 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { api, type CreateAppointmentInput } from "@shared/routes";
 import { useToast } from "@/hooks/use-toast";
 
 export function useCreateAppointment() {
-  const queryClient = useQueryClient();
   const { toast } = useToast();
 
   return useMutation({
     mutationFn: async (data: CreateAppointmentInput) => {
-      // Validate with Zod before sending if possible, but route parsing handles it too
       const validated = api.appointments.create.input.parse(data);
       
       const res = await fetch(api.appointments.create.path, {
@@ -19,22 +17,30 @@ export function useCreateAppointment() {
 
       if (!res.ok) {
         if (res.status === 400) {
-          const error = await res.json(); // Simple parsing for now
+          const error = await res.json();
           throw new Error(error.message || "Validation failed");
         }
         throw new Error("Failed to create appointment");
       }
 
-      // 201 Response matches schema: { appointment: ..., clientSecret: ... }
-      return api.appointments.create.responses[201].parse(await res.json());
+      const result = await res.json();
+      return result;
     },
-    onSuccess: () => {
-      // Invalidate relevant queries if we had a list view
-      // queryClient.invalidateQueries({ queryKey: [api.appointments.list.path] });
-      toast({
-        title: "Booking Initiated",
-        description: "Your appointment request has been received. Please complete payment if required.",
-      });
+    onSuccess: (data) => {
+      if (data.checkoutUrl) {
+        toast({
+          title: "Redirecting to Payment",
+          description: "Taking you to secure checkout...",
+        });
+        setTimeout(() => {
+          window.location.href = data.checkoutUrl;
+        }, 500);
+      } else {
+        toast({
+          title: "Appointment Booked",
+          description: "Your appointment has been scheduled. You will receive a confirmation email shortly.",
+        });
+      }
     },
     onError: (error) => {
       toast({

@@ -1,5 +1,5 @@
 import type { Express } from "express";
-import { createServer, type Server } from "http";
+import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { z } from "zod";
@@ -15,11 +15,45 @@ export async function registerRoutes(
       
       const appointment = await storage.createAppointment(input);
       
-      // TODO: Initialize Stripe Payment Intent here
-      // const paymentIntent = await stripe.paymentIntents.create({...})
-      const clientSecret = "mock_secret"; // Placeholder until stripe is integrated
+      let checkoutUrl: string | null = null;
+      
+      try {
+        const { getUncachableStripeClient } = await import("./stripeClient");
+        const stripe = await getUncachableStripeClient();
+        
+        const session = await stripe.checkout.sessions.create({
+          payment_method_types: ['card'],
+          line_items: [
+            {
+              price_data: {
+                currency: 'cad',
+                product_data: {
+                  name: 'Consultation with Audrey Mondesir, CRIA',
+                  description: `Career strategy consultation for ${input.name}`,
+                },
+                unit_amount: 5000,
+              },
+              quantity: 1,
+            },
+          ],
+          mode: 'payment',
+          success_url: `${req.protocol}://${req.get('host')}/book?success=true&appointmentId=${appointment.id}`,
+          cancel_url: `${req.protocol}://${req.get('host')}/book?canceled=true`,
+          metadata: {
+            appointmentId: appointment.id.toString(),
+          },
+          customer_email: input.email,
+        });
 
-      res.status(201).json({ appointment, clientSecret });
+        checkoutUrl = session.url;
+      } catch (stripeError: any) {
+        console.error('Stripe checkout creation failed:', stripeError.message);
+      }
+
+      res.status(201).json({ 
+        appointment, 
+        checkoutUrl 
+      });
     } catch (err) {
       if (err instanceof z.ZodError) {
         return res.status(400).json({
@@ -27,7 +61,8 @@ export async function registerRoutes(
           field: err.errors[0].path.join('.'),
         });
       }
-      throw err;
+      console.error('Error creating appointment:', err);
+      res.status(500).json({ message: 'Failed to create appointment' });
     }
   });
 
@@ -43,6 +78,17 @@ export async function registerRoutes(
     }
     
     res.json(appointment);
+  });
+
+  app.get('/api/stripe/publishable-key', async (req, res) => {
+    try {
+      const { getStripePublishableKey } = await import("./stripeClient");
+      const publishableKey = await getStripePublishableKey();
+      res.json({ publishableKey });
+    } catch (error: any) {
+      console.error('Error getting publishable key:', error.message);
+      res.status(500).json({ message: 'Stripe not configured' });
+    }
   });
 
   return httpServer;
