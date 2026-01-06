@@ -5,7 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import audreyPhoto from "@assets/Opera_Snapshot_2026-01-06_131656_www.facebook.com_1767723472873.png";
+import audreyPhoto from "@assets/FB_IMG_1767723555659_1767723948957.jpg";
 
 const rotatingWords = ["avec vous", "pour vous", "à vos côtés"];
 
@@ -213,12 +213,15 @@ export default function Home() {
               </div>
               
               <div className="relative">
-                <img 
-                  src={audreyPhoto} 
-                  alt="Audrey Mondesir - CRIA" 
-                  className="rounded-2xl shadow-2xl w-full object-cover"
-                  data-testid="img-about"
-                />
+                <div className="rounded-2xl shadow-2xl overflow-hidden">
+                  <img 
+                    src={audreyPhoto} 
+                    alt="Audrey Mondesir - CRIA" 
+                    className="w-full object-cover object-top"
+                    style={{ marginBottom: '-15%' }}
+                    data-testid="img-about"
+                  />
+                </div>
                 <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-accent/20 rounded-xl -z-10" />
                 <div className="absolute -top-6 -right-6 w-24 h-24 border-2 border-primary/20 rounded-xl -z-10" />
               </div>
