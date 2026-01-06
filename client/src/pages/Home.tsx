@@ -150,7 +150,7 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % rotatingWords.length);
-    }, 1500);
+    }, 800);
     return () => clearInterval(interval);
   }, []);
 
@@ -235,7 +235,7 @@ export default function Home() {
                 <span className="text-primary relative inline-block min-w-[280px] md:min-w-[400px]">
                   <span 
                     key={wordIndex}
-                    className="inline-block animate-in fade-in slide-in-from-bottom-4 duration-300"
+                    className="inline-block animate-in fade-in slide-in-from-bottom-2 duration-200"
                   >
                     {rotatingWords[wordIndex]}
                   </span>
