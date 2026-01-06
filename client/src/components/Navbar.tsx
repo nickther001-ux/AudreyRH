@@ -17,10 +17,21 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const scrollToSection = (sectionId: string) => {
+    if (location !== "/") {
+      window.location.href = "/#" + sectionId;
+      return;
+    }
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const navLinks = [
-    { href: "/", label: "Accueil" },
-    { href: "/#services", label: "Services" },
-    { href: "/#expertise", label: "À propos" },
+    { href: "/", label: "Accueil", isAnchor: false },
+    { href: "services", label: "Services", isAnchor: true },
+    { href: "expertise", label: "À propos", isAnchor: true },
   ];
 
   return (
@@ -47,17 +58,28 @@ export function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8 flex-wrap">
             {navLinks.map((link) => (
-              <Link 
-                key={link.href} 
-                href={link.href}
-                className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary",
-                  location === link.href ? "text-primary" : "text-muted-foreground"
-                )}
-                data-testid={`link-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
-              >
-                {link.label}
-              </Link>
+              link.isAnchor ? (
+                <button 
+                  key={link.href}
+                  onClick={() => scrollToSection(link.href)}
+                  className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground"
+                  data-testid={`link-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
+                >
+                  {link.label}
+                </button>
+              ) : (
+                <Link 
+                  key={link.href} 
+                  href={link.href}
+                  className={cn(
+                    "text-sm font-medium transition-colors hover:text-primary",
+                    location === link.href ? "text-primary" : "text-muted-foreground"
+                  )}
+                  data-testid={`link-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
+                >
+                  {link.label}
+                </Link>
+              )
             ))}
             
             <Link href="/book" data-testid="link-book-consultation">
@@ -84,20 +106,34 @@ export function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border shadow-lg p-4 flex flex-col gap-2 animate-in slide-in-from-top-2">
           {navLinks.map((link) => (
-            <Link 
-              key={link.href} 
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className={cn(
-                "block py-3 px-4 text-base font-medium rounded-lg transition-colors",
-                location === link.href 
-                  ? "text-primary bg-primary/5" 
-                  : "text-foreground hover:bg-muted"
-              )}
-              data-testid={`link-mobile-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
-            >
-              {link.label}
-            </Link>
+            link.isAnchor ? (
+              <button 
+                key={link.href}
+                onClick={() => {
+                  scrollToSection(link.href);
+                  setMobileMenuOpen(false);
+                }}
+                className="block py-3 px-4 text-base font-medium rounded-lg transition-colors text-foreground hover:bg-muted text-left"
+                data-testid={`link-mobile-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
+              >
+                {link.label}
+              </button>
+            ) : (
+              <Link 
+                key={link.href} 
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  "block py-3 px-4 text-base font-medium rounded-lg transition-colors",
+                  location === link.href 
+                    ? "text-primary bg-primary/5" 
+                    : "text-foreground hover:bg-muted"
+                )}
+                data-testid={`link-mobile-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
+              >
+                {link.label}
+              </Link>
+            )
           ))}
           <div className="pt-2 border-t border-border mt-2">
             <Link 
