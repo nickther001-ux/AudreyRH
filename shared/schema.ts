@@ -9,6 +9,7 @@ export const appointments = pgTable("appointments", {
   phone: text("phone"),
   reason: text("reason").notNull(),
   date: timestamp("date").notNull(),
+  platform: text("platform", { enum: ["zoom", "google_meet"] }).default("zoom").notNull(),
   status: text("status", { enum: ["pending", "confirmed", "completed", "cancelled"] }).default("pending").notNull(),
   paymentStatus: text("payment_status", { enum: ["unpaid", "paid"] }).default("unpaid").notNull(),
   stripePaymentIntentId: text("stripe_payment_intent_id"),
@@ -24,6 +25,7 @@ export const insertAppointmentSchema = createInsertSchema(appointments).omit({
 }).extend({
   date: z.coerce.date().min(new Date(), "Date must be in the future"),
   email: z.string().email("Invalid email address"),
+  platform: z.enum(["zoom", "google_meet"]).default("zoom"),
 });
 
 export type Appointment = typeof appointments.$inferSelect;

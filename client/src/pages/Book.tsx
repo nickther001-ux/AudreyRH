@@ -16,6 +16,9 @@ import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { CalendarIcon, CreditCard, Loader2, CheckCircle2, XCircle, Clock, Video, FileText } from "lucide-react";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
+import { SiZoom, SiGooglemeet } from "react-icons/si";
 import { useLocation } from "wouter";
 
 export default function Book() {
@@ -43,6 +46,7 @@ export default function Book() {
       email: "",
       phone: "",
       reason: "",
+      platform: "zoom",
     },
   });
 
@@ -286,6 +290,55 @@ export default function Book() {
                               data-testid="input-reason"
                               {...field} 
                             />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="platform"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Plateforme de vidéoconférence</FormLabel>
+                          <FormControl>
+                            <RadioGroup
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                              className="grid grid-cols-2 gap-4"
+                            >
+                              <div>
+                                <RadioGroupItem
+                                  value="zoom"
+                                  id="zoom"
+                                  className="peer sr-only"
+                                />
+                                <Label
+                                  htmlFor="zoom"
+                                  className="flex flex-col items-center justify-center rounded-lg border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
+                                  data-testid="radio-zoom"
+                                >
+                                  <SiZoom className="mb-2 h-6 w-6 text-[#2D8CFF]" />
+                                  <span className="font-medium">Zoom</span>
+                                </Label>
+                              </div>
+                              <div>
+                                <RadioGroupItem
+                                  value="google_meet"
+                                  id="google_meet"
+                                  className="peer sr-only"
+                                />
+                                <Label
+                                  htmlFor="google_meet"
+                                  className="flex flex-col items-center justify-center rounded-lg border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
+                                  data-testid="radio-google-meet"
+                                >
+                                  <SiGooglemeet className="mb-2 h-6 w-6 text-[#00897B]" />
+                                  <span className="font-medium">Google Meet</span>
+                                </Label>
+                              </div>
+                            </RadioGroup>
                           </FormControl>
                           <FormMessage />
                         </FormItem>
