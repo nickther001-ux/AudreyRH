@@ -243,7 +243,7 @@ export default function Home() {
               </h1>
               
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed" data-testid="text-hero-description">
-                Réalisons ensemble votre potentiel de carrière au Québec. Audrey Mondesir, votre partenaire de confiance pour naviguer le marché de l'emploi.
+                Réalisons ensemble votre potentiel de carrière au Québec. Audrey Mondesir<span className="text-yellow-400">.</span> votre partenaire de confiance pour naviguer le marché de l'emploi.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4 flex-wrap">
@@ -460,7 +460,7 @@ export default function Home() {
               <blockquote className="text-2xl md:text-3xl font-medium text-foreground leading-relaxed mb-6" data-testid="text-quote">
                 Je vous aiderai à vous concentrer sur la reconnaissance de vos compétences pour que vous puissiez devenir contremaître et commencer à gagner plus tôt.
               </blockquote>
-              <p className="text-muted-foreground">— Audrey Mondesir, CRIA</p>
+              <p className="text-muted-foreground">— Audrey Mondesir<span className="text-yellow-400">.</span> CRIA</p>
             </div>
           </div>
         </section>
