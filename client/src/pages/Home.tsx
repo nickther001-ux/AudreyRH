@@ -1,187 +1,262 @@
 import { Link } from "wouter";
-import { motion } from "framer-motion";
-import { ArrowRight, Briefcase, GraduationCap, TrendingUp, Users } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ArrowRight, Briefcase, GraduationCap, TrendingUp, Users, CheckCircle, Target, Award } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { ServiceCard } from "@/components/ServiceCard";
+import { Card } from "@/components/ui/card";
+
+const rotatingWords = ["avec vous", "pour vous", "à vos côtés"];
 
 export default function Home() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
+  const [wordIndex, setWordIndex] = useState(0);
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
-  };
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIndex((prev) => (prev + 1) % rotatingWords.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="min-h-screen bg-background flex flex-col font-body">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
 
       <main className="flex-grow">
-        {/* Hero Section */}
-        <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden" data-testid="section-hero">
-          {/* Background Elements */}
-          <div className="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl opacity-60" />
-          <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-[400px] h-[400px] bg-primary/5 rounded-full blur-3xl opacity-60" />
-
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={containerVariants}
-                className="space-y-6"
-              >
-                <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/5 text-primary text-sm font-semibold tracking-wide uppercase">
-                  <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-                  CRIA Expert
-                </motion.div>
-                
-                <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1]" data-testid="text-hero-title">
-                  Welcome to My <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/80">Expertise</span>
-                </motion.h1>
-                
-                <motion.p variants={itemVariants} className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-lg" data-testid="text-hero-description">
-                  Navigating the Quebec job market requires more than a resume—it demands a strategy. I provide the essential guidance you need to succeed.
-                </motion.p>
-                
-                <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 pt-4 flex-wrap">
-                  <Link href="/book">
-                    <Button size="lg" className="bg-primary text-white px-8 h-12 text-base shadow-xl shadow-primary/20 transition-all" data-testid="button-hero-book">
-                      Book a Consultation
-                    </Button>
-                  </Link>
-                  <Link href="#expertise">
-                    <Button variant="outline" size="lg" className="border-2 px-8 h-12 text-base transition-all" data-testid="button-hero-learn">
-                      Learn More <ArrowRight className="ml-2 w-4 h-4" />
-                    </Button>
-                  </Link>
-                </motion.div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative"
-              >
-                <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl border-4 border-card">
-                  <img 
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80" 
-                    alt="Audrey Mondesir" 
-                    className="w-full h-auto object-cover"
-                    data-testid="img-hero"
-                  />
-                </div>
-                {/* Decorative squares */}
-                <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-accent/20 rounded-xl -z-0" />
-                <div className="absolute -top-6 -left-6 w-32 h-32 border-2 border-primary/10 rounded-xl -z-0" />
-              </motion.div>
+        {/* Hero Section - gorh.co style */}
+        <section className="relative pt-32 pb-24 md:pt-44 md:pb-32 bg-gradient-to-br from-primary/5 via-background to-accent/5" data-testid="section-hero">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="max-w-4xl mx-auto text-center space-y-8">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight" data-testid="text-hero-title">
+                Une experte CRIA
+                <br />
+                <span className="text-primary relative inline-block min-w-[280px] md:min-w-[400px]">
+                  <span 
+                    key={wordIndex}
+                    className="inline-block animate-in fade-in slide-in-from-bottom-4 duration-500"
+                  >
+                    {rotatingWords[wordIndex]}
+                  </span>
+                </span>
+              </h1>
+              
+              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed" data-testid="text-hero-description">
+                Réalisons ensemble votre potentiel de carrière au Québec. Audrey Mondesir, votre partenaire de confiance pour naviguer le marché de l'emploi.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4 flex-wrap">
+                <Link href="/book">
+                  <Button size="lg" className="bg-primary text-white px-8 h-14 text-base shadow-xl shadow-primary/20" data-testid="button-hero-book">
+                    Prendre rendez-vous
+                    <ArrowRight className="ml-2 w-5 h-5" />
+                  </Button>
+                </Link>
+                <Link href="#services">
+                  <Button variant="outline" size="lg" className="px-8 h-14 text-base border-2" data-testid="button-hero-services">
+                    Découvrir mes services
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Value Proposition / Intro */}
-        <section id="expertise" className="py-20 bg-card" data-testid="section-expertise">
+        {/* Question Section - like gorh.co */}
+        <section className="py-20 bg-card border-y border-border" data-testid="section-question">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-3xl mx-auto text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="text-expertise-title">Why Choosing the Right Path Matters</h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Many immigrants mistakenly believe that obtaining a Master's degree is the only way to succeed. 
-                But the reality is that the job market in Quebec often seeks skilled trades and technicians 
-                much more urgently than it needs advanced degrees in Sociology or similar fields.
+            <div className="max-w-3xl mx-auto text-center space-y-6">
+              <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-question-title">
+                Où en êtes-vous dans votre parcours professionnel ?
+              </h2>
+              <p className="text-lg text-muted-foreground">
+                Beaucoup d'immigrants croient qu'un diplôme de maîtrise est la seule voie vers le succès. 
+                La réalité ? Le marché québécois recherche souvent des métiers spécialisés bien plus que des diplômes avancés.
+              </p>
+              <Link href="#expertise">
+                <Button variant="outline" size="lg" className="mt-4" data-testid="button-discover-services">
+                  Découvrir comment je peux vous aider
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Services Section - Grid like gorh.co */}
+        <section id="services" className="py-20" data-testid="section-services">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Un accompagnement sur mesure selon vos besoins
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Des services adaptés à votre réalité et à vos objectifs de carrière
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              <ServiceCard 
-                title="Strategic Insight" 
-                description="This is market analysis at its finest. I help you understand which professions are truly hiring." 
-                icon={TrendingUp}
-              />
-              <ServiceCard 
-                title="Credential Recognition" 
-                description="I assist you in getting your credentials recognized and avoiding the pitfalls of unnecessary studies." 
-                icon={GraduationCap}
-                delay={100}
-              />
-              <ServiceCard 
-                title="Employability Strategy" 
-                description="Forget the generic advice. We focus on practical skills that lead to employment and financial stability." 
-                icon={Briefcase}
-                delay={200}
-              />
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <Card className="p-8 hover:shadow-lg transition-shadow border-border" data-testid="card-service-strategy">
+                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                  <TrendingUp className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Analyse stratégique du marché</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Comprenez quelles professions recrutent vraiment au Québec. Une analyse fine du marché pour orienter vos décisions.
+                </p>
+                <Link href="/book" className="text-primary font-medium hover:underline inline-flex items-center gap-1">
+                  En savoir plus <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Card>
+
+              <Card className="p-8 hover:shadow-lg transition-shadow border-border" data-testid="card-service-credentials">
+                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                  <GraduationCap className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Reconnaissance des acquis</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Je vous aide à faire reconnaître vos compétences et à éviter les pièges des études inutiles.
+                </p>
+                <Link href="/book" className="text-primary font-medium hover:underline inline-flex items-center gap-1">
+                  En savoir plus <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Card>
+
+              <Card className="p-8 hover:shadow-lg transition-shadow border-border" data-testid="card-service-employability">
+                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                  <Briefcase className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Stratégie d'employabilité</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Oubliez les conseils génériques. Concentrons-nous sur les compétences pratiques qui mènent à l'emploi.
+                </p>
+                <Link href="/book" className="text-primary font-medium hover:underline inline-flex items-center gap-1">
+                  En savoir plus <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Card>
+
+              <Card className="p-8 hover:shadow-lg transition-shadow border-border" data-testid="card-service-coaching">
+                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                  <Target className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Coaching de carrière</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Un accompagnement personnalisé pour définir et atteindre vos objectifs professionnels au Québec.
+                </p>
+                <Link href="/book" className="text-primary font-medium hover:underline inline-flex items-center gap-1">
+                  En savoir plus <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Card>
+
+              <Card className="p-8 hover:shadow-lg transition-shadow border-border" data-testid="card-service-orientation">
+                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                  <Award className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Orientation professionnelle</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Identifiez le meilleur chemin vers une carrière épanouissante basée sur vos expériences et compétences.
+                </p>
+                <Link href="/book" className="text-primary font-medium hover:underline inline-flex items-center gap-1">
+                  En savoir plus <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Card>
+
+              <Card className="p-8 hover:shadow-lg transition-shadow border-border" data-testid="card-service-integration">
+                <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6">
+                  <Users className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Intégration au marché</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Comprenez les codes du marché québécois et positionnez-vous efficacement auprès des employeurs.
+                </p>
+                <Link href="/book" className="text-primary font-medium hover:underline inline-flex items-center gap-1">
+                  En savoir plus <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Card>
             </div>
           </div>
         </section>
 
-        {/* Personal Statement */}
-        <section className="py-20 bg-secondary/5 border-y border-border" data-testid="section-commitment">
+        {/* About Section - Professional like gorh.co */}
+        <section id="expertise" className="py-20 bg-card border-y border-border" data-testid="section-about">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div className="order-2 md:order-1">
-                <img 
-                  src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80" 
-                  alt="Industrial Expertise" 
-                  className="rounded-2xl shadow-xl grayscale hover:grayscale-0 transition-all duration-500"
-                  data-testid="img-commitment"
-                />
-              </div>
-              <div className="order-1 md:order-2 space-y-6">
-                <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-commitment-title">My Commitment to You</h2>
+            <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+              <div className="space-y-6">
+                <div className="inline-block px-4 py-1 bg-primary/10 rounded-full text-primary text-sm font-medium">
+                  À propos
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-about-title">
+                  Mon engagement envers vous
+                </h2>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  As a CRIA (Expert in Industrial Relations), I understand the nuances of the job market. 
-                  My background in construction and manufacturing gives me the insight to guide you effectively.
+                  En tant que CRIA (Conseillère en relations industrielles agréée), je comprends les nuances du marché de l'emploi. 
+                  Mon expérience dans les secteurs de la construction et de la fabrication me donne un aperçu unique pour vous guider efficacement.
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  With 16 years of experience, I know what employers are looking for. I'm here to break the 
-                  belief that "prestige" is the only path. I provide the truth—focusing on practical skills 
-                  that lead to employment.
+                  Avec 16 ans d'expérience, je sais ce que les employeurs recherchent. Je suis ici pour briser le mythe que le « prestige » 
+                  est le seul chemin vers le succès.
                 </p>
                 
-                <div className="pt-4 p-6 bg-card rounded-xl border-l-4 border-accent shadow-sm">
-                  <p className="italic text-foreground font-medium" data-testid="text-quote">
-                    "I'll help you focus on getting your skills recognized so you can become a foreman and start earning sooner."
-                  </p>
+                <div className="space-y-4 pt-4">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground">16 années d'expertise en relations industrielles</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground">Connaissance approfondie du marché québécois</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground">Accompagnement personnalisé et stratégique</span>
+                  </div>
                 </div>
               </div>
+              
+              <div className="relative">
+                <img 
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80" 
+                  alt="Audrey Mondesir - CRIA" 
+                  className="rounded-2xl shadow-2xl w-full"
+                  data-testid="img-about"
+                />
+                <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-accent/20 rounded-xl -z-10" />
+                <div className="absolute -top-6 -right-6 w-24 h-24 border-2 border-primary/20 rounded-xl -z-10" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Testimonial/Quote Section */}
+        <section className="py-20" data-testid="section-quote">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="text-6xl text-primary/20 font-serif mb-4">"</div>
+              <blockquote className="text-2xl md:text-3xl font-medium text-foreground leading-relaxed mb-6" data-testid="text-quote">
+                Je vous aiderai à vous concentrer sur la reconnaissance de vos compétences pour que vous puissiez devenir contremaître et commencer à gagner plus tôt.
+              </blockquote>
+              <p className="text-muted-foreground">— Audrey Mondesir, CRIA</p>
             </div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section id="services" className="py-24 bg-primary text-white text-center relative overflow-hidden" data-testid="section-cta">
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-          
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <div className="max-w-2xl mx-auto space-y-8">
-              <Users className="w-16 h-16 mx-auto text-accent mb-4" />
-              <h2 className="text-3xl md:text-5xl font-bold text-white" data-testid="text-cta-title">Ready to Strategize?</h2>
+        <section className="py-24 bg-primary" data-testid="section-cta">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="max-w-3xl mx-auto text-center space-y-8">
+              <h2 className="text-3xl md:text-5xl font-bold text-white" data-testid="text-cta-title">
+                Prêt à définir votre stratégie ?
+              </h2>
               <p className="text-xl text-primary-foreground/80">
-                Stop guessing and start planning. Book a one-on-one consultation to analyze your profile and create a roadmap for your career in Quebec.
+                Arrêtez de deviner et commencez à planifier. Réservez une consultation individuelle pour analyser votre profil et créer votre feuille de route.
               </p>
               
               <div className="pt-4">
                 <Link href="/book">
-                  <Button size="lg" className="bg-accent text-primary font-bold px-10 h-14 text-lg shadow-xl transition-all" data-testid="button-cta-book">
-                    Book Consultation - $50
+                  <Button size="lg" className="bg-accent text-primary font-bold px-10 h-14 text-lg shadow-xl" data-testid="button-cta-book">
+                    Réserver une consultation - 50$
                   </Button>
                 </Link>
                 <p className="mt-4 text-sm text-primary-foreground/60">
-                  Secure payment integration via Stripe
+                  Paiement sécurisé via Stripe
                 </p>
               </div>
             </div>

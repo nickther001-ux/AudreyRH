@@ -1,81 +1,88 @@
 import { Link } from "wouter";
-import { Linkedin, Mail, ArrowUpRight } from "lucide-react";
+import { Linkedin, Mail, MapPin } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-primary text-primary-foreground pt-20 pb-10" data-testid="footer">
+    <footer className="bg-foreground text-background pt-16 pb-8" data-testid="footer">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-16">
-          <div className="md:col-span-5 space-y-6">
-            <h3 className="text-3xl font-bold text-white">Audrey Mondesir<span className="text-accent">.</span></h3>
-            <p className="text-primary-foreground/80 max-w-sm leading-relaxed">
-              Expert guidance on industrial relations and employability strategy for newcomers in Quebec.
-              Navigating your career path with clarity and purpose.
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          {/* Brand */}
+          <div className="md:col-span-2 space-y-4">
+            <h3 className="text-2xl font-bold">
+              <span className="text-primary">Audrey</span> Mondesir
+            </h3>
+            <p className="text-background/70 max-w-sm leading-relaxed">
+              Conseillère en relations industrielles agréée (CRIA). Experte en stratégie d'employabilité pour les nouveaux arrivants au Québec.
             </p>
-            <div className="flex gap-4 pt-2 flex-wrap">
+            <div className="flex gap-3 pt-2 flex-wrap">
               <a 
                 href="#" 
-                className="p-2 bg-white/10 rounded-full hover:bg-accent hover:text-primary transition-colors"
+                className="w-10 h-10 bg-background/10 rounded-lg flex items-center justify-center hover:bg-primary transition-colors"
                 data-testid="link-linkedin"
               >
-                <Linkedin size={20} />
+                <Linkedin size={18} />
               </a>
               <a 
                 href="mailto:contact@audreymondesir.com" 
-                className="p-2 bg-white/10 rounded-full hover:bg-accent hover:text-primary transition-colors"
+                className="w-10 h-10 bg-background/10 rounded-lg flex items-center justify-center hover:bg-primary transition-colors"
                 data-testid="link-email-icon"
               >
-                <Mail size={20} />
+                <Mail size={18} />
               </a>
             </div>
           </div>
 
-          <div className="md:col-span-3 md:col-start-7">
-            <h4 className="text-lg font-semibold mb-6 text-white">Navigation</h4>
-            <ul className="space-y-4">
+          {/* Navigation */}
+          <div>
+            <h4 className="font-semibold mb-4 text-background">Navigation</h4>
+            <ul className="space-y-3">
               <li>
-                <Link href="/" className="hover:text-accent transition-colors" data-testid="link-footer-home">
-                  Home
+                <Link href="/" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-home">
+                  Accueil
                 </Link>
               </li>
               <li>
-                <Link href="/#expertise" className="hover:text-accent transition-colors" data-testid="link-footer-expertise">
-                  My Expertise
-                </Link>
-              </li>
-              <li>
-                <Link href="/#services" className="hover:text-accent transition-colors" data-testid="link-footer-services">
+                <Link href="/#services" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-services">
                   Services
                 </Link>
               </li>
               <li>
-                <Link href="/book" className="hover:text-accent transition-colors" data-testid="link-footer-book">
-                  Book Consultation
+                <Link href="/#expertise" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-about">
+                  À propos
+                </Link>
+              </li>
+              <li>
+                <Link href="/book" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-book">
+                  Prendre rendez-vous
                 </Link>
               </li>
             </ul>
           </div>
 
-          <div className="md:col-span-3">
-            <h4 className="text-lg font-semibold mb-6 text-white">Contact</h4>
-            <ul className="space-y-4 text-primary-foreground/80">
-              <li>Montreal, Quebec</li>
+          {/* Contact */}
+          <div>
+            <h4 className="font-semibold mb-4 text-background">Contact</h4>
+            <ul className="space-y-3 text-background/70">
+              <li className="flex items-center gap-2">
+                <MapPin size={16} className="flex-shrink-0" />
+                Montréal, Québec
+              </li>
               <li>
                 <a 
                   href="mailto:contact@audreymondesir.com" 
-                  className="hover:text-accent transition-colors flex items-center gap-2 flex-wrap"
+                  className="hover:text-primary transition-colors"
                   data-testid="link-footer-email"
                 >
-                  contact@audreymondesir.com <ArrowUpRight size={14} />
+                  contact@audreymondesir.com
                 </a>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-primary-foreground/60">
-          <p data-testid="text-copyright">&copy; {new Date().getFullYear()} Audrey Mondesir. All rights reserved.</p>
-          <p>Designed with professional intent.</p>
+        <div className="pt-8 border-t border-background/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-background/50">
+          <p data-testid="text-copyright">&copy; {new Date().getFullYear()} Audrey Mondesir. Tous droits réservés.</p>
+          <p>Consultation en relations industrielles</p>
         </div>
       </div>
     </footer>
