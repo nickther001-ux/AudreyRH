@@ -1,38 +1,45 @@
-import { type User, type InsertUser } from "@shared/schema";
-import { randomUUID } from "crypto";
-
-// modify the interface with any CRUD methods
-// you might need
+import { db } from "./db";
+import {
+  appointments,
+  type InsertAppointment,
+  type Appointment
+} from "@shared/schema";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  createUser(user: InsertUser): Promise<User>;
+  createAppointment(appointment: InsertAppointment): Promise<Appointment>;
+  getAppointment(id: number): Promise<Appointment | undefined>;
+  updateAppointmentPayment(id: number, paymentIntentId: string): Promise<Appointment>;
 }
 
-export class MemStorage implements IStorage {
-  private users: Map<string, User>;
-
-  constructor() {
-    this.users = new Map();
+export class DatabaseStorage implements IStorage {
+  async createAppointment(insertAppointment: InsertAppointment): Promise<Appointment> {
+    const [appointment] = await db
+      .insert(appointments)
+      .values(insertAppointment)
+      .returning();
+    return appointment;
   }
 
-  async getUser(id: string): Promise<User | undefined> {
-    return this.users.get(id);
+  async getAppointment(id: number): Promise<Appointment | undefined> {
+    const [appointment] = await db
+      .select()
+      .from(appointments)
+      .where(eq(appointments.id, id));
+    return appointment;
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
-  }
-
-  async createUser(insertUser: InsertUser): Promise<User> {
-    const id = randomUUID();
-    const user: User = { ...insertUser, id };
-    this.users.set(id, user);
-    return user;
+  async updateAppointmentPayment(id: number, paymentIntentId: string): Promise<Appointment> {
+    const [appointment] = await db
+      .update(appointments)
+      .set({ 
+        paymentStatus: "paid",
+        stripePaymentIntentId: paymentIntentId 
+      })
+      .where(eq(appointments.id, id))
+      .returning();
+    return appointment;
   }
 }
 
-export const storage = new MemStorage();
+export const storage = new DatabaseStorage();
