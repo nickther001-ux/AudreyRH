@@ -10,22 +10,12 @@ A professional consultation website for Audrey Mondesir, CRIA (Certified Industr
 - `drizzle.config.ts` - Database configuration
 
 ## Key Features
-- Professional landing page with strategic career orientation focus
-- Hero section: "Ne recommencez pas à zéro. Intégrez le marché intelligemment"
-- "Orientation Stratégique" section with 3 key points (Audit, Ciblage, Optimisation)
-- "Outils Opérationnels" section (CV, LinkedIn, Entrevues)
-- Testimonials section with client success stories
+- Professional landing page matching gorh.co design
+- Service cards with detailed information dialogs
 - Booking system with platform selection (Zoom/Google Meet)
 - Stripe payment integration
 - Admin page for managing availability (/admin)
 - French language throughout
-
-## Navigation
-- Accueil (Home)
-- Méthode & Services (scroll to services section)
-- À Propos (scroll to expertise section)
-- Témoignages (scroll to testimonials)
-- CTA: "Réserver ma consultation" (links to booking)
 
 ## Database Schema
 - `appointments` - Stores booking information with payment status
@@ -42,10 +32,6 @@ A professional consultation website for Audrey Mondesir, CRIA (Certified Industr
 - Platform options: Zoom or Google Meet
 
 ## Recent Changes
-- 2026-01-08: Restructured homepage with strategic orientation focus
-- 2026-01-08: Updated navigation with new menu items and CTA "Réserver ma consultation"
-- 2026-01-08: Added testimonials section with 3 sample success stories
-- 2026-01-08: Service cards now link directly to booking page
 - 2026-01-06: Added platform selection (Zoom/Google Meet) to booking form
 - 2026-01-06: Created availability management system (admin page at /admin)
 - 2026-01-06: Updated booking form to show only available time slots
