@@ -292,34 +292,76 @@ export default function Home() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card text-center" data-testid="card-audit">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-audit">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Target className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Audit de Compétences</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Nous analysons votre expérience pour identifier ce qui a de la valeur maintenant au Canada.
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Analyse approfondie de votre parcours pour identifier les compétences transférables au marché canadien.
                 </p>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                    <span>Cartographie de vos compétences techniques et comportementales</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                    <span>Identification des équivalences avec les standards canadiens</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                    <span>Valorisation de votre expérience internationale</span>
+                  </li>
+                </ul>
               </Card>
 
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card text-center" data-testid="card-ciblage">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-ciblage">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Briefcase className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Ciblage des Métiers en Pénurie</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Je vous redirige vers des secteurs qui embauchent activement et qui correspondent à votre profil.
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Orientation stratégique vers les secteurs qui recrutent activement et valorisent votre profil.
                 </p>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                    <span>Analyse des secteurs en demande au Québec et au Canada</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                    <span>Matching avec les postes correspondant à votre expertise</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                    <span>Accès aux opportunités du marché caché</span>
+                  </li>
+                </ul>
               </Card>
 
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card text-center" data-testid="card-optimisation">
-                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-optimisation">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <GraduationCap className="w-8 h-8 text-primary" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Optimisation du Parcours</h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  Identification des micro-formations ou certifications rapides pour combler les écarts sans repartir pour 3 ans d'université.
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Plan d'action personnalisé pour combler les écarts sans repartir de zéro.
                 </p>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                    <span>Micro-formations et certifications rapides ciblées</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                    <span>Reconnaissance des acquis et équivalences de diplômes</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                    <span>Stratégie d'insertion rapide sur le marché</span>
+                  </li>
+                </ul>
               </Card>
             </div>
           </div>
