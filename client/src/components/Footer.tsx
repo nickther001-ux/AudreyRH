@@ -42,12 +42,12 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-services">
+                <Link href="/#services" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-services">
                   Services
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-about">
+                <Link href="/#expertise" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-about">
                   À propos
                 </Link>
               </li>

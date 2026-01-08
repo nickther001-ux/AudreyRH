@@ -32,10 +32,6 @@ A professional consultation website for Audrey Mondesir, CRIA (Certified Industr
 - Platform options: Zoom or Google Meet
 
 ## Recent Changes
-- 2026-01-08: Restructured site to multi-page layout (inspired by gorh.co)
-- 2026-01-08: Created dedicated /services and /about pages
-- 2026-01-08: Added dropdown menu in Navbar with all service categories
-- 2026-01-08: Simplified Home page as landing page with links to other pages
 - 2026-01-06: Added platform selection (Zoom/Google Meet) to booking form
 - 2026-01-06: Created availability management system (admin page at /admin)
 - 2026-01-06: Updated booking form to show only available time slots
