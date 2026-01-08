@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import audreyPhoto from "@assets/FB_IMG_1767723555659_1767723948957.jpg";
+import audreyPhoto from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
 
 const rotatingWords = ["avec vous", "pour vous", "à vos côtés"];
 
