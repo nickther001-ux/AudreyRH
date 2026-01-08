@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { useState, useEffect } from "react";
-import { ArrowRight, Briefcase, GraduationCap, TrendingUp, Users, CheckCircle, Target, Award, X } from "lucide-react";
+import { ArrowRight, Briefcase, GraduationCap, TrendingUp, Users, CheckCircle, Target, Award, X, Quote, Star } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -470,8 +470,90 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Testimonial/Quote Section */}
-        <section className="py-20" data-testid="section-quote">
+        {/* Testimonials Section */}
+        <section className="py-20" data-testid="section-testimonials">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="text-center mb-12">
+              <div className="inline-block px-4 py-1 bg-primary/10 rounded-full text-primary text-sm font-medium mb-4">
+                Témoignages
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-testimonials-title">
+                Ce que disent mes clients
+              </h2>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {/* Testimonial 1 */}
+              <Card className="p-8 bg-card border-border relative" data-testid="card-testimonial-1">
+                <Quote className="w-10 h-10 text-primary/20 absolute top-6 right-6" />
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-accent text-accent" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  "Audrey m'a aidé à comprendre que ma maîtrise en gestion n'était pas nécessaire pour le poste que je visais. Grâce à ses conseils, j'ai économisé 2 ans d'études et j'ai trouvé un emploi dans mon domaine en 3 mois."
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold">M.D.</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Marie D.</p>
+                    <p className="text-sm text-muted-foreground">Gestionnaire de projets</p>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Testimonial 2 */}
+              <Card className="p-8 bg-card border-border relative" data-testid="card-testimonial-2">
+                <Quote className="w-10 h-10 text-primary/20 absolute top-6 right-6" />
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-accent text-accent" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  "Je ne savais pas par où commencer avec mes diplômes étrangers. Audrey m'a guidé vers la reconnaissance de mes acquis et m'a orienté vers les bons organismes. Un investissement qui a changé ma carrière."
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold">J.P.</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Jean-Pierre K.</p>
+                    <p className="text-sm text-muted-foreground">Ingénieur civil</p>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Testimonial 3 */}
+              <Card className="p-8 bg-card border-border relative" data-testid="card-testimonial-3">
+                <Quote className="w-10 h-10 text-primary/20 absolute top-6 right-6" />
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-accent text-accent" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground leading-relaxed mb-6">
+                  "Après 6 mois de recherche infructueuse, une seule consultation avec Audrey m'a permis de revoir ma stratégie. En 2 mois, j'avais 3 offres d'emploi. Son expertise du marché québécois est inestimable."
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold">S.A.</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">Sophie A.</p>
+                    <p className="text-sm text-muted-foreground">Comptable CPA</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Quote Section */}
+        <section className="py-20 bg-card border-y border-border" data-testid="section-quote">
           <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-3xl mx-auto text-center">
               <div className="text-6xl text-primary/20 font-serif mb-4">"</div>
