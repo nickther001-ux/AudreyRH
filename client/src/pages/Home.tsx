@@ -8,7 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import audreyPhoto from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
 
-const rotatingWords = ["avec vous", "pour vous", "à vos côtés"];
+const rotatingWords = ["intelligemment", "stratégiquement", "efficacement"];
 
 type ServiceKey = "strategy" | "credentials" | "employability" | "integration" | null;
 
@@ -240,9 +240,10 @@ export default function Home() {
               </div>
               
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight" data-testid="text-hero-title">
-                Une experte CRIA
+                Ne recommencez pas à zéro.
                 <br />
-                <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent relative inline-block min-w-[280px] md:min-w-[400px]">
+                <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                  Intégrez le marché{" "}
                   <span 
                     key={wordIndex}
                     className="inline-block animate-in fade-in slide-in-from-bottom-2 duration-200"
@@ -253,13 +254,13 @@ export default function Home() {
               </h1>
               
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed" data-testid="text-hero-description">
-                Réalisons ensemble votre potentiel de carrière au Québec. Audrey Mondesir, votre partenaire de confiance pour naviguer le marché de l'emploi.
+                Plus qu'un simple CV. Une stratégie ciblée pour valoriser vos compétences réelles et accéder rapidement aux emplois en demande au Canada.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 flex-wrap">
                 <Link href="/book">
                   <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 text-white px-8 h-14 text-base shadow-xl shadow-primary/25 border-0" data-testid="button-hero-book">
-                    Prendre rendez-vous
+                    Bilan Stratégique Gratuit
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 </Link>
@@ -273,145 +274,114 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Question Section - Modern glass style */}
-        <section className="py-24 relative overflow-hidden" data-testid="section-question">
+        {/* Section 2: Orientation Stratégique */}
+        <section className="py-24 relative overflow-hidden" data-testid="section-orientation">
           <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5" />
           <div className="container mx-auto px-4 md:px-6 relative z-10">
-            <div className="max-w-3xl mx-auto">
-              <Card className="p-10 md:p-14 text-center bg-card/80 backdrop-blur-sm shadow-xl border-primary/10">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="text-question-title">
-                  Où en êtes-vous dans votre parcours professionnel ?
-                </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                  Beaucoup d'immigrants croient qu'un diplôme de maîtrise est la seule voie vers le succès. 
-                  La réalité ? Le marché québécois recherche souvent des métiers spécialisés bien plus que des diplômes avancés.
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+                <TrendingUp className="w-4 h-4" />
+                Ma Valeur Ajoutée
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
+                Orientation Stratégique & Marché de l'Emploi
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Évitez le piège de la surqualification et des années d'études inutiles.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card text-center" data-testid="card-audit">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                  <Target className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Audit de Compétences</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Nous analysons votre expérience pour identifier ce qui a de la valeur maintenant au Canada.
                 </p>
-                <Link href="/book">
-                  <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg shadow-primary/20" data-testid="button-discover-services">
-                    Découvrir comment je peux vous aider
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </Link>
+              </Card>
+
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card text-center" data-testid="card-ciblage">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                  <Briefcase className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Ciblage des Métiers en Pénurie</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Je vous redirige vers des secteurs qui embauchent activement et qui correspondent à votre profil.
+                </p>
+              </Card>
+
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card text-center" data-testid="card-optimisation">
+                <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6 mx-auto">
+                  <GraduationCap className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Optimisation du Parcours</h3>
+                <p className="text-muted-foreground leading-relaxed">
+                  Identification des micro-formations ou certifications rapides pour combler les écarts sans repartir pour 3 ans d'université.
+                </p>
               </Card>
             </div>
           </div>
         </section>
 
-        {/* Services Section - Modern cards */}
+        {/* Section 3: Outils Opérationnels */}
         <section id="services" className="py-24 bg-muted/30" data-testid="section-services">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                <Target className="w-4 h-4" />
-                Services
+                <Briefcase className="w-4 h-4" />
+                Outils Concrets
               </div>
               <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
-                Un accompagnement sur mesure
+                Des outils concrets pour décrocher l'entrevue
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Des services adaptés à votre réalité et à vos objectifs de carrière
+                Les services essentiels pour vous démarquer sur le marché canadien
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {/* Analyse stratégique - Has dialog */}
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-strategy">
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {/* CV */}
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-cv">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <TrendingUp className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Analyse stratégique du marché</h3>
+                <h3 className="text-xl font-bold mb-3">Adaptation de CV</h3>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  Comprenez quelles professions recrutent vraiment au Québec. Une analyse fine du marché pour orienter vos décisions.
+                  CV aux normes canadiennes, optimisé pour les systèmes ATS utilisés par les recruteurs.
                 </p>
-                <button 
-                  onClick={() => setOpenDialog("strategy")}
-                  className="text-primary font-medium inline-flex items-center gap-1"
-                  data-testid="button-learn-more-strategy"
-                >
-                  En savoir plus <ArrowRight className="w-4 h-4" />
-                </button>
-              </Card>
-
-              {/* Reconnaissance des acquis - Has dialog */}
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-credentials">
-                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
-                  <GraduationCap className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Reconnaissance des acquis</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Je vous aide à faire reconnaître vos compétences et à éviter les pièges des études inutiles.
-                </p>
-                <button 
-                  onClick={() => setOpenDialog("credentials")}
-                  className="text-primary font-medium inline-flex items-center gap-1"
-                  data-testid="button-learn-more-credentials"
-                >
-                  En savoir plus <ArrowRight className="w-4 h-4" />
-                </button>
-              </Card>
-
-              {/* Stratégie d'employabilité - Has dialog */}
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-employability">
-                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
-                  <Briefcase className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Stratégie d'employabilité</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Oubliez les conseils génériques. Concentrons-nous sur les compétences pratiques qui mènent à l'emploi.
-                </p>
-                <button 
-                  onClick={() => setOpenDialog("employability")}
-                  className="text-primary font-medium inline-flex items-center gap-1"
-                  data-testid="button-learn-more-employability"
-                >
-                  En savoir plus <ArrowRight className="w-4 h-4" />
-                </button>
-              </Card>
-
-              {/* Coaching de carrière - Links to booking (no dialog) */}
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-coaching">
-                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
-                  <Target className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Coaching de carrière</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Un accompagnement personnalisé pour définir et atteindre vos objectifs professionnels au Québec.
-                </p>
-                <Link href="/book" className="text-primary font-medium inline-flex items-center gap-1">
+                <Link href="/book" className="text-primary font-medium inline-flex items-center gap-1" data-testid="button-learn-more-cv">
                   Réserver <ArrowRight className="w-4 h-4" />
                 </Link>
               </Card>
 
-              {/* Orientation professionnelle - Links to booking (no dialog) */}
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-orientation">
-                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
-                  <Award className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Orientation professionnelle</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Identifiez le meilleur chemin vers une carrière épanouissante basée sur vos expériences et compétences.
-                </p>
-                <Link href="/book" className="text-primary font-medium inline-flex items-center gap-1">
-                  Réserver <ArrowRight className="w-4 h-4" />
-                </Link>
-              </Card>
-
-              {/* Intégration au marché - Has dialog */}
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-integration">
+              {/* LinkedIn */}
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-linkedin">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Users className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Intégration au marché</h3>
+                <h3 className="text-xl font-bold mb-3">Optimisation LinkedIn</h3>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  Comprenez les codes du marché québécois et positionnez-vous efficacement auprès des employeurs.
+                  Profil LinkedIn optimisé pour attirer les recruteurs et élargir votre réseau professionnel.
                 </p>
-                <button 
-                  onClick={() => setOpenDialog("integration")}
-                  className="text-primary font-medium inline-flex items-center gap-1"
-                  data-testid="button-learn-more-integration"
-                >
-                  En savoir plus <ArrowRight className="w-4 h-4" />
-                </button>
+                <Link href="/book" className="text-primary font-medium inline-flex items-center gap-1" data-testid="button-learn-more-linkedin">
+                  Réserver <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Card>
+
+              {/* Entrevues */}
+              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-interview">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
+                  <Award className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">Préparation aux entrevues</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  Maîtrisez les codes culturels québécois et canadiens pour réussir vos entrevues.
+                </p>
+                <Link href="/book" className="text-primary font-medium inline-flex items-center gap-1" data-testid="button-learn-more-interview">
+                  Réserver <ArrowRight className="w-4 h-4" />
+                </Link>
               </Card>
             </div>
           </div>
@@ -470,15 +440,43 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Testimonial/Quote Section */}
-        <section className="py-20" data-testid="section-quote">
+        {/* Section Témoignages */}
+        <section id="section-testimonials" className="py-20" data-testid="section-testimonials">
           <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-3xl mx-auto text-center">
-              <div className="text-6xl text-primary/20 font-serif mb-4">"</div>
-              <blockquote className="text-2xl md:text-3xl font-medium text-foreground leading-relaxed mb-6" data-testid="text-quote">
-                Je vous aiderai à vous concentrer sur la reconnaissance de vos compétences pour que vous puissiez devenir contremaître et commencer à gagner plus tôt.
-              </blockquote>
-              <p className="text-muted-foreground">— Audrey Mondesir, CRIA</p>
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+                <CheckCircle className="w-4 h-4" />
+                Preuve Sociale
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
+                Ils ont réussi leur intégration
+              </h2>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <Card className="p-8 bg-card border-border">
+                <div className="text-4xl text-primary/20 font-serif mb-4">"</div>
+                <blockquote className="text-foreground leading-relaxed mb-6">
+                  Grâce à Audrey, j'ai évité une maîtrise inutile et j'ai trouvé un poste de gestionnaire en 3 mois.
+                </blockquote>
+                <p className="text-muted-foreground text-sm font-medium">— M.K., Gestionnaire de projet</p>
+              </Card>
+
+              <Card className="p-8 bg-card border-border">
+                <div className="text-4xl text-primary/20 font-serif mb-4">"</div>
+                <blockquote className="text-foreground leading-relaxed mb-6">
+                  Son analyse du marché m'a permis de cibler les bons secteurs. J'ai décroché un emploi en construction en 6 semaines.
+                </blockquote>
+                <p className="text-muted-foreground text-sm font-medium">— J.P., Technicien en construction</p>
+              </Card>
+
+              <Card className="p-8 bg-card border-border">
+                <div className="text-4xl text-primary/20 font-serif mb-4">"</div>
+                <blockquote className="text-foreground leading-relaxed mb-6">
+                  L'optimisation de mon CV et LinkedIn a tout changé. Les recruteurs me contactent maintenant directement.
+                </blockquote>
+                <p className="text-muted-foreground text-sm font-medium">— S.L., Analyste financier</p>
+              </Card>
             </div>
           </div>
         </section>

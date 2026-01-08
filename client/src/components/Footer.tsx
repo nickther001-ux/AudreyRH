@@ -43,17 +43,22 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/#services" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-services">
-                  Services
+                  Méthode & Services
                 </Link>
               </li>
               <li>
                 <Link href="/#expertise" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-about">
-                  À propos
+                  À Propos
+                </Link>
+              </li>
+              <li>
+                <Link href="/#section-testimonials" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-testimonials">
+                  Témoignages
                 </Link>
               </li>
               <li>
                 <Link href="/book" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-book">
-                  Prendre rendez-vous
+                  Contact
                 </Link>
               </li>
             </ul>

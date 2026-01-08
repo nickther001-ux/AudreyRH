@@ -30,8 +30,9 @@ export function Navbar() {
 
   const navLinks = [
     { href: "/", label: "Accueil", isAnchor: false },
-    { href: "services", label: "Services", isAnchor: true },
-    { href: "expertise", label: "À propos", isAnchor: true },
+    { href: "services", label: "Méthode & Services", isAnchor: true },
+    { href: "expertise", label: "À Propos", isAnchor: true },
+    { href: "section-testimonials", label: "Témoignages", isAnchor: true },
   ];
 
   return (
@@ -84,7 +85,7 @@ export function Navbar() {
             
             <Link href="/book" data-testid="link-book-consultation">
               <Button className="bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg shadow-primary/25 border-0">
-                Prendre rendez-vous
+                Bilan Stratégique Gratuit
               </Button>
             </Link>
           </div>
@@ -141,8 +142,8 @@ export function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
               data-testid="link-mobile-book"
             >
-              <Button className="w-full bg-primary text-white">
-                Prendre rendez-vous
+              <Button className="w-full bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg shadow-primary/25 border-0">
+                Bilan Stratégique Gratuit
               </Button>
             </Link>
           </div>
