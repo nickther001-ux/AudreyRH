@@ -1,7 +1,9 @@
 import { Link } from "wouter";
 import { Linkedin, Mail, MapPin } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 export function Footer() {
+  const { t } = useLanguage();
   return (
     <footer className="bg-gradient-to-br from-foreground to-foreground/95 text-background pt-20 pb-10" data-testid="footer">
       <div className="container mx-auto px-4 md:px-6">
@@ -34,26 +36,26 @@ export function Footer() {
 
           {/* Navigation */}
           <div>
-            <h4 className="font-semibold mb-4 text-background">Navigation</h4>
+            <h4 className="font-semibold mb-4 text-background">{t("footer.navigation")}</h4>
             <ul className="space-y-3">
               <li>
                 <Link href="/" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-home">
-                  Accueil
+                  {t("nav.home")}
                 </Link>
               </li>
               <li>
                 <Link href="/#services" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-services">
-                  Services
+                  {t("nav.services")}
                 </Link>
               </li>
               <li>
                 <Link href="/#expertise" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-about">
-                  À propos
+                  {t("nav.about")}
                 </Link>
               </li>
               <li>
                 <Link href="/book" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-book">
-                  Prendre rendez-vous
+                  {t("nav.book")}
                 </Link>
               </li>
             </ul>
@@ -61,7 +63,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-semibold mb-4 text-background">Contact</h4>
+            <h4 className="font-semibold mb-4 text-background">{t("footer.contact")}</h4>
             <ul className="space-y-3 text-background/70">
               <li className="flex items-center gap-2">
                 <MapPin size={16} className="flex-shrink-0" />
@@ -81,7 +83,7 @@ export function Footer() {
         </div>
 
         <div className="pt-10 border-t border-background/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-background/40">
-          <p data-testid="text-copyright">&copy; {new Date().getFullYear()} Audrey Mondesir<span className="text-accent">.</span> Tous droits réservés.</p>
+          <p data-testid="text-copyright">&copy; {new Date().getFullYear()} Audrey Mondesir<span className="text-accent">.</span> {t("footer.rights")}</p>
           <p className="text-background/30">Consultation en relations industrielles</p>
         </div>
       </div>

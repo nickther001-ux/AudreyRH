@@ -3,7 +3,8 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, addDays, startOfDay } from "date-fns";
-import { fr } from "date-fns/locale";
+import { fr, enUS } from "date-fns/locale";
+import { useLanguage } from "@/lib/i18n";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Calendar } from "@/components/ui/calendar";
@@ -43,6 +44,8 @@ const timeSlots = [
 
 export default function Admin() {
   const { toast } = useToast();
+  const { t, language } = useLanguage();
+  const dateLocale = language === "fr" ? fr : enUS;
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(addDays(new Date(), 1));
 
   const { data: slots = [], isLoading } = useQuery<AvailabilitySlot[]>({
@@ -69,8 +72,8 @@ export default function Admin() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/availability'] });
       toast({
-        title: "Disponibilité ajoutée",
-        description: "Le créneau a été ajouté avec succès.",
+        title: t("admin.slotAdded"),
+        description: t("admin.slotAddedDesc"),
       });
       form.reset({
         date: selectedDate || addDays(startOfDay(new Date()), 1),
@@ -80,8 +83,8 @@ export default function Admin() {
     },
     onError: () => {
       toast({
-        title: "Erreur",
-        description: "Impossible d'ajouter le créneau.",
+        title: t("admin.error"),
+        description: t("admin.errorAdd"),
         variant: "destructive",
       });
     },
@@ -94,14 +97,14 @@ export default function Admin() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['/api/availability'] });
       toast({
-        title: "Créneau supprimé",
-        description: "Le créneau a été supprimé avec succès.",
+        title: t("admin.slotDeleted"),
+        description: t("admin.slotDeletedDesc"),
       });
     },
     onError: () => {
       toast({
-        title: "Erreur",
-        description: "Impossible de supprimer le créneau.",
+        title: t("admin.error"),
+        description: t("admin.errorDelete"),
         variant: "destructive",
       });
     },
@@ -130,8 +133,8 @@ export default function Admin() {
             </Button>
           </Link>
           <div>
-            <h1 className="text-3xl font-bold" data-testid="text-admin-title">Gérer mes disponibilités</h1>
-            <p className="text-muted-foreground">Ajoutez vos créneaux disponibles pour les consultations</p>
+            <h1 className="text-3xl font-bold" data-testid="text-admin-title">{t("admin.title")}</h1>
+            <p className="text-muted-foreground">{t("admin.addSlot")}</p>
           </div>
         </div>
 
@@ -139,7 +142,7 @@ export default function Admin() {
           <Card className="p-6">
             <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
               <Plus className="h-5 w-5 text-primary" />
-              Ajouter un créneau
+              {t("admin.addSlot")}
             </h2>
 
             <Form {...form}>
@@ -149,7 +152,7 @@ export default function Admin() {
                   name="date"
                   render={({ field }) => (
                     <FormItem className="flex flex-col">
-                      <FormLabel>Date</FormLabel>
+                      <FormLabel>{t("admin.date")}</FormLabel>
                       <Popover>
                         <PopoverTrigger asChild>
                           <FormControl>
@@ -162,9 +165,9 @@ export default function Admin() {
                               data-testid="button-admin-date-picker"
                             >
                               {field.value ? (
-                                format(field.value, "PPP", { locale: fr })
+                                format(field.value, "PPP", { locale: dateLocale })
                               ) : (
-                                <span>Choisir une date</span>
+                                <span>{t("admin.date")}</span>
                               )}
                               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                             </Button>
@@ -194,11 +197,11 @@ export default function Admin() {
                     name="startTime"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Heure de début</FormLabel>
+                        <FormLabel>{t("admin.startTime")}</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger data-testid="select-start-time">
-                              <SelectValue placeholder="Début" />
+                              <SelectValue placeholder={t("admin.startPlaceholder")} />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -219,11 +222,11 @@ export default function Admin() {
                     name="endTime"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Heure de fin</FormLabel>
+                        <FormLabel>{t("admin.endTime")}</FormLabel>
                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                           <FormControl>
                             <SelectTrigger data-testid="select-end-time">
-                              <SelectValue placeholder="Fin" />
+                              <SelectValue placeholder={t("admin.endPlaceholder")} />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
@@ -246,7 +249,7 @@ export default function Admin() {
                   disabled={isCreating}
                   data-testid="button-add-slot"
                 >
-                  {isCreating ? "Ajout en cours..." : "Ajouter ce créneau"}
+                  {isCreating ? t("admin.adding") : t("admin.add")}
                 </Button>
               </form>
             </Form>
@@ -255,14 +258,14 @@ export default function Admin() {
           <Card className="p-6">
             <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
               <Clock className="h-5 w-5 text-primary" />
-              Créneaux disponibles
+              {t("admin.currentSlots")}
             </h2>
 
             {isLoading ? (
-              <p className="text-muted-foreground">Chargement...</p>
+              <p className="text-muted-foreground">{t("book.loading")}</p>
             ) : Object.keys(groupedSlots).length === 0 ? (
               <p className="text-muted-foreground" data-testid="text-no-slots">
-                Aucun créneau disponible. Ajoutez vos disponibilités à gauche.
+                {t("admin.noSlots")}
               </p>
             ) : (
               <div className="space-y-6">
@@ -271,7 +274,7 @@ export default function Admin() {
                   .map(([dateKey, dateSlots]) => (
                     <div key={dateKey}>
                       <h3 className="font-medium text-sm text-muted-foreground mb-2">
-                        {format(new Date(dateKey), "EEEE d MMMM yyyy", { locale: fr })}
+                        {format(new Date(dateKey), "EEEE d MMMM yyyy", { locale: dateLocale })}
                       </h3>
                       <div className="space-y-2">
                         {dateSlots
@@ -307,14 +310,14 @@ export default function Admin() {
         <Card className="p-6 mt-8">
           <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
             <Users className="h-5 w-5 text-primary" />
-            Réservations clients
+            {t("admin.appointments")}
           </h2>
 
           {isLoadingAppointments ? (
-            <p className="text-muted-foreground">Chargement...</p>
+            <p className="text-muted-foreground">{t("book.loading")}</p>
           ) : allAppointments.length === 0 ? (
             <p className="text-muted-foreground" data-testid="text-no-appointments">
-              Aucune réservation pour le moment.
+              {t("admin.noAppointments")}
             </p>
           ) : (
             <div className="space-y-4">
@@ -332,9 +335,9 @@ export default function Admin() {
                           <span className="font-semibold text-lg">{appt.name}</span>
                           <Badge variant={appt.paymentStatus === "paid" ? "default" : "secondary"}>
                             {appt.paymentStatus === "paid" ? (
-                              <><CheckCircle className="h-3 w-3 mr-1" /> Payé</>
+                              <><CheckCircle className="h-3 w-3 mr-1" /> {t("admin.paid")}</>
                             ) : (
-                              <><XCircle className="h-3 w-3 mr-1" /> Non payé</>
+                              <><XCircle className="h-3 w-3 mr-1" /> {t("admin.unpaid")}</>
                             )}
                           </Badge>
                           <Badge variant="outline">
@@ -345,15 +348,15 @@ export default function Admin() {
                         {appt.phone && <p className="text-sm text-muted-foreground">{appt.phone}</p>}
                         <div className="text-sm">
                           <span className="font-medium">Date:</span>{" "}
-                          {format(new Date(appt.date), "EEEE d MMMM yyyy", { locale: fr })}
+                          {format(new Date(appt.date), "EEEE d MMMM yyyy", { locale: dateLocale })}
                           {appt.startTime && appt.endTime && (
                             <span className="ml-2">
-                              de {appt.startTime} à {appt.endTime}
+                              {t("admin.from")} {appt.startTime} {t("admin.to")} {appt.endTime}
                             </span>
                           )}
                         </div>
                         <div className="mt-2 p-3 bg-background rounded-md">
-                          <p className="text-sm font-medium mb-1">Raison de la consultation:</p>
+                          <p className="text-sm font-medium mb-1">{t("admin.consultationReason")}</p>
                           <p className="text-sm text-muted-foreground">{appt.reason}</p>
                         </div>
                       </div>

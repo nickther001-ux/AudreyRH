@@ -13,13 +13,14 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { format, isSameDay } from "date-fns";
-import { fr } from "date-fns/locale";
+import { fr, enUS } from "date-fns/locale";
 import { CreditCard, Loader2, CheckCircle2, XCircle, Clock, Video, FileText, CalendarDays } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { SiZoom, SiGooglemeet } from "react-icons/si";
 import { useLocation } from "wouter";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useLanguage } from "@/lib/i18n";
 
 export default function Book() {
   const [success, setSuccess] = useState(false);
@@ -27,6 +28,8 @@ export default function Book() {
   const [selectedSlotId, setSelectedSlotId] = useState<number | null>(null);
   const { mutate, isPending } = useCreateAppointment();
   const [, setLocation] = useLocation();
+  const { t, language } = useLanguage();
+  const dateLocale = language === "fr" ? fr : enUS;
 
   const { data: availableSlots = [], isLoading: slotsLoading } = useQuery<AvailabilitySlot[]>({
     queryKey: ['/api/availability'],
@@ -95,13 +98,13 @@ export default function Book() {
             <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mx-auto">
               <CheckCircle2 size={40} />
             </div>
-            <h1 className="text-3xl font-bold" data-testid="text-success-title">Paiement réussi!</h1>
+            <h1 className="text-3xl font-bold" data-testid="text-success-title">{t("book.success.title")}</h1>
             <p className="text-muted-foreground text-lg" data-testid="text-success-message">
-              Merci d'avoir réservé une consultation avec Audrey Mondesir. Vous recevrez un courriel de confirmation avec les détails de votre rendez-vous.
+              {t("book.success.message")}
             </p>
             <div className="pt-4">
               <Button onClick={() => { setSuccess(false); setLocation('/'); }} variant="outline" data-testid="button-back-home">
-                Retour à l'accueil
+                {t("book.success.back")}
               </Button>
             </div>
           </div>
@@ -120,13 +123,13 @@ export default function Book() {
             <div className="w-20 h-20 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-full flex items-center justify-center mx-auto">
               <XCircle size={40} />
             </div>
-            <h1 className="text-3xl font-bold" data-testid="text-canceled-title">Paiement annulé</h1>
+            <h1 className="text-3xl font-bold" data-testid="text-canceled-title">{t("book.cancel.title")}</h1>
             <p className="text-muted-foreground text-lg" data-testid="text-canceled-message">
-              Votre réservation n'a pas été complétée. Aucun frais n'a été facturé. N'hésitez pas à réessayer quand vous serez prêt.
+              {t("book.cancel.message")}
             </p>
             <div className="pt-4">
               <Button onClick={() => setCanceled(false)} data-testid="button-try-again">
-                Réessayer
+                {t("book.cancel.retry")}
               </Button>
             </div>
           </div>
@@ -145,10 +148,10 @@ export default function Book() {
           {/* Header */}
           <div className="max-w-3xl mx-auto text-center mb-12">
             <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-book-title">
-              Prendre rendez-vous
+              {t("book.title")}
             </h1>
             <p className="text-lg text-muted-foreground">
-              Réservez une consultation personnalisée pour votre stratégie de carrière au Québec.
+              {t("book.subtitle")}
             </p>
           </div>
 
@@ -157,27 +160,27 @@ export default function Book() {
             {/* Sidebar Info */}
             <div className="lg:col-span-2 space-y-6">
               <Card className="p-6 border-border">
-                <h3 className="font-bold text-lg mb-4">Détails de la consultation</h3>
+                <h3 className="font-bold text-lg mb-4">{t("book.details")}</h3>
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <Clock className="w-5 h-5 text-primary mt-0.5" />
                     <div>
-                      <p className="font-medium">Durée</p>
-                      <p className="text-sm text-muted-foreground">45 - 60 minutes</p>
+                      <p className="font-medium">{t("book.durationLabel")}</p>
+                      <p className="text-sm text-muted-foreground">{t("book.durationValue")}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <Video className="w-5 h-5 text-primary mt-0.5" />
                     <div>
-                      <p className="font-medium">Format</p>
-                      <p className="text-sm text-muted-foreground">Vidéoconférence (Zoom / Google Meet)</p>
+                      <p className="font-medium">{t("book.format")}</p>
+                      <p className="text-sm text-muted-foreground">{t("book.formatValue")}</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <CreditCard className="w-5 h-5 text-primary mt-0.5" />
                     <div>
-                      <p className="font-medium">Tarif</p>
-                      <p className="text-2xl font-bold text-primary" data-testid="text-price">50,00 $ USD</p>
+                      <p className="font-medium">{t("book.rate")}</p>
+                      <p className="text-2xl font-bold text-primary" data-testid="text-price">{t("book.rateValue")}</p>
                     </div>
                   </div>
                 </div>
@@ -187,11 +190,11 @@ export default function Book() {
                 <div className="flex items-start gap-3">
                   <FileText className="w-5 h-5 text-primary mt-0.5" />
                   <div>
-                    <h4 className="font-bold mb-2">À préparer</h4>
+                    <h4 className="font-bold mb-2">{t("book.prepare")}</h4>
                     <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>Votre CV / curriculum vitae</li>
-                      <li>Historique de votre formation</li>
-                      <li>Liste de vos questions spécifiques</li>
+                      <li>{t("book.prepareCV")}</li>
+                      <li>{t("book.prepareEducation")}</li>
+                      <li>{t("book.prepareQuestions")}</li>
                     </ul>
                   </div>
                 </div>
@@ -210,10 +213,10 @@ export default function Book() {
                         name="name"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Nom complet</FormLabel>
+                            <FormLabel>{t("book.name")}</FormLabel>
                             <FormControl>
                               <Input 
-                                placeholder="Jean Dupont" 
+                                placeholder={t("book.namePlaceholder")} 
                                 className="h-12" 
                                 data-testid="input-name"
                                 {...field} 
@@ -229,10 +232,10 @@ export default function Book() {
                         name="email"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Adresse courriel</FormLabel>
+                            <FormLabel>{t("book.email")}</FormLabel>
                             <FormControl>
                               <Input 
-                                placeholder="jean@exemple.com" 
+                                placeholder={t("book.emailPlaceholder")} 
                                 className="h-12" 
                                 data-testid="input-email"
                                 {...field} 
@@ -249,7 +252,7 @@ export default function Book() {
                       name="phone"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Téléphone (optionnel)</FormLabel>
+                          <FormLabel>{t("book.phone")}</FormLabel>
                           <FormControl>
                             <Input 
                               placeholder="+1 (514) 000-0000" 
@@ -271,7 +274,7 @@ export default function Book() {
                         <FormItem>
                           <FormLabel className="flex items-center gap-2">
                             <CalendarDays className="h-4 w-4" />
-                            Choisir un créneau disponible
+                            {t("book.availableSlots")}
                           </FormLabel>
                           <FormControl>
                             {slotsLoading ? (
@@ -281,7 +284,7 @@ export default function Book() {
                             ) : Object.keys(groupedSlots).length === 0 ? (
                               <div className="p-6 bg-muted/50 rounded-lg text-center">
                                 <p className="text-muted-foreground" data-testid="text-no-availability">
-                                  Aucune disponibilité pour le moment. Veuillez revenir plus tard.
+                                  {t("book.noSlots")} {t("book.checkBack")}
                                 </p>
                               </div>
                             ) : (
@@ -291,7 +294,7 @@ export default function Book() {
                                   .map(([dateKey, dateSlots]) => (
                                     <div key={dateKey} className="space-y-2">
                                       <p className="text-sm font-medium text-muted-foreground capitalize">
-                                        {format(new Date(dateKey), "EEEE d MMMM", { locale: fr })}
+                                        {format(new Date(dateKey), "EEEE d MMMM", { locale: dateLocale })}
                                       </p>
                                       <div className="flex flex-wrap gap-2">
                                         {dateSlots
@@ -328,10 +331,10 @@ export default function Book() {
                       name="reason"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Raison de la consultation</FormLabel>
+                          <FormLabel>{t("book.reason")}</FormLabel>
                           <FormControl>
                             <Textarea 
-                              placeholder="Décrivez brièvement votre situation et ce que vous espérez accomplir..." 
+                              placeholder={t("book.reasonPlaceholder")} 
                               className="min-h-[120px] resize-none" 
                               data-testid="input-reason"
                               {...field} 
@@ -347,7 +350,7 @@ export default function Book() {
                       name="platform"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Plateforme de vidéoconférence</FormLabel>
+                          <FormLabel>{t("book.platform")}</FormLabel>
                           <FormControl>
                             <RadioGroup
                               onValueChange={field.onChange}
@@ -403,17 +406,17 @@ export default function Book() {
                         {isPending ? (
                           <>
                             <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                            Traitement en cours...
+                            {t("book.processing")}
                           </>
                         ) : (
                           <>
                             <CreditCard className="mr-2 h-5 w-5" />
-                            Procéder au paiement - 50,00 $ USD
+                            {t("book.pay")}
                           </>
                         )}
                       </Button>
                       <p className="text-center text-xs text-muted-foreground mt-4">
-                        Paiement sécurisé via Stripe. En confirmant, vous acceptez nos conditions de service.
+                        {t("book.secure")}
                       </p>
                     </div>
 

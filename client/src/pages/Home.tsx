@@ -11,137 +11,6 @@ import audreyPhoto from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
 
 type ServiceKey = "strategy" | "credentials" | "employability" | "integration" | null;
 
-const serviceDetails = {
-  strategy: {
-    title: "Analyse stratégique du marché",
-    description: "Évitez les erreurs coûteuses avec une analyse basée sur les données réelles",
-    stats: [
-      { value: "42,6%", label: "des immigrants sont surqualifiés pour leur emploi (vs 24,9% des natifs)", source: "MIFI 2020" },
-      { value: "2x", label: "plus de chômage chez les immigrants (8%) vs natifs (4,1%)", source: "Institut du Québec 2024" },
-    ],
-    content: [
-      {
-        heading: "Le problème que je résous",
-        points: [
-          "Beaucoup d'immigrants investissent dans des maîtrises inutiles pour le marché local",
-          "Les métiers spécialisés (construction, santé) recrutent plus que les postes de bureau",
-          "Sans bonne analyse, vous risquez des années d'études pour un emploi dans lequel vous serez surqualifié",
-          "Je vous montre où sont les VRAIES opportunités selon votre profil"
-        ]
-      },
-      {
-        heading: "Secteurs qui recrutent activement",
-        points: [
-          "Santé : infirmiers, préposés - pénurie critique persistante",
-          "Construction : 219 200 emplois à pourvoir à Montréal d'ici 2026",
-          "Technologies : développeurs, cybersécurité - demande constante",
-          "Transport : chauffeurs poids lourds - forte demande"
-        ]
-      },
-      {
-        heading: "Mon approche",
-        text: "J'utilise les données officielles de quebec.ca/emploi et l'État d'équilibre du marché (516 professions analysées) pour vous donner des recommandations concrètes, pas des conseils génériques."
-      }
-    ]
-  },
-  credentials: {
-    title: "Reconnaissance des acquis",
-    description: "Ne repartez pas à zéro - faites valoir ce que vous savez déjà",
-    stats: [
-      { value: "10%", label: "des immigrants restent surqualifiés pendant 10+ ans", source: "Statistique Canada" },
-      { value: "14%", label: "des diplômés étrangers subissent une surqualification persistante", source: "StatCan 2016-2021" },
-    ],
-    content: [
-      {
-        heading: "Pourquoi c'est crucial",
-        points: [
-          "Retourner aux études = années perdues si vos compétences sont déjà reconnues",
-          "Le programme RAC peut vous donner un diplôme québécois SANS retourner à l'école",
-          "L'évaluation comparative (138$ en 2025) n'est qu'un avis - pas une équivalence",
-          "47,9% des immigrants parrainés sont surqualifiés - la bonne stratégie fait la différence"
-        ]
-      },
-      {
-        heading: "La RAC : votre raccourci vers le diplôme",
-        points: [
-          "Reconnaissance des Acquis et Compétences - gratuit ou faible coût",
-          "Obtenez un DEP, AEP ou DEC en démontrant vos compétences existantes",
-          "Processus : portfolio, évaluation pratique, formation ciblée si nécessaire",
-          "Disponible dans les Centres de services scolaires partout au Québec"
-        ]
-      },
-      {
-        heading: "Les 46 ordres professionnels",
-        text: "Médecin, ingénieur, comptable, infirmier... Je vous aide à naviguer les exigences spécifiques de chaque ordre via Qualifications Québec et à éviter les démarches inutiles."
-      }
-    ]
-  },
-  employability: {
-    title: "Stratégie d'employabilité",
-    description: "Décrochez votre première expérience canadienne - le plus grand défi",
-    stats: [
-      { value: "68%", label: "des nouveaux travailleurs en 2024 sont des immigrants", source: "Institut du Québec" },
-      { value: "3x", label: "plus de chômage chez les immigrants temporaires (11,7%)", source: "StatCan 2024" },
-    ],
-    content: [
-      {
-        heading: "Le vrai obstacle",
-        points: [
-          "Sans expérience canadienne, votre CV est souvent ignoré",
-          "Les employeurs cherchent des preuves que vous comprenez le marché local",
-          "Les conseils génériques (refaire son CV) ne suffisent pas",
-          "Il faut une stratégie ciblée selon votre secteur et votre statut"
-        ]
-      },
-      {
-        heading: "Programmes qui fonctionnent",
-        points: [
-          "PRIIME : subvention salariale pour votre première embauche (Services Québec)",
-          "CITIM : ateliers intensifs CV québécois, entrevues, codes culturels",
-          "Interconnexion : réseautage direct avec employeurs (Chambre de commerce)",
-          "Mentorat professionnel : accès au réseau d'un professionnel établi"
-        ]
-      },
-      {
-        heading: "Ma valeur ajoutée",
-        text: "Je vous aide à préparer un dossier PRIIME solide et à cibler les employeurs qui participent à ces programmes. Ensemble, on transforme votre expérience internationale en atout."
-      }
-    ]
-  },
-  integration: {
-    title: "Intégration au marché",
-    description: "Maîtrisez les codes invisibles qui font la différence",
-    stats: [
-      { value: "+3 pts", label: "hausse du chômage immigrant en 2 ans (5% à 8%)", source: "Institut du Québec" },
-      { value: "4M$", label: "investis par Québec pour la reconnaissance des diplômes", source: "Radio-Canada 2021" },
-    ],
-    content: [
-      {
-        heading: "Ce que les employeurs ne disent pas",
-        points: [
-          "La culture du 'tu' et l'approche égalitaire au travail québécois",
-          "L'importance du réseautage informel (5 à 7, événements)",
-          "Les attentes en communication : direct mais diplomate",
-          "L'équilibre travail-vie personnelle est valorisé ici"
-        ]
-      },
-      {
-        heading: "Programmes employeurs majeurs",
-        points: [
-          "Hydro-Québec : Programme d'intégration 30 semaines pour nouveaux arrivants",
-          "Ville de Québec/Montréal : stages rémunérés pour immigrants",
-          "Desjardins, Banque Nationale : programmes diversité active",
-          "Emplois en régions : opportunités hors Montréal avec aide à l'installation"
-        ]
-      },
-      {
-        heading: "Changement 2025",
-        text: "Depuis février 2025, les travailleurs étrangers temporaires ne sont plus admissibles à certains services d'emploi. Je vous aide à identifier les programmes auxquels VOUS avez droit selon votre statut."
-      }
-    ]
-  }
-};
-
 export default function Home() {
   const [wordIndex, setWordIndex] = useState(0);
   const [openDialog, setOpenDialog] = useState<ServiceKey>(null);
@@ -156,57 +25,92 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  const getDialogStats = (key: "strategy" | "credentials" | "employability" | "integration") => {
+    const stats: Record<string, { value: string; source: string }[]> = {
+      strategy: [
+        { value: "42,6%", source: "MIFI 2020" },
+        { value: "2x", source: "Institut du Québec 2024" },
+      ],
+      credentials: [
+        { value: "10%", source: "Statistique Canada" },
+        { value: "14%", source: "StatCan 2016-2021" },
+      ],
+      employability: [
+        { value: "68%", source: "Institut du Québec" },
+        { value: "3x", source: "StatCan 2024" },
+      ],
+      integration: [
+        { value: "+3 pts", source: "Institut du Québec" },
+        { value: "4M$", source: "Radio-Canada 2021" },
+      ],
+    };
+    return stats[key];
+  };
+
   const renderServiceDialog = (key: ServiceKey) => {
     if (!key) return null;
-    const service = serviceDetails[key];
+    
+    const stats = getDialogStats(key);
     
     return (
       <Dialog open={openDialog === key} onOpenChange={(open) => setOpenDialog(open ? key : null)}>
         <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle className="text-2xl">{service.title}</DialogTitle>
+            <DialogTitle className="text-2xl">{t(`dialog.${key}.title`)}</DialogTitle>
             <DialogDescription className="text-base">
-              {service.description}
+              {t(`dialog.${key}.desc`)}
             </DialogDescription>
           </DialogHeader>
           
           {/* Statistics Cards */}
-          {service.stats && (
-            <div className="grid grid-cols-2 gap-4 mt-4">
-              {service.stats.map((stat, idx) => (
-                <div key={idx} className="bg-primary/5 border border-primary/20 rounded-lg p-4 text-center">
-                  <div className="text-3xl font-bold text-primary mb-1">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground leading-tight">{stat.label}</div>
-                  <div className="text-xs text-muted-foreground/70 mt-2 italic">Source: {stat.source}</div>
-                </div>
-              ))}
-            </div>
-          )}
-          
-          <div className="space-y-6 mt-6">
-            {service.content.map((section, idx) => (
-              <div key={idx}>
-                <h4 className="font-bold text-lg mb-3 text-foreground">{section.heading}</h4>
-                {section.points ? (
-                  <ul className="space-y-2">
-                    {section.points.map((point, i) => (
-                      <li key={i} className="flex items-start gap-2 text-muted-foreground">
-                        <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-muted-foreground leading-relaxed">{section.text}</p>
-                )}
+          <div className="grid grid-cols-2 gap-4 mt-4">
+            {stats.map((stat, idx) => (
+              <div key={idx} className="bg-primary/5 border border-primary/20 rounded-lg p-4 text-center">
+                <div className="text-3xl font-bold text-primary mb-1">{stat.value}</div>
+                <div className="text-sm text-muted-foreground leading-tight">{t(`dialog.${key}.stat${idx + 1}`)}</div>
+                <div className="text-xs text-muted-foreground/70 mt-2 italic">Source: {stat.source}</div>
               </div>
             ))}
+          </div>
+          
+          <div className="space-y-6 mt-6">
+            {/* Section 1 - Points */}
+            <div>
+              <h4 className="font-bold text-lg mb-3 text-foreground">{t(`dialog.${key}.h1`)}</h4>
+              <ul className="space-y-2">
+                {[1, 2, 3, 4].map((i) => (
+                  <li key={i} className="flex items-start gap-2 text-muted-foreground">
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span>{t(`dialog.${key}.p1.${i}`)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            {/* Section 2 - Points */}
+            <div>
+              <h4 className="font-bold text-lg mb-3 text-foreground">{t(`dialog.${key}.h2`)}</h4>
+              <ul className="space-y-2">
+                {[1, 2, 3, 4].map((i) => (
+                  <li key={i} className="flex items-start gap-2 text-muted-foreground">
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span>{t(`dialog.${key}.p2.${i}`)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            {/* Section 3 - Text */}
+            <div>
+              <h4 className="font-bold text-lg mb-3 text-foreground">{t(`dialog.${key}.h3`)}</h4>
+              <p className="text-muted-foreground leading-relaxed">{t(`dialog.${key}.text`)}</p>
+            </div>
           </div>
 
           <div className="mt-6 pt-4 border-t border-border">
             <Link href="/book">
               <Button className="w-full" size="lg">
-                Réserver une consultation
+                {t("services.bookConsultation")}
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
             </Link>
@@ -320,16 +224,16 @@ export default function Home() {
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <TrendingUp className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Analyse stratégique du marché</h3>
+                <h3 className="text-xl font-bold mb-3">{t("services.strategy.title")}</h3>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  Comprenez quelles professions recrutent vraiment au Québec. Une analyse fine du marché pour orienter vos décisions.
+                  {t("services.strategy.desc")}
                 </p>
                 <button 
                   onClick={() => setOpenDialog("strategy")}
                   className="text-primary font-medium inline-flex items-center gap-1"
                   data-testid="button-learn-more-strategy"
                 >
-                  En savoir plus <ArrowRight className="w-4 h-4" />
+                  {t("services.strategy.more")} <ArrowRight className="w-4 h-4" />
                 </button>
               </Card>
 
@@ -338,16 +242,16 @@ export default function Home() {
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <GraduationCap className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Reconnaissance des acquis</h3>
+                <h3 className="text-xl font-bold mb-3">{t("services.credentials.title")}</h3>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  Je vous aide à faire reconnaître vos compétences et à éviter les pièges des études inutiles.
+                  {t("services.credentials.desc")}
                 </p>
                 <button 
                   onClick={() => setOpenDialog("credentials")}
                   className="text-primary font-medium inline-flex items-center gap-1"
                   data-testid="button-learn-more-credentials"
                 >
-                  En savoir plus <ArrowRight className="w-4 h-4" />
+                  {t("services.credentials.more")} <ArrowRight className="w-4 h-4" />
                 </button>
               </Card>
 
@@ -356,16 +260,16 @@ export default function Home() {
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Briefcase className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Stratégie d'employabilité</h3>
+                <h3 className="text-xl font-bold mb-3">{t("services.employability.title")}</h3>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  Oubliez les conseils génériques. Concentrons-nous sur les compétences pratiques qui mènent à l'emploi.
+                  {t("services.employability.desc")}
                 </p>
                 <button 
                   onClick={() => setOpenDialog("employability")}
                   className="text-primary font-medium inline-flex items-center gap-1"
                   data-testid="button-learn-more-employability"
                 >
-                  En savoir plus <ArrowRight className="w-4 h-4" />
+                  {t("services.employability.more")} <ArrowRight className="w-4 h-4" />
                 </button>
               </Card>
 
@@ -374,12 +278,12 @@ export default function Home() {
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Target className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Coaching de carrière</h3>
+                <h3 className="text-xl font-bold mb-3">{t("services.coaching.title")}</h3>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  Un accompagnement personnalisé pour définir et atteindre vos objectifs professionnels au Québec.
+                  {t("services.coaching.desc")}
                 </p>
                 <Link href="/book" className="text-primary font-medium inline-flex items-center gap-1">
-                  Réserver <ArrowRight className="w-4 h-4" />
+                  {t("services.coaching.book")} <ArrowRight className="w-4 h-4" />
                 </Link>
               </Card>
 
@@ -388,12 +292,12 @@ export default function Home() {
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Award className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Orientation professionnelle</h3>
+                <h3 className="text-xl font-bold mb-3">{t("services.orientation.title")}</h3>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  Identifiez le meilleur chemin vers une carrière épanouissante basée sur vos expériences et compétences.
+                  {t("services.orientation.desc")}
                 </p>
                 <Link href="/book" className="text-primary font-medium inline-flex items-center gap-1">
-                  Réserver <ArrowRight className="w-4 h-4" />
+                  {t("services.orientation.book")} <ArrowRight className="w-4 h-4" />
                 </Link>
               </Card>
 
@@ -402,16 +306,16 @@ export default function Home() {
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Users className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">Intégration au marché</h3>
+                <h3 className="text-xl font-bold mb-3">{t("services.integration.title")}</h3>
                 <p className="text-muted-foreground leading-relaxed mb-4">
-                  Comprenez les codes du marché québécois et positionnez-vous efficacement auprès des employeurs.
+                  {t("services.integration.desc")}
                 </p>
                 <button 
                   onClick={() => setOpenDialog("integration")}
                   className="text-primary font-medium inline-flex items-center gap-1"
                   data-testid="button-learn-more-integration"
                 >
-                  En savoir plus <ArrowRight className="w-4 h-4" />
+                  {t("services.integration.more")} <ArrowRight className="w-4 h-4" />
                 </button>
               </Card>
             </div>
@@ -491,15 +395,15 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
-                  "Avec 10 ans d'expérience bancaire en Côte d'Ivoire, je ne savais pas comment me positionner ici. Audrey m'a guidé vers les bonnes certifications et réseaux. Je suis maintenant directeur de succursale."
+                  {t("testimonial.1.text")}
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
                     <span className="text-primary font-bold text-sm">Y.K.</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground text-sm">Youssouf Keita</p>
-                    <p className="text-xs text-muted-foreground">Directeur de banque</p>
+                    <p className="font-semibold text-foreground text-sm">{t("testimonial.1.name")}</p>
+                    <p className="text-xs text-muted-foreground">{t("testimonial.1.job")}</p>
                   </div>
                 </div>
               </Card>
@@ -513,15 +417,15 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
-                  "Audrey m'a convaincu de ne pas retourner aux études. Elle m'a montré comment faire reconnaître mon expérience de soudeur au Cameroun. En 4 mois, j'avais ma carte de compétence et un emploi stable."
+                  {t("testimonial.2.text")}
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
                     <span className="text-primary font-bold text-sm">J.N.</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground text-sm">Jean-Baptiste Nkomo</p>
-                    <p className="text-xs text-muted-foreground">Soudeur</p>
+                    <p className="font-semibold text-foreground text-sm">{t("testimonial.2.name")}</p>
+                    <p className="text-xs text-muted-foreground">{t("testimonial.2.job")}</p>
                   </div>
                 </div>
               </Card>
@@ -535,15 +439,15 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
-                  "Diplômée en finance au Sénégal, je doutais de mes chances. Audrey m'a aidée à cibler les bonnes entreprises et à adapter mon CV. Je suis maintenant analyste financière dans une grande firme."
+                  {t("testimonial.3.text")}
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
                     <span className="text-primary font-bold text-sm">A.S.</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground text-sm">Aïssatou Sarr</p>
-                    <p className="text-xs text-muted-foreground">Analyste financière</p>
+                    <p className="font-semibold text-foreground text-sm">{t("testimonial.3.name")}</p>
+                    <p className="text-xs text-muted-foreground">{t("testimonial.3.job")}</p>
                   </div>
                 </div>
               </Card>
@@ -557,15 +461,15 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
-                  "Je travaillais comme caissière depuis 2 ans sans voir d'issue. Audrey m'a aidée à valoriser mon expérience en service client et j'ai décroché un poste de réceptionniste dans une clinique."
+                  {t("testimonial.4.text")}
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
                     <span className="text-primary font-bold text-sm">F.D.</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground text-sm">Fatou Diallo</p>
-                    <p className="text-xs text-muted-foreground">Réceptionniste</p>
+                    <p className="font-semibold text-foreground text-sm">{t("testimonial.4.name")}</p>
+                    <p className="text-xs text-muted-foreground">{t("testimonial.4.job")}</p>
                   </div>
                 </div>
               </Card>
@@ -579,15 +483,15 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
-                  "Arrivé du Sénégal avec un diplôme en électricité, je ne savais pas comment m'y prendre. Audrey m'a guidé étape par étape. Maintenant je travaille comme électricien avec un bon salaire."
+                  {t("testimonial.5.text")}
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
                     <span className="text-primary font-bold text-sm">M.S.</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground text-sm">Moussa Sow</p>
-                    <p className="text-xs text-muted-foreground">Électricien</p>
+                    <p className="font-semibold text-foreground text-sm">{t("testimonial.5.name")}</p>
+                    <p className="text-xs text-muted-foreground">{t("testimonial.5.job")}</p>
                   </div>
                 </div>
               </Card>
@@ -601,15 +505,15 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
-                  "Je pensais devoir tout recommencer à zéro. Audrey m'a montré que mon expérience de chauffeur au Maroc pouvait être valorisée. J'ai obtenu mon permis classe 1 et je travaille comme camionneur."
+                  {t("testimonial.6.text")}
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
                     <span className="text-primary font-bold text-sm">K.B.</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground text-sm">Karim Benali</p>
-                    <p className="text-xs text-muted-foreground">Camionneur</p>
+                    <p className="font-semibold text-foreground text-sm">{t("testimonial.6.name")}</p>
+                    <p className="text-xs text-muted-foreground">{t("testimonial.6.job")}</p>
                   </div>
                 </div>
               </Card>
