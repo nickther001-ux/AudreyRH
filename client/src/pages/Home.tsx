@@ -26,7 +26,7 @@ const serviceDetails = {
         points: [
           "Beaucoup d'immigrants investissent dans des maîtrises inutiles pour le marché local",
           "Les métiers spécialisés (construction, santé) recrutent plus que les postes de bureau",
-          "Sans bonne analyse, vous risquez des années d'études pour un emploi surqualifié",
+          "Sans bonne analyse, vous risquez des années d'études pour un emploi dans lequel vous serez surqualifié",
           "Je vous montre où sont les VRAIES opportunités selon votre profil"
         ]
       },
