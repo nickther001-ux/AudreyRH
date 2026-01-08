@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { useState, useEffect } from "react";
-import { ArrowRight, Briefcase, GraduationCap, TrendingUp, Users, CheckCircle, Target, Award, X } from "lucide-react";
+import { ArrowRight, Briefcase, GraduationCap, TrendingUp, Users, CheckCircle, Target, Award, X, Star } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -495,9 +495,13 @@ export default function Home() {
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               <Card className="p-8 bg-card border-border">
-                <div className="text-4xl text-primary/20 font-serif mb-4">"</div>
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-accent text-accent" />
+                  ))}
+                </div>
                 <blockquote className="text-foreground leading-relaxed mb-6">
                   Grâce à Audrey, j'ai évité une maîtrise inutile et j'ai trouvé un poste de gestionnaire en 3 mois.
                 </blockquote>
@@ -505,7 +509,11 @@ export default function Home() {
               </Card>
 
               <Card className="p-8 bg-card border-border">
-                <div className="text-4xl text-primary/20 font-serif mb-4">"</div>
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-accent text-accent" />
+                  ))}
+                </div>
                 <blockquote className="text-foreground leading-relaxed mb-6">
                   Son analyse du marché m'a permis de cibler les bons secteurs. J'ai décroché un emploi en construction en 6 semaines.
                 </blockquote>
@@ -513,11 +521,51 @@ export default function Home() {
               </Card>
 
               <Card className="p-8 bg-card border-border">
-                <div className="text-4xl text-primary/20 font-serif mb-4">"</div>
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-accent text-accent" />
+                  ))}
+                </div>
                 <blockquote className="text-foreground leading-relaxed mb-6">
                   L'optimisation de mon CV et LinkedIn a tout changé. Les recruteurs me contactent maintenant directement.
                 </blockquote>
                 <p className="text-muted-foreground text-sm font-medium">— S.L., Analyste financier</p>
+              </Card>
+
+              <Card className="p-8 bg-card border-border">
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-accent text-accent" />
+                  ))}
+                </div>
+                <blockquote className="text-foreground leading-relaxed mb-6">
+                  Audrey m'a aidé à comprendre le marché québécois et à adapter mon approche. Résultat: CDI en 2 mois!
+                </blockquote>
+                <p className="text-muted-foreground text-sm font-medium">— A.B., Ingénieur logiciel</p>
+              </Card>
+
+              <Card className="p-8 bg-card border-border">
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-accent text-accent" />
+                  ))}
+                </div>
+                <blockquote className="text-foreground leading-relaxed mb-6">
+                  La préparation aux entrevues était exceptionnelle. J'ai pu décoder les attentes culturelles et réussir mes entretiens.
+                </blockquote>
+                <p className="text-muted-foreground text-sm font-medium">— F.M., Comptable CPA</p>
+              </Card>
+
+              <Card className="p-8 bg-card border-border">
+                <div className="flex gap-1 mb-4">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-accent text-accent" />
+                  ))}
+                </div>
+                <blockquote className="text-foreground leading-relaxed mb-6">
+                  Investissement rentabilisé dès le premier mois. Ma nouvelle carrière au Canada a enfin démarré grâce à ses conseils.
+                </blockquote>
+                <p className="text-muted-foreground text-sm font-medium">— R.T., Directeur marketing</p>
               </Card>
             </div>
           </div>
