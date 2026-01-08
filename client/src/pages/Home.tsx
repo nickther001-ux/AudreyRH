@@ -283,7 +283,7 @@ export default function Home() {
                   Où en êtes-vous dans votre parcours professionnel ?
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                  Beaucoup d'immigrants croient qu'un diplôme de maîtrise est la seule voie vers le succès. 
+                  Beaucoup d'immigrants croient qu'un diplôme est la seule voie vers le succès. 
                   La réalité ? Le marché québécois recherche souvent des métiers spécialisés bien plus que des diplômes avancés.
                 </p>
                 <Link href="/book">
