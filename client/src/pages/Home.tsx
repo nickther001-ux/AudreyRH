@@ -6,9 +6,8 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { useLanguage } from "@/lib/i18n";
 import audreyPhoto from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
-
-const rotatingWords = ["avec vous", "pour vous", "à vos côtés"];
 
 type ServiceKey = "strategy" | "credentials" | "employability" | "integration" | null;
 
@@ -146,10 +145,13 @@ const serviceDetails = {
 export default function Home() {
   const [wordIndex, setWordIndex] = useState(0);
   const [openDialog, setOpenDialog] = useState<ServiceKey>(null);
+  const { t } = useLanguage();
+
+  const rotatingWords = [t("hero.rotating.1"), t("hero.rotating.2"), t("hero.rotating.3")];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setWordIndex((prev) => (prev + 1) % rotatingWords.length);
+      setWordIndex((prev) => (prev + 1) % 3);
     }, 800);
     return () => clearInterval(interval);
   }, []);
@@ -236,11 +238,11 @@ export default function Home() {
             <div className="max-w-4xl mx-auto text-center space-y-8">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
                 <Award className="w-4 h-4" />
-                Conseillère en Relations Industrielles Agréée
+                {t("hero.badge")}
               </div>
               
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight" data-testid="text-hero-title">
-                Une experte CRIA
+                {t("hero.title1")}
                 <br />
                 <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent relative inline-block min-w-[280px] md:min-w-[400px]">
                   <span 
@@ -253,19 +255,19 @@ export default function Home() {
               </h1>
               
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed" data-testid="text-hero-description">
-                Réalisons ensemble votre potentiel de carrière au Québec. Audrey Mondesir, votre partenaire de confiance pour naviguer le marché de l'emploi.
+                {t("hero.description")}
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 flex-wrap">
                 <Link href="/book">
                   <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 text-white px-8 h-14 text-base shadow-xl shadow-primary/25 border-0" data-testid="button-hero-book">
-                    Prendre rendez-vous
+                    {t("hero.cta")}
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 </Link>
                 <Link href="#services">
                   <Button variant="outline" size="lg" className="px-8 h-14 text-base border-2 backdrop-blur-sm" data-testid="button-hero-services">
-                    Découvrir mes services
+                    {t("hero.services")}
                   </Button>
                 </Link>
               </div>
@@ -280,15 +282,14 @@ export default function Home() {
             <div className="max-w-3xl mx-auto">
               <Card className="p-10 md:p-14 text-center bg-card/80 backdrop-blur-sm shadow-xl border-primary/10">
                 <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="text-question-title">
-                  Où en êtes-vous dans votre parcours professionnel ?
+                  {t("question.title")}
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                  Beaucoup d'immigrants croient qu'un diplôme est la seule voie vers le succès. 
-                  La réalité ? Le marché québécois recherche souvent des métiers spécialisés bien plus que des diplômes avancés.
+                  {t("question.text")}
                 </p>
                 <Link href="/book">
                   <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg shadow-primary/20" data-testid="button-discover-services">
-                    Découvrir comment je peux vous aider
+                    {t("question.cta")}
                     <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </Link>
@@ -303,13 +304,13 @@ export default function Home() {
             <div className="text-center mb-16">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
                 <Target className="w-4 h-4" />
-                Services
+                {t("services.badge")}
               </div>
               <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
-                Un accompagnement sur mesure
+                {t("services.title")}
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                Des services adaptés à votre réalité et à vos objectifs de carrière
+                {t("services.description")}
               </p>
             </div>
 
@@ -423,32 +424,30 @@ export default function Home() {
             <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="space-y-6">
                 <div className="inline-block px-4 py-1 bg-primary/10 rounded-full text-primary text-sm font-medium">
-                  À propos
+                  {t("about.badge")}
                 </div>
                 <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-about-title">
-                  Mon engagement envers vous
+                  {t("about.title")}
                 </h2>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  En tant que CRIA (Conseillère en relations industrielles agréée), je comprends les nuances du marché de l'emploi. 
-                  Mon expérience dans les secteurs de la construction et de la fabrication me donne un aperçu unique pour vous guider efficacement.
+                  {t("about.text1")}
                 </p>
                 <p className="text-muted-foreground text-lg leading-relaxed">
-                  Avec 16 ans d'expérience, je sais ce que les employeurs recherchent. Je suis ici pour briser le mythe que le « prestige » 
-                  est le seul chemin vers le succès.
+                  {t("about.text2")}
                 </p>
                 
                 <div className="space-y-4 pt-4">
                   <div className="flex items-start gap-3">
                     <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground">16 années d'expertise en relations industrielles</span>
+                    <span className="text-foreground">{t("about.point1")}</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground">Connaissance approfondie du marché québécois</span>
+                    <span className="text-foreground">{t("about.point2")}</span>
                   </div>
                   <div className="flex items-start gap-3">
                     <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground">Accompagnement personnalisé et stratégique</span>
+                    <span className="text-foreground">{t("about.point3")}</span>
                   </div>
                 </div>
               </div>
@@ -475,10 +474,10 @@ export default function Home() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-12">
               <div className="inline-block px-4 py-1 bg-primary/10 rounded-full text-primary text-sm font-medium mb-4">
-                Témoignages
+                {t("testimonials.badge")}
               </div>
               <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-testimonials-title">
-                Ce que disent mes clients
+                {t("testimonials.title")}
               </h2>
             </div>
             
@@ -624,9 +623,9 @@ export default function Home() {
             <div className="max-w-3xl mx-auto text-center">
               <div className="text-6xl text-primary/20 font-serif mb-4">"</div>
               <blockquote className="text-2xl md:text-3xl font-medium text-foreground leading-relaxed mb-6" data-testid="text-quote">
-                Je vous aiderai à vous concentrer sur la reconnaissance de vos compétences pour que vous puissiez devenir contremaître et commencer à gagner plus tôt.
+                {t("quote.text")}
               </blockquote>
-              <p className="text-muted-foreground">— Audrey Mondesir, CRIA</p>
+              <p className="text-muted-foreground">{t("quote.author")}</p>
             </div>
           </div>
         </section>
@@ -636,20 +635,20 @@ export default function Home() {
           <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-3xl mx-auto text-center space-y-8">
               <h2 className="text-3xl md:text-5xl font-bold text-white" data-testid="text-cta-title">
-                Prêt à définir votre stratégie ?
+                {t("cta.title")}
               </h2>
               <p className="text-xl text-primary-foreground/80">
-                Arrêtez de deviner et commencez à planifier. Réservez une consultation individuelle pour analyser votre profil et créer votre feuille de route.
+                {t("cta.text")}
               </p>
               
               <div className="pt-4">
                 <Link href="/book">
                   <Button size="lg" className="bg-accent text-primary font-bold px-10 h-14 text-lg shadow-xl" data-testid="button-cta-book">
-                    Réserver une consultation - 50$ USD
+                    {t("cta.button")}
                   </Button>
                 </Link>
                 <p className="mt-4 text-sm text-primary-foreground/60">
-                  Paiement sécurisé via Stripe
+                  {t("cta.secure")}
                 </p>
               </div>
             </div>
