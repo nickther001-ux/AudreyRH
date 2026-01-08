@@ -482,69 +482,135 @@ export default function Home() {
               </h2>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {/* Testimonial 1 */}
-              <Card className="p-8 bg-card border-border relative" data-testid="card-testimonial-1">
-                <Quote className="w-10 h-10 text-primary/20 absolute top-6 right-6" />
-                <div className="flex gap-1 mb-4">
+              <Card className="p-6 bg-card border-border relative" data-testid="card-testimonial-1">
+                <Quote className="w-8 h-8 text-primary/20 absolute top-4 right-4" />
+                <div className="flex gap-1 mb-3">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-accent text-accent" />
                   ))}
                 </div>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  "Audrey m'a aidé à comprendre que ma maîtrise en gestion n'était pas nécessaire pour le poste que je visais. Grâce à ses conseils, j'ai économisé 2 ans d'études et j'ai trouvé un emploi dans mon domaine en 3 mois."
+                <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
+                  "Je travaillais comme caissière depuis 2 ans sans voir d'issue. Audrey m'a aidée à valoriser mon expérience en service client et j'ai décroché un poste de réceptionniste dans une clinique. Merci infiniment!"
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
-                    <span className="text-primary font-bold">M.D.</span>
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm">F.D.</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">Marie D.</p>
-                    <p className="text-sm text-muted-foreground">Gestionnaire de projets</p>
+                    <p className="font-semibold text-foreground text-sm">Fatou Diallo</p>
+                    <p className="text-xs text-muted-foreground">Réceptionniste</p>
                   </div>
                 </div>
               </Card>
 
               {/* Testimonial 2 */}
-              <Card className="p-8 bg-card border-border relative" data-testid="card-testimonial-2">
-                <Quote className="w-10 h-10 text-primary/20 absolute top-6 right-6" />
-                <div className="flex gap-1 mb-4">
+              <Card className="p-6 bg-card border-border relative" data-testid="card-testimonial-2">
+                <Quote className="w-8 h-8 text-primary/20 absolute top-4 right-4" />
+                <div className="flex gap-1 mb-3">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-accent text-accent" />
                   ))}
                 </div>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  "Je ne savais pas par où commencer avec mes diplômes étrangers. Audrey m'a guidé vers la reconnaissance de mes acquis et m'a orienté vers les bons organismes. Un investissement qui a changé ma carrière."
+                <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
+                  "Audrey m'a convaincu de ne pas retourner aux études. Elle m'a montré comment faire reconnaître mon expérience de soudeur au Cameroun. En 4 mois, j'avais ma carte de compétence et un emploi stable."
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
-                    <span className="text-primary font-bold">J.P.</span>
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm">J.N.</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">Jean-Pierre K.</p>
-                    <p className="text-sm text-muted-foreground">Ingénieur civil</p>
+                    <p className="font-semibold text-foreground text-sm">Jean-Baptiste Nkomo</p>
+                    <p className="text-xs text-muted-foreground">Soudeur</p>
                   </div>
                 </div>
               </Card>
 
               {/* Testimonial 3 */}
-              <Card className="p-8 bg-card border-border relative" data-testid="card-testimonial-3">
-                <Quote className="w-10 h-10 text-primary/20 absolute top-6 right-6" />
-                <div className="flex gap-1 mb-4">
+              <Card className="p-6 bg-card border-border relative" data-testid="card-testimonial-3">
+                <Quote className="w-8 h-8 text-primary/20 absolute top-4 right-4" />
+                <div className="flex gap-1 mb-3">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-accent text-accent" />
                   ))}
                 </div>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  "Après 6 mois de recherche infructueuse, une seule consultation avec Audrey m'a permis de revoir ma stratégie. En 2 mois, j'avais 3 offres d'emploi. Son expertise du marché québécois est inestimable."
+                <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
+                  "J'hésitais entre plusieurs formations. Une consultation avec Audrey m'a orientée vers le secteur de la petite enfance. Aujourd'hui, je suis éducatrice en garderie et j'adore mon travail."
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
-                    <span className="text-primary font-bold">S.A.</span>
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm">A.K.</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">Sophie A.</p>
-                    <p className="text-sm text-muted-foreground">Comptable CPA</p>
+                    <p className="font-semibold text-foreground text-sm">Aminata Koné</p>
+                    <p className="text-xs text-muted-foreground">Éducatrice en garderie</p>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Testimonial 4 */}
+              <Card className="p-6 bg-card border-border relative" data-testid="card-testimonial-4">
+                <Quote className="w-8 h-8 text-primary/20 absolute top-4 right-4" />
+                <div className="flex gap-1 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-accent text-accent" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
+                  "Arrivé du Sénégal avec un diplôme en électricité, je ne savais pas comment m'y prendre. Audrey m'a guidé étape par étape. Maintenant je travaille comme électricien avec un bon salaire."
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm">M.S.</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground text-sm">Moussa Sow</p>
+                    <p className="text-xs text-muted-foreground">Électricien</p>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Testimonial 5 */}
+              <Card className="p-6 bg-card border-border relative" data-testid="card-testimonial-5">
+                <Quote className="w-8 h-8 text-primary/20 absolute top-4 right-4" />
+                <div className="flex gap-1 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-accent text-accent" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
+                  "Après des mois à envoyer des CV sans réponse, Audrey m'a aidée à reformuler mon parcours. J'ai trouvé un poste d'aide-cuisinière dans un restaurant. C'est le début d'une nouvelle vie!"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm">G.T.</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground text-sm">Grace Tshimanga</p>
+                    <p className="text-xs text-muted-foreground">Aide-cuisinière</p>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Testimonial 6 */}
+              <Card className="p-6 bg-card border-border relative" data-testid="card-testimonial-6">
+                <Quote className="w-8 h-8 text-primary/20 absolute top-4 right-4" />
+                <div className="flex gap-1 mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-accent text-accent" />
+                  ))}
+                </div>
+                <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
+                  "Je pensais devoir tout recommencer à zéro. Audrey m'a montré que mon expérience de chauffeur en Côte d'Ivoire pouvait être valorisée. J'ai obtenu mon permis classe 1 et je travaille maintenant comme camionneur."
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
+                    <span className="text-primary font-bold text-sm">K.O.</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground text-sm">Kouadio Ouattara</p>
+                    <p className="text-xs text-muted-foreground">Camionneur</p>
                   </div>
                 </div>
               </Card>
