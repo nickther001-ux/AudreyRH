@@ -1,13 +1,15 @@
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/i18n";
 
 export function Navbar() {
   const [location] = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,10 +31,14 @@ export function Navbar() {
   };
 
   const navLinks = [
-    { href: "/", label: "Accueil", isAnchor: false },
-    { href: "services", label: "Services", isAnchor: true },
-    { href: "expertise", label: "À propos", isAnchor: true },
+    { href: "/", label: t("nav.home"), isAnchor: false },
+    { href: "services", label: t("nav.services"), isAnchor: true },
+    { href: "expertise", label: t("nav.about"), isAnchor: true },
   ];
+
+  const toggleLanguage = () => {
+    setLanguage(language === "fr" ? "en" : "fr");
+  };
 
   return (
     <nav
@@ -56,14 +62,14 @@ export function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8 flex-wrap">
+          <div className="hidden md:flex items-center gap-6 flex-wrap">
             {navLinks.map((link) => (
               link.isAnchor ? (
                 <button 
                   key={link.href}
                   onClick={() => scrollToSection(link.href)}
                   className="text-sm font-medium transition-colors hover:text-primary text-muted-foreground"
-                  data-testid={`link-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
+                  data-testid={`link-${link.href}`}
                 >
                   {link.label}
                 </button>
@@ -75,30 +81,53 @@ export function Navbar() {
                     "text-sm font-medium transition-colors hover:text-primary",
                     location === link.href ? "text-primary" : "text-muted-foreground"
                   )}
-                  data-testid={`link-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
+                  data-testid={`link-home`}
                 >
                   {link.label}
                 </Link>
               )
             ))}
             
+            {/* Language Toggle */}
+            <Button 
+              variant="ghost" 
+              size="sm"
+              onClick={toggleLanguage}
+              className="flex items-center gap-2"
+              data-testid="button-language-toggle"
+            >
+              <Globe className="w-4 h-4" />
+              <span className="uppercase font-medium">{language === "fr" ? "EN" : "FR"}</span>
+            </Button>
+            
             <Link href="/book" data-testid="link-book-consultation">
               <Button className="bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg shadow-primary/25 border-0">
-                Prendre rendez-vous
+                {t("nav.book")}
               </Button>
             </Link>
           </div>
 
           {/* Mobile Menu Toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            data-testid="button-mobile-menu"
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </Button>
+          <div className="flex items-center gap-2 md:hidden">
+            {/* Language Toggle Mobile */}
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={toggleLanguage}
+              data-testid="button-language-toggle-mobile"
+            >
+              <Globe className="w-5 h-5" />
+            </Button>
+            
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              data-testid="button-mobile-menu"
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -114,7 +143,7 @@ export function Navbar() {
                   setMobileMenuOpen(false);
                 }}
                 className="block py-3 px-4 text-base font-medium rounded-lg transition-colors text-foreground hover:bg-muted text-left"
-                data-testid={`link-mobile-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
+                data-testid={`link-mobile-${link.href}`}
               >
                 {link.label}
               </button>
@@ -129,7 +158,7 @@ export function Navbar() {
                     ? "text-primary bg-primary/5" 
                     : "text-foreground hover:bg-muted"
                 )}
-                data-testid={`link-mobile-${link.label.toLowerCase().replace(/\s+/g, '-')}`}
+                data-testid={`link-mobile-home`}
               >
                 {link.label}
               </Link>
@@ -142,7 +171,7 @@ export function Navbar() {
               data-testid="link-mobile-book"
             >
               <Button className="w-full bg-primary text-white">
-                Prendre rendez-vous
+                {t("nav.book")}
               </Button>
             </Link>
           </div>
