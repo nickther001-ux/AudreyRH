@@ -85,7 +85,7 @@ export function Navbar() {
             
             <Link href="/book" data-testid="link-book-consultation">
               <Button className="bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg shadow-primary/25 border-0">
-                Bilan Stratégique Gratuit
+                Réserver ma consultation
               </Button>
             </Link>
           </div>
@@ -143,7 +143,7 @@ export function Navbar() {
               data-testid="link-mobile-book"
             >
               <Button className="w-full bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg shadow-primary/25 border-0">
-                Bilan Stratégique Gratuit
+                Réserver ma consultation
               </Button>
             </Link>
           </div>

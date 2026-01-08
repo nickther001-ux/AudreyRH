@@ -260,7 +260,7 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 flex-wrap">
                 <Link href="/book">
                   <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 text-white px-8 h-14 text-base shadow-xl shadow-primary/25 border-0" data-testid="button-hero-book">
-                    Bilan Stratégique Gratuit
+                    Réserver ma consultation
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 </Link>

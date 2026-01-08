@@ -25,7 +25,7 @@ A professional consultation website for Audrey Mondesir, CRIA (Certified Industr
 - Méthode & Services (scroll to services section)
 - À Propos (scroll to expertise section)
 - Témoignages (scroll to testimonials)
-- CTA: "Bilan Stratégique Gratuit" (links to booking)
+- CTA: "Réserver ma consultation" (links to booking)
 
 ## Database Schema
 - `appointments` - Stores booking information with payment status
@@ -43,7 +43,7 @@ A professional consultation website for Audrey Mondesir, CRIA (Certified Industr
 
 ## Recent Changes
 - 2026-01-08: Restructured homepage with strategic orientation focus
-- 2026-01-08: Updated navigation with new menu items and CTA "Bilan Stratégique Gratuit"
+- 2026-01-08: Updated navigation with new menu items and CTA "Réserver ma consultation"
 - 2026-01-08: Added testimonials section with 3 sample success stories
 - 2026-01-08: Service cards now link directly to booking page
 - 2026-01-06: Added platform selection (Zoom/Google Meet) to booking form
