@@ -602,14 +602,14 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-5 text-sm">
-                  "Je pensais devoir tout recommencer à zéro. Audrey m'a montré que mon expérience de chauffeur en Côte d'Ivoire pouvait être valorisée. J'ai obtenu mon permis classe 1 et je travaille comme camionneur."
+                  "Je pensais devoir tout recommencer à zéro. Audrey m'a montré que mon expérience de chauffeur au Maroc pouvait être valorisée. J'ai obtenu mon permis classe 1 et je travaille comme camionneur."
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
-                    <span className="text-primary font-bold text-sm">K.O.</span>
+                    <span className="text-primary font-bold text-sm">K.B.</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground text-sm">Kouadio Ouattara</p>
+                    <p className="font-semibold text-foreground text-sm">Karim Benali</p>
                     <p className="text-xs text-muted-foreground">Camionneur</p>
                   </div>
                 </div>
