@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowRight, Briefcase, GraduationCap, TrendingUp, Users, CheckCircle, Target, Award, X, Star } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import audreyPhoto from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
+
+const rotatingWords = ["pour vous", "avec vous", "à vos côtés"];
 
 type ServiceKey = "strategy" | "credentials" | "employability" | "integration" | null;
 
@@ -142,7 +144,15 @@ const serviceDetails = {
 };
 
 export default function Home() {
+  const [wordIndex, setWordIndex] = useState(0);
   const [openDialog, setOpenDialog] = useState<ServiceKey>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIndex((prev) => (prev + 1) % rotatingWords.length);
+    }, 1500);
+    return () => clearInterval(interval);
+  }, []);
 
   const renderServiceDialog = (key: ServiceKey) => {
     if (!key) return null;
@@ -233,7 +243,13 @@ export default function Home() {
                 Ne recommencez pas à zéro.
                 <br />
                 <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                  Intégrez le marché efficacement
+                  Intégrez le marché{" "}
+                  <span 
+                    key={wordIndex}
+                    className="inline-block animate-in fade-in slide-in-from-bottom-2 duration-300"
+                  >
+                    {rotatingWords[wordIndex]}
+                  </span>
                 </span>
               </h1>
               
