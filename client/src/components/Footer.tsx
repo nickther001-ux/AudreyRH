@@ -19,7 +19,7 @@ export function Footer() {
             </p>
             <div className="flex gap-3 pt-2 flex-wrap">
               <a 
-                href="https://www.linkedin.com/in/audreymondesir" 
+                href="https://www.linkedin.com/in/audrey-mondesir-cria-49a8b31bb/" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-11 h-11 bg-background/10 rounded-xl flex items-center justify-center hover:bg-primary hover:scale-105 transition-all duration-300"
