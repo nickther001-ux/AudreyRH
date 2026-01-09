@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { Linkedin, Mail, MapPin } from "lucide-react";
+import { SiTiktok } from "react-icons/si";
 import { useLanguage } from "@/lib/i18n";
 
 export function Footer() {
@@ -23,6 +24,15 @@ export function Footer() {
                 data-testid="link-linkedin"
               >
                 <Linkedin size={20} />
+              </a>
+              <a 
+                href="https://www.tiktok.com/@audreymondesir" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-11 h-11 bg-background/10 rounded-xl flex items-center justify-center hover:bg-primary hover:scale-105 transition-all duration-300"
+                data-testid="link-tiktok"
+              >
+                <SiTiktok size={20} />
               </a>
               <a 
                 href="mailto:contact@audreymondesir.com" 
