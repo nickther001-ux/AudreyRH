@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useLanguage } from "@/lib/i18n";
 import audreyPhoto from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
+import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
 
 type ServiceKey = "strategy" | "credentials" | "employability" | "integration" | null;
 
@@ -131,24 +132,28 @@ export default function Home() {
       {renderServiceDialog("integration")}
 
       <main className="flex-grow">
-        {/* Hero Section - Modern elegant style */}
+        {/* Hero Section - Montreal skyline background */}
         <section className="relative pt-32 pb-24 md:pt-44 md:pb-32 overflow-hidden" data-testid="section-hero">
-          {/* Background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/8 via-background to-accent/5" />
-          <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-accent/10 to-transparent rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl" />
+          {/* Montreal skyline background image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${montrealSkyline})` }}
+          />
+          {/* Dark overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-primary/90 via-primary/80 to-primary/95" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
           
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="max-w-4xl mx-auto text-center space-y-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 text-white text-sm font-medium mb-4 backdrop-blur-sm">
                 <Award className="w-4 h-4" />
                 {t("hero.badge")}
               </div>
               
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight" data-testid="text-hero-title">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white" data-testid="text-hero-title">
                 {t("hero.title1")}
                 <br />
-                <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent relative inline-block min-w-[280px] md:min-w-[400px]">
+                <span className="bg-gradient-to-r from-accent to-accent/70 bg-clip-text text-transparent relative inline-block min-w-[280px] md:min-w-[400px]">
                   <span 
                     key={wordIndex}
                     className="inline-block animate-in fade-in slide-in-from-bottom-2 duration-200"
@@ -158,19 +163,19 @@ export default function Home() {
                 </span>
               </h1>
               
-              <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed" data-testid="text-hero-description">
+              <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto leading-relaxed" data-testid="text-hero-description">
                 {t("hero.description")}
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6 flex-wrap">
                 <Link href="/book">
-                  <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 text-white px-8 h-14 text-base shadow-xl shadow-primary/25 border-0" data-testid="button-hero-book">
+                  <Button size="lg" className="bg-accent hover:bg-accent/90 text-primary font-semibold px-8 h-14 text-base shadow-xl" data-testid="button-hero-book">
                     {t("hero.cta")}
                     <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 </Link>
                 <Link href="#services">
-                  <Button variant="outline" size="lg" className="px-8 h-14 text-base border-2 backdrop-blur-sm" data-testid="button-hero-services">
+                  <Button variant="outline" size="lg" className="px-8 h-14 text-base border-2 border-white/40 text-white hover:bg-white/10 backdrop-blur-sm" data-testid="button-hero-services">
                     {t("hero.services")}
                   </Button>
                 </Link>
