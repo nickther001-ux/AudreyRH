@@ -70,6 +70,11 @@ export function Footer() {
                   {t("nav.book")}
                 </Link>
               </li>
+              <li>
+                <Link href="/terms" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-terms">
+                  {t("footer.terms")}
+                </Link>
+              </li>
             </ul>
           </div>
 
