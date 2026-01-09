@@ -12,15 +12,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { format, isSameDay } from "date-fns";
+import { format } from "date-fns";
 import { fr, enUS } from "date-fns/locale";
-import { CreditCard, Loader2, CheckCircle2, XCircle, Clock, Video, FileText, CalendarDays } from "lucide-react";
+import { CreditCard, Loader2, CheckCircle2, XCircle, Clock, Video, FileText, CalendarDays, Shield, User, Mail, Phone, MessageSquare, Sparkles } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { SiZoom, SiGooglemeet } from "react-icons/si";
 import { useLocation } from "wouter";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useLanguage } from "@/lib/i18n";
+import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
 
 export default function Book() {
   const [success, setSuccess] = useState(false);
@@ -58,7 +58,6 @@ export default function Book() {
     },
   });
 
-  // Group slots by date
   const groupedSlots = availableSlots.reduce((acc, slot) => {
     const dateKey = format(new Date(slot.date), 'yyyy-MM-dd');
     if (!acc[dateKey]) {
@@ -77,7 +76,6 @@ export default function Book() {
   };
 
   const onSubmit = (data: InsertAppointment) => {
-    // Ensure slot info is included
     if (selectedSlotId) {
       const selectedSlot = availableSlots.find(s => s.id === selectedSlotId);
       if (selectedSlot) {
@@ -95,15 +93,15 @@ export default function Book() {
         <Navbar />
         <main className="flex-grow flex items-center justify-center py-20">
           <div className="max-w-md w-full mx-4 text-center space-y-6">
-            <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 rounded-full flex items-center justify-center mx-auto">
-              <CheckCircle2 size={40} />
+            <div className="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 text-white rounded-full flex items-center justify-center mx-auto shadow-xl shadow-green-500/30">
+              <CheckCircle2 size={48} />
             </div>
             <h1 className="text-3xl font-bold" data-testid="text-success-title">{t("book.success.title")}</h1>
             <p className="text-muted-foreground text-lg" data-testid="text-success-message">
               {t("book.success.message")}
             </p>
             <div className="pt-4">
-              <Button onClick={() => { setSuccess(false); setLocation('/'); }} variant="outline" data-testid="button-back-home">
+              <Button onClick={() => { setSuccess(false); setLocation('/'); }} size="lg" data-testid="button-back-home">
                 {t("book.success.back")}
               </Button>
             </div>
@@ -120,15 +118,15 @@ export default function Book() {
         <Navbar />
         <main className="flex-grow flex items-center justify-center py-20">
           <div className="max-w-md w-full mx-4 text-center space-y-6">
-            <div className="w-20 h-20 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-full flex items-center justify-center mx-auto">
-              <XCircle size={40} />
+            <div className="w-24 h-24 bg-gradient-to-br from-orange-400 to-orange-600 text-white rounded-full flex items-center justify-center mx-auto shadow-xl shadow-orange-500/30">
+              <XCircle size={48} />
             </div>
             <h1 className="text-3xl font-bold" data-testid="text-canceled-title">{t("book.cancel.title")}</h1>
             <p className="text-muted-foreground text-lg" data-testid="text-canceled-message">
               {t("book.cancel.message")}
             </p>
             <div className="pt-4">
-              <Button onClick={() => setCanceled(false)} data-testid="button-try-again">
+              <Button onClick={() => setCanceled(false)} size="lg" data-testid="button-try-again">
                 {t("book.cancel.retry")}
               </Button>
             </div>
@@ -143,103 +141,253 @@ export default function Book() {
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
 
-      <main className="flex-grow pt-32 pb-20">
-        <div className="container mx-auto px-4 md:px-6">
-          {/* Header */}
-          <div className="max-w-3xl mx-auto text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4" data-testid="text-book-title">
+      {/* Hero Banner */}
+      <section className="relative pt-20 pb-16 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${montrealSkyline})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1a365d]/95 via-[#1a365d]/90 to-background" />
+        
+        <div className="relative container mx-auto px-4 md:px-6 pt-12 pb-8">
+          <div className="max-w-3xl mx-auto text-center space-y-4">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30 text-primary-foreground">
+              <Sparkles className="w-4 h-4" />
+              <span className="text-sm font-medium">{t("book.badge")}</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-white" data-testid="text-book-title">
               {t("book.title")}
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-white/80 max-w-xl mx-auto">
               {t("book.subtitle")}
             </p>
           </div>
+        </div>
+      </section>
 
-          <div className="max-w-5xl mx-auto grid lg:grid-cols-5 gap-8">
+      <main className="flex-grow pb-20 -mt-8">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="max-w-6xl mx-auto grid lg:grid-cols-12 gap-8">
             
-            {/* Sidebar Info */}
-            <div className="lg:col-span-2 space-y-6">
-              <Card className="p-6 border-border">
-                <h3 className="font-bold text-lg mb-4">{t("book.details")}</h3>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <Clock className="w-5 h-5 text-primary mt-0.5" />
-                    <div>
-                      <p className="font-medium">{t("book.durationLabel")}</p>
-                      <p className="text-sm text-muted-foreground">{t("book.durationValue")}</p>
-                    </div>
+            {/* Left Column - Sticky Summary */}
+            <div className="lg:col-span-4 space-y-6">
+              <div className="lg:sticky lg:top-24">
+                {/* Session Summary Card */}
+                <Card className="overflow-hidden border-2 border-primary/20 shadow-xl">
+                  <div className="bg-gradient-to-br from-primary to-primary/80 p-6 text-primary-foreground">
+                    <h3 className="font-bold text-xl mb-2">{t("book.details")}</h3>
+                    <div className="text-4xl font-bold" data-testid="text-price">{t("book.rateValue")}</div>
+                    <p className="text-primary-foreground/80 text-sm mt-1">{t("book.perSession")}</p>
                   </div>
-                  <div className="flex items-start gap-3">
-                    <Video className="w-5 h-5 text-primary mt-0.5" />
-                    <div>
-                      <p className="font-medium">{t("book.format")}</p>
-                      <p className="text-sm text-muted-foreground">{t("book.formatValue")}</p>
+                  
+                  <div className="p-6 space-y-5">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <Clock className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-semibold">{t("book.durationLabel")}</p>
+                        <p className="text-sm text-muted-foreground">{t("book.durationValue")}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CreditCard className="w-5 h-5 text-primary mt-0.5" />
-                    <div>
-                      <p className="font-medium">{t("book.rate")}</p>
-                      <p className="text-2xl font-bold text-primary" data-testid="text-price">{t("book.rateValue")}</p>
+                    
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <Video className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-semibold">{t("book.format")}</p>
+                        <p className="text-sm text-muted-foreground">{t("book.formatValue")}</p>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </Card>
 
-              <Card className="p-6 border-border bg-primary/5">
-                <div className="flex items-start gap-3">
-                  <FileText className="w-5 h-5 text-primary mt-0.5" />
-                  <div>
-                    <h4 className="font-bold mb-2">{t("book.prepare")}</h4>
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      <li>{t("book.prepareCV")}</li>
-                      <li>{t("book.prepareEducation")}</li>
-                      <li>{t("book.prepareQuestions")}</li>
-                    </ul>
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                        <Shield className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-semibold">{t("book.securePayment")}</p>
+                        <p className="text-sm text-muted-foreground">{t("book.stripeProtected")}</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
+
+                {/* Preparation Checklist */}
+                <Card className="p-6 mt-6 bg-accent/30 border-accent">
+                  <div className="flex items-center gap-3 mb-4">
+                    <FileText className="w-5 h-5 text-primary" />
+                    <h4 className="font-bold">{t("book.prepare")}</h4>
+                  </div>
+                  <ul className="space-y-3">
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-muted-foreground">{t("book.prepareCV")}</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-muted-foreground">{t("book.prepareEducation")}</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                      <span className="text-sm text-muted-foreground">{t("book.prepareQuestions")}</span>
+                    </li>
+                  </ul>
+                </Card>
+              </div>
             </div>
 
-            {/* Booking Form */}
-            <div className="lg:col-span-3">
-              <Card className="p-6 md:p-8 border-border">
+            {/* Right Column - Booking Form */}
+            <div className="lg:col-span-8">
+              <Card className="p-6 md:p-8 shadow-xl border-2">
                 <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <FormField
-                        control={form.control}
-                        name="name"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>{t("book.name")}</FormLabel>
-                            <FormControl>
-                              <Input 
-                                placeholder={t("book.namePlaceholder")} 
-                                className="h-12" 
-                                data-testid="input-name"
-                                {...field} 
-                              />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                    {/* Section 1: Contact Info */}
+                    <div>
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">1</div>
+                        <h3 className="text-lg font-bold">{t("book.contactInfo")}</h3>
+                      </div>
                       
+                      <div className="grid md:grid-cols-2 gap-5">
+                        <FormField
+                          control={form.control}
+                          name="name"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="flex items-center gap-2">
+                                <User className="w-4 h-4" />
+                                {t("book.name")}
+                              </FormLabel>
+                              <FormControl>
+                                <Input 
+                                  placeholder={t("book.namePlaceholder")} 
+                                  className="h-12" 
+                                  data-testid="input-name"
+                                  {...field} 
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        
+                        <FormField
+                          control={form.control}
+                          name="email"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="flex items-center gap-2">
+                                <Mail className="w-4 h-4" />
+                                {t("book.email")}
+                              </FormLabel>
+                              <FormControl>
+                                <Input 
+                                  placeholder={t("book.emailPlaceholder")} 
+                                  className="h-12" 
+                                  data-testid="input-email"
+                                  {...field} 
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+
+                      <div className="mt-5">
+                        <FormField
+                          control={form.control}
+                          name="phone"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="flex items-center gap-2">
+                                <Phone className="w-4 h-4" />
+                                {t("book.phone")}
+                              </FormLabel>
+                              <FormControl>
+                                <Input 
+                                  placeholder="+1 (514) 000-0000" 
+                                  className="h-12" 
+                                  data-testid="input-phone"
+                                  {...field} 
+                                  value={field.value || ''} 
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Section 2: Date Selection */}
+                    <div>
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">2</div>
+                        <h3 className="text-lg font-bold">{t("book.selectDateTime")}</h3>
+                      </div>
+
                       <FormField
                         control={form.control}
-                        name="email"
+                        name="date"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>{t("book.email")}</FormLabel>
+                            <FormLabel className="flex items-center gap-2">
+                              <CalendarDays className="w-4 h-4" />
+                              {t("book.availableSlots")}
+                            </FormLabel>
                             <FormControl>
-                              <Input 
-                                placeholder={t("book.emailPlaceholder")} 
-                                className="h-12" 
-                                data-testid="input-email"
-                                {...field} 
-                              />
+                              {slotsLoading ? (
+                                <div className="flex items-center justify-center p-12 bg-muted/30 rounded-lg">
+                                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                                </div>
+                              ) : Object.keys(groupedSlots).length === 0 ? (
+                                <div className="p-8 bg-muted/30 rounded-lg text-center">
+                                  <CalendarDays className="w-12 h-12 mx-auto text-muted-foreground/50 mb-4" />
+                                  <p className="text-muted-foreground font-medium" data-testid="text-no-availability">
+                                    {t("book.noSlots")}
+                                  </p>
+                                  <p className="text-sm text-muted-foreground mt-1">{t("book.checkBack")}</p>
+                                </div>
+                              ) : (
+                                <div className="space-y-5 max-h-[350px] overflow-y-auto pr-2">
+                                  {Object.entries(groupedSlots)
+                                    .sort(([a], [b]) => a.localeCompare(b))
+                                    .map(([dateKey, dateSlots]) => (
+                                      <div key={dateKey} className="p-4 rounded-lg bg-muted/30 border">
+                                        <p className="text-sm font-semibold text-foreground capitalize mb-3 flex items-center gap-2">
+                                          <CalendarDays className="w-4 h-4 text-primary" />
+                                          {format(new Date(dateKey), "EEEE d MMMM yyyy", { locale: dateLocale })}
+                                        </p>
+                                        <div className="flex flex-wrap gap-2">
+                                          {dateSlots
+                                            .sort((a, b) => a.startTime.localeCompare(b.startTime))
+                                            .map((slot) => (
+                                              <Button
+                                                key={slot.id}
+                                                type="button"
+                                                variant={selectedSlotId === slot.id ? "default" : "outline"}
+                                                size="sm"
+                                                onClick={() => handleSlotSelect(slot)}
+                                                className={cn(
+                                                  "transition-all font-medium",
+                                                  selectedSlotId === slot.id 
+                                                    ? "ring-2 ring-primary ring-offset-2 shadow-lg" 
+                                                    : "hover:border-primary/50"
+                                                )}
+                                                data-testid={`button-slot-${slot.id}`}
+                                              >
+                                                <Clock className="w-3 h-3 mr-1.5" />
+                                                {slot.startTime} - {slot.endTime}
+                                              </Button>
+                                            ))}
+                                        </div>
+                                      </div>
+                                    ))}
+                                </div>
+                              )}
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -247,177 +395,116 @@ export default function Book() {
                       />
                     </div>
 
-                    <FormField
-                      control={form.control}
-                      name="phone"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t("book.phone")}</FormLabel>
-                          <FormControl>
-                            <Input 
-                              placeholder="+1 (514) 000-0000" 
-                              className="h-12" 
-                              data-testid="input-phone"
-                              {...field} 
-                              value={field.value || ''} 
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                    {/* Section 3: Session Details */}
+                    <div>
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">3</div>
+                        <h3 className="text-lg font-bold">{t("book.sessionDetails")}</h3>
+                      </div>
 
-                    <FormField
-                      control={form.control}
-                      name="date"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel className="flex items-center gap-2">
-                            <CalendarDays className="h-4 w-4" />
-                            {t("book.availableSlots")}
-                          </FormLabel>
-                          <FormControl>
-                            {slotsLoading ? (
-                              <div className="flex items-center justify-center p-8">
-                                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-                              </div>
-                            ) : Object.keys(groupedSlots).length === 0 ? (
-                              <div className="p-6 bg-muted/50 rounded-lg text-center">
-                                <p className="text-muted-foreground" data-testid="text-no-availability">
-                                  {t("book.noSlots")} {t("book.checkBack")}
-                                </p>
-                              </div>
-                            ) : (
-                              <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2">
-                                {Object.entries(groupedSlots)
-                                  .sort(([a], [b]) => a.localeCompare(b))
-                                  .map(([dateKey, dateSlots]) => (
-                                    <div key={dateKey} className="space-y-2">
-                                      <p className="text-sm font-medium text-muted-foreground capitalize">
-                                        {format(new Date(dateKey), "EEEE d MMMM", { locale: dateLocale })}
-                                      </p>
-                                      <div className="flex flex-wrap gap-2">
-                                        {dateSlots
-                                          .sort((a, b) => a.startTime.localeCompare(b.startTime))
-                                          .map((slot) => (
-                                            <Button
-                                              key={slot.id}
-                                              type="button"
-                                              variant={selectedSlotId === slot.id ? "default" : "outline"}
-                                              size="sm"
-                                              onClick={() => handleSlotSelect(slot)}
-                                              className={cn(
-                                                "transition-all",
-                                                selectedSlotId === slot.id && "ring-2 ring-primary ring-offset-2"
-                                              )}
-                                              data-testid={`button-slot-${slot.id}`}
-                                            >
-                                              {slot.startTime} - {slot.endTime}
-                                            </Button>
-                                          ))}
-                                      </div>
-                                    </div>
-                                  ))}
-                              </div>
-                            )}
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="reason"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t("book.reason")}</FormLabel>
-                          <FormControl>
-                            <Textarea 
-                              placeholder={t("book.reasonPlaceholder")} 
-                              className="min-h-[120px] resize-none" 
-                              data-testid="input-reason"
-                              {...field} 
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-
-                    <FormField
-                      control={form.control}
-                      name="platform"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>{t("book.platform")}</FormLabel>
-                          <FormControl>
-                            <RadioGroup
-                              onValueChange={field.onChange}
-                              defaultValue={field.value}
-                              className="grid grid-cols-2 gap-4"
-                            >
-                              <div>
-                                <RadioGroupItem
-                                  value="zoom"
-                                  id="zoom"
-                                  className="peer sr-only"
+                      <div className="space-y-5">
+                        <FormField
+                          control={form.control}
+                          name="reason"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="flex items-center gap-2">
+                                <MessageSquare className="w-4 h-4" />
+                                {t("book.reason")}
+                              </FormLabel>
+                              <FormControl>
+                                <Textarea 
+                                  placeholder={t("book.reasonPlaceholder")} 
+                                  className="min-h-[120px] resize-none" 
+                                  data-testid="input-reason"
+                                  {...field} 
                                 />
-                                <Label
-                                  htmlFor="zoom"
-                                  className="flex flex-col items-center justify-center rounded-lg border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
-                                  data-testid="radio-zoom"
-                                >
-                                  <SiZoom className="mb-2 h-6 w-6 text-[#2D8CFF]" />
-                                  <span className="font-medium">Zoom</span>
-                                </Label>
-                              </div>
-                              <div>
-                                <RadioGroupItem
-                                  value="google_meet"
-                                  id="google_meet"
-                                  className="peer sr-only"
-                                />
-                                <Label
-                                  htmlFor="google_meet"
-                                  className="flex flex-col items-center justify-center rounded-lg border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary cursor-pointer"
-                                  data-testid="radio-google-meet"
-                                >
-                                  <SiGooglemeet className="mb-2 h-6 w-6 text-[#00897B]" />
-                                  <span className="font-medium">Google Meet</span>
-                                </Label>
-                              </div>
-                            </RadioGroup>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
 
-                    {/* Submit */}
-                    <div className="pt-4 border-t border-border">
+                        <FormField
+                          control={form.control}
+                          name="platform"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel className="flex items-center gap-2">
+                                <Video className="w-4 h-4" />
+                                {t("book.platform")}
+                              </FormLabel>
+                              <FormControl>
+                                <RadioGroup
+                                  onValueChange={field.onChange}
+                                  defaultValue={field.value}
+                                  className="grid grid-cols-2 gap-4"
+                                >
+                                  <div>
+                                    <RadioGroupItem
+                                      value="zoom"
+                                      id="zoom"
+                                      className="peer sr-only"
+                                    />
+                                    <Label
+                                      htmlFor="zoom"
+                                      className="flex flex-col items-center justify-center rounded-xl border-2 border-muted bg-card p-6 hover:bg-accent/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 [&:has([data-state=checked])]:border-primary cursor-pointer transition-all"
+                                      data-testid="radio-zoom"
+                                    >
+                                      <SiZoom className="mb-3 h-8 w-8 text-[#2D8CFF]" />
+                                      <span className="font-semibold">Zoom</span>
+                                    </Label>
+                                  </div>
+                                  <div>
+                                    <RadioGroupItem
+                                      value="google_meet"
+                                      id="google_meet"
+                                      className="peer sr-only"
+                                    />
+                                    <Label
+                                      htmlFor="google_meet"
+                                      className="flex flex-col items-center justify-center rounded-xl border-2 border-muted bg-card p-6 hover:bg-accent/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 [&:has([data-state=checked])]:border-primary cursor-pointer transition-all"
+                                      data-testid="radio-google-meet"
+                                    >
+                                      <SiGooglemeet className="mb-3 h-8 w-8 text-[#00897B]" />
+                                      <span className="font-semibold">Google Meet</span>
+                                    </Label>
+                                  </div>
+                                </RadioGroup>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Submit Section */}
+                    <div className="pt-6 border-t-2 border-border">
                       <Button 
                         type="submit" 
                         size="lg" 
-                        className="w-full h-14 text-lg bg-primary shadow-lg shadow-primary/20"
+                        className="w-full h-16 text-lg font-bold shadow-xl shadow-primary/30 bg-gradient-to-r from-primary to-primary/90"
                         disabled={isPending}
                         data-testid="button-submit"
                       >
                         {isPending ? (
                           <>
-                            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                            <Loader2 className="mr-3 h-6 w-6 animate-spin" />
                             {t("book.processing")}
                           </>
                         ) : (
                           <>
-                            <CreditCard className="mr-2 h-5 w-5" />
+                            <CreditCard className="mr-3 h-6 w-6" />
                             {t("book.pay")}
                           </>
                         )}
                       </Button>
-                      <p className="text-center text-xs text-muted-foreground mt-4">
-                        {t("book.secure")}
-                      </p>
+                      
+                      <div className="flex items-center justify-center gap-2 mt-4 text-muted-foreground">
+                        <Shield className="w-4 h-4" />
+                        <p className="text-sm">{t("book.secure")}</p>
+                      </div>
                     </div>
 
                   </form>
