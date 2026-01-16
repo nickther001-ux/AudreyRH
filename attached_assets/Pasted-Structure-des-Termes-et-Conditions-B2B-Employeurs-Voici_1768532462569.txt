@@ -1,0 +1,81 @@
+Structure des Termes et Conditions (B2B - Employeurs)
+Voici une proposition de clauses adaptées à ton offre de "Chasseur de tête / Coach" pour le Québec.
+
+1. Objet du contrat
+Les présentes conditions générales régissent les services de recrutement et de placement de personnel offerts par [Nom de ton Agence] (ci-après l'« Agence ») au client (ci-après le « Client »).
+
+2. Description des Services
+L'Agence s'engage à présenter des candidats dont le profil a été préalablement validé et, selon l'option choisie, coaché pour faciliter leur intégration.
+
+Option A : Placement "Spot"
+
+Identification et présentation de candidats qualifiés.
+
+Suivi d'intégration de 3 semaines post-embauche.
+
+Aucune garantie de remplacement en cas de départ du candidat.
+
+Option B : Solution "Sérénité"
+
+Identification, présentation et coaching préparatoire du candidat.
+
+Suivi d'intégration de 3 semaines.
+
+Suivi mensuel pendant 4 mois.
+
+1 heure de coaching correctif incluse au besoin.
+
+Garantie de remplacement de 4 mois (voir article 5).
+
+3. Honoraires et Facturation
+En contrepartie des services rendus, le Client s'engage à verser à l'Agence les honoraires suivants :
+
+Forfait "Spot" : 4 500 $ CAD (plus taxes applicables).
+
+Forfait "Sérénité" : 7 500 $ CAD (plus taxes applicables).
+
+Modalités de paiement :
+
+La facture est émise à la date de signature du contrat d'embauche par le candidat ou à sa première journée de travail (à définir).
+
+Le paiement est dû net 15 jours (ou 30 jours, selon ta préférence) suivant la date de facturation.
+
+Tout retard de paiement entraînera des intérêts au taux de [X]% par mois.
+
+4. Clause de Non-Sollicitation et Candidature Directe
+Si le Client embauche un candidat présenté par l'Agence (pour n'importe quel poste) dans les 12 mois suivant sa présentation, les honoraires complets seront dus, même si le Client a initialement refusé le candidat ou a suspendu le mandat.
+
+5. Garantie de Remplacement (Applicable uniquement à l'option "Sérénité")
+Si le candidat engagé sous l'option "Sérénité" quitte son emploi ou est congédié pour une cause juste et suffisante à l'intérieur d'une période de quatre (4) mois suivant sa date d'entrée en fonction, l'Agence s'engage à :
+
+Effectuer les démarches pour trouver un remplaçant sans frais additionnels pour le Client (une seule fois).
+
+Cette garantie est valide à condition que :
+
+Le Client ait acquitté la facture initiale dans les délais prescrits.
+
+Le départ ne soit pas dû à une mise à pied économique, un manque de travail, ou une modification substantielle des conditions de travail par le Client.
+
+Le Client ait avisé l'Agence par écrit dans les 7 jours suivant le départ.
+
+Note : L'option "Spot" ne bénéficie d'aucune garantie de remplacement.
+
+6. Responsabilité
+L'Agence effectue une validation rigoureuse ("Profil validé & coaché") des compétences et références des candidats. Toutefois, l'Agence n'est pas responsable des actes, erreurs, omissions ou négligences du candidat une fois celui-ci à l'emploi du Client. Le Client est seul responsable de la décision finale d'embauche et de la vérification finale des antécédents (judiciaires, crédit, etc.) si nécessaire.
+
+7. Confidentialité
+L'Agence et le Client s'engagent à garder confidentielles toutes les informations commerciales et renseignements personnels échangés dans le cadre du présent mandat, conformément à la Loi sur la protection des renseignements personnels dans le secteur privé (Loi 25 au Québec).
+
+8. Loi Applicable et Langue
+Le présent contrat est régi par les lois de la province de Québec. Les parties conviennent que ce contrat et tous les documents s'y rattachant soient rédigés en français. (Clause standard pour conformité loi 96).
+
+Points de vigilance pour ton projet spécifique
+La distinction B2B vs B2C : Puisque tu fais aussi du coaching pour les immigrants (B2C), assure-toi que ton contrat avec l'employeur (le texte ci-dessus) ne mentionne jamais que le candidat paie quoi que ce soit. Si l'employeur pense que le candidat te paie pour "avoir le poste", cela pourrait être perçu comme un frais de recrutement illégal refilé au candidat.
+
+Conseil : Dans tes contrats candidats (séparés), assure-toi que le coaching est facturé pour "l'amélioration de l'employabilité et l'adaptation culturelle", et non pour "le placement".
+
+La clause "Spot" sans garantie : C'est ton offre la plus risquée pour la satisfaction client. Pour te protéger légalement comme Randstad, assure-toi que la mention "SANS GARANTIE DE REMPLACEMENT" soit écrite en majuscules ou en gras dans le contrat final pour qu'un client ne puisse pas revenir contre toi en disant qu'il n'avait pas compris.
+
+Loi 25 (Données personnelles) : Comme tu gères des CV et des profils "validés", tu dois avoir une politique de confidentialité sur ton site web ou en annexe de tes contrats, expliquant comment tu stockes les données des candidats.
+
+Veux-tu que je rédige une clause spécifique pour définir ce que comprend exactement ton "Coaching correctif" dans l'option Sérénité, afin d'éviter que l'employeur n'en demande trop ?
