@@ -1,6 +1,7 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useLanguage } from "@/lib/i18n";
+import bokehBg from "@assets/IMM_1768534974735.png";
 
 export default function Terms() {
   const { t } = useLanguage();
@@ -9,8 +10,17 @@ export default function Terms() {
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
       
-      <main className="flex-grow pt-24 pb-16">
-        <div className="container mx-auto px-4 md:px-6 max-w-4xl">
+      <main 
+        className="flex-grow pt-24 pb-16 relative"
+        style={{
+          backgroundImage: `url(${bokehBg})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        <div className="absolute inset-0 bg-background/90 dark:bg-background/95"></div>
+        <div className="container mx-auto px-4 md:px-6 max-w-4xl relative z-10">
           <h1 className="text-3xl md:text-4xl font-bold mb-8" data-testid="text-terms-title">
             {t("terms.title")}
           </h1>
