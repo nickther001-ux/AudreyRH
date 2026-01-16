@@ -153,5 +153,26 @@ export async function registerRoutes(
     }
   });
 
+  // Admin password verification endpoint
+  app.post('/api/admin/verify-password', async (req, res) => {
+    try {
+      const { password } = req.body;
+      const adminPassword = process.env.ADMIN_PASSWORD;
+      
+      if (!adminPassword) {
+        return res.status(500).json({ success: false, message: 'Admin password not configured' });
+      }
+      
+      if (password === adminPassword) {
+        res.json({ success: true });
+      } else {
+        res.status(401).json({ success: false, message: 'Invalid password' });
+      }
+    } catch (err) {
+      console.error('Error verifying admin password:', err);
+      res.status(500).json({ success: false, message: 'Verification failed' });
+    }
+  });
+
   return httpServer;
 }
