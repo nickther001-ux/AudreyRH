@@ -35,7 +35,7 @@ export async function registerRoutes(
           line_items: [
             {
               price_data: {
-                currency: 'cad',
+                currency: 'usd',
                 product_data: {
                   name: 'Consultation with Audrey Mondesir, CRIA',
                   description: `Career strategy consultation for ${input.name}`,
