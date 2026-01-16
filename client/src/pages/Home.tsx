@@ -9,6 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { useLanguage } from "@/lib/i18n";
 import audreyPhoto from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
 import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
+import bokehBg from "@assets/IMM_1768534974735.png";
 
 type ServiceKey = "strategy" | "credentials" | "employability" | "integration" | null;
 
@@ -184,9 +185,18 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Question Section - Modern glass style */}
-        <section className="py-24 relative overflow-hidden" data-testid="section-question">
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-accent/5" />
+        {/* Question Section - Modern glass style with bokeh background */}
+        <section 
+          className="py-24 relative overflow-hidden" 
+          data-testid="section-question"
+          style={{
+            backgroundImage: `url(${bokehBg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed'
+          }}
+        >
+          <div className="absolute inset-0 bg-background/85 dark:bg-background/90" />
           <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="max-w-3xl mx-auto">
               <Card className="p-10 md:p-14 text-center bg-card/80 backdrop-blur-sm shadow-xl border-primary/10">
@@ -327,9 +337,20 @@ export default function Home() {
           </div>
         </section>
 
-        {/* About Section - Professional like gorh.co */}
-        <section id="expertise" className="py-20 bg-card border-y border-border" data-testid="section-about">
-          <div className="container mx-auto px-4 md:px-6">
+        {/* About Section - Professional like gorh.co with bokeh background */}
+        <section 
+          id="expertise" 
+          className="py-20 border-y border-border relative overflow-hidden" 
+          data-testid="section-about"
+          style={{
+            backgroundImage: `url(${bokehBg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed'
+          }}
+        >
+          <div className="absolute inset-0 bg-card/90 dark:bg-card/95" />
+          <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="space-y-6">
                 <div className="inline-block px-4 py-1 bg-primary/10 rounded-full text-primary text-sm font-medium">
@@ -378,9 +399,19 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Testimonials Section */}
-        <section className="py-20" data-testid="section-testimonials">
-          <div className="container mx-auto px-4 md:px-6">
+        {/* Testimonials Section with bokeh background */}
+        <section 
+          className="py-20 relative overflow-hidden" 
+          data-testid="section-testimonials"
+          style={{
+            backgroundImage: `url(${bokehBg})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed'
+          }}
+        >
+          <div className="absolute inset-0 bg-background/85 dark:bg-background/90" />
+          <div className="container mx-auto px-4 md:px-6 relative z-10">
             <div className="text-center mb-12">
               <div className="inline-block px-4 py-1 bg-primary/10 rounded-full text-primary text-sm font-medium mb-4">
                 {t("testimonials.badge")}
