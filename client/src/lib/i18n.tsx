@@ -21,7 +21,7 @@ const translations = {
     "hero.rotating.1": "avec vous",
     "hero.rotating.2": "pour vous",
     "hero.rotating.3": "à vos côtés",
-    "hero.description": "Réalisons ensemble votre potentiel de carrière au Québec. Audrey Mondesir, votre partenaire de confiance pour naviguer le marché de l'emploi.",
+    "hero.description": "J'accompagne les futurs immigrants et nouveaux arrivants à bien intégrer le marché de l'emploi au Canada. Audrey Mondesir, votre partenaire de confiance.",
     "hero.cta": "Prendre rendez-vous",
     "hero.services": "Découvrir mes services",
     
@@ -288,7 +288,7 @@ const translations = {
     "hero.rotating.1": "with you",
     "hero.rotating.2": "for you",
     "hero.rotating.3": "by your side",
-    "hero.description": "Let's achieve your career potential in Quebec together. Audrey Mondesir, your trusted partner to navigate the job market.",
+    "hero.description": "I help future immigrants and newcomers successfully integrate into the Canadian job market. Audrey Mondesir, your trusted partner.",
     "hero.cta": "Book an appointment",
     "hero.services": "Discover my services",
     
