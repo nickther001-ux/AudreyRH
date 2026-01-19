@@ -262,7 +262,7 @@ export default function Services() {
                 </ul>
                 
                 <Link href="/book">
-                  <Button className="w-full bg-accent hover:bg-accent/90 text-white" size="lg">
+                  <Button className="w-full bg-accent text-white" size="lg">
                     {t("pricing.cta")}
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>

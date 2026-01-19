@@ -9,11 +9,13 @@ import Home from "@/pages/Home";
 import Book from "@/pages/Book";
 import Admin from "@/pages/Admin";
 import Terms from "@/pages/Terms";
+import Services from "@/pages/Services";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/services" component={Services} />
       <Route path="/book" component={Book} />
       <Route path="/admin" component={Admin} />
       <Route path="/terms" component={Terms} />

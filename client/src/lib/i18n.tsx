@@ -341,7 +341,7 @@ const translations = {
     "pricing.recruitment.item2": "Garantie de remplacement (ex: 3 mois)",
     "pricing.recruitment.item3": "Gestion administrative de la subvention (si applicable)",
     
-    "pricing.note1": "Le forfait 'Entrevue Découverte' (50 $) est 100% remboursable sous forme de rabais à l'achat de n'importe quel forfait supérieur (A, B, C ou D).",
+    "pricing.note1": "Le montant du forfait 'Entrevue Découverte' (50 $) est appliqué comme crédit à l'achat de n'importe quel forfait supérieur (A, B, C ou D).",
     "pricing.note2": "Les services candidats sont du coaching professionnel (Savoir-faire, Outils, Stratégie). Les services de recrutement (Mise en relation directe) sont facturés aux employeurs uniquement.",
     "pricing.cta": "Réserver mon entrevue découverte",
     "pricing.popular": "Populaire",
@@ -679,7 +679,7 @@ const translations = {
     "pricing.recruitment.item2": "Replacement guarantee (e.g., 3 months)",
     "pricing.recruitment.item3": "Administrative management of subsidy (if applicable)",
     
-    "pricing.note1": "The 'Discovery Interview' package ($50) is 100% refundable as a discount when purchasing any higher package (A, B, C or D).",
+    "pricing.note1": "The 'Discovery Interview' package ($50) amount is applied as a credit when purchasing any higher package (A, B, C or D).",
     "pricing.note2": "Candidate services are professional coaching (Know-how, Tools, Strategy). Recruitment services (Direct introduction) are charged to employers only.",
     "pricing.cta": "Book my discovery interview",
     "pricing.popular": "Popular",
