@@ -338,6 +338,155 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Packages Section - Candidate Services */}
+        <section id="packages" className="py-24 bg-background" data-testid="section-packages">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6">
+                <Briefcase className="w-4 h-4" />
+                {t("packages.badge")}
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
+                {t("packages.title")}
+              </h2>
+              <div className="accent-line" />
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                {t("packages.subtitle")}
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+              {/* Package 0: Discovery */}
+              <Card className="p-6 card-hover-lift border-2 border-primary/20 bg-card relative overflow-hidden" data-testid="card-package-discovery">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
+                <div className="text-center mb-6">
+                  <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">0</span>
+                  <h3 className="text-xl font-bold mt-3">{t("packages.discovery.name")}</h3>
+                  <p className="text-sm text-muted-foreground">{t("packages.discovery.subtitle")}</p>
+                </div>
+                
+                <div className="text-center mb-6">
+                  <div className="text-4xl font-bold text-primary">{t("packages.discovery.price")}</div>
+                  <p className="text-sm text-muted-foreground">{t("packages.discovery.currency")}</p>
+                  <p className="text-xs text-accent font-medium mt-1">{t("packages.discovery.noFees")}</p>
+                </div>
+                
+                <div className="bg-muted/50 rounded-lg p-3 mb-4">
+                  <p className="text-sm font-medium text-foreground">{t("packages.discovery.for")}</p>
+                  <p className="text-xs text-muted-foreground">{t("packages.discovery.forDetail")}</p>
+                </div>
+                
+                <ul className="space-y-3 mb-6">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <div>
+                      <span className="text-sm font-medium">{t("packages.discovery.feature1")}</span>
+                      <p className="text-xs text-muted-foreground">{t("packages.discovery.feature1Detail")}</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-sm">{t("packages.discovery.feature2")}</span>
+                  </li>
+                </ul>
+                
+                <div className="bg-accent/10 rounded-lg p-3 text-center">
+                  <p className="text-xs text-accent font-medium">{t("packages.discovery.note")}</p>
+                </div>
+              </Card>
+
+              {/* Package A: Essential */}
+              <Card className="p-6 card-hover-lift border-2 border-accent/30 bg-card relative overflow-hidden" data-testid="card-package-essential">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent to-accent/50" />
+                <div className="text-center mb-6">
+                  <span className="text-xs font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">A</span>
+                  <h3 className="text-xl font-bold mt-3">{t("packages.essential.name")}</h3>
+                  <p className="text-sm text-muted-foreground">{t("packages.essential.subtitle")}</p>
+                </div>
+                
+                <div className="text-center mb-6">
+                  <div className="text-4xl font-bold text-accent">{t("packages.essential.price")}</div>
+                  <p className="text-xs text-muted-foreground">{t("packages.essential.openingFee")}</p>
+                  <p className="text-xs text-muted-foreground">{t("packages.essential.proxyFee")}</p>
+                  <p className="text-sm font-bold text-foreground mt-2">{t("packages.essential.total")}</p>
+                </div>
+                
+                <div className="bg-muted/50 rounded-lg p-3 mb-4">
+                  <p className="text-sm font-medium text-foreground">{t("packages.essential.for")}</p>
+                  <p className="text-xs text-muted-foreground">{t("packages.essential.forDetail")}</p>
+                </div>
+                
+                <ul className="space-y-3 mb-4">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                    <span className="text-sm">{t("packages.essential.feature1")}</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                    <span className="text-sm">{t("packages.essential.feature2")}</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                    <span className="text-sm">{t("packages.essential.feature3")}</span>
+                  </li>
+                </ul>
+              </Card>
+
+              {/* Package B: Plan */}
+              <Card className="p-6 card-hover-lift border-2 border-primary bg-gradient-to-b from-primary/5 to-transparent relative overflow-hidden shadow-lg" data-testid="card-package-plan">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary" />
+                <div className="absolute -top-1 right-4">
+                  <span className="bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-b-md">Populaire</span>
+                </div>
+                <div className="text-center mb-6 pt-2">
+                  <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">B</span>
+                  <h3 className="text-xl font-bold mt-3">{t("packages.plan.name")}</h3>
+                  <p className="text-sm text-muted-foreground">{t("packages.plan.subtitle")}</p>
+                </div>
+                
+                <div className="text-center mb-6">
+                  <div className="text-4xl font-bold text-primary">{t("packages.plan.price")}</div>
+                  <p className="text-xs text-muted-foreground">{t("packages.plan.openingFee")}</p>
+                  <p className="text-sm font-bold text-foreground mt-2">{t("packages.plan.total")}</p>
+                </div>
+                
+                <div className="bg-muted/50 rounded-lg p-3 mb-4">
+                  <p className="text-sm font-medium text-foreground">{t("packages.plan.for")}</p>
+                  <p className="text-xs text-muted-foreground">{t("packages.plan.forDetail")}</p>
+                </div>
+                
+                <ul className="space-y-3 mb-4">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-sm">{t("packages.plan.feature1")}</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <div>
+                      <span className="text-sm">{t("packages.plan.feature2")}</span>
+                      <p className="text-xs text-muted-foreground">{t("packages.plan.feature2Detail")}</p>
+                    </div>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-sm">{t("packages.plan.feature3")}</span>
+                  </li>
+                </ul>
+              </Card>
+            </div>
+
+            <div className="text-center mt-10">
+              <p className="text-sm text-muted-foreground mb-6">{t("packages.note")}</p>
+              <Link href="/book">
+                <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg">
+                  {t("packages.cta")}
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* About Section - Professional like gorh.co with bokeh background */}
         <section 
           id="expertise" 
