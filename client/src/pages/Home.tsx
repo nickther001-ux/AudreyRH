@@ -1,11 +1,10 @@
 import { Link } from "wouter";
 import { useState, useEffect } from "react";
-import { ArrowRight, Briefcase, GraduationCap, TrendingUp, Users, CheckCircle, Target, Award, X, Quote, Star, MessageCircle, Rocket } from "lucide-react";
+import { ArrowRight, Briefcase, GraduationCap, TrendingUp, Users, CheckCircle, Target, Award, X, Quote, Star } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { useLanguage } from "@/lib/i18n";
 import audreyPhoto from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
@@ -218,7 +217,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Services Section - Highlight key packages and link to full page */}
+        {/* Services Section - Modern cards */}
         <section id="services" className="py-24 bg-muted/30" data-testid="section-services">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
@@ -227,68 +226,114 @@ export default function Home() {
                 {t("services.badge")}
               </div>
               <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
-                {t("pricing.hero.title")}
+                {t("services.title")}
               </h2>
               <div className="accent-line" />
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                {t("pricing.hero.subtitle")}
+                {t("services.description")}
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {/* Phase 0 - Discovery */}
-              <Card className="p-8 card-hover-lift gradient-border border-border bg-card relative" data-testid="card-phase-0">
-                <Badge className="absolute top-4 right-4 bg-primary text-white">
-                  {t("pricing.required")}
-                </Badge>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {/* Analyse stratégique - Has dialog */}
+              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-strategy">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
-                  <MessageCircle className="w-7 h-7 text-primary" />
+                  <TrendingUp className="w-7 h-7 text-primary" />
                 </div>
-                <div className="text-sm text-muted-foreground mb-1">{t("pricing.phase0.phase")}</div>
-                <h3 className="text-xl font-bold mb-2">{t("pricing.phase0.title")}</h3>
-                <div className="text-3xl font-bold text-primary mb-4">50 $</div>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {t("pricing.phase0.desc")}
+                <h3 className="text-xl font-bold mb-3">{t("services.strategy.title")}</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  {t("services.strategy.desc")}
                 </p>
+                <button 
+                  onClick={() => setOpenDialog("strategy")}
+                  className="text-primary font-medium inline-flex items-center gap-1"
+                  data-testid="button-learn-more-strategy"
+                >
+                  {t("services.strategy.more")} <ArrowRight className="w-4 h-4" />
+                </button>
               </Card>
 
-              {/* Phase C - Popular */}
-              <Card className="p-8 card-hover-lift gradient-border border-border bg-card relative ring-2 ring-accent" data-testid="card-phase-c">
-                <Badge className="absolute top-4 right-4 bg-accent text-white">
-                  {t("pricing.popular")}
-                </Badge>
-                <div className="w-14 h-14 bg-gradient-to-br from-accent/20 to-accent/5 rounded-2xl flex items-center justify-center mb-6">
-                  <Rocket className="w-7 h-7 text-accent" />
+              {/* Reconnaissance des acquis - Has dialog */}
+              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-credentials">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
+                  <GraduationCap className="w-7 h-7 text-primary" />
                 </div>
-                <div className="text-sm text-muted-foreground mb-1">{t("pricing.phaseC.phase")}</div>
-                <h3 className="text-xl font-bold mb-2">{t("pricing.phaseC.title")}</h3>
-                <div className="text-3xl font-bold text-accent mb-4">250 $</div>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {t("pricing.phaseC.desc")}
+                <h3 className="text-xl font-bold mb-3">{t("services.credentials.title")}</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  {t("services.credentials.desc")}
                 </p>
+                <button 
+                  onClick={() => setOpenDialog("credentials")}
+                  className="text-primary font-medium inline-flex items-center gap-1"
+                  data-testid="button-learn-more-credentials"
+                >
+                  {t("services.credentials.more")} <ArrowRight className="w-4 h-4" />
+                </button>
               </Card>
 
-              {/* Phase D - Certification */}
-              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-phase-d">
+              {/* Stratégie d'employabilité - Has dialog */}
+              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-employability">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
+                  <Briefcase className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">{t("services.employability.title")}</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  {t("services.employability.desc")}
+                </p>
+                <button 
+                  onClick={() => setOpenDialog("employability")}
+                  className="text-primary font-medium inline-flex items-center gap-1"
+                  data-testid="button-learn-more-employability"
+                >
+                  {t("services.employability.more")} <ArrowRight className="w-4 h-4" />
+                </button>
+              </Card>
+
+              {/* Coaching de carrière - Links to booking (no dialog) */}
+              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-coaching">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
+                  <Target className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">{t("services.coaching.title")}</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  {t("services.coaching.desc")}
+                </p>
+                <Link href="/book" className="text-primary font-medium inline-flex items-center gap-1">
+                  {t("services.coaching.book")} <ArrowRight className="w-4 h-4" />
+                </Link>
+              </Card>
+
+              {/* Orientation professionnelle - Links to booking (no dialog) */}
+              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-orientation">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Award className="w-7 h-7 text-primary" />
                 </div>
-                <div className="text-sm text-muted-foreground mb-1">{t("pricing.phaseD.phase")}</div>
-                <h3 className="text-xl font-bold mb-2">{t("pricing.phaseD.title")}</h3>
-                <div className="text-3xl font-bold text-primary mb-4">750 $ - 950 $</div>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  {t("pricing.phaseD.desc")}
+                <h3 className="text-xl font-bold mb-3">{t("services.orientation.title")}</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  {t("services.orientation.desc")}
                 </p>
+                <Link href="/book" className="text-primary font-medium inline-flex items-center gap-1">
+                  {t("services.orientation.book")} <ArrowRight className="w-4 h-4" />
+                </Link>
               </Card>
-            </div>
 
-            <div className="text-center mt-12">
-              <Link href="/services">
-                <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg shadow-primary/20" data-testid="button-view-all-services">
-                  {t("home.viewAllServices")}
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              </Link>
+              {/* Intégration au marché - Has dialog */}
+              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-integration">
+                <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
+                  <Users className="w-7 h-7 text-primary" />
+                </div>
+                <h3 className="text-xl font-bold mb-3">{t("services.integration.title")}</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  {t("services.integration.desc")}
+                </p>
+                <button 
+                  onClick={() => setOpenDialog("integration")}
+                  className="text-primary font-medium inline-flex items-center gap-1"
+                  data-testid="button-learn-more-integration"
+                >
+                  {t("services.integration.more")} <ArrowRight className="w-4 h-4" />
+                </button>
+              </Card>
             </div>
           </div>
         </section>

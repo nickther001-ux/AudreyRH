@@ -14,12 +14,10 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - Professional landing page with Montreal cityscape hero
 - Full bilingual support (French/English) with language toggle
 - Service cards with detailed information dialogs
-- Comprehensive Services/Pricing page with B2C packages (Phase 0-D: $50-$950) and B2B recruitment ($2,500-$3,500)
 - Redesigned booking page with hero banner, sticky sidebar, and step-based form
 - Booking system with platform selection (Zoom/Google Meet)
-- Stripe payment integration ($50 USD Discovery Interview)
-- Password-protected Admin page for managing availability
-- Strict NO REFUND policy (Phase 0 amount applied as credit to higher packages)
+- Stripe payment integration
+- Admin page for managing availability (/admin)
 - Terms & Conditions page (/terms)
 - Social media links (TikTok, LinkedIn)
 
@@ -29,9 +27,8 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 
 ## Routes
 - `/` - Home page
-- `/services` - Services & Pricing page with B2C/B2B offerings
 - `/book` - Booking page with available time slots
-- `/admin` - Admin page for managing availability (password protected)
+- `/admin` - Admin page for managing availability
 - `/terms` - Terms & Conditions page
 
 ## User Preferences
@@ -46,8 +43,6 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - Sticky sidebar for consultation details on booking page
 
 ## Recent Changes
-- 2026-01-19: Added comprehensive Services/Pricing page with B2C (5 packages) and B2B sections
-- 2026-01-19: Updated navigation with Services page link
 - 2026-01-11: Redesigned booking page with hero banner, sticky sidebar, and numbered step sections
 - 2026-01-11: Added bilingual Terms & Conditions page (/terms)
 - 2026-01-11: Fixed duplicate translation keys in i18n.tsx

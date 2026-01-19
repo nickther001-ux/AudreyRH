@@ -32,7 +32,7 @@ export function Navbar() {
 
   const navLinks = [
     { href: "/", label: t("nav.home"), isAnchor: false },
-    { href: "/services", label: t("nav.services"), isAnchor: false },
+    { href: "services", label: t("nav.services"), isAnchor: true },
     { href: "expertise", label: t("nav.about"), isAnchor: true },
   ];
 
