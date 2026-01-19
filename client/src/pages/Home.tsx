@@ -228,6 +228,7 @@ export default function Home() {
               <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
                 {t("services.title")}
               </h2>
+              <div className="accent-line" />
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 {t("services.description")}
               </p>
@@ -235,7 +236,7 @@ export default function Home() {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* Analyse stratégique - Has dialog */}
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-strategy">
+              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-strategy">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <TrendingUp className="w-7 h-7 text-primary" />
                 </div>
@@ -253,7 +254,7 @@ export default function Home() {
               </Card>
 
               {/* Reconnaissance des acquis - Has dialog */}
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-credentials">
+              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-credentials">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <GraduationCap className="w-7 h-7 text-primary" />
                 </div>
@@ -271,7 +272,7 @@ export default function Home() {
               </Card>
 
               {/* Stratégie d'employabilité - Has dialog */}
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-employability">
+              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-employability">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Briefcase className="w-7 h-7 text-primary" />
                 </div>
@@ -289,7 +290,7 @@ export default function Home() {
               </Card>
 
               {/* Coaching de carrière - Links to booking (no dialog) */}
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-coaching">
+              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-coaching">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Target className="w-7 h-7 text-primary" />
                 </div>
@@ -303,7 +304,7 @@ export default function Home() {
               </Card>
 
               {/* Orientation professionnelle - Links to booking (no dialog) */}
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-orientation">
+              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-orientation">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Award className="w-7 h-7 text-primary" />
                 </div>
@@ -317,7 +318,7 @@ export default function Home() {
               </Card>
 
               {/* Intégration au marché - Has dialog */}
-              <Card className="p-8 hover:shadow-xl transition-shadow duration-300 border-border bg-card" data-testid="card-service-integration">
+              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-integration">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Users className="w-7 h-7 text-primary" />
                 </div>
@@ -419,11 +420,12 @@ export default function Home() {
               <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-testimonials-title">
                 {t("testimonials.title")}
               </h2>
+              <div className="accent-line mt-4" />
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {/* Testimonial 1 - Prestigious */}
-              <Card className="p-6 bg-card border-border relative" data-testid="card-testimonial-1">
+              <Card className="p-6 bg-card border-border relative card-hover-lift" data-testid="card-testimonial-1">
                 <Quote className="w-8 h-8 text-primary/20 absolute top-4 right-4" />
                 <div className="flex gap-1 mb-3">
                   {[...Array(5)].map((_, i) => (
@@ -445,7 +447,7 @@ export default function Home() {
               </Card>
 
               {/* Testimonial 2 - Modest */}
-              <Card className="p-6 bg-card border-border relative" data-testid="card-testimonial-2">
+              <Card className="p-6 bg-card border-border relative card-hover-lift" data-testid="card-testimonial-2">
                 <Quote className="w-8 h-8 text-primary/20 absolute top-4 right-4" />
                 <div className="flex gap-1 mb-3">
                   {[...Array(5)].map((_, i) => (
@@ -467,7 +469,7 @@ export default function Home() {
               </Card>
 
               {/* Testimonial 3 - Prestigious */}
-              <Card className="p-6 bg-card border-border relative" data-testid="card-testimonial-3">
+              <Card className="p-6 bg-card border-border relative card-hover-lift" data-testid="card-testimonial-3">
                 <Quote className="w-8 h-8 text-primary/20 absolute top-4 right-4" />
                 <div className="flex gap-1 mb-3">
                   {[...Array(5)].map((_, i) => (
@@ -489,7 +491,7 @@ export default function Home() {
               </Card>
 
               {/* Testimonial 4 - Modest */}
-              <Card className="p-6 bg-card border-border relative" data-testid="card-testimonial-4">
+              <Card className="p-6 bg-card border-border relative card-hover-lift" data-testid="card-testimonial-4">
                 <Quote className="w-8 h-8 text-primary/20 absolute top-4 right-4" />
                 <div className="flex gap-1 mb-3">
                   {[...Array(5)].map((_, i) => (
@@ -511,7 +513,7 @@ export default function Home() {
               </Card>
 
               {/* Testimonial 5 - Modest */}
-              <Card className="p-6 bg-card border-border relative" data-testid="card-testimonial-5">
+              <Card className="p-6 bg-card border-border relative card-hover-lift" data-testid="card-testimonial-5">
                 <Quote className="w-8 h-8 text-primary/20 absolute top-4 right-4" />
                 <div className="flex gap-1 mb-3">
                   {[...Array(5)].map((_, i) => (
@@ -533,7 +535,7 @@ export default function Home() {
               </Card>
 
               {/* Testimonial 6 - Modest */}
-              <Card className="p-6 bg-card border-border relative" data-testid="card-testimonial-6">
+              <Card className="p-6 bg-card border-border relative card-hover-lift" data-testid="card-testimonial-6">
                 <Quote className="w-8 h-8 text-primary/20 absolute top-4 right-4" />
                 <div className="flex gap-1 mb-3">
                   {[...Array(5)].map((_, i) => (
