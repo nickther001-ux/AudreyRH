@@ -406,6 +406,7 @@ export default function Home() {
                 
                 <div className="text-center mb-6">
                   <div className="text-4xl font-bold text-accent">{t("packages.essential.price")}</div>
+                  <p className="text-xs text-muted-foreground">{t("packages.essential.consultation")}</p>
                   <p className="text-xs text-muted-foreground">{t("packages.essential.openingFee")}</p>
                   <p className="text-xs text-muted-foreground">{t("packages.essential.proxyFee")}</p>
                   <p className="text-sm font-bold text-foreground mt-2">{t("packages.essential.total")}</p>
@@ -446,6 +447,7 @@ export default function Home() {
                 
                 <div className="text-center mb-6">
                   <div className="text-4xl font-bold text-primary">{t("packages.plan.price")}</div>
+                  <p className="text-xs text-muted-foreground">{t("packages.plan.consultation")}</p>
                   <p className="text-xs text-muted-foreground">{t("packages.plan.openingFee")}</p>
                   <p className="text-sm font-bold text-foreground mt-2">{t("packages.plan.total")}</p>
                 </div>

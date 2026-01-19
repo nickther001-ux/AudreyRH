@@ -40,7 +40,7 @@ export async function registerRoutes(
                   name: 'Consultation with Audrey Mondesir, CRIA',
                   description: `Career strategy consultation for ${input.name}`,
                 },
-                unit_amount: 8000,
+                unit_amount: 8500,
               },
               quantity: 1,
             },
