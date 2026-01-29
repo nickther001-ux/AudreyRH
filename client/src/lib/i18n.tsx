@@ -68,7 +68,7 @@ const translations = {
     "testimonial.6.name": "Karim Benali",
     "testimonial.6.job": "Camionneur",
     
-    "quote.text": "Je vous aiderai à vous concentrer sur la reconnaissance de vos compétences pour que vous puissiez devenir contremaître et commencer à gagner plus tôt.",
+    "quote.text": "Je vous aiderai à faire reconnaître vos compétences afin que vous puissiez devenir un acteur clé sur le marché.",
     "quote.author": "— Audrey Mondesir, CRIA",
     
     "cta.title": "Prêt à définir votre stratégie ?",
@@ -381,7 +381,7 @@ const translations = {
     "testimonial.6.name": "Karim Benali",
     "testimonial.6.job": "Truck Driver",
     
-    "quote.text": "I will help you focus on getting your skills recognized so you can become a foreman and start earning sooner.",
+    "quote.text": "I will help you get your skills recognized so you can become a key player in the market.",
     "quote.author": "— Audrey Mondesir, CRIA",
     
     "cta.title": "Ready to define your strategy?",
