@@ -21,7 +21,7 @@ const translations = {
     "hero.rotating.1": "avec vous",
     "hero.rotating.2": "pour vous",
     "hero.rotating.3": "à vos côtés",
-    "hero.description": "Je vous aiderai à vous faire reconnaître vos compétences afin que vous puissiez devenir un acteur clé sur le marché.",
+    "hero.description": "Je transforme des compétences internationales en opportunités concrètes sur le marché du travail canadien, là où les talents sont le plus recherchés.",
     "hero.cta": "Prendre rendez-vous",
     "hero.services": "Découvrir mes services",
     
@@ -334,7 +334,7 @@ const translations = {
     "hero.rotating.1": "with you",
     "hero.rotating.2": "for you",
     "hero.rotating.3": "by your side",
-    "hero.description": "I will help you get your skills recognized so you can become a key player in the market.",
+    "hero.description": "I transform international skills into concrete opportunities in the Canadian job market, where talent is most in demand.",
     "hero.cta": "Book an appointment",
     "hero.services": "Discover my services",
     
