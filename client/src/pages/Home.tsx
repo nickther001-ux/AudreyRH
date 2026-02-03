@@ -360,8 +360,7 @@ export default function Home() {
               <Card className="p-6 card-hover-lift border-2 border-primary/20 bg-card relative overflow-hidden" data-testid="card-package-discovery">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
                 <div className="text-center mb-6">
-                  <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">0</span>
-                  <h3 className="text-xl font-bold mt-3">{t("packages.discovery.name")}</h3>
+                  <h3 className="text-xl font-bold">{t("packages.discovery.name")}</h3>
                   <p className="text-sm text-muted-foreground">{t("packages.discovery.subtitle")}</p>
                 </div>
                 
@@ -396,11 +395,13 @@ export default function Home() {
               </Card>
 
               {/* Package A: Essential */}
-              <Card className="p-6 card-hover-lift border-2 border-accent/30 bg-card relative overflow-hidden" data-testid="card-package-essential">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent to-accent/50" />
-                <div className="text-center mb-6">
-                  <span className="text-xs font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">A</span>
-                  <h3 className="text-xl font-bold mt-3">{t("packages.essential.name")}</h3>
+              <Card className="p-6 card-hover-lift border-2 border-accent bg-gradient-to-b from-accent/5 to-transparent relative overflow-hidden shadow-lg" data-testid="card-package-essential">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent via-primary to-accent" />
+                <div className="absolute -top-1 right-4">
+                  <span className="bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-b-md">Populaire</span>
+                </div>
+                <div className="text-center mb-6 pt-2">
+                  <h3 className="text-xl font-bold">{t("packages.essential.name")}</h3>
                   <p className="text-sm text-muted-foreground">{t("packages.essential.subtitle")}</p>
                 </div>
                 
@@ -442,14 +443,10 @@ export default function Home() {
               </Card>
 
               {/* Package B: Plan */}
-              <Card className="p-6 card-hover-lift border-2 border-primary bg-gradient-to-b from-primary/5 to-transparent relative overflow-hidden shadow-lg" data-testid="card-package-plan">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary" />
-                <div className="absolute -top-1 right-4">
-                  <span className="bg-primary text-primary-foreground text-xs font-bold px-3 py-1 rounded-b-md">Populaire</span>
-                </div>
-                <div className="text-center mb-6 pt-2">
-                  <span className="text-xs font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">B</span>
-                  <h3 className="text-xl font-bold mt-3">{t("packages.plan.name")}</h3>
+              <Card className="p-6 card-hover-lift border-2 border-primary/30 bg-card relative overflow-hidden" data-testid="card-package-plan">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
+                <div className="text-center mb-6">
+                  <h3 className="text-xl font-bold">{t("packages.plan.name")}</h3>
                   <p className="text-sm text-muted-foreground">{t("packages.plan.subtitle")}</p>
                 </div>
                 
