@@ -468,18 +468,24 @@ export default function Home() {
                 <ul className="space-y-3 mb-4">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">{t("packages.plan.feature1")}</span>
+                    <div>
+                      <span className="text-sm font-medium">{t("packages.plan.feature1")}</span>
+                      <p className="text-xs text-muted-foreground">{t("packages.plan.feature1Detail")}</p>
+                    </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     <div>
-                      <span className="text-sm">{t("packages.plan.feature2")}</span>
+                      <span className="text-sm font-medium">{t("packages.plan.feature2")}</span>
                       <p className="text-xs text-muted-foreground">{t("packages.plan.feature2Detail")}</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">{t("packages.plan.feature3")}</span>
+                    <div>
+                      <span className="text-sm font-medium">{t("packages.plan.feature3")}</span>
+                      <p className="text-xs text-muted-foreground">{t("packages.plan.feature3Detail")}</p>
+                    </div>
                   </li>
                 </ul>
               </Card>
