@@ -529,18 +529,31 @@ export default function Home() {
                   {t("about.text2")}
                 </p>
                 
-                <div className="space-y-4 pt-4">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground">{t("about.point1")}</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground">{t("about.point2")}</span>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-foreground">{t("about.point3")}</span>
+                {/* Why Choose Me */}
+                <div className="pt-6">
+                  <h3 className="text-xl font-bold mb-4 text-primary">{t("about.whyTitle")}</h3>
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-semibold text-foreground">{t("about.reason1Title")} : </span>
+                        <span className="text-muted-foreground">{t("about.reason1Text")}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-semibold text-foreground">{t("about.reason2Title")} : </span>
+                        <span className="text-muted-foreground">{t("about.reason2Text")}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" />
+                      <div>
+                        <span className="font-semibold text-foreground">{t("about.reason3Title")} : </span>
+                        <span className="text-muted-foreground">{t("about.reason3Text")}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -557,6 +570,34 @@ export default function Home() {
                 </div>
                 <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-accent/20 rounded-xl -z-10" />
                 <div className="absolute -top-6 -right-6 w-24 h-24 border-2 border-primary/20 rounded-xl -z-10" />
+              </div>
+            </div>
+            
+            {/* Compliance Section */}
+            <div className="mt-16 max-w-4xl mx-auto">
+              <div className="bg-muted/50 border border-border rounded-xl p-6 md:p-8">
+                <h3 className="text-xl font-bold mb-3 text-primary">{t("about.complianceTitle")}</h3>
+                <p className="text-muted-foreground mb-4">{t("about.complianceText")}</p>
+                <p className="text-sm font-semibold text-foreground mb-3">{t("about.complianceSubtitle")}</p>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  <div className="flex items-start gap-2">
+                    <X className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-muted-foreground">{t("about.compliance1")}</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <X className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-muted-foreground">{t("about.compliance2")}</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <X className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-muted-foreground">{t("about.compliance3")}</span>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <X className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+                    <span className="text-sm text-muted-foreground">{t("about.compliance4")}</span>
+                  </div>
+                </div>
+                <p className="mt-6 text-center font-medium text-accent italic">{t("about.mission")}</p>
               </div>
             </div>
           </div>
