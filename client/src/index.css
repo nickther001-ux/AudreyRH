@@ -337,4 +337,17 @@
       transform: translateY(0);
     }
   }
+
+  @keyframes kenBurnsZoom {
+    from {
+      transform: scale(1.1);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  .ken-burns-zoom {
+    animation: kenBurnsZoom 20s ease-out forwards;
+  }
 }

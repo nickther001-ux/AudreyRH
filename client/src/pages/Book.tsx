@@ -144,7 +144,7 @@ export default function Book() {
       {/* Hero Banner */}
       <section className="relative pt-20 pb-16 overflow-hidden">
         <div 
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center ken-burns-zoom"
           style={{ backgroundImage: `url(${montrealSkyline})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#1a365d]/95 via-[#1a365d]/90 to-background" />
