@@ -304,7 +304,7 @@ const translations = {
     "packages.essential.feature1": "Audit de conformité académique",
     "packages.essential.feature1Detail": "Analyse des diplômes selon les standards du marché",
     "packages.essential.feature2": "Stratégie de localisation",
-    "packages.essential.feature2Detail": "Identification des régions prioritaires hors Montréal/Laval",
+    "packages.essential.feature2Detail": "Identification des régions prioritaires",
     "packages.essential.feature3": "Ciblage d'employeurs",
     "packages.essential.feature3Detail": "Liste d'entreprises ciblées par secteur d'activité",
     
@@ -621,7 +621,7 @@ const translations = {
     "packages.essential.feature1": "Academic compliance audit",
     "packages.essential.feature1Detail": "Diploma analysis according to market standards",
     "packages.essential.feature2": "Location strategy",
-    "packages.essential.feature2Detail": "Identification of priority regions outside Montreal/Laval",
+    "packages.essential.feature2Detail": "Identification of priority regions",
     "packages.essential.feature3": "Employer targeting",
     "packages.essential.feature3Detail": "List of targeted companies by industry",
     
