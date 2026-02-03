@@ -408,7 +408,6 @@ export default function Home() {
                   <div className="text-4xl font-bold text-accent">{t("packages.essential.price")}</div>
                   <p className="text-xs text-muted-foreground">{t("packages.essential.consultation")}</p>
                   <p className="text-xs text-muted-foreground">{t("packages.essential.openingFee")}</p>
-                  <p className="text-xs text-muted-foreground">{t("packages.essential.proxyFee")}</p>
                   <p className="text-sm font-bold text-foreground mt-2">{t("packages.essential.total")}</p>
                 </div>
                 
@@ -420,15 +419,24 @@ export default function Home() {
                 <ul className="space-y-3 mb-4">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">{t("packages.essential.feature1")}</span>
+                    <div>
+                      <span className="text-sm font-medium">{t("packages.essential.feature1")}</span>
+                      <p className="text-xs text-muted-foreground">{t("packages.essential.feature1Detail")}</p>
+                    </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">{t("packages.essential.feature2")}</span>
+                    <div>
+                      <span className="text-sm font-medium">{t("packages.essential.feature2")}</span>
+                      <p className="text-xs text-muted-foreground">{t("packages.essential.feature2Detail")}</p>
+                    </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">{t("packages.essential.feature3")}</span>
+                    <div>
+                      <span className="text-sm font-medium">{t("packages.essential.feature3")}</span>
+                      <p className="text-xs text-muted-foreground">{t("packages.essential.feature3Detail")}</p>
+                    </div>
                   </li>
                 </ul>
               </Card>
