@@ -37,7 +37,7 @@ export function Footer() {
                 <SiTiktok size={20} />
               </a>
               <a 
-                href="mailto:contact@audreymondesir.com" 
+                href="mailto:info@audreyRH.com" 
                 className="w-11 h-11 bg-background/10 rounded-xl flex items-center justify-center hover:bg-primary hover:scale-105 transition-all duration-300"
                 data-testid="link-email-icon"
               >
@@ -88,11 +88,11 @@ export function Footer() {
               </li>
               <li>
                 <a 
-                  href="mailto:contact@audreymondesir.com" 
+                  href="mailto:info@audreyRH.com" 
                   className="hover:text-primary transition-colors"
                   data-testid="link-footer-email"
                 >
-                  contact@audreymondesir.com
+                  info@audreyRH.com
                 </a>
               </li>
             </ul>

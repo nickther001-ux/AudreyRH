@@ -118,7 +118,7 @@ const translations = {
     "terms.jurisdiction.title": "10. Loi applicable",
     "terms.jurisdiction.text": "Les présentes conditions sont régies par les lois de la province de Québec et les lois fédérales du Canada applicables. Tout litige sera soumis à la compétence exclusive des tribunaux du Québec, district de Montréal.",
     "terms.contact.title": "11. Contact",
-    "terms.contact.text": "Pour toute question concernant ces conditions générales, veuillez nous contacter à contact@audreymondesir.com.",
+    "terms.contact.text": "Pour toute question concernant ces conditions générales, veuillez nous contacter à info@audreyRH.com.",
     
     "book.title": "Réserver une consultation",
     "book.subtitle": "Choisissez un créneau disponible pour votre consultation personnalisée avec Audrey Mondesir, CRIA.",
@@ -447,7 +447,7 @@ const translations = {
     "terms.jurisdiction.title": "10. Applicable Law",
     "terms.jurisdiction.text": "These terms are governed by the laws of the Province of Quebec and applicable federal laws of Canada. Any dispute shall be subject to the exclusive jurisdiction of the courts of Quebec, District of Montreal.",
     "terms.contact.title": "11. Contact",
-    "terms.contact.text": "For any questions regarding these terms and conditions, please contact us at contact@audreymondesir.com.",
+    "terms.contact.text": "For any questions regarding these terms and conditions, please contact us at info@audreyRH.com.",
     
     "book.title": "Book a consultation",
     "book.subtitle": "Choose an available slot for your personalized consultation with Audrey Mondesir, CRIA.",
