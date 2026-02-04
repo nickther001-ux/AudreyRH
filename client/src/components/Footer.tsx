@@ -12,7 +12,7 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-2 space-y-5">
             <h3 className="text-3xl font-bold tracking-tight">
-              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Audrey</span> Mondesir<span className="text-accent">.</span>
+              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Audrey</span>RH<span className="text-accent">.</span>
             </h3>
             <p className="text-background/60 max-w-sm leading-relaxed text-lg">
               Conseillère en relations industrielles agréée (CRIA). Experte en stratégie d'employabilité pour les nouveaux arrivants au Québec.
@@ -100,7 +100,7 @@ export function Footer() {
         </div>
 
         <div className="pt-10 border-t border-background/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-background/40">
-          <p data-testid="text-copyright">&copy; {new Date().getFullYear()} Audrey Mondesir<span className="text-accent">.</span> {t("footer.rights")}</p>
+          <p data-testid="text-copyright">&copy; {new Date().getFullYear()} AudreyRH<span className="text-accent">.</span> {t("footer.rights")}</p>
           <p className="text-background/30">Consultation en relations industrielles</p>
         </div>
       </div>

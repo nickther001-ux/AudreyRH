@@ -562,7 +562,7 @@ export default function Home() {
                 <div className="rounded-2xl shadow-2xl overflow-hidden">
                   <img 
                     src={audreyPhoto} 
-                    alt="Audrey Mondesir - CRIA" 
+                    alt="AudreyRH - CRIA" 
                     className="w-full object-cover object-top"
                     style={{ marginBottom: '-15%' }}
                     data-testid="img-about"

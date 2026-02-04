@@ -58,7 +58,7 @@ export function Navbar() {
             className="text-2xl font-bold text-foreground tracking-tight"
             data-testid="link-logo"
           >
-            <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Audrey</span> Mondesir<span className="text-accent">.</span>
+            <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Audrey</span>RH<span className="text-accent">.</span>
           </Link>
 
           {/* Desktop Nav */}
