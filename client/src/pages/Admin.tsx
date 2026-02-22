@@ -33,7 +33,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { insertAvailabilitySlotSchema, type AvailabilitySlot, type InsertAvailabilitySlot, type Appointment } from "@shared/schema";
-import { CalendarIcon, Plus, Trash2, Clock, ArrowLeft, Users, CheckCircle, XCircle, Lock } from "lucide-react";
+import { CalendarIcon, Plus, Trash2, Clock, ArrowLeft, Users, CheckCircle, XCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Link } from "wouter";
@@ -49,98 +49,6 @@ export default function Admin() {
   const { t, language } = useLanguage();
   const dateLocale = language === "fr" ? fr : enUS;
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(addDays(new Date(), 1));
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return sessionStorage.getItem('adminAuth') === 'true';
-  });
-  const [password, setPassword] = useState("");
-  const [isVerifying, setIsVerifying] = useState(false);
-  const [passwordError, setPasswordError] = useState("");
-
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsVerifying(true);
-    setPasswordError("");
-    
-    try {
-      const response = await fetch('/api/admin/verify-password', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
-      });
-      
-      if (response.ok) {
-        sessionStorage.setItem('adminAuth', 'true');
-        setIsAuthenticated(true);
-      } else {
-        setPasswordError(language === "fr" ? "Mot de passe incorrect" : "Incorrect password");
-      }
-    } catch (error) {
-      setPasswordError(language === "fr" ? "Erreur de connexion" : "Connection error");
-    } finally {
-      setIsVerifying(false);
-    }
-  };
-
-  // If not authenticated, show login form
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <Card className="w-full max-w-md p-8">
-          <div className="text-center mb-6">
-            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Lock className="w-8 h-8 text-primary" />
-            </div>
-            <h1 className="text-2xl font-bold" data-testid="text-admin-login-title">
-              {language === "fr" ? "Accès Administration" : "Admin Access"}
-            </h1>
-            <p className="text-muted-foreground mt-2">
-              {language === "fr" ? "Entrez le mot de passe pour accéder à cette page" : "Enter password to access this page"}
-            </p>
-          </div>
-          
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="password">
-                {language === "fr" ? "Mot de passe" : "Password"}
-              </Label>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder={language === "fr" ? "Entrez le mot de passe" : "Enter password"}
-                data-testid="input-admin-password"
-              />
-              {passwordError && (
-                <p className="text-sm text-destructive">{passwordError}</p>
-              )}
-            </div>
-            
-            <Button 
-              type="submit" 
-              className="w-full" 
-              disabled={isVerifying || !password}
-              data-testid="button-admin-login"
-            >
-              {isVerifying 
-                ? (language === "fr" ? "Vérification..." : "Verifying...") 
-                : (language === "fr" ? "Accéder" : "Access")}
-            </Button>
-          </form>
-          
-          <div className="mt-6 text-center">
-            <Link href="/">
-              <Button variant="ghost" size="sm">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                {language === "fr" ? "Retour à l'accueil" : "Back to home"}
-              </Button>
-            </Link>
-          </div>
-        </Card>
-      </div>
-    );
-  }
-
   const { data: slots = [], isLoading } = useQuery<AvailabilitySlot[]>({
     queryKey: ['/api/availability'],
   });
