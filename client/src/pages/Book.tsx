@@ -359,8 +359,10 @@ export default function Book() {
                                       <div key={dateKey} className="p-4 rounded-lg bg-muted/30 border">
                                         <p className="text-sm font-semibold text-foreground capitalize mb-3 flex items-center gap-2">
                                           <CalendarDays className="w-4 h-4 text-primary" />
-                                          {format(new Date(dateKey), "EEEE d MMMM yyyy", { locale: dateLocale })}
-                                        </p>
+                                        <p className="text-sm font-semibold text-foreground capitalize mb-3 flex items-center gap-2">
+                                          <CalendarDays className="w-4 h-4 text-primary" />
+                                          {format(new Date(dateKey + "T12:00:00"), "EEEE d MMMM yyyy", { locale: dateLocale })}
+                                        </p>                                        </p>
                                         <div className="flex flex-wrap gap-2">
                                           {dateSlots
                                             .sort((a, b) => a.startTime.localeCompare(b.startTime))
