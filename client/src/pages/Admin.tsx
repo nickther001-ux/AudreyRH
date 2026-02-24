@@ -38,6 +38,15 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { Link } from "wouter";
 
+function parseLocalDate(dateInput: string | Date): Date {
+  const str = typeof dateInput === 'string' ? dateInput : dateInput.toISOString();
+  const match = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (match) {
+    return new Date(parseInt(match[1]), parseInt(match[2]) - 1, parseInt(match[3]), 12, 0, 0);
+  }
+  return new Date(str);
+}
+
 const timeSlots = [
   "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
   "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
@@ -116,7 +125,7 @@ export default function Admin() {
   };
 
   const groupedSlots = slots.reduce((acc, slot) => {
-    const dateKey = format(new Date(slot.date), 'yyyy-MM-dd');
+    const dateKey = format(parseLocalDate(slot.date), 'yyyy-MM-dd');
     if (!acc[dateKey]) {
       acc[dateKey] = [];
     }
@@ -275,7 +284,7 @@ export default function Admin() {
                   .map(([dateKey, dateSlots]) => (
                     <div key={dateKey}>
                       <h3 className="font-medium text-sm text-muted-foreground mb-2">
-                        {format(new Date(dateKey), "EEEE d MMMM yyyy", { locale: dateLocale })}
+                        {format(parseLocalDate(dateKey), "EEEE d MMMM yyyy", { locale: dateLocale })}
                       </h3>
                       <div className="space-y-2">
                         {dateSlots
@@ -349,7 +358,7 @@ export default function Admin() {
                         {appt.phone && <p className="text-sm text-muted-foreground">{appt.phone}</p>}
                         <div className="text-sm">
                           <span className="font-medium">Date:</span>{" "}
-                          {format(new Date(appt.date), "EEEE d MMMM yyyy", { locale: dateLocale })}
+                          {format(parseLocalDate(appt.date), "EEEE d MMMM yyyy", { locale: dateLocale })}
                           {appt.startTime && appt.endTime && (
                             <span className="ml-2">
                               {t("admin.from")} {appt.startTime} {t("admin.to")} {appt.endTime}

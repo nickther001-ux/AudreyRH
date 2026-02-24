@@ -22,6 +22,15 @@ import { useLocation } from "wouter";
 import { useLanguage } from "@/lib/i18n";
 import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
 
+function parseLocalDate(dateInput: string | Date): Date {
+  const str = typeof dateInput === 'string' ? dateInput : dateInput.toISOString();
+  const match = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (match) {
+    return new Date(parseInt(match[1]), parseInt(match[2]) - 1, parseInt(match[3]), 12, 0, 0);
+  }
+  return new Date(str);
+}
+
 export default function Book() {
   const [success, setSuccess] = useState(false);
   const [canceled, setCanceled] = useState(false);
@@ -59,7 +68,7 @@ export default function Book() {
   });
 
   const groupedSlots = availableSlots.reduce((acc, slot) => {
-    const dateKey = format(new Date(slot.date), 'yyyy-MM-dd');
+    const dateKey = format(parseLocalDate(slot.date), 'yyyy-MM-dd');
     if (!acc[dateKey]) {
       acc[dateKey] = [];
     }
@@ -69,7 +78,7 @@ export default function Book() {
 
   const handleSlotSelect = (slot: AvailabilitySlot) => {
     setSelectedSlotId(slot.id);
-    form.setValue('date', new Date(slot.date));
+    form.setValue('date', parseLocalDate(slot.date));
     form.setValue('slotId', slot.id);
     form.setValue('startTime', slot.startTime);
     form.setValue('endTime', slot.endTime);
@@ -359,10 +368,8 @@ export default function Book() {
                                       <div key={dateKey} className="p-4 rounded-lg bg-muted/30 border">
                                         <p className="text-sm font-semibold text-foreground capitalize mb-3 flex items-center gap-2">
                                           <CalendarDays className="w-4 h-4 text-primary" />
-                                        <p className="text-sm font-semibold text-foreground capitalize mb-3 flex items-center gap-2">
-                                          <CalendarDays className="w-4 h-4 text-primary" />
-                                          {format(new Date(dateKey + "T12:00:00"), "EEEE d MMMM yyyy", { locale: dateLocale })}
-                                        </p>                                        </p>
+                                          {format(parseLocalDate(dateKey), "EEEE d MMMM yyyy", { locale: dateLocale })}
+                                        </p>
                                         <div className="flex flex-wrap gap-2">
                                           {dateSlots
                                             .sort((a, b) => a.startTime.localeCompare(b.startTime))
