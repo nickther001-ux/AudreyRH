@@ -5,6 +5,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/lib/i18n";
+import { CountUp } from "@/components/CountUp";
 import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
 
 const grantCategories = [
@@ -43,9 +44,9 @@ const grantCategories = [
 ];
 
 const stats = [
-  { icon: DollarSign, valueKey: "grants.stat1Value", labelKey: "grants.stat1Label" },
-  { icon: Users, valueKey: "grants.stat2Value", labelKey: "grants.stat2Label" },
-  { icon: TrendingUp, valueKey: "grants.stat4Value", labelKey: "grants.stat4Label" },
+  { icon: DollarSign, from: 0, to: 4.5, duration: 2,   suffix: "B$", labelKey: "grants.stat1Label" },
+  { icon: Users,     from: 0, to: 500,  duration: 2.5, suffix: "+",  labelKey: "grants.stat2Label" },
+  { icon: TrendingUp,from: 0, to: 92,   duration: 2.2, suffix: "%",  labelKey: "grants.stat4Label" },
 ];
 
 export default function Grants() {
@@ -101,11 +102,14 @@ export default function Grants() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {stats.map((stat) => (
-              <div key={stat.valueKey} className="text-center">
+              <div key={stat.labelKey} className="text-center">
                 <div className="flex justify-center mb-2">
                   <stat.icon className="w-6 h-6 text-accent" />
                 </div>
-                <div className="text-3xl font-bold text-white mb-1">{t(stat.valueKey)}</div>
+                <div className="text-3xl font-bold text-white mb-1">
+                  <CountUp from={stat.from} to={stat.to} duration={stat.duration} />
+                  <span>{stat.suffix}</span>
+                </div>
                 <div className="text-background/60 text-sm">{t(stat.labelKey)}</div>
               </div>
             ))}
