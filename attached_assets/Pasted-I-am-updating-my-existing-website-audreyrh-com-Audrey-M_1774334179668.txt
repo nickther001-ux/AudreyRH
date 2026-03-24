@@ -1,0 +1,50 @@
+I am updating my existing website, audreyrh.com (Audrey Mondesir - CRIA). Currently, the site focuses on immigration career consulting, employability strategy, and credential recognition for newcomers. I am expanding the business model. The primary target audience for our services is immigrants, with a specific focus on helping those from Africa, and we are targeting the United States market.
+
+Objective:
+
+Architecture Shift: Convert the current single-page layout into a fully functional multi-page website.
+
+New Feature: Add a brand new, dedicated "Grants & Funding" (Subventions et Financement) portal.
+
+Language: The code, comments, and primary placeholder text generated must be strictly in English.
+
+Multi-Page & Navigation Requirements:
+
+Routing/File Structure: Generate separate HTML files (e.g., index.html for Home, consulting.html for Career/Immigration Services, grants.html for Funding, and contact.html).
+
+Global Navigation: Create a persistent, responsive navigation bar and footer that appear on every page, containing functional links to navigate between these new distinct pages.
+
+Content Requirements for the New grants.html Page:
+Create a grid of "Grant Opportunity" cards or a structured list targeting the following four groups, keeping in mind our focus on empowering immigrants and newcomers in the US market:
+
+Artists: Grants focused on creative projects, portfolio development, and cultural initiatives.
+
+Entrepreneurs: Funding for startups, solo founders, and early-stage business development.
+
+PMEs (SMEs): Financial support for small to medium enterprises looking to scale, hire, or optimize their operations.
+
+Corporate Businesses: Enterprise-level grants for large-scale innovation, workforce development, or corporate restructuring.
+
+UI/UX & Functional Requirements:
+
+Header Section (Grants Page): Add an eye-catching header titled "Grants & Funding Programs". Include a short introductory paragraph explaining that Audrey RH provides direct financial grants to support immigrant talent, artists, and growing businesses.
+
+Card Layout: For each of the 4 categories above, create a UI card that includes:
+
+An appropriate modern icon.
+
+A clear title.
+
+A brief 1-2 sentence description.
+
+A primary Call to Action (CTA) button reading "Check Eligibility" or "Apply Now".
+
+Application Flow: When a user clicks "Apply Now", direct them to the contact.html page featuring an application form (Fields: Name, Email, Business/Grant Type dropdown, and Project Description).
+
+Technical & Design Constraints:
+
+Write clean, modular HTML/CSS/JS.
+
+Extract shared components (like the navigation bar and footer) to maintain consistency.
+
+Keep the styling consistent with a modern, professional, and trustworthy consulting firm. Ensure all pages are fully mobile-responsive.
