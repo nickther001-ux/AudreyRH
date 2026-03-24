@@ -355,7 +355,7 @@ const translations = {
 
     "business.badge": "Solutions Entreprises",
     "business.hero.title": "Solutions RH pour entreprises ambitieuses",
-    "business.hero.description": "AudreyRH accompagne les PMEs, startups et grandes entreprises dans leur stratégie RH, l'acquisition de talents immigrants qualifiés et l'accès aux subventions gouvernementales.",
+    "business.hero.description": "AudreyRH accompagne les PMEs, startups et grandes entreprises dans leur stratégie RH, l'acquisition de talents qualifiés et l'accès aux subventions gouvernementales.",
     "business.hero.cta": "Nous contacter",
     "business.hero.book": "Réserver une consultation",
 
@@ -860,7 +860,7 @@ const translations = {
 
     "business.badge": "Business Solutions",
     "business.hero.title": "HR Solutions for Ambitious Organizations",
-    "business.hero.description": "AudreyRH supports SMEs, startups, and large corporations in their HR strategy, acquisition of qualified immigrant talent, and access to government funding programs.",
+    "business.hero.description": "AudreyRH supports SMEs, startups, and large corporations in their HR strategy, acquisition of qualified talent, and access to government funding programs.",
     "business.hero.cta": "Contact Us",
     "business.hero.book": "Book a consultation",
 
