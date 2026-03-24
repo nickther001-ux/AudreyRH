@@ -33,10 +33,13 @@ export default function Business() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${montrealSkyline})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-foreground/88 via-foreground/78 to-accent/40" />
+        {/* Dark base overlay — makes the city much darker */}
+        <div className="absolute inset-0 bg-black/60" />
+        {/* Gradient tint on top */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/70 via-transparent to-accent/20" />
 
         <div className="relative z-10 container mx-auto px-4 md:px-6 text-center py-24">
-          <div className="inline-flex items-center gap-2 bg-accent/25 border border-accent/50 text-accent px-4 py-2 rounded-full text-sm font-medium mb-6">
+          <div className="inline-flex items-center gap-2 bg-black/50 border border-accent/60 text-accent px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
             <Building2 className="w-4 h-4" />
             {t("business.badge")}
           </div>

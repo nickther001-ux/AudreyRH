@@ -49,7 +49,7 @@ export function Navbar() {
             className="text-2xl font-bold text-foreground tracking-tight flex-shrink-0"
             data-testid="link-logo"
           >
-            <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Audrey</span>
+            <span className={cn(isScrolled ? "bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent" : "text-white")}>Audrey</span>
             <span className={cn(isScrolled ? "text-foreground" : "text-white")}>RH</span>
             <span className="text-accent">.</span>
           </Link>
@@ -61,12 +61,12 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary",
+                  "text-sm font-medium transition-colors",
                   location === link.href
-                    ? "text-primary"
+                    ? isScrolled ? "text-primary" : "text-white font-semibold"
                     : isScrolled
-                    ? "text-muted-foreground"
-                    : "text-white/80"
+                    ? "text-muted-foreground hover:text-primary"
+                    : "text-white hover:text-white/80"
                 )}
                 data-testid={`link-nav-${link.href.replace("/", "") || "home"}`}
               >
