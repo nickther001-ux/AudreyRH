@@ -408,7 +408,7 @@ const translations = {
     "business.why.results.text": "Des recommandations basées sur des données réelles du marché, pas des conseils génériques. Chaque intervention est conçue pour générer un ROI mesurable.",
 
     "business.grants.title": "Accédez aux subventions disponibles",
-    "business.grants.text": "De nombreuses subventions gouvernementales sont disponibles pour les entreprises qui embauchent des immigrants. Découvrez les programmes adaptés à votre situation.",
+    "business.grants.text": "De nombreuses subventions gouvernementales sont disponibles pour les entreprises qui cherchent à croître et à embaucher. Découvrez les programmes adaptés à votre situation.",
     "business.grants.cta": "Explorer les subventions",
 
     "business.cta.title": "Prêt à optimiser votre capital humain ?",
@@ -913,7 +913,7 @@ const translations = {
     "business.why.results.text": "Recommendations grounded in real market data, not generic advice. Every engagement is designed to generate measurable ROI for your organization.",
 
     "business.grants.title": "Access Available Government Grants",
-    "business.grants.text": "Many government grants are available for companies that hire immigrants. Discover the programs adapted to your situation.",
+    "business.grants.text": "Many government grants are available for companies looking to grow and hire. Discover the programs adapted to your situation.",
     "business.grants.cta": "Explore Grants",
 
     "business.cta.title": "Ready to Optimize Your Human Capital?",
