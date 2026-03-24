@@ -433,7 +433,7 @@ const translations = {
 
     "grants.intro.title": "Votre partenaire stratégique pour l'accès au financement",
     "grants.intro.text": "Naviguer dans le labyrinthe des subventions gouvernementales et privées est complexe. AudreyRH identifie les opportunités adaptées à votre profil d'immigrant et vous accompagne dans la préparation d'un dossier solide, maximisant vos chances d'obtenir le financement dont vous avez besoin.",
-    "grants.intro.point1": "Veille active sur toutes les subventions fédérales, étatiques et privées disponibles pour les immigrants aux États-Unis",
+    "grants.intro.point1": "Veille active sur toutes les subventions fédérales, provinciales et privées disponibles pour les immigrants au Canada",
     "grants.intro.point2": "Analyse de votre admissibilité selon votre statut, secteur d'activité et projet",
     "grants.intro.point3": "Accompagnement personnalisé dans la préparation et soumission de votre dossier",
 
@@ -938,7 +938,7 @@ const translations = {
 
     "grants.intro.title": "Your Strategic Partner for Funding Access",
     "grants.intro.text": "Navigating the maze of government and private grants is complex. AudreyRH identifies opportunities tailored to your immigrant profile and guides you through building a strong application that maximizes your chances of securing the funding you need.",
-    "grants.intro.point1": "Active monitoring of all federal, state, and private grants available to immigrants in the US",
+    "grants.intro.point1": "Active monitoring of all federal, provincial, and private grants available to immigrants in Canada",
     "grants.intro.point2": "Eligibility analysis based on your status, industry, and project",
     "grants.intro.point3": "Personalized guidance for preparing and submitting a compelling application",
 
