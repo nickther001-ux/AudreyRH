@@ -67,7 +67,7 @@ export default function Home() {
 
               {/* For Businesses */}
               <Link href="/business" data-testid="link-gateway-business">
-                <div className="group relative bg-white/10 hover:bg-white/[0.14] border-2 border-accent/35 hover:border-accent/60 rounded-3xl p-10 text-left transition-all duration-300 cursor-pointer backdrop-blur-sm hover:-translate-y-1" style={{ boxShadow: "0 0 18px 2px rgba(249,115,22,0.18), 0 0 0 0 transparent" }} onMouseEnter={e => (e.currentTarget.style.boxShadow = "0 0 28px 6px rgba(249,115,22,0.28), 0 8px 32px rgba(0,0,0,0.25)")} onMouseLeave={e => (e.currentTarget.style.boxShadow = "0 0 18px 2px rgba(249,115,22,0.18), 0 0 0 0 transparent")}>
+                <div className="group relative border-2 border-transparent hover:border-transparent rounded-3xl p-10 text-left transition-all duration-300 cursor-pointer backdrop-blur-sm hover:-translate-y-1" style={{ background: "rgba(249,115,22,0.13)" }} onMouseEnter={e => (e.currentTarget.style.background = "rgba(249,115,22,0.19)")} onMouseLeave={e => (e.currentTarget.style.background = "rgba(249,115,22,0.13)")}>
                   <div className="w-16 h-16 bg-accent/20 group-hover:bg-accent/30 rounded-2xl flex items-center justify-center mb-6 transition-colors">
                     <Building2 className="w-8 h-8 text-accent" />
                   </div>
