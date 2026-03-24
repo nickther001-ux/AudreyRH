@@ -389,7 +389,7 @@ const translations = {
 
     "business.who.title": "Qui nous accompagnons",
     "business.who.subtitle": "Nos services s'adressent à tous les types d'organisations souhaitant optimiser leur stratégie de capital humain.",
-    "business.who.sme.title": "PMEs & Petites entreprises",
+    "business.who.sme.title": "PMEs & Moyennes entreprises",
     "business.who.sme.desc": "Structurez vos RH, accédez aux talents et aux subventions gouvernementales pour accélérer votre croissance.",
     "business.who.startup.title": "Startups & Entrepreneurs",
     "business.who.startup.desc": "Construisez votre équipe fondatrice, définissez votre culture d'entreprise et accédez aux financements de démarrage.",
@@ -453,7 +453,7 @@ const translations = {
     "grants.entrepreneurs.feature2": "Programmes SBA pour minorités",
     "grants.entrepreneurs.feature3": "Microfinancement et prêts à taux préférentiels",
 
-    "grants.sme.title": "PMEs & Petites Entreprises",
+    "grants.sme.title": "PMEs & Moyennes Entreprises",
     "grants.sme.description": "Soutien financier pour les petites et moyennes entreprises dirigées par des immigrants cherchant à croître, embaucher ou optimiser leurs opérations.",
     "grants.sme.feature1": "Grants de croissance et d'expansion",
     "grants.sme.feature2": "Financement pour embauche et formation",
