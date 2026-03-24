@@ -449,8 +449,8 @@ const translations = {
 
     "grants.entrepreneurs.title": "Entrepreneurs & Fondateurs",
     "grants.entrepreneurs.description": "Financements pour startups et entrepreneurs solo immigrants en phase de lancement ou de développement initial aux États-Unis.",
-    "grants.entrepreneurs.feature1": "Subventions de démarrage pour entrepreneurs immigrants",
-    "grants.entrepreneurs.feature2": "Programmes SBA pour minorités et immigrants",
+    "grants.entrepreneurs.feature1": "Subventions de démarrage pour entrepreneurs",
+    "grants.entrepreneurs.feature2": "Programmes SBA pour minorités",
     "grants.entrepreneurs.feature3": "Microfinancement et prêts à taux préférentiels",
 
     "grants.sme.title": "PMEs & Petites Entreprises",
