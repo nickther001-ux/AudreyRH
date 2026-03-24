@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { Menu, X, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
+import { StarBorder } from "@/components/StarBorder";
 
 export function Navbar() {
   const [location] = useLocation();
@@ -44,15 +45,19 @@ export function Navbar() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between gap-4">
           {/* Logo */}
-          <Link
+          <StarBorder
+            as="a"
             href="/"
-            className="text-2xl font-bold text-foreground tracking-tight flex-shrink-0"
+            color="#f97316"
+            speed="5s"
+            thickness={2}
+            className="flex-shrink-0 text-2xl font-bold tracking-tight"
             data-testid="link-logo"
           >
             <span className={cn(isScrolled ? "bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent" : "text-white")}>Audrey</span>
             <span className={cn(isScrolled ? "text-foreground" : "text-white")}>RH</span>
             <span className="text-accent">.</span>
-          </Link>
+          </StarBorder>
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-5 flex-wrap">
