@@ -363,7 +363,7 @@ const translations = {
     "business.services.title": "Des solutions RH adaptées à votre réalité",
     "business.services.subtitle": "Un accompagnement stratégique pour optimiser votre capital humain et accéder aux financements disponibles.",
 
-    "business.service.talent.title": "Acquisition de talents immigrants",
+    "business.service.talent.title": "Acquisition de talents",
     "business.service.talent.desc": "Accédez à un bassin de candidats internationaux qualifiés, rigoureusement évalués pour correspondre aux besoins spécifiques de votre entreprise.",
     "business.service.talent.point1": "Présélection et évaluation des candidats immigrants",
     "business.service.talent.point2": "Matching culture et compétences avec vos postes ouverts",
@@ -868,7 +868,7 @@ const translations = {
     "business.services.title": "HR Solutions Tailored to Your Reality",
     "business.services.subtitle": "Strategic support to optimize your human capital and access the funding you deserve.",
 
-    "business.service.talent.title": "Immigrant Talent Acquisition",
+    "business.service.talent.title": "Talent Acquisition",
     "business.service.talent.desc": "Access a pool of qualified international candidates, rigorously assessed to match your organization's specific needs and culture.",
     "business.service.talent.point1": "Pre-screening and evaluation of immigrant candidates",
     "business.service.talent.point2": "Culture and skills matching with your open positions",
