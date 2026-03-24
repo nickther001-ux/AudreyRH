@@ -56,7 +56,10 @@ export default function Business() {
             <Link href="/contact" data-testid="link-business-hero-contact">
               <Button
                 size="lg"
-                className="bg-accent text-white hover:bg-accent/90 shadow-xl shadow-accent/30 px-8 py-6 text-base font-semibold"
+                className="border border-accent/40 text-white px-8 py-6 text-base font-semibold backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5"
+                style={{ background: "rgba(249,115,22,0.18)" }}
+                onMouseEnter={e => (e.currentTarget.style.background = "rgba(249,115,22,0.28)")}
+                onMouseLeave={e => (e.currentTarget.style.background = "rgba(249,115,22,0.18)")}
               >
                 {t("business.hero.cta")}
                 <ArrowRight className="ml-2 w-5 h-5" />
