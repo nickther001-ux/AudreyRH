@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { ArrowRight, Users, TrendingUp, Award, CheckCircle, Briefcase, Target, Building2, DollarSign, ShieldCheck } from "lucide-react";
+import { ArrowRight, Users, TrendingUp, Award, CheckCircle, Briefcase, Target, Building2, DollarSign, ShieldCheck, Rocket, Heart, Factory } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -123,25 +123,50 @@ export default function Business() {
 
       {/* Who We Serve */}
       <section className="py-24 relative overflow-hidden bg-primary">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-accent/20 via-primary to-primary" />
+        {/* Decorative gradient */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-accent/25 via-primary/95 to-primary" />
+        {/* Dot grid pattern */}
+        <div
+          className="absolute inset-0 opacity-[0.07]"
+          style={{
+            backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+
         <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-5xl">
           <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-accent/20 border border-accent/40 text-accent px-4 py-2 rounded-full text-sm font-medium mb-5">
+              <Users className="w-4 h-4" />
+              {t("business.who.title")}
+            </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">{t("business.who.title")}</h2>
-            <p className="text-white/70 text-lg max-w-2xl mx-auto">{t("business.who.subtitle")}</p>
+            <p className="text-white/65 text-lg max-w-2xl mx-auto leading-relaxed">{t("business.who.subtitle")}</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {["sme", "startup", "corporate", "nonprofit"].map((type) => (
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            {[
+              { type: "sme",       Icon: Factory,   color: "text-accent",      bg: "bg-accent/20",   border: "border-accent/30",   num: "01" },
+              { type: "startup",   Icon: Rocket,    color: "text-secondary",   bg: "bg-secondary/20",border: "border-secondary/30",num: "02" },
+              { type: "corporate", Icon: Building2, color: "text-white",       bg: "bg-white/15",    border: "border-white/25",    num: "03" },
+              { type: "nonprofit", Icon: Heart,     color: "text-accent",      bg: "bg-accent/20",   border: "border-accent/30",   num: "04" },
+            ].map(({ type, Icon, color, bg, border, num }) => (
               <div
                 key={type}
-                className="bg-white/10 border border-white/20 rounded-2xl p-6 flex items-start gap-4 backdrop-blur-sm"
+                className={`group relative bg-white/[0.06] hover:bg-white/[0.11] border ${border} rounded-2xl p-7 flex items-start gap-5 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-black/20`}
                 data-testid={`card-business-who-${type}`}
               >
-                <div className="w-10 h-10 bg-accent/30 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <CheckCircle className="w-5 h-5 text-accent" />
+                {/* Number watermark */}
+                <span className="absolute top-4 right-5 text-5xl font-black text-white/[0.06] select-none leading-none">
+                  {num}
+                </span>
+                {/* Icon */}
+                <div className={`w-12 h-12 ${bg} rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5`}>
+                  <Icon className={`w-6 h-6 ${color}`} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white mb-1">{t(`business.who.${type}.title`)}</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">{t(`business.who.${type}.desc`)}</p>
+                  <h3 className="font-bold text-white text-base mb-2">{t(`business.who.${type}.title`)}</h3>
+                  <p className="text-white/65 text-sm leading-relaxed">{t(`business.who.${type}.desc`)}</p>
                 </div>
               </div>
             ))}
