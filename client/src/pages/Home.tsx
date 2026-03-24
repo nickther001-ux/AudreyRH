@@ -67,9 +67,9 @@ export default function Home() {
 
               {/* For Businesses */}
               <Link href="/business" data-testid="link-gateway-business">
-                <div className="group relative bg-accent/20 hover:bg-accent border-2 border-accent/50 hover:border-accent rounded-3xl p-10 text-left transition-all duration-300 cursor-pointer backdrop-blur-sm hover:shadow-2xl hover:shadow-accent/30 hover:-translate-y-1">
-                  <div className="w-16 h-16 bg-accent/30 group-hover:bg-white/20 rounded-2xl flex items-center justify-center mb-6 transition-colors">
-                    <Building2 className="w-8 h-8 text-accent group-hover:text-white" />
+                <div className="group relative bg-white/10 hover:bg-white/[0.15] border-2 border-white/30 hover:border-accent/60 rounded-3xl p-10 text-left transition-all duration-300 cursor-pointer backdrop-blur-sm hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-1">
+                  <div className="w-16 h-16 bg-accent/20 group-hover:bg-accent/30 rounded-2xl flex items-center justify-center mb-6 transition-colors">
+                    <Building2 className="w-8 h-8 text-accent" />
                   </div>
                   <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
                     {t("gateway.business.title")}
@@ -77,7 +77,7 @@ export default function Home() {
                   <p className="text-white/75 group-hover:text-white/90 text-base leading-relaxed mb-8 transition-colors">
                     {t("gateway.business.subtitle")}
                   </p>
-                  <div className="flex items-center gap-2 text-white font-semibold">
+                  <div className="flex items-center gap-2 text-accent font-semibold">
                     {t("gateway.business.cta")}
                     <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                   </div>
