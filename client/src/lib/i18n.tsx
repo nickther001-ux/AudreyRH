@@ -365,7 +365,7 @@ const translations = {
 
     "business.service.talent.title": "Acquisition de talents",
     "business.service.talent.desc": "Accédez à un bassin de candidats internationaux qualifiés, rigoureusement évalués pour correspondre aux besoins spécifiques de votre entreprise.",
-    "business.service.talent.point1": "Présélection et évaluation des candidats immigrants",
+    "business.service.talent.point1": "Présélection et évaluation des candidats",
     "business.service.talent.point2": "Matching culture et compétences avec vos postes ouverts",
     "business.service.talent.point3": "Accompagnement à l'intégration en milieu de travail",
 
@@ -870,7 +870,7 @@ const translations = {
 
     "business.service.talent.title": "Talent Acquisition",
     "business.service.talent.desc": "Access a pool of qualified international candidates, rigorously assessed to match your organization's specific needs and culture.",
-    "business.service.talent.point1": "Pre-screening and evaluation of immigrant candidates",
+    "business.service.talent.point1": "Pre-screening and evaluation of candidates",
     "business.service.talent.point2": "Culture and skills matching with your open positions",
     "business.service.talent.point3": "Workplace integration support and onboarding guidance",
 
