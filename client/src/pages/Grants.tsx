@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Palette, Lightbulb, Building2, Briefcase, ArrowRight, CheckCircle, Globe, DollarSign, Users, TrendingUp } from "lucide-react";
+import { Palette, Lightbulb, Building2, Briefcase, ArrowRight, CheckCircle, DollarSign, Users, TrendingUp } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -45,7 +45,6 @@ const grantCategories = [
 const stats = [
   { icon: DollarSign, valueKey: "grants.stat1Value", labelKey: "grants.stat1Label" },
   { icon: Users, valueKey: "grants.stat2Value", labelKey: "grants.stat2Label" },
-  { icon: Globe, valueKey: "grants.stat3Value", labelKey: "grants.stat3Label" },
   { icon: TrendingUp, valueKey: "grants.stat4Value", labelKey: "grants.stat4Label" },
 ];
 
@@ -100,7 +99,7 @@ export default function Grants() {
       {/* Stats Bar */}
       <section className="bg-foreground text-background py-12">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {stats.map((stat) => (
               <div key={stat.valueKey} className="text-center">
                 <div className="flex justify-center mb-2">
