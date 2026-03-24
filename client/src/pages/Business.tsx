@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/lib/i18n";
 import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
-import bokehBg from "@assets/IMM_1768534974735.png";
 
 const services = [
   { icon: Users, key: "talent", color: "text-primary", bg: "bg-primary/10" },
@@ -123,29 +122,26 @@ export default function Business() {
       </section>
 
       {/* Who We Serve */}
-      <section
-        className="py-24 relative overflow-hidden"
-        style={{ backgroundImage: `url(${bokehBg})`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
-      >
-        <div className="absolute inset-0 bg-background/88" />
+      <section className="py-24 relative overflow-hidden bg-primary">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-accent/20 via-primary to-primary" />
         <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-5xl">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">{t("business.who.title")}</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{t("business.who.subtitle")}</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">{t("business.who.title")}</h2>
+            <p className="text-white/70 text-lg max-w-2xl mx-auto">{t("business.who.subtitle")}</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {["sme", "startup", "corporate", "nonprofit"].map((type) => (
               <div
                 key={type}
-                className="bg-card border border-border rounded-2xl p-6 flex items-start gap-4"
+                className="bg-white/10 border border-white/20 rounded-2xl p-6 flex items-start gap-4 backdrop-blur-sm"
                 data-testid={`card-business-who-${type}`}
               >
-                <div className="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-accent/30 rounded-xl flex items-center justify-center flex-shrink-0">
                   <CheckCircle className="w-5 h-5 text-accent" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground mb-1">{t(`business.who.${type}.title`)}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{t(`business.who.${type}.desc`)}</p>
+                  <h3 className="font-semibold text-white mb-1">{t(`business.who.${type}.title`)}</h3>
+                  <p className="text-white/70 text-sm leading-relaxed">{t(`business.who.${type}.desc`)}</p>
                 </div>
               </div>
             ))}
