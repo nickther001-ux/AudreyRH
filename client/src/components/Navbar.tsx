@@ -34,6 +34,8 @@ export function Navbar() {
     { href: "/", label: t("nav.home"), isAnchor: false },
     { href: "services", label: t("nav.services"), isAnchor: true },
     { href: "expertise", label: t("nav.about"), isAnchor: true },
+    { href: "/grants", label: t("nav.grants"), isAnchor: false },
+    { href: "/contact", label: t("nav.contact"), isAnchor: false },
   ];
 
   const toggleLanguage = () => {
@@ -81,7 +83,7 @@ export function Navbar() {
                     "text-sm font-medium transition-colors hover:text-primary",
                     location === link.href ? "text-primary" : "text-muted-foreground"
                   )}
-                  data-testid={`link-home`}
+                  data-testid={`link-nav-${link.href.replace("/", "") || "home"}`}
                 >
                   {link.label}
                 </Link>
@@ -158,7 +160,7 @@ export function Navbar() {
                     ? "text-primary bg-primary/5" 
                     : "text-foreground hover:bg-muted"
                 )}
-                data-testid={`link-mobile-home`}
+                data-testid={`link-mobile-${link.href.replace("/", "") || "home"}`}
               >
                 {link.label}
               </Link>

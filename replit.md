@@ -30,6 +30,8 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - `/book` - Booking page with available time slots
 - `/admin` - Admin page for managing availability
 - `/terms` - Terms & Conditions page
+- `/grants` - Grants & Funding portal (4 categories: Artists, Entrepreneurs, SMEs, Corporate)
+- `/contact` - Contact & Grant Application form page
 
 ## User Preferences
 - Currency: USD ($50)

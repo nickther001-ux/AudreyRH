@@ -9,6 +9,8 @@ import Home from "@/pages/Home";
 import Book from "@/pages/Book";
 import Admin from "@/pages/Admin";
 import Terms from "@/pages/Terms";
+import Grants from "@/pages/Grants";
+import Contact from "@/pages/Contact";
 
 function Router() {
   return (
@@ -17,6 +19,8 @@ function Router() {
       <Route path="/book" component={Book} />
       <Route path="/admin" component={Admin} />
       <Route path="/terms" component={Terms} />
+      <Route path="/grants" component={Grants} />
+      <Route path="/contact" component={Contact} />
       <Route component={NotFound} />
     </Switch>
   );

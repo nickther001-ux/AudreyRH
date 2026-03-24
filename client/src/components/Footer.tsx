@@ -71,6 +71,16 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/grants" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-grants">
+                  {t("nav.grants")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-contact">
+                  {t("nav.contact")}
+                </Link>
+              </li>
+              <li>
                 <Link href="/terms" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-terms">
                   {t("footer.terms")}
                 </Link>
