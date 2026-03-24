@@ -443,7 +443,7 @@ const translations = {
 
     "grants.artists.title": "Artistes & Créateurs",
     "grants.artists.description": "Subventions dédiées aux artistes immigrants souhaitant développer leur pratique créative, constituer un portfolio et lancer des initiatives culturelles sur le marché américain.",
-    "grants.artists.feature1": "Grants pour projets créatifs multiculturels",
+    "grants.artists.feature1": "Subventions pour projets créatifs multiculturels",
     "grants.artists.feature2": "Financement de portfolio et exposition",
     "grants.artists.feature3": "Résidences artistiques et bourses culturelles",
 
