@@ -15,11 +15,11 @@ export function Footer() {
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Audrey</span>RH<span className="text-accent">.</span>
             </h3>
             <p className="text-background/60 max-w-sm leading-relaxed text-lg">
-              Conseillère en relations industrielles agréée (CRIA). Experte en stratégie d'employabilité pour les nouveaux arrivants au Québec.
+              Conseillère en relations industrielles agréée (CRIA). Experte en stratégie d'employabilité pour les nouveaux arrivants au Canada.
             </p>
             <div className="flex gap-3 pt-2 flex-wrap">
-              <a 
-                href="https://www.linkedin.com/in/audrey-mondesir-cria-49a8b31bb/" 
+              <a
+                href="https://www.linkedin.com/in/audrey-mondesir-cria-49a8b31bb/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-11 h-11 bg-background/10 rounded-xl flex items-center justify-center hover:bg-primary hover:scale-105 transition-all duration-300"
@@ -27,8 +27,8 @@ export function Footer() {
               >
                 <Linkedin size={20} />
               </a>
-              <a 
-                href="https://www.tiktok.com/@audreymondesir" 
+              <a
+                href="https://www.tiktok.com/@audreymondesir"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-11 h-11 bg-background/10 rounded-xl flex items-center justify-center hover:bg-primary hover:scale-105 transition-all duration-300"
@@ -36,8 +36,8 @@ export function Footer() {
               >
                 <SiTiktok size={20} />
               </a>
-              <a 
-                href="mailto:info@audreyRH.com" 
+              <a
+                href="mailto:info@audreyRH.com"
                 className="w-11 h-11 bg-background/10 rounded-xl flex items-center justify-center hover:bg-primary hover:scale-105 transition-all duration-300"
                 data-testid="link-email-icon"
               >
@@ -56,18 +56,13 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/#services" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-services">
-                  {t("nav.services")}
+                <Link href="/individuals" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-individuals">
+                  {t("nav.individuals")}
                 </Link>
               </li>
               <li>
-                <Link href="/#expertise" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-about">
-                  {t("nav.about")}
-                </Link>
-              </li>
-              <li>
-                <Link href="/book" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-book">
-                  {t("nav.book")}
+                <Link href="/business" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-business">
+                  {t("nav.business")}
                 </Link>
               </li>
               <li>
@@ -78,6 +73,11 @@ export function Footer() {
               <li>
                 <Link href="/contact" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-contact">
                   {t("nav.contact")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/book" className="text-background/70 hover:text-primary transition-colors" data-testid="link-footer-book">
+                  {t("nav.book")}
                 </Link>
               </li>
               <li>
@@ -97,8 +97,8 @@ export function Footer() {
                 Montréal, Québec
               </li>
               <li>
-                <a 
-                  href="mailto:info@audreyRH.com" 
+                <a
+                  href="mailto:info@audreyRH.com"
                   className="hover:text-primary transition-colors"
                   data-testid="link-footer-email"
                 >

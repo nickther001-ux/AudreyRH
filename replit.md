@@ -26,7 +26,9 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - `availability_slots` - Stores Audrey's available time blocks
 
 ## Routes
-- `/` - Home page
+- `/` - **Gateway** homepage with two entry tiles (For Individuals / For Businesses)
+- `/individuals` - Individual services page (career consulting, packages, about, testimonials)
+- `/business` - Business solutions page (HR strategy, talent acquisition, grants, compliance)
 - `/book` - Booking page with available time slots
 - `/admin` - Admin page for managing availability
 - `/terms` - Terms & Conditions page

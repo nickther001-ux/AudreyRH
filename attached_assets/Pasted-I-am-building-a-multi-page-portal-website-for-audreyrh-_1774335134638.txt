@@ -1,0 +1,50 @@
+I am building a multi-page portal website for audreyrh.com. The business focuses on HR consulting, employability strategy, immigration support (specifically helping newcomers transition into the Canadian market), and a new financial grants program.
+
+Objective:
+Build a multi-page website architecture where the homepage acts as a "Gateway" to route users based on their specific needs.
+
+1. Homepage Gateway (index.html):
+
+Hero Section: A clean, welcoming, and professional landing screen with the headline: "Welcome to Audrey RH".
+
+Split Navigation / Dual Layout: Below the welcome message, create two prominent, equal-sized clickable areas:
+
+Option A: "For Individuals" - Add a brief subtext like "Career consulting, Canadian immigration strategy, and individual grants." Clicking this routes to individuals.html.
+
+Option B: "For Businesses" - Add a brief subtext like "HR solutions, talent acquisition, and corporate funding." Clicking this routes to business.html.
+
+Ensure the design here is striking, modern, and makes the choice immediately obvious.
+
+2. Multi-Page Architecture & Routing:
+Generate the following separate HTML files and link them together with a global, persistent navigation bar and footer:
+
+index.html (The Gateway homepage described above)
+
+individuals.html (Focuses on newcomers, career building, and artists)
+
+business.html (Focuses on PMEs, corporate restructuring, and entrepreneurs)
+
+grants.html (The central Grants & Funding hub)
+
+contact.html (Application and general inquiry form)
+
+3. The Grants & Funding Program (grants.html):
+Create a dedicated page with a grid of 4 "Grant Opportunity" cards. Add a header explaining that Audrey RH provides direct financial grants.
+
+Artists: Grants for creative projects and cultural initiatives.
+
+Entrepreneurs: Funding for startups and solo founders in Canada.
+
+PMEs (SMEs): Financial support for scaling, hiring, or optimizing HR.
+
+Corporate Businesses: Enterprise-level grants for large-scale innovation.
+
+Card UI: Each card needs an icon, a title, a 1-2 sentence description, and an "Apply Now" button that routes to contact.html.
+
+4. Technical & Design Constraints:
+
+All code, comments, and placeholder text must be strictly in English.
+
+Write clean, modular HTML/CSS/JS. Ensure all pages are fully mobile-responsive.
+
+The styling should feel professional, trustworthy, and welcoming, fitting an HR consulting firm targeting the Canadian market.

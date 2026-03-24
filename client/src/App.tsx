@@ -11,11 +11,15 @@ import Admin from "@/pages/Admin";
 import Terms from "@/pages/Terms";
 import Grants from "@/pages/Grants";
 import Contact from "@/pages/Contact";
+import Individuals from "@/pages/Individuals";
+import Business from "@/pages/Business";
 
 function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/individuals" component={Individuals} />
+      <Route path="/business" component={Business} />
       <Route path="/book" component={Book} />
       <Route path="/admin" component={Admin} />
       <Route path="/terms" component={Terms} />
