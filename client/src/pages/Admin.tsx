@@ -140,9 +140,7 @@ export default function Admin() {
   );
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(addDays(new Date(), 1));
 
-  if (!isAuthenticated) {
-    return <AdminLogin onSuccess={() => setIsAuthenticated(true)} />;
-  }
+  // All hooks must be declared before any conditional return (Rules of Hooks)
   const { data: slots = [], isLoading } = useQuery<AvailabilitySlot[]>({
     queryKey: ['/api/availability'],
   });
@@ -204,6 +202,11 @@ export default function Admin() {
       });
     },
   });
+
+  // Guard: show login screen until authenticated
+  if (!isAuthenticated) {
+    return <AdminLogin onSuccess={() => setIsAuthenticated(true)} />;
+  }
 
   const onSubmit = (data: InsertAvailabilitySlot) => {
     createSlot(data);
