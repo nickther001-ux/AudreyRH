@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { DarkVeil } from "@/components/DarkVeil";
 import { useLanguage } from "@/lib/i18n";
 import audreyPhoto from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
 import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
@@ -119,7 +120,8 @@ export default function Individuals() {
       {renderServiceDialog("integration")}
 
       <main className="flex-grow">
-        {/* Hero Section */}
+
+        {/* ── Section 1: Hero (Dark/Skyline) ── keep as-is */}
         <section className="relative pt-32 pb-24 md:pt-44 md:pb-32 overflow-hidden" data-testid="section-hero">
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -163,20 +165,15 @@ export default function Individuals() {
           </div>
         </section>
 
-        {/* Question Section */}
-        <section
-          className="py-24 relative overflow-hidden"
-          data-testid="section-question"
-          style={{ backgroundImage: `url(${bokehBg})`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
-        >
-          <div className="absolute inset-0 bg-background/85 dark:bg-background/90" />
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
+        {/* ── Section 2: Question (White) ── */}
+        <section className="py-24 bg-white" data-testid="section-question">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-3xl mx-auto">
-              <Card className="p-10 md:p-14 text-center bg-card/80 backdrop-blur-sm shadow-xl border-primary/10">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6" data-testid="text-question-title">
+              <Card className="p-10 md:p-14 text-center bg-white shadow-xl border-slate-200">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-slate-900" data-testid="text-question-title">
                   {t("question.title")}
                 </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed mb-8">{t("question.text")}</p>
+                <p className="text-lg text-slate-500 leading-relaxed mb-8">{t("question.text")}</p>
                 <Link href="/book">
                   <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg shadow-primary/20" data-testid="button-discover-services">
                     {t("question.cta")}
@@ -188,81 +185,81 @@ export default function Individuals() {
           </div>
         </section>
 
-        {/* Services Section */}
-        <section id="services" className="py-24 bg-muted/30" data-testid="section-services">
+        {/* ── Section 3: Services (White) ── */}
+        <section id="services" className="py-24 bg-white" data-testid="section-services">
           <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
                 <Target className="w-4 h-4" />
                 {t("services.badge")}
               </div>
-              <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">{t("services.title")}</h2>
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight text-slate-900">{t("services.title")}</h2>
               <div className="accent-line" />
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{t("services.description")}</p>
+              <p className="text-slate-500 text-lg max-w-2xl mx-auto">{t("services.description")}</p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-strategy">
+              <Card className="p-8 card-hover-lift gradient-border border-slate-200 bg-white shadow-sm" data-testid="card-service-strategy">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <TrendingUp className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">{t("services.strategy.title")}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">{t("services.strategy.desc")}</p>
+                <h3 className="text-xl font-bold mb-3 text-slate-900">{t("services.strategy.title")}</h3>
+                <p className="text-slate-500 leading-relaxed mb-4">{t("services.strategy.desc")}</p>
                 <button onClick={() => setOpenDialog("strategy")} className="text-primary font-medium inline-flex items-center gap-1" data-testid="button-learn-more-strategy">
                   {t("services.strategy.more")} <ArrowRight className="w-4 h-4" />
                 </button>
               </Card>
 
-              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-credentials">
+              <Card className="p-8 card-hover-lift gradient-border border-slate-200 bg-white shadow-sm" data-testid="card-service-credentials">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <GraduationCap className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">{t("services.credentials.title")}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">{t("services.credentials.desc")}</p>
+                <h3 className="text-xl font-bold mb-3 text-slate-900">{t("services.credentials.title")}</h3>
+                <p className="text-slate-500 leading-relaxed mb-4">{t("services.credentials.desc")}</p>
                 <button onClick={() => setOpenDialog("credentials")} className="text-primary font-medium inline-flex items-center gap-1" data-testid="button-learn-more-credentials">
                   {t("services.credentials.more")} <ArrowRight className="w-4 h-4" />
                 </button>
               </Card>
 
-              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-employability">
+              <Card className="p-8 card-hover-lift gradient-border border-slate-200 bg-white shadow-sm" data-testid="card-service-employability">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Briefcase className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">{t("services.employability.title")}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">{t("services.employability.desc")}</p>
+                <h3 className="text-xl font-bold mb-3 text-slate-900">{t("services.employability.title")}</h3>
+                <p className="text-slate-500 leading-relaxed mb-4">{t("services.employability.desc")}</p>
                 <button onClick={() => setOpenDialog("employability")} className="text-primary font-medium inline-flex items-center gap-1" data-testid="button-learn-more-employability">
                   {t("services.employability.more")} <ArrowRight className="w-4 h-4" />
                 </button>
               </Card>
 
-              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-coaching">
+              <Card className="p-8 card-hover-lift gradient-border border-slate-200 bg-white shadow-sm" data-testid="card-service-coaching">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Target className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">{t("services.coaching.title")}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">{t("services.coaching.desc")}</p>
+                <h3 className="text-xl font-bold mb-3 text-slate-900">{t("services.coaching.title")}</h3>
+                <p className="text-slate-500 leading-relaxed mb-4">{t("services.coaching.desc")}</p>
                 <Link href="/book" className="text-primary font-medium inline-flex items-center gap-1">
                   {t("services.coaching.book")} <ArrowRight className="w-4 h-4" />
                 </Link>
               </Card>
 
-              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-orientation">
+              <Card className="p-8 card-hover-lift gradient-border border-slate-200 bg-white shadow-sm" data-testid="card-service-orientation">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Award className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">{t("services.orientation.title")}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">{t("services.orientation.desc")}</p>
+                <h3 className="text-xl font-bold mb-3 text-slate-900">{t("services.orientation.title")}</h3>
+                <p className="text-slate-500 leading-relaxed mb-4">{t("services.orientation.desc")}</p>
                 <Link href="/book" className="text-primary font-medium inline-flex items-center gap-1">
                   {t("services.orientation.book")} <ArrowRight className="w-4 h-4" />
                 </Link>
               </Card>
 
-              <Card className="p-8 card-hover-lift gradient-border border-border bg-card" data-testid="card-service-integration">
+              <Card className="p-8 card-hover-lift gradient-border border-slate-200 bg-white shadow-sm" data-testid="card-service-integration">
                 <div className="w-14 h-14 bg-gradient-to-br from-primary/20 to-primary/5 rounded-2xl flex items-center justify-center mb-6">
                   <Users className="w-7 h-7 text-primary" />
                 </div>
-                <h3 className="text-xl font-bold mb-3">{t("services.integration.title")}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">{t("services.integration.desc")}</p>
+                <h3 className="text-xl font-bold mb-3 text-slate-900">{t("services.integration.title")}</h3>
+                <p className="text-slate-500 leading-relaxed mb-4">{t("services.integration.desc")}</p>
                 <button onClick={() => setOpenDialog("integration")} className="text-primary font-medium inline-flex items-center gap-1" data-testid="button-learn-more-integration">
                   {t("services.integration.more")} <ArrowRight className="w-4 h-4" />
                 </button>
@@ -271,119 +268,130 @@ export default function Individuals() {
           </div>
         </section>
 
-        {/* Packages Section */}
-        <section id="packages" className="py-24 bg-background" data-testid="section-packages">
-          <div className="container mx-auto px-4 md:px-6">
+        {/* ── Section 4: Packages (DarkVeil) ── */}
+        <section id="packages" className="py-24 relative overflow-hidden" data-testid="section-packages">
+          <DarkVeil zIndex={0} speed={0.5} noiseIntensity={0} warpIntensity={0} />
+
+          <div className="container mx-auto px-4 md:px-6 relative" style={{ zIndex: 1 }}>
             <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 border border-accent/40 text-accent text-sm font-medium mb-6">
                 <Briefcase className="w-4 h-4" />
                 {t("packages.badge")}
               </div>
-              <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">{t("packages.title")}</h2>
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight text-white">{t("packages.title")}</h2>
               <div className="accent-line" />
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{t("packages.subtitle")}</p>
+              <p className="text-white/65 text-lg max-w-2xl mx-auto">{t("packages.subtitle")}</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-              <Card className="p-6 card-hover-lift border-2 border-primary/20 bg-card relative overflow-hidden" data-testid="card-package-discovery">
+              {/* Discovery */}
+              <div className="relative overflow-hidden rounded-xl bg-white/[0.07] border border-white/20 p-6 card-hover-lift backdrop-blur-sm" data-testid="card-package-discovery">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
                 <div className="text-center mb-6">
-                  <h3 className="text-xl font-bold">{t("packages.discovery.name")}</h3>
-                  <p className="text-sm text-muted-foreground">{t("packages.discovery.subtitle")}</p>
+                  <h3 className="text-xl font-bold text-white">{t("packages.discovery.name")}</h3>
+                  <p className="text-sm text-white/60">{t("packages.discovery.subtitle")}</p>
                 </div>
                 <div className="text-center mb-6">
-                  <div className="text-4xl font-bold text-primary">{t("packages.discovery.price")}</div>
-                  <p className="text-sm text-muted-foreground">{t("packages.discovery.currency")}</p>
+                  <div className="text-4xl font-bold text-white">{t("packages.discovery.price")}</div>
+                  <p className="text-sm text-white/60">{t("packages.discovery.currency")}</p>
                   <p className="text-xs text-accent font-medium mt-1">{t("packages.discovery.noFees")}</p>
                 </div>
-                <div className="bg-muted/50 rounded-lg p-3 mb-4">
-                  <p className="text-sm font-medium text-foreground">{t("packages.discovery.for")}</p>
-                  <p className="text-xs text-muted-foreground">{t("packages.discovery.forDetail")}</p>
+                <div className="bg-white/[0.08] rounded-lg p-3 mb-4">
+                  <p className="text-sm font-medium text-white">{t("packages.discovery.for")}</p>
+                  <p className="text-xs text-white/60">{t("packages.discovery.forDetail")}</p>
                 </div>
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     <div>
-                      <span className="text-sm font-medium">{t("packages.discovery.feature1")}</span>
-                      <p className="text-xs text-muted-foreground">{t("packages.discovery.feature1Detail")}</p>
+                      <span className="text-sm font-medium text-white">{t("packages.discovery.feature1")}</span>
+                      <p className="text-xs text-white/60">{t("packages.discovery.feature1Detail")}</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-sm">{t("packages.discovery.feature2")}</span>
+                    <span className="text-sm text-white">{t("packages.discovery.feature2")}</span>
                   </li>
                 </ul>
-                <div className="bg-accent/10 rounded-lg p-3 text-center">
+                <div className="bg-accent/15 rounded-lg p-3 text-center border border-accent/30">
                   <p className="text-xs text-accent font-medium">{t("packages.discovery.note")}</p>
                 </div>
-              </Card>
+              </div>
 
-              <Card className="p-6 card-hover-lift border-2 border-accent bg-gradient-to-b from-accent/5 to-transparent relative overflow-hidden shadow-lg" data-testid="card-package-essential">
+              {/* Essential – Popular */}
+              <div className="relative overflow-hidden rounded-xl bg-accent/[0.15] border-2 border-accent/60 p-6 card-hover-lift backdrop-blur-sm shadow-lg shadow-accent/10" data-testid="card-package-essential">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent via-primary to-accent" />
                 <div className="absolute -top-1 right-4">
-                  <span className="bg-accent text-accent-foreground text-xs font-bold px-3 py-1 rounded-b-md">Populaire</span>
+                  <span className="bg-accent text-white text-xs font-bold px-3 py-1 rounded-b-md">Populaire</span>
                 </div>
                 <div className="text-center mb-6 pt-2">
-                  <h3 className="text-xl font-bold">{t("packages.essential.name")}</h3>
-                  <p className="text-sm text-muted-foreground">{t("packages.essential.subtitle")}</p>
+                  <h3 className="text-xl font-bold text-white">{t("packages.essential.name")}</h3>
+                  <p className="text-sm text-white/60">{t("packages.essential.subtitle")}</p>
                 </div>
                 <div className="text-center mb-6">
                   <div className="text-4xl font-bold text-accent">{t("packages.essential.price")}</div>
-                  <p className="text-xs text-muted-foreground">{t("packages.essential.consultation")}</p>
-                  <p className="text-xs text-muted-foreground">{t("packages.essential.openingFee")}</p>
-                  <p className="text-sm font-bold text-foreground mt-2">{t("packages.essential.total")}</p>
+                  <p className="text-xs text-white/60">{t("packages.essential.consultation")}</p>
+                  <p className="text-xs text-white/60">{t("packages.essential.openingFee")}</p>
+                  <p className="text-sm font-bold text-white mt-2">{t("packages.essential.total")}</p>
                 </div>
-                <div className="bg-muted/50 rounded-lg p-3 mb-4">
-                  <p className="text-sm font-medium text-foreground">{t("packages.essential.for")}</p>
-                  <p className="text-xs text-muted-foreground">{t("packages.essential.forDetail")}</p>
+                <div className="bg-white/[0.08] rounded-lg p-3 mb-4">
+                  <p className="text-sm font-medium text-white">{t("packages.essential.for")}</p>
+                  <p className="text-xs text-white/60">{t("packages.essential.forDetail")}</p>
                 </div>
                 <ul className="space-y-3 mb-4">
                   {[1, 2, 3].map((i) => (
                     <li key={i} className="flex items-start gap-2">
                       <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
                       <div>
-                        <span className="text-sm font-medium">{t(`packages.essential.feature${i}`)}</span>
-                        <p className="text-xs text-muted-foreground">{t(`packages.essential.feature${i}Detail`)}</p>
+                        <span className="text-sm font-medium text-white">{t(`packages.essential.feature${i}`)}</span>
+                        <p className="text-xs text-white/60">{t(`packages.essential.feature${i}Detail`)}</p>
                       </div>
                     </li>
                   ))}
                 </ul>
-              </Card>
+              </div>
 
-              <Card className="p-6 card-hover-lift border-2 border-primary/30 bg-card relative overflow-hidden" data-testid="card-package-plan">
+              {/* Plan */}
+              <div className="relative overflow-hidden rounded-xl bg-white/[0.07] border border-white/20 p-6 card-hover-lift backdrop-blur-sm" data-testid="card-package-plan">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
                 <div className="text-center mb-6">
-                  <h3 className="text-xl font-bold">{t("packages.plan.name")}</h3>
-                  <p className="text-sm text-muted-foreground">{t("packages.plan.subtitle")}</p>
+                  <h3 className="text-xl font-bold text-white">{t("packages.plan.name")}</h3>
+                  <p className="text-sm text-white/60">{t("packages.plan.subtitle")}</p>
                 </div>
                 <div className="text-center mb-6">
-                  <div className="text-4xl font-bold text-primary">{t("packages.plan.price")}</div>
-                  <p className="text-xs text-muted-foreground">{t("packages.plan.consultation")}</p>
-                  <p className="text-xs text-muted-foreground">{t("packages.plan.openingFee")}</p>
-                  <p className="text-sm font-bold text-foreground mt-2">{t("packages.plan.total")}</p>
+                  <div className="text-4xl font-bold text-white">{t("packages.plan.price")}</div>
+                  <p className="text-xs text-white/60">{t("packages.plan.consultation")}</p>
+                  <p className="text-xs text-white/60">{t("packages.plan.openingFee")}</p>
+                  <p className="text-sm font-bold text-white mt-2">{t("packages.plan.total")}</p>
                 </div>
-                <div className="bg-muted/50 rounded-lg p-3 mb-4">
-                  <p className="text-sm font-medium text-foreground">{t("packages.plan.for")}</p>
-                  <p className="text-xs text-muted-foreground">{t("packages.plan.forDetail")}</p>
+                <div className="bg-white/[0.08] rounded-lg p-3 mb-4">
+                  <p className="text-sm font-medium text-white">{t("packages.plan.for")}</p>
+                  <p className="text-xs text-white/60">{t("packages.plan.forDetail")}</p>
                 </div>
                 <ul className="space-y-3 mb-4">
                   {[1, 2, 3].map((i) => (
                     <li key={i} className="flex items-start gap-2">
                       <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                       <div>
-                        <span className="text-sm font-medium">{t(`packages.plan.feature${i}`)}</span>
-                        <p className="text-xs text-muted-foreground">{t(`packages.plan.feature${i}Detail`)}</p>
+                        <span className="text-sm font-medium text-white">{t(`packages.plan.feature${i}`)}</span>
+                        <p className="text-xs text-white/60">{t(`packages.plan.feature${i}Detail`)}</p>
                       </div>
                     </li>
                   ))}
                 </ul>
-              </Card>
+              </div>
             </div>
 
-            <div className="text-center mt-10">
-              <p className="text-sm text-muted-foreground mb-6">{t("packages.note")}</p>
+            <div className="text-center mt-10" style={{ position: "relative", zIndex: 1 }}>
+              <p className="text-sm text-white/60 mb-6">{t("packages.note")}</p>
               <Link href="/book">
-                <Button size="lg" className="bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg">
+                <Button
+                  size="lg"
+                  className="border border-accent/50 text-white px-8 py-6 text-base font-semibold backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5"
+                  style={{ background: "rgba(249,115,22,0.22)" }}
+                  onMouseEnter={e => (e.currentTarget.style.background = "rgba(249,115,22,0.35)")}
+                  onMouseLeave={e => (e.currentTarget.style.background = "rgba(249,115,22,0.22)")}
+                >
                   {t("packages.cta")}
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
@@ -392,23 +400,21 @@ export default function Individuals() {
           </div>
         </section>
 
-        {/* About Section */}
+        {/* ── Section 5: About (White/Slate-50) ── */}
         <section
           id="expertise"
-          className="py-20 border-y border-border relative overflow-hidden"
+          className="py-20 bg-slate-50"
           data-testid="section-about"
-          style={{ backgroundImage: `url(${bokehBg})`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
         >
-          <div className="absolute inset-0 bg-card/90 dark:bg-card/95" />
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
               <div className="space-y-6">
                 <div className="inline-block px-4 py-1 bg-primary/10 rounded-full text-primary text-sm font-medium">
                   {t("about.badge")}
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-about-title">{t("about.title")}</h2>
-                <p className="text-muted-foreground text-lg leading-relaxed">{t("about.text1")}</p>
-                <p className="text-muted-foreground text-lg leading-relaxed">{t("about.text2")}</p>
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-900" data-testid="text-about-title">{t("about.title")}</h2>
+                <p className="text-slate-500 text-lg leading-relaxed">{t("about.text1")}</p>
+                <p className="text-slate-500 text-lg leading-relaxed">{t("about.text2")}</p>
                 <div className="pt-6">
                   <h3 className="text-xl font-bold mb-4 text-primary">{t("about.whyTitle")}</h3>
                   <div className="space-y-4">
@@ -416,8 +422,8 @@ export default function Individuals() {
                       <div key={i} className="flex items-start gap-3">
                         <CheckCircle className="w-6 h-6 text-accent flex-shrink-0 mt-0.5" />
                         <div>
-                          <span className="font-semibold text-foreground">{t(`about.reason${i}Title`)} : </span>
-                          <span className="text-muted-foreground">{t(`about.reason${i}Text`)}</span>
+                          <span className="font-semibold text-slate-900">{t(`about.reason${i}Title`)} : </span>
+                          <span className="text-slate-500">{t(`about.reason${i}Text`)}</span>
                         </div>
                       </div>
                     ))}
@@ -434,15 +440,15 @@ export default function Individuals() {
             </div>
 
             <div className="mt-16 max-w-4xl mx-auto">
-              <div className="bg-muted/50 border border-border rounded-xl p-6 md:p-8">
+              <div className="bg-white border border-slate-200 rounded-xl p-6 md:p-8 shadow-sm">
                 <h3 className="text-xl font-bold mb-3 text-primary">{t("about.complianceTitle")}</h3>
-                <p className="text-muted-foreground mb-4">{t("about.complianceText")}</p>
-                <p className="text-sm font-semibold text-foreground mb-3">{t("about.complianceSubtitle")}</p>
+                <p className="text-slate-500 mb-4">{t("about.complianceText")}</p>
+                <p className="text-sm font-semibold text-slate-900 mb-3">{t("about.complianceSubtitle")}</p>
                 <div className="grid sm:grid-cols-2 gap-3">
                   {[1, 2, 3, 4].map((i) => (
                     <div key={i} className="flex items-start gap-2">
                       <X className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
-                      <span className="text-sm text-muted-foreground">{t(`about.compliance${i}`)}</span>
+                      <span className="text-sm text-slate-500">{t(`about.compliance${i}`)}</span>
                     </div>
                   ))}
                 </div>
@@ -452,19 +458,14 @@ export default function Individuals() {
           </div>
         </section>
 
-        {/* Testimonials */}
-        <section
-          className="py-20 relative overflow-hidden"
-          data-testid="section-testimonials"
-          style={{ backgroundImage: `url(${bokehBg})`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
-        >
-          <div className="absolute inset-0 bg-background/85 dark:bg-background/90" />
-          <div className="container mx-auto px-4 md:px-6 relative z-10">
+        {/* ── Section 6: Testimonials (White) ── */}
+        <section className="py-20 bg-white" data-testid="section-testimonials">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-12">
               <div className="inline-block px-4 py-1 bg-primary/10 rounded-full text-primary text-sm font-medium mb-4">
                 {t("testimonials.badge")}
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold" data-testid="text-testimonials-title">{t("testimonials.title")}</h2>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900" data-testid="text-testimonials-title">{t("testimonials.title")}</h2>
               <div className="accent-line mt-4" />
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
@@ -476,21 +477,21 @@ export default function Individuals() {
                 { id: 5, initials: "M.S." },
                 { id: 6, initials: "K.B." },
               ].map(({ id, initials }) => (
-                <Card key={id} className="p-6 bg-card border-border relative card-hover-lift" data-testid={`card-testimonial-${id}`}>
+                <Card key={id} className="p-6 bg-white border-slate-200 shadow-sm relative card-hover-lift" data-testid={`card-testimonial-${id}`}>
                   <Quote className="w-8 h-8 text-primary/20 absolute top-4 right-4" />
                   <div className="flex gap-1 mb-3">
                     {[...Array(5)].map((_, i) => (
                       <Star key={i} className="w-4 h-4 fill-accent text-accent" />
                     ))}
                   </div>
-                  <p className="text-muted-foreground leading-relaxed mb-5 text-sm">{t(`testimonial.${id}.text`)}</p>
+                  <p className="text-slate-500 leading-relaxed mb-5 text-sm">{t(`testimonial.${id}.text`)}</p>
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center">
                       <span className="text-primary font-bold text-sm">{initials}</span>
                     </div>
                     <div>
-                      <p className="font-semibold text-foreground text-sm">{t(`testimonial.${id}.name`)}</p>
-                      <p className="text-xs text-muted-foreground">{t(`testimonial.${id}.job`)}</p>
+                      <p className="font-semibold text-slate-900 text-sm">{t(`testimonial.${id}.name`)}</p>
+                      <p className="text-xs text-slate-400">{t(`testimonial.${id}.job`)}</p>
                     </div>
                   </div>
                 </Card>
@@ -499,36 +500,46 @@ export default function Individuals() {
           </div>
         </section>
 
-        {/* Quote Section */}
-        <section className="py-20 bg-card border-y border-border" data-testid="section-quote">
-          <div className="container mx-auto px-4 md:px-6">
+        {/* ── Section 7: Quote (DarkVeil) ── */}
+        <section className="py-20 relative overflow-hidden" data-testid="section-quote">
+          <DarkVeil zIndex={0} speed={0.4} noiseIntensity={0} warpIntensity={0} />
+          <div className="container mx-auto px-4 md:px-6 relative" style={{ zIndex: 1 }}>
             <div className="max-w-3xl mx-auto text-center">
-              <div className="text-6xl text-primary/20 font-serif mb-4">"</div>
-              <blockquote className="text-2xl md:text-3xl font-medium text-foreground leading-relaxed mb-6" data-testid="text-quote">
+              <div className="text-6xl text-white/20 font-serif mb-4">"</div>
+              <blockquote className="text-2xl md:text-3xl font-medium text-white leading-relaxed mb-6" data-testid="text-quote">
                 {t("quote.text")}
               </blockquote>
-              <p className="text-muted-foreground">{t("quote.author")}</p>
+              <p className="text-white/60">{t("quote.author")}</p>
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-24 bg-primary" data-testid="section-cta">
-          <div className="container mx-auto px-4 md:px-6">
+        {/* ── Section 8: CTA (DarkVeil) ── */}
+        <section className="py-24 relative overflow-hidden" data-testid="section-cta">
+          <DarkVeil zIndex={0} speed={0.5} noiseIntensity={0} warpIntensity={0} />
+          <div className="container mx-auto px-4 md:px-6 relative" style={{ zIndex: 1 }}>
             <div className="max-w-3xl mx-auto text-center space-y-8">
               <h2 className="text-3xl md:text-5xl font-bold text-white" data-testid="text-cta-title">{t("cta.title")}</h2>
-              <p className="text-xl text-primary-foreground/80">{t("cta.text")}</p>
+              <p className="text-xl text-white/70">{t("cta.text")}</p>
               <div className="pt-4">
                 <Link href="/book">
-                  <Button size="lg" className="bg-accent text-primary font-bold px-10 h-14 text-lg shadow-xl" data-testid="button-cta-book">
+                  <Button
+                    size="lg"
+                    className="border border-accent/50 text-white px-10 h-14 text-lg font-bold backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5"
+                    style={{ background: "rgba(249,115,22,0.22)" }}
+                    onMouseEnter={e => (e.currentTarget.style.background = "rgba(249,115,22,0.35)")}
+                    onMouseLeave={e => (e.currentTarget.style.background = "rgba(249,115,22,0.22)")}
+                    data-testid="button-cta-book"
+                  >
                     {t("cta.button")}
                   </Button>
                 </Link>
-                <p className="mt-4 text-sm text-primary-foreground/60">{t("cta.secure")}</p>
+                <p className="mt-4 text-sm text-white/50">{t("cta.secure")}</p>
               </div>
             </div>
           </div>
         </section>
+
       </main>
 
       <Footer />
