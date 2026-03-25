@@ -346,6 +346,68 @@ export async function sendContactEmails(data: ContactEmailData) {
               </tr>
             </table>
 
+            <!-- Preparation checklist -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
+              <tr>
+                <td style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:24px 28px;">
+
+                  <!-- Section title -->
+                  <p style="margin:0 0 18px;font-size:13px;font-weight:700;color:#1e293b;text-transform:uppercase;letter-spacing:1.2px;border-bottom:2px solid #f97316;padding-bottom:10px;display:inline-block;">
+                    Préparation &nbsp;/&nbsp; Preparation
+                  </p>
+
+                  <!-- Documents -->
+                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:14px;">
+                    <tr>
+                      <td width="28" valign="top" style="padding-top:1px;">
+                        <span style="display:inline-block;width:20px;height:20px;background:#f97316;border-radius:50%;text-align:center;line-height:20px;font-size:11px;font-weight:700;color:#fff;">✓</span>
+                      </td>
+                      <td>
+                        <p style="margin:0 0 2px;font-size:14px;font-weight:700;color:#1e293b;">Documents</p>
+                        <p style="margin:0;font-size:13px;color:#64748b;line-height:1.6;">
+                          CV à jour, lettres de refus, offres d'emploi pertinentes<br/>
+                          <em style="color:#94a3b8;">Updated CV, rejection letters, relevant job postings</em>
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Goals / Objectifs -->
+                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:14px;">
+                    <tr>
+                      <td width="28" valign="top" style="padding-top:1px;">
+                        <span style="display:inline-block;width:20px;height:20px;background:#f97316;border-radius:50%;text-align:center;line-height:20px;font-size:11px;font-weight:700;color:#fff;">✓</span>
+                      </td>
+                      <td>
+                        <p style="margin:0 0 2px;font-size:14px;font-weight:700;color:#1e293b;">Objectifs / Goals</p>
+                        <p style="margin:0;font-size:13px;color:#64748b;line-height:1.6;">
+                          Notez vos 2–3 priorités pour cette consultation<br/>
+                          <em style="color:#94a3b8;">Write down your 2–3 priorities for this session</em>
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Environment -->
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="28" valign="top" style="padding-top:1px;">
+                        <span style="display:inline-block;width:20px;height:20px;background:#f97316;border-radius:50%;text-align:center;line-height:20px;font-size:11px;font-weight:700;color:#fff;">✓</span>
+                      </td>
+                      <td>
+                        <p style="margin:0 0 2px;font-size:14px;font-weight:700;color:#1e293b;">Environnement / Environment</p>
+                        <p style="margin:0;font-size:13px;color:#64748b;line-height:1.6;">
+                          Endroit calme, connexion stable, caméra fonctionnelle<br/>
+                          <em style="color:#94a3b8;">Quiet space, stable connection, working camera</em>
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+
+                </td>
+              </tr>
+            </table>
+
             <!-- FR CTA -->
             <p style="margin:0 0 24px;font-size:15px;color:#64748b;line-height:1.75;">
               En attendant notre réponse, vous pouvez réserver une consultation directement en ligne :
