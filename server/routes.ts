@@ -46,7 +46,7 @@ export async function registerRoutes(
             },
           ],
           mode: 'payment',
-          success_url: `${req.protocol}://${req.get('host')}/book?success=true&appointmentId=${appointment.id}`,
+          success_url: `${req.protocol}://${req.get('host')}/book?success=true&appointmentId=${appointment.id}&email=${encodeURIComponent(appointment.email)}`,
           cancel_url: `${req.protocol}://${req.get('host')}/book?canceled=true`,
           metadata: {
             appointmentId: appointment.id.toString(),

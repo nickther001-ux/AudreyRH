@@ -14,7 +14,7 @@ import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { fr, enUS } from "date-fns/locale";
-import { CreditCard, Loader2, CheckCircle2, XCircle, Clock, Video, FileText, CalendarDays, Shield, User, Mail, Phone, MessageSquare, Sparkles } from "lucide-react";
+import { CreditCard, Loader2, CheckCircle2, XCircle, Clock, Video, FileText, CalendarDays, Shield, User, Mail, Phone, MessageSquare, Sparkles, Inbox } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { SiZoom, SiGooglemeet } from "react-icons/si";
@@ -34,6 +34,7 @@ function parseLocalDate(dateInput: string | Date): Date {
 export default function Book() {
   const [success, setSuccess] = useState(false);
   const [canceled, setCanceled] = useState(false);
+  const [confirmedEmail, setConfirmedEmail] = useState("");
   const [selectedSlotId, setSelectedSlotId] = useState<number | null>(null);
   const { mutate, isPending } = useCreateAppointment();
   const [, setLocation] = useLocation();
@@ -47,6 +48,9 @@ export default function Book() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('success') === 'true') {
+      // Capture email BEFORE replaceState wipes the URL
+      const emailParam = params.get('email');
+      if (emailParam) setConfirmedEmail(decodeURIComponent(emailParam));
       setSuccess(true);
       window.history.replaceState({}, '', '/book');
       const appointmentId = params.get('appointmentId');
@@ -106,20 +110,73 @@ export default function Book() {
     return (
       <div className="min-h-screen bg-background flex flex-col">
         <Navbar />
-        <main className="flex-grow flex items-center justify-center py-20">
-          <div className="max-w-md w-full mx-4 text-center space-y-6">
+        <main className="flex-grow flex items-center justify-center py-16 px-4">
+          <div className="max-w-md w-full mx-auto text-center space-y-6">
+
+            {/* Success icon */}
             <div className="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 text-white rounded-full flex items-center justify-center mx-auto shadow-xl shadow-green-500/30">
               <CheckCircle2 size={48} />
             </div>
-            <h1 className="text-3xl font-bold" data-testid="text-success-title">{t("book.success.title")}</h1>
-            <p className="text-muted-foreground text-lg" data-testid="text-success-message">
+
+            {/* Title */}
+            <h1
+              className="text-3xl font-bold"
+              style={{ color: "#1e293b" }}
+              data-testid="text-success-title"
+            >
+              {t("book.success.title")}
+            </h1>
+
+            {/* Subtitle */}
+            <p
+              className="text-base leading-relaxed"
+              style={{ color: "#64748b" }}
+              data-testid="text-success-message"
+            >
               {t("book.success.message")}
             </p>
-            <div className="pt-4">
-              <Button onClick={() => { setSuccess(false); setLocation('/'); }} size="lg" data-testid="button-back-home">
+
+            {/* Email notice */}
+            {confirmedEmail && (
+              <div
+                className="flex items-start gap-3 rounded-xl px-5 py-4 text-left mx-auto"
+                style={{ background: "#f8fafc", border: "1px solid #e2e8f0", maxWidth: "420px" }}
+                data-testid="text-success-email-notice"
+              >
+                <Inbox
+                  size={20}
+                  className="mt-0.5 shrink-0"
+                  style={{ color: "#f97316" }}
+                />
+                <p className="text-sm leading-relaxed" style={{ color: "#1e293b" }}>
+                  {t("book.success.emailNoticePrefix")}{" "}
+                  <span className="font-bold" style={{ color: "#f97316" }}>
+                    {confirmedEmail}
+                  </span>
+                  <br />
+                  <span style={{ color: "#64748b" }}>
+                    {t("book.success.emailNoticeSuffix")}{" "}
+                    <span className="font-bold" style={{ color: "#f97316" }}>
+                      {confirmedEmail}
+                    </span>
+                  </span>
+                </p>
+              </div>
+            )}
+
+            {/* CTA */}
+            <div className="pt-2">
+              <Button
+                onClick={() => { setSuccess(false); setLocation('/'); }}
+                size="lg"
+                data-testid="button-back-home"
+                style={{ background: "#f97316", color: "#fff" }}
+                className="hover:opacity-90 transition-opacity font-bold px-8"
+              >
                 {t("book.success.back")}
               </Button>
             </div>
+
           </div>
         </main>
         <Footer />
