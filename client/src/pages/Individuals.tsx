@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { DarkVeil } from "@/components/DarkVeil";
 import { useLanguage } from "@/lib/i18n";
+import ShinyText from "@/components/ShinyText";
 import audreyPhoto from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
 import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
 import bokehBg from "@assets/IMM_1768534974735.png";
@@ -136,8 +137,15 @@ export default function Individuals() {
                 <Award className="w-4 h-4" />
                 {t("hero.badge")}
               </div>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight text-white" data-testid="text-hero-title">
-                {t("hero.title1")}
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.1] tracking-tight" data-testid="text-hero-title">
+                <ShinyText
+                  text={t("hero.title1")}
+                  speed={3}
+                  className="text-4xl md:text-6xl lg:text-7xl font-bold"
+                  color="white"
+                  shineColor="#f97316"
+                  spread={220}
+                />
                 <br />
                 <span className="bg-gradient-to-r from-accent to-accent/70 bg-clip-text text-transparent relative inline-block min-w-[280px] md:min-w-[400px]">
                   <span key={wordIndex} className="inline-block animate-in fade-in slide-in-from-bottom-2 duration-200">

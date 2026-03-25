@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/lib/i18n";
 import { DarkVeil } from "@/components/DarkVeil";
+import ShinyText from "@/components/ShinyText";
 import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
 
 const services = [
@@ -43,10 +44,17 @@ export default function Business() {
             {t("business.badge")}
           </div>
           <h1
-            className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
+            className="text-4xl md:text-6xl font-bold mb-6 leading-tight"
             data-testid="text-business-title"
           >
-            {t("business.hero.title")}
+            <ShinyText
+              text={t("business.hero.title")}
+              speed={3}
+              className="text-4xl md:text-6xl font-bold leading-tight"
+              color="white"
+              shineColor="#f97316"
+              spread={200}
+            />
           </h1>
           <p className="text-white/80 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed">
             {t("business.hero.description")}
@@ -85,8 +93,15 @@ export default function Business() {
               <Target className="w-4 h-4" />
               {t("business.services.badge")}
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight text-slate-900">
-              {t("business.services.title")}
+            <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
+              <ShinyText
+                text={t("business.services.title")}
+                speed={3}
+                className="text-3xl md:text-5xl font-bold tracking-tight"
+                color="#1e293b"
+                shineColor="#f97316"
+                spread={180}
+              />
             </h2>
             <p className="text-slate-500 text-lg max-w-2xl mx-auto">
               {t("business.services.subtitle")}
