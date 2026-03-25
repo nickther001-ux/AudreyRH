@@ -48,12 +48,25 @@ export default function Book() {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     if (params.get('success') === 'true') {
-      // Capture email BEFORE replaceState wipes the URL
+      // Capture all params BEFORE replaceState wipes the URL
       const emailParam = params.get('email');
-      if (emailParam) setConfirmedEmail(decodeURIComponent(emailParam));
+      const sessionId = params.get('session_id');
+      const appointmentId = params.get('appointmentId');
+
+      if (emailParam) {
+        // Primary: email was passed directly in the success URL
+        setConfirmedEmail(decodeURIComponent(emailParam));
+      } else if (sessionId) {
+        // Fallback: retrieve email from the Stripe session
+        fetch(`/api/stripe/session-email?sessionId=${encodeURIComponent(sessionId)}`)
+          .then(r => r.json())
+          .then(data => { if (data.email) setConfirmedEmail(data.email); })
+          .catch(err => console.error('Session email fetch error:', err));
+      }
+
       setSuccess(true);
       window.history.replaceState({}, '', '/book');
-      const appointmentId = params.get('appointmentId');
+
       if (appointmentId) {
         fetch(`/api/appointments/${appointmentId}/confirm`, { method: 'POST' })
           .then(r => r.json())

@@ -46,7 +46,7 @@ export async function registerRoutes(
             },
           ],
           mode: 'payment',
-          success_url: `${req.protocol}://${req.get('host')}/book?success=true&appointmentId=${appointment.id}&email=${encodeURIComponent(appointment.email)}`,
+          success_url: `${req.protocol}://${req.get('host')}/book?success=true&appointmentId=${appointment.id}&email=${encodeURIComponent(appointment.email)}&session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${req.protocol}://${req.get('host')}/book?canceled=true`,
           metadata: {
             appointmentId: appointment.id.toString(),
@@ -136,6 +136,22 @@ export async function registerRoutes(
     } catch (err) {
       console.error('Error confirming appointment:', err);
       res.status(500).json({ message: 'Failed to confirm appointment' });
+    }
+  });
+
+  // Retrieve customer email from a Stripe checkout session (fallback for success page)
+  app.get('/api/stripe/session-email', async (req, res) => {
+    const sessionId = req.query.sessionId as string;
+    if (!sessionId) return res.status(400).json({ message: 'sessionId required' });
+    try {
+      const { getUncachableStripeClient } = await import('./stripeClient');
+      const stripe = await getUncachableStripeClient();
+      const session = await stripe.checkout.sessions.retrieve(sessionId);
+      const email = session.customer_email || session.customer_details?.email || '';
+      res.json({ email });
+    } catch (err: any) {
+      console.error('Session email lookup failed:', err.message);
+      res.status(500).json({ message: 'Failed to retrieve session' });
     }
   });
 
