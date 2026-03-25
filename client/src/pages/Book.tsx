@@ -49,6 +49,12 @@ export default function Book() {
     if (params.get('success') === 'true') {
       setSuccess(true);
       window.history.replaceState({}, '', '/book');
+      const appointmentId = params.get('appointmentId');
+      if (appointmentId) {
+        fetch(`/api/appointments/${appointmentId}/confirm`, { method: 'POST' })
+          .then(r => r.json())
+          .catch(err => console.error('Confirm error:', err));
+      }
     }
     if (params.get('canceled') === 'true') {
       setCanceled(true);

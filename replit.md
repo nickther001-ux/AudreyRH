@@ -52,8 +52,12 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - 2026-01-11: Fixed duplicate translation keys in i18n.tsx
 - 2026-01-11: Added comprehensive bilingual support throughout application
 
-## Future Enhancements
-- Email confirmation: User dismissed Resend integration. To add email functionality later:
-  - Option 1: Set up Resend integration through Replit
-  - Option 2: User can provide SMTP credentials or other email service API key to store as secrets
-  - Email should send welcome/confirmation message after successful payment
+## Email Confirmation (Live)
+- Resend integration connected via Replit OAuth connector
+- `server/resend.ts` — Resend client helper (uses Replit connector credentials, never cached)
+- `POST /api/appointments/:id/confirm` — marks payment as paid + sends two emails:
+  1. Client confirmation email (French, branded HTML template with appointment details)
+  2. Audrey notification email (internal summary with client info)
+- Triggered from `client/src/pages/Book.tsx` when Stripe redirects to `?success=true&appointmentId=X`
+- Idempotent: if appointment already paid, skips email silently
+- Email failures are non-fatal (logged but don't break the success page)

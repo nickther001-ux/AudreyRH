@@ -89,6 +89,54 @@ export async function registerRoutes(
     res.json(appointment);
   });
 
+  // Confirm payment and send emails — idempotent (safe to call multiple times)
+  app.post('/api/appointments/:id/confirm', async (req, res) => {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) {
+      return res.status(400).json({ message: "Invalid ID" });
+    }
+
+    try {
+      const appointment = await storage.getAppointment(id);
+      if (!appointment) {
+        return res.status(404).json({ message: "Appointment not found" });
+      }
+
+      // Idempotency — if already confirmed, just return
+      if (appointment.paymentStatus === 'paid') {
+        return res.json({ success: true, alreadyConfirmed: true });
+      }
+
+      await storage.updateAppointmentPayment(id, '');
+
+      // Send confirmation emails (non-blocking — don't fail the response if email errors)
+      try {
+        const { sendBookingConfirmation } = await import('./resend');
+        const dateStr = appointment.date
+          ? new Date(appointment.date).toLocaleDateString('fr-CA', {
+              weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+            })
+          : '';
+        await sendBookingConfirmation({
+          clientName: appointment.name,
+          clientEmail: appointment.email,
+          date: dateStr,
+          startTime: appointment.startTime ?? null,
+          endTime: appointment.endTime ?? null,
+          platform: appointment.platform,
+          reason: appointment.reason,
+        });
+      } catch (emailErr: any) {
+        console.error('Email send failed (non-fatal):', emailErr.message);
+      }
+
+      res.json({ success: true });
+    } catch (err) {
+      console.error('Error confirming appointment:', err);
+      res.status(500).json({ message: 'Failed to confirm appointment' });
+    }
+  });
+
   app.get('/api/stripe/publishable-key', async (req, res) => {
     try {
       const { getStripePublishableKey } = await import("./stripeClient");
