@@ -68,7 +68,7 @@ export default function Individuals() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
             onClick={() => setOpenDialog(null)}
           >
             {(() => {
@@ -103,7 +103,7 @@ export default function Individuals() {
                   <div className="overflow-y-auto flex-1 px-8 py-6 space-y-6">
                     {/* Premium insight */}
                     {hasInsight(key) && (
-                      <div className="bg-slate-50 border-l-4 border-[#f97316] rounded-r-xl p-5">
+                      <div className="bg-blue-50 border-l-4 border-[#2563eb] rounded-r-xl p-5">
                         <p className="text-slate-700 leading-relaxed text-[15px] italic">
                           "{t(`dialog.${key}.insight`)}"
                         </p>
@@ -127,7 +127,7 @@ export default function Individuals() {
                       <ul className="space-y-2">
                         {[1, 2, 3, 4].map((i) => (
                           <li key={i} className="flex items-start gap-2.5 text-slate-600">
-                            <CheckCircle className="w-5 h-5 text-[#f97316] flex-shrink-0 mt-0.5" />
+                            <CheckCircle className="w-5 h-5 text-[#2563eb] flex-shrink-0 mt-0.5" />
                             <span className="text-sm leading-relaxed">{t(`dialog.${key}.p1.${i}`)}</span>
                           </li>
                         ))}
@@ -140,7 +140,7 @@ export default function Individuals() {
                       <ul className="space-y-2">
                         {[1, 2, 3, 4].map((i) => (
                           <li key={i} className="flex items-start gap-2.5 text-slate-600">
-                            <CheckCircle className="w-5 h-5 text-[#f97316] flex-shrink-0 mt-0.5" />
+                            <CheckCircle className="w-5 h-5 text-[#2563eb] flex-shrink-0 mt-0.5" />
                             <span className="text-sm leading-relaxed">{t(`dialog.${key}.p2.${i}`)}</span>
                           </li>
                         ))}
@@ -155,10 +155,10 @@ export default function Individuals() {
                   </div>
 
                   {/* Footer CTAs */}
-                  <div className="px-8 py-5 border-t border-slate-200 bg-slate-50 flex-shrink-0 flex flex-col sm:flex-row gap-3">
+                  <div className="px-8 py-5 border-t border-slate-200 bg-white flex-shrink-0 flex flex-col sm:flex-row gap-3">
                     <Link href="/book" className="flex-1">
                       <Button
-                        className="w-full bg-[#f97316] hover:bg-[#ea6c0a] text-white font-semibold"
+                        className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold shadow-md shadow-blue-200"
                         size="lg"
                         onClick={() => setOpenDialog(null)}
                         data-testid="button-modal-book"
@@ -167,18 +167,16 @@ export default function Individuals() {
                         <ArrowRight className="ml-2 w-4 h-4" />
                       </Button>
                     </Link>
-                    <Link href="/contact" className="flex-1 sm:flex-none">
-                      <Button
-                        variant="outline"
-                        size="lg"
-                        className="w-full border-[#1e293b]/30 text-[#1e293b] hover:bg-[#1e293b]/5 font-medium"
-                        onClick={() => setOpenDialog(null)}
-                        data-testid="button-modal-discuss"
-                      >
-                        <MessageSquare className="mr-2 w-4 h-4" />
-                        {t("modal.discuss")}
-                      </Button>
-                    </Link>
+                    <Button
+                      variant="outline"
+                      size="lg"
+                      className="border-slate-300 text-slate-600 hover:bg-slate-50 font-medium"
+                      onClick={() => setOpenDialog(null)}
+                      data-testid="button-modal-close"
+                    >
+                      <X className="mr-2 w-4 h-4" />
+                      Fermer / Close
+                    </Button>
                   </div>
                 </motion.div>
               );
