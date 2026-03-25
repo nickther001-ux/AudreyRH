@@ -1,0 +1,42 @@
+1. The Content (Premium Copy)
+Strategic Market Analysis / Analyse stratégique du marché
+The Insight: Understanding the "hidden" job market in Quebec.
+
+Content: "Navigating the Quebec labor market requires more than just looking at job boards. We provide a deep dive into high-demand sectors, salary benchmarks by region, and growth projections. Our analysis helps you pivot your career toward industries where your skills are not just needed, but valued at a premium."
+
+Credential Recognition / Reconnaissance des acquis
+The Insight: Saving years of unnecessary schooling.
+
+Content: "Don't let bureaucracy stall your progress. We specialize in navigating the complex world of Quebec's professional orders and comparative evaluations. We help you identify the most efficient path to getting your international experience recognized, ensuring you don't spend time or money on studies you don't actually need."
+
+Employability Strategy / Stratégie d'employabilité
+The Insight: Beyond the resume—cultural and professional fit.
+
+Content: "A Quebec-style resume is only the first step. Our strategy focuses on your 'personal brand' within the local context. From optimizing your LinkedIn profile for local recruiters to mastering the art of the Quebec interview, we equip you with the soft skills and networking tactics needed to secure a role that matches your true potential."
+
+2. The Replit Implementation Prompt
+To make these links actually work, paste this into the Replit Chat.
+
+Context: The "Learn More" links on the service cards for the "Individuals" section are currently not functional. I want to implement a professional Modal (popup) system to display detailed information for each service.
+
+Task:
+
+Create a Modal Component: Use framer-motion for a smooth "fade-in" effect. The modal should have a clean, white background, a deep Midnight Navy (#0f172a) header, and a "Close" button.
+
+Connect the Links: Update the "Learn More" buttons so that clicking them opens the modal with the specific content for that card.
+
+Insert Premium Content: Use the bilingual text provided for Strategic Market Analysis, Credential Recognition, and Employability Strategy.
+
+Bilingual Support: Ensure the content switches between French and English based on the site's language toggle.
+
+High-End Styling: Use generous padding inside the modal and a very soft backdrop-blur for the background overlay to maintain the luxury feel.
+
+Constraint: Do not navigate the user away from the page; the modal should keep them in the current flow.
+
+Pro-Tip: The "CTA" inside the Modal
+A high-end site never lets a user reach a "dead end." Inside every "Learn More" modal, we should have a small button that says "Discuss this service" which scrolls them down to the contact form or opens the booking calendar.
+
+Would you like me to provide the copy for the bottom three cards (Career Coaching, Career Guidance, and Market Integration) as well?
+Draft content for the remaining service cards
+Design a high-end Modal UI with Tailwind
+Add a "Book Now" button inside the service modals

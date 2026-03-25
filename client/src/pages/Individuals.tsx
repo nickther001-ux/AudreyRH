@@ -1,11 +1,11 @@
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useState, useEffect } from "react";
-import { ArrowRight, Briefcase, GraduationCap, TrendingUp, Users, CheckCircle, Target, Award, X, Quote, Star } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, Briefcase, GraduationCap, TrendingUp, Users, CheckCircle, Target, Award, X, Quote, Star, MessageSquare } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { DarkVeil } from "@/components/DarkVeil";
 import { useLanguage } from "@/lib/i18n";
 import ShinyText from "@/components/ShinyText";
@@ -19,6 +19,7 @@ export default function Individuals() {
   const [wordIndex, setWordIndex] = useState(0);
   const [openDialog, setOpenDialog] = useState<ServiceKey>(null);
   const { t } = useLanguage();
+  const [, navigate] = useLocation();
 
   const rotatingWords = [t("hero.rotating.1"), t("hero.rotating.2"), t("hero.rotating.3")];
 
@@ -51,74 +52,146 @@ export default function Individuals() {
     return stats[key];
   };
 
-  const renderServiceDialog = (key: ServiceKey) => {
-    if (!key) return null;
-    const stats = getDialogStats(key);
-    return (
-      <Dialog open={openDialog === key} onOpenChange={(open) => setOpenDialog(open ? key : null)}>
-        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-2xl">{t(`dialog.${key}.title`)}</DialogTitle>
-            <DialogDescription className="text-base">{t(`dialog.${key}.desc`)}</DialogDescription>
-          </DialogHeader>
-          <div className="grid grid-cols-2 gap-4 mt-4">
-            {stats.map((stat, idx) => (
-              <div key={idx} className="bg-primary/5 border border-primary/20 rounded-lg p-4 text-center">
-                <div className="text-3xl font-bold text-primary mb-1">{stat.value}</div>
-                <div className="text-sm text-muted-foreground leading-tight">{t(`dialog.${key}.stat${idx + 1}`)}</div>
-                <div className="text-xs text-muted-foreground/70 mt-2 italic">Source: {stat.source}</div>
-              </div>
-            ))}
-          </div>
-          <div className="space-y-6 mt-6">
-            <div>
-              <h4 className="font-bold text-lg mb-3 text-foreground">{t(`dialog.${key}.h1`)}</h4>
-              <ul className="space-y-2">
-                {[1, 2, 3, 4].map((i) => (
-                  <li key={i} className="flex items-start gap-2 text-muted-foreground">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span>{t(`dialog.${key}.p1.${i}`)}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-lg mb-3 text-foreground">{t(`dialog.${key}.h2`)}</h4>
-              <ul className="space-y-2">
-                {[1, 2, 3, 4].map((i) => (
-                  <li key={i} className="flex items-start gap-2 text-muted-foreground">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span>{t(`dialog.${key}.p2.${i}`)}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-lg mb-3 text-foreground">{t(`dialog.${key}.h3`)}</h4>
-              <p className="text-muted-foreground leading-relaxed">{t(`dialog.${key}.text`)}</p>
-            </div>
-          </div>
-          <div className="mt-6 pt-4 border-t border-border">
-            <Link href="/book">
-              <Button className="w-full" size="lg">
-                {t("services.bookConsultation")}
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Link>
-          </div>
-        </DialogContent>
-      </Dialog>
-    );
-  };
+  const hasInsight = (key: ServiceKey): key is "strategy" | "credentials" | "employability" =>
+    key === "strategy" || key === "credentials" || key === "employability";
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Navbar />
 
-      {renderServiceDialog("strategy")}
-      {renderServiceDialog("credentials")}
-      {renderServiceDialog("employability")}
-      {renderServiceDialog("integration")}
+      {/* ── Animated Service Modal ── */}
+      <AnimatePresence>
+        {openDialog && (() => {
+          const key = openDialog;
+          const stats = getDialogStats(key);
+          return (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                key="backdrop"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md"
+                onClick={() => setOpenDialog(null)}
+              />
+              {/* Panel */}
+              <motion.div
+                key="panel"
+                initial={{ opacity: 0, scale: 0.95, y: 24 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.96, y: 16 }}
+                transition={{ type: "spring", damping: 28, stiffness: 340 }}
+                className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+              >
+                <div
+                  className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[88vh] overflow-hidden flex flex-col pointer-events-auto"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Navy header */}
+                  <div className="bg-[#0f172a] px-8 py-6 flex items-start justify-between flex-shrink-0">
+                    <div className="pr-4">
+                      <h2 className="text-2xl font-bold text-white leading-tight">{t(`dialog.${key}.title`)}</h2>
+                      <p className="text-white/60 text-sm mt-1.5 leading-relaxed">{t(`dialog.${key}.desc`)}</p>
+                    </div>
+                    <button
+                      onClick={() => setOpenDialog(null)}
+                      className="text-white/50 hover:text-white transition-colors flex-shrink-0 mt-0.5 rounded-full hover:bg-white/10 p-1"
+                      data-testid="button-close-modal"
+                      aria-label="Close"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  {/* Scrollable content */}
+                  <div className="overflow-y-auto flex-1 px-8 py-6 space-y-6">
+                    {/* Premium insight */}
+                    {hasInsight(key) && (
+                      <div className="bg-slate-50 border-l-4 border-[#f97316] rounded-r-xl p-5">
+                        <p className="text-slate-700 leading-relaxed text-[15px] italic">
+                          "{t(`dialog.${key}.insight`)}"
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Stats */}
+                    <div className="grid grid-cols-2 gap-4">
+                      {stats.map((stat, idx) => (
+                        <div key={idx} className="bg-[#1e293b]/5 border border-[#1e293b]/15 rounded-xl p-4 text-center">
+                          <div className="text-3xl font-bold text-[#1e293b] mb-1">{stat.value}</div>
+                          <div className="text-sm text-slate-500 leading-tight">{t(`dialog.${key}.stat${idx + 1}`)}</div>
+                          <div className="text-xs text-slate-400 mt-2 italic">Source: {stat.source}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Section h1 */}
+                    <div>
+                      <h4 className="font-bold text-lg mb-3 text-[#0f172a]">{t(`dialog.${key}.h1`)}</h4>
+                      <ul className="space-y-2">
+                        {[1, 2, 3, 4].map((i) => (
+                          <li key={i} className="flex items-start gap-2.5 text-slate-600">
+                            <CheckCircle className="w-5 h-5 text-[#f97316] flex-shrink-0 mt-0.5" />
+                            <span className="text-sm leading-relaxed">{t(`dialog.${key}.p1.${i}`)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Section h2 */}
+                    <div>
+                      <h4 className="font-bold text-lg mb-3 text-[#0f172a]">{t(`dialog.${key}.h2`)}</h4>
+                      <ul className="space-y-2">
+                        {[1, 2, 3, 4].map((i) => (
+                          <li key={i} className="flex items-start gap-2.5 text-slate-600">
+                            <CheckCircle className="w-5 h-5 text-[#f97316] flex-shrink-0 mt-0.5" />
+                            <span className="text-sm leading-relaxed">{t(`dialog.${key}.p2.${i}`)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Section h3 */}
+                    <div className="bg-slate-50 rounded-xl p-5">
+                      <h4 className="font-bold text-base mb-2 text-[#0f172a]">{t(`dialog.${key}.h3`)}</h4>
+                      <p className="text-slate-600 leading-relaxed text-sm">{t(`dialog.${key}.text`)}</p>
+                    </div>
+                  </div>
+
+                  {/* Footer CTAs */}
+                  <div className="px-8 py-5 border-t border-slate-200 bg-slate-50 flex-shrink-0 flex flex-col sm:flex-row gap-3">
+                    <Link href="/book" className="flex-1">
+                      <Button
+                        className="w-full bg-[#f97316] hover:bg-[#ea6c0a] text-white font-semibold"
+                        size="lg"
+                        onClick={() => setOpenDialog(null)}
+                        data-testid="button-modal-book"
+                      >
+                        {t("services.bookConsultation")}
+                        <ArrowRight className="ml-2 w-4 h-4" />
+                      </Button>
+                    </Link>
+                    <Link href="/contact" className="flex-1 sm:flex-none">
+                      <Button
+                        variant="outline"
+                        size="lg"
+                        className="w-full border-[#1e293b]/30 text-[#1e293b] hover:bg-[#1e293b]/5 font-medium"
+                        onClick={() => setOpenDialog(null)}
+                        data-testid="button-modal-discuss"
+                      >
+                        <MessageSquare className="mr-2 w-4 h-4" />
+                        {t("modal.discuss")}
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            </>
+          );
+        })()}
+      </AnimatePresence>
 
       <main className="flex-grow">
 
