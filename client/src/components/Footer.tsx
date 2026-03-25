@@ -28,7 +28,7 @@ export function Footer() {
                 <Linkedin size={20} />
               </a>
               <a
-                href="https://www.tiktok.com/@audreymondesir"
+                href="https://www.tiktok.com/@tacoach.rh"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-11 h-11 bg-background/10 rounded-xl flex items-center justify-center hover:bg-primary hover:scale-105 transition-all duration-300"
