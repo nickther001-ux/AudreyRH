@@ -23,10 +23,19 @@ export default function Contact() {
     e.preventDefault();
     if (!form.name || !form.email || !form.grantType || !form.projectDescription) return;
     setLoading(true);
-    // Simulate form submission (no backend endpoint needed — sends to email)
-    await new Promise((r) => setTimeout(r, 1200));
-    setLoading(false);
-    setSubmitted(true);
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error('Send failed');
+      setSubmitted(true);
+    } catch {
+      alert(t("contact.form.errorMessage") || "Une erreur s'est produite. Veuillez réessayer.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const grantTypes = [

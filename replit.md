@@ -52,12 +52,16 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - 2026-01-11: Fixed duplicate translation keys in i18n.tsx
 - 2026-01-11: Added comprehensive bilingual support throughout application
 
-## Email Confirmation (Live)
-- Resend integration connected via Replit OAuth connector
-- `server/resend.ts` — Resend client helper (uses Replit connector credentials, never cached)
-- `POST /api/appointments/:id/confirm` — marks payment as paid + sends two emails:
-  1. Client confirmation email (French, branded HTML template with appointment details)
-  2. Audrey notification email (internal summary with client info)
-- Triggered from `client/src/pages/Book.tsx` when Stripe redirects to `?success=true&appointmentId=X`
-- Idempotent: if appointment already paid, skips email silently
-- Email failures are non-fatal (logged but don't break the success page)
+## Email (Live — via Resend)
+- Domain `audreyrh.com` verified on Resend; `RESEND_API_KEY` secret set
+- `server/resend.ts` — Resend client using `process.env.RESEND_API_KEY`; all emails from `AudreyRH <info@audreyrh.com>`
+- **Booking confirmation** — `POST /api/appointments/:id/confirm`:
+  - Marks appointment `paymentStatus = 'paid'`; idempotent (skips email if already paid)
+  - Client: French branded HTML with date/time/platform details
+  - Audrey: internal notification email
+  - Triggered by Book.tsx when Stripe redirects to `?success=true&appointmentId=X`
+- **Contact form** — `POST /api/contact`:
+  - Validates name, email, grantType, projectDescription
+  - Audrey: lead notification with all fields
+  - Client: bilingual (FR/EN) auto-reply with copper/navy brand styling
+  - Connected to Contact.tsx `handleSubmit`

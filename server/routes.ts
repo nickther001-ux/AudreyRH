@@ -148,6 +148,26 @@ export async function registerRoutes(
     }
   });
 
+  // Contact / grant application form — sends lead + auto-reply emails
+  app.post('/api/contact', async (req, res) => {
+    const { name, email, grantType, projectDescription } = req.body;
+    if (!name || !email || !grantType || !projectDescription) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: 'Invalid email address' });
+    }
+    try {
+      const { sendContactEmails } = await import('./resend');
+      await sendContactEmails({ name, email, grantType, projectDescription });
+      res.json({ success: true });
+    } catch (err: any) {
+      console.error('Contact form email error:', err.message);
+      res.status(500).json({ message: 'Failed to send message' });
+    }
+  });
+
   // Admin routes - get all appointments
   app.get('/api/admin/appointments', async (req, res) => {
     try {
