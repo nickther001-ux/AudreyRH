@@ -35,7 +35,7 @@ export default function Home() {
             {/* Title */}
             <div>
               <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight tracking-tight mb-4" data-testid="text-gateway-title">
-                <span className="bg-gradient-to-r from-accent to-accent/70 bg-clip-text text-transparent">Audrey</span>
+                <span className="text-white">Audrey</span>
                 <span className="text-white">RH</span>
                 <span className="text-accent">.</span>
               </h1>
