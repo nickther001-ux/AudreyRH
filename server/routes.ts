@@ -125,6 +125,8 @@ export async function registerRoutes(
           endTime: appointment.endTime ?? null,
           platform: appointment.platform,
           reason: appointment.reason,
+          amount: '85.00',
+          stripeId: appointment.stripePaymentIntentId ?? undefined,
         });
       } catch (emailErr: any) {
         console.error('Email send failed (non-fatal):', emailErr.message);

@@ -1,0 +1,54 @@
+1. Internal Payment Notification (For Audrey)
+This is the email Audrey receives. It prioritizes the "money" details and gives her a direct link to her dashboard.
+
+HTML
+<div style="font-family: sans-serif; max-width: 500px; margin: auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+  <div style="background: #1e293b; color: white; padding: 20px; text-align: center;">
+    <h2 style="margin: 0; font-size: 18px;">💰 Nouveau Paiement Reçu</h2>
+  </div>
+  <div style="padding: 25px; color: #334155;">
+    <div style="margin-bottom: 15px;">
+      <strong style="color: #64748b; font-size: 12px; text-transform: uppercase;">Client</strong><br>
+      <span style="font-size: 16px;">{{customerName}} ({{customerEmail}})</span>
+    </div>
+    <div style="margin-bottom: 15px;">
+      <strong style="color: #64748b; font-size: 12px; text-transform: uppercase;">Montant / Amount</strong><br>
+      <span style="font-size: 20px; font-weight: bold; color: #16a34a;">${{amount}} CAD</span>
+    </div>
+    <div style="margin-bottom: 15px;">
+      <strong style="color: #64748b; font-size: 12px; text-transform: uppercase;">Transaction ID</strong><br>
+      <code style="background: #f1f5f9; padding: 2px 5px;">{{stripeId}}</code>
+    </div>
+    <hr style="border: 0; border-top: 1px solid #f1f5f9; margin: 20px 0;">
+    <center>
+      <a href="https://audreyrh.com/admin" style="background: #f97316; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">Voir dans le tableau de bord</a>
+    </center>
+  </div>
+</div>
+2. User Confirmation + Preparation (For the Client)
+This is what the client gets. It includes the new "How to Prepare" checklist to ensure the meeting is productive.
+
+HTML
+<div style="font-family: sans-serif; max-width: 600px; margin: auto; border: 1px solid #e2e8f0; border-radius: 8px;">
+  <div style="background: #1e293b; padding: 20px; text-align: center; border-bottom: 4px solid #f97316;">
+    <h1 style="color: white; margin: 0; font-size: 22px;">Audrey<span style="color: #f97316;">RH</span></h1>
+  </div>
+  <div style="padding: 30px; color: #334155; line-height: 1.6;">
+    <h2 style="color: #1e293b;">Merci pour votre paiement / Thank you for your payment</h2>
+    <p>Bonjour <strong>{{name}}</strong>, votre consultation est confirmée.</p>
+
+    <div style="background: #f8fafc; border: 1px dashed #cbd5e1; padding: 20px; border-radius: 8px; margin: 25px 0;">
+      <h3 style="margin-top: 0; color: #1e293b; font-size: 16px;">📋 Préparation / Preparation</h3>
+      <ul style="padding-left: 20px; font-size: 14px;">
+        <li><strong>FR:</strong> Ayez vos états financiers ou documents d'incorporation prêts.</li>
+        <li><strong>EN:</strong> Have your financial statements or incorporation docs ready.</li>
+        <li><strong>FR:</strong> Notez vos 3 défis RH prioritaires.</li>
+        <li><strong>EN:</strong> Note your top 3 priority HR challenges.</li>
+        <li><strong>FR:</strong> Assurez-vous d'avoir une connexion internet stable.</li>
+        <li><strong>EN:</strong> Ensure you have a stable internet connection.</li>
+      </ul>
+    </div>
+
+    <p style="font-size: 13px; color: #64748b;">Un lien Zoom/Teams vous sera envoyé séparément.</p>
+  </div>
+</div>

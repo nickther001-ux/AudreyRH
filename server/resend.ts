@@ -19,6 +19,8 @@ export type AppointmentEmailData = {
   endTime: string | null;
   platform: string;
   reason: string;
+  amount?: string;
+  stripeId?: string;
 };
 
 export async function sendBookingConfirmation(data: AppointmentEmailData) {
@@ -27,100 +29,269 @@ export async function sendBookingConfirmation(data: AppointmentEmailData) {
   const timeRange =
     data.startTime && data.endTime ? `${data.startTime} – ${data.endTime} (HE)` : '';
 
+  const amountDisplay = data.amount ?? '85.00';
+  const stripeIdDisplay = data.stripeId ?? '—';
+
+  // 1 — Client booking confirmation + preparation checklist
   const clientHtml = `
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Confirmation de réservation — AudreyRH</title>
+  <title>Consultation confirmée — AudreyRH</title>
 </head>
-<body style="margin:0;padding:0;background:#f8fafc;font-family:Inter,ui-sans-serif,system-ui,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;padding:40px 0;">
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:48px 0;">
     <tr><td align="center">
-      <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
-        <!-- Header -->
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.10);">
+
+        <!-- ── Header ── -->
         <tr>
-          <td style="background:linear-gradient(135deg,#1e3a5f 0%,#2d5a8e 100%);padding:40px 48px;text-align:center;">
-            <p style="margin:0;font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.5px;">AudreyRH</p>
-            <p style="margin:6px 0 0;font-size:13px;color:rgba(255,255,255,0.7);letter-spacing:0.5px;text-transform:uppercase;">Conseillère en ressources humaines agréée · CRIA</p>
+          <td style="background:#1e293b;padding:0;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr><td style="background:#f97316;height:4px;font-size:0;">&nbsp;</td></tr>
+              <tr>
+                <td style="padding:32px 48px 24px;text-align:center;">
+                  <p style="margin:0;font-size:30px;font-weight:800;color:#ffffff;letter-spacing:-1px;">
+                    Audrey<span style="color:#f97316;">RH</span><span style="color:#f97316;">.</span>
+                  </p>
+                  <p style="margin:6px 0 0;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;">
+                    Conseillère en ressources humaines agréée &nbsp;·&nbsp; CRIA
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:0 48px 32px;text-align:center;">
+                  <table cellpadding="0" cellspacing="0" style="margin:0 auto;background:#16a34a;border-radius:100px;">
+                    <tr>
+                      <td style="padding:10px 24px;">
+                        <p style="margin:0;font-size:13px;font-weight:700;color:#ffffff;letter-spacing:0.3px;">
+                          ✅&nbsp;&nbsp;Paiement confirmé — Consultation réservée
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
-        <!-- Success band -->
-        <tr>
-          <td style="background:#16a34a;padding:16px 48px;text-align:center;">
-            <p style="margin:0;font-size:15px;font-weight:600;color:#fff;">✅ &nbsp;Paiement confirmé — Votre consultation est réservée</p>
-          </td>
-        </tr>
-        <!-- Body -->
+
+        <!-- ── Body ── -->
         <tr>
           <td style="padding:48px;">
-            <p style="margin:0 0 20px;font-size:22px;font-weight:700;color:#1e3a5f;">Bonjour ${data.clientName},</p>
-            <p style="margin:0 0 32px;font-size:15px;color:#475569;line-height:1.7;">
-              Merci pour votre confiance ! Votre consultation avec <strong>Audrey Mondesir, CRIA</strong> est confirmée. Voici un récapitulatif :
+
+            <p style="margin:0 0 6px;font-size:24px;font-weight:700;color:#1e293b;">Bonjour ${data.clientName},</p>
+            <p style="margin:0 0 28px;font-size:15px;color:#64748b;line-height:1.75;">
+              Merci pour votre paiement / Thank you for your payment.<br/>
+              Votre consultation avec <strong style="color:#1e293b;">Audrey Mondesir, CRIA</strong> est confirmée.
             </p>
-            <!-- Details box -->
-            <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;border-radius:10px;margin-bottom:32px;">
-              <tr><td style="padding:28px 32px;">
+
+            <!-- Appointment details -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;">
+              <tr><td style="padding:24px 28px;">
                 <table width="100%" cellpadding="0" cellspacing="0">
-                  ${data.date ? `<tr><td style="padding:10px 0;border-bottom:1px solid #e2e8f0;">
-                    <span style="font-size:13px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;">Date</span><br/>
-                    <span style="font-size:16px;font-weight:600;color:#1e3a5f;">${data.date}</span>
+                  ${data.date ? `<tr><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                    <span style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Date</span><br/>
+                    <span style="font-size:15px;font-weight:600;color:#1e293b;">${data.date}</span>
                   </td></tr>` : ''}
-                  ${timeRange ? `<tr><td style="padding:10px 0;border-bottom:1px solid #e2e8f0;">
-                    <span style="font-size:13px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;">Heure</span><br/>
-                    <span style="font-size:16px;font-weight:600;color:#1e3a5f;">${timeRange}</span>
+                  ${timeRange ? `<tr><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                    <span style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Heure / Time</span><br/>
+                    <span style="font-size:15px;font-weight:600;color:#1e293b;">${timeRange}</span>
                   </td></tr>` : ''}
-                  <tr><td style="padding:10px 0;border-bottom:1px solid #e2e8f0;">
-                    <span style="font-size:13px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;">Plateforme</span><br/>
-                    <span style="font-size:16px;font-weight:600;color:#1e3a5f;">${platformLabel}</span>
+                  <tr><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                    <span style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Plateforme</span><br/>
+                    <span style="font-size:15px;font-weight:600;color:#1e293b;">${platformLabel}</span>
                   </td></tr>
-                  <tr><td style="padding:10px 0;">
-                    <span style="font-size:13px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;">Sujet</span><br/>
-                    <span style="font-size:15px;color:#1e3a5f;">${data.reason}</span>
-                  </td></tr>
+                  ${data.reason ? `<tr><td style="padding:8px 0;">
+                    <span style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Sujet / Subject</span><br/>
+                    <span style="font-size:14px;color:#334155;">${data.reason}</span>
+                  </td></tr>` : ''}
                 </table>
               </td></tr>
             </table>
-            <p style="margin:0 0 12px;font-size:15px;color:#475569;line-height:1.7;">
-              Audrey vous enverra le lien ${platformLabel} <strong>24 à 48 heures avant</strong> votre rendez-vous.
+
+            <!-- Preparation checklist -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+              <tr>
+                <td style="background:#f8fafc;border:1px dashed #cbd5e1;border-radius:10px;padding:24px 28px;">
+                  <p style="margin:0 0 16px;font-size:15px;font-weight:700;color:#1e293b;">📋 Préparation / Preparation</p>
+
+                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:12px;">
+                    <tr>
+                      <td width="26" valign="top" style="padding-top:1px;">
+                        <span style="display:inline-block;width:18px;height:18px;background:#f97316;border-radius:50%;text-align:center;line-height:18px;font-size:10px;font-weight:700;color:#fff;">✓</span>
+                      </td>
+                      <td>
+                        <p style="margin:0;font-size:13px;color:#334155;line-height:1.6;">
+                          <strong>FR:</strong> Ayez vos états financiers ou documents d'incorporation prêts.<br/>
+                          <em style="color:#64748b;">EN: Have your financial statements or incorporation docs ready.</em>
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:12px;">
+                    <tr>
+                      <td width="26" valign="top" style="padding-top:1px;">
+                        <span style="display:inline-block;width:18px;height:18px;background:#f97316;border-radius:50%;text-align:center;line-height:18px;font-size:10px;font-weight:700;color:#fff;">✓</span>
+                      </td>
+                      <td>
+                        <p style="margin:0;font-size:13px;color:#334155;line-height:1.6;">
+                          <strong>FR:</strong> Notez vos 3 défis RH prioritaires.<br/>
+                          <em style="color:#64748b;">EN: Note your top 3 priority HR challenges.</em>
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td width="26" valign="top" style="padding-top:1px;">
+                        <span style="display:inline-block;width:18px;height:18px;background:#f97316;border-radius:50%;text-align:center;line-height:18px;font-size:10px;font-weight:700;color:#fff;">✓</span>
+                      </td>
+                      <td>
+                        <p style="margin:0;font-size:13px;color:#334155;line-height:1.6;">
+                          <strong>FR:</strong> Assurez-vous d'avoir une connexion internet stable.<br/>
+                          <em style="color:#64748b;">EN: Ensure you have a stable internet connection.</em>
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin:0 0 8px;font-size:14px;color:#64748b;line-height:1.7;">
+              Le lien ${platformLabel} vous sera envoyé <strong style="color:#1e293b;">24 à 48 heures avant</strong> votre rendez-vous.
             </p>
-            <p style="margin:0 0 32px;font-size:15px;color:#475569;line-height:1.7;">
-              Pour toute question : <a href="mailto:info@audreyrh.com" style="color:#c87941;text-decoration:none;font-weight:600;">info@audreyrh.com</a>
+            <p style="margin:0 0 32px;font-size:14px;color:#64748b;">
+              Questions ? <a href="mailto:info@audreyrh.com" style="color:#f97316;font-weight:600;text-decoration:none;">info@audreyrh.com</a>
             </p>
-            <hr style="border:none;border-top:1px solid #e2e8f0;margin:32px 0;"/>
-            <p style="margin:0;font-size:13px;color:#94a3b8;text-align:center;line-height:1.6;">
-              AudreyRH · info@audreyrh.com · Montréal, Québec, Canada<br/>
-              <em>Tous les paiements sont finaux — aucun remboursement.</em>
+
+          </td>
+        </tr>
+
+        <!-- ── Footer ── -->
+        <tr>
+          <td style="background:#1e293b;padding:24px 48px;text-align:center;">
+            <p style="margin:0 0 6px;font-size:13px;color:rgba(255,255,255,0.85);font-weight:600;">AudreyRH</p>
+            <p style="margin:0 0 8px;font-size:12px;color:rgba(255,255,255,0.4);">
+              Montréal, Québec, Canada &nbsp;·&nbsp;
+              <a href="mailto:info@audreyrh.com" style="color:rgba(255,255,255,0.4);text-decoration:none;">info@audreyrh.com</a> &nbsp;·&nbsp;
+              <a href="https://audreyrh.com" style="color:#f97316;text-decoration:none;">audreyrh.com</a>
+            </p>
+            <p style="margin:0;font-size:11px;color:rgba(255,255,255,0.25);">
+              Tous les paiements sont finaux — aucun remboursement. · All payments are final — no refunds.
             </p>
           </td>
         </tr>
+
       </table>
     </td></tr>
   </table>
 </body>
 </html>`;
 
+  // 2 — Internal payment notification to Audrey
   const notifyHtml = `
-<!DOCTYPE html><html><head><meta charset="UTF-8"/></head>
-<body style="font-family:Inter,sans-serif;background:#f8fafc;padding:32px;">
-  <div style="background:#fff;border-radius:10px;padding:32px;max-width:500px;margin:auto;border:1px solid #e2e8f0;">
-    <h2 style="color:#1e3a5f;margin:0 0 20px;">🗓 Nouvelle réservation confirmée</h2>
-    <table cellpadding="0" cellspacing="0" width="100%">
-      <tr><td style="padding:8px 0;color:#64748b;font-size:14px;width:100px;">Client</td><td style="padding:8px 0;font-weight:600;color:#1e3a5f;">${data.clientName}</td></tr>
-      <tr><td style="padding:8px 0;color:#64748b;font-size:14px;">Courriel</td><td style="padding:8px 0;"><a href="mailto:${data.clientEmail}" style="color:#c87941;">${data.clientEmail}</a></td></tr>
-      ${data.date ? `<tr><td style="padding:8px 0;color:#64748b;font-size:14px;">Date</td><td style="padding:8px 0;font-weight:600;color:#1e3a5f;">${data.date}</td></tr>` : ''}
-      ${timeRange ? `<tr><td style="padding:8px 0;color:#64748b;font-size:14px;">Heure</td><td style="padding:8px 0;font-weight:600;color:#1e3a5f;">${timeRange}</td></tr>` : ''}
-      <tr><td style="padding:8px 0;color:#64748b;font-size:14px;">Plateforme</td><td style="padding:8px 0;">${platformLabel}</td></tr>
-      <tr><td style="padding:8px 0;color:#64748b;font-size:14px;vertical-align:top;">Sujet</td><td style="padding:8px 0;color:#1e3a5f;">${data.reason}</td></tr>
-    </table>
-  </div>
-</body></html>`;
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Nouveau Paiement — AudreyRH</title>
+</head>
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:40px 0;">
+    <tr><td align="center">
+      <table width="500" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+
+        <!-- Header -->
+        <tr>
+          <td style="background:#1e293b;padding:0;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr><td style="background:#f97316;height:4px;font-size:0;">&nbsp;</td></tr>
+              <tr>
+                <td style="padding:24px 32px;">
+                  <p style="margin:0;font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">AudreyRH · Paiement reçu</p>
+                  <p style="margin:0;font-size:20px;font-weight:700;color:#ffffff;">💰 Nouveau Paiement Reçu</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Fields -->
+        <tr>
+          <td style="padding:28px 32px 24px;">
+
+            <!-- Client -->
+            <div style="margin-bottom:18px;">
+              <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Client</p>
+              <p style="margin:0;font-size:16px;color:#1e293b;">
+                ${data.clientName}
+                <a href="mailto:${data.clientEmail}" style="font-size:14px;color:#f97316;text-decoration:none;margin-left:6px;">(${data.clientEmail})</a>
+              </p>
+            </div>
+
+            <!-- Amount -->
+            <div style="margin-bottom:18px;">
+              <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Montant / Amount</p>
+              <p style="margin:0;font-size:26px;font-weight:800;color:#16a34a;">$${amountDisplay} CAD</p>
+            </div>
+
+            <!-- Date & time -->
+            ${data.date ? `<div style="margin-bottom:18px;">
+              <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Date${timeRange ? ' & Heure' : ''}</p>
+              <p style="margin:0;font-size:15px;font-weight:600;color:#1e293b;">${data.date}${timeRange ? ' · ' + timeRange : ''}</p>
+            </div>` : ''}
+
+            <!-- Platform -->
+            <div style="margin-bottom:18px;">
+              <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Plateforme</p>
+              <p style="margin:0;font-size:15px;font-weight:600;color:#1e293b;">${platformLabel}</p>
+            </div>
+
+            <!-- Transaction ID -->
+            <div style="margin-bottom:24px;">
+              <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Transaction ID</p>
+              <code style="font-size:13px;background:#f1f5f9;padding:4px 8px;border-radius:4px;color:#475569;">${stripeIdDisplay}</code>
+            </div>
+
+            <hr style="border:0;border-top:1px solid #f1f5f9;margin:0 0 24px;"/>
+
+            <table cellpadding="0" cellspacing="0" style="margin:0 auto;">
+              <tr>
+                <td style="background:#f97316;border-radius:8px;">
+                  <a href="https://audreyrh.com/admin" style="display:inline-block;padding:12px 28px;font-size:14px;font-weight:700;color:#ffffff;text-decoration:none;">
+                    Voir dans le tableau de bord →
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:16px 32px;text-align:center;">
+            <p style="margin:0;font-size:12px;color:#94a3b8;">AudreyRH · Notification automatique · <a href="https://audreyrh.com" style="color:#f97316;text-decoration:none;">audreyrh.com</a></p>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
 
   console.log('[Resend] Sending booking emails to:', data.clientEmail);
   const [r1, r2] = await Promise.all([
     client.emails.send({ from: FROM, to: data.clientEmail, subject: 'Confirmation de votre consultation — AudreyRH', html: clientHtml }),
-    client.emails.send({ from: FROM, to: NOTIFY_TO, subject: `[AudreyRH] Nouvelle réservation — ${data.clientName}`, html: notifyHtml }),
+    client.emails.send({ from: FROM, to: NOTIFY_TO, replyTo: data.clientEmail, subject: `💰 Nouveau Paiement : ${data.clientName} — $${amountDisplay} CAD`, html: notifyHtml }),
   ]);
   if (r1.error) console.error('[Resend] Booking client email error:', JSON.stringify(r1.error));
   else console.log('[Resend] Booking client email sent, id:', r1.data?.id);
