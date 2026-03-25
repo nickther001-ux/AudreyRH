@@ -53,11 +53,96 @@ const timeSlots = [
   "15:00", "15:30", "16:00", "16:30", "17:00", "17:30"
 ];
 
+function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isPending, setIsPending] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+    setIsPending(true);
+    try {
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+      if (res.ok) {
+        sessionStorage.setItem("admin_auth", "1");
+        onSuccess();
+      } else {
+        const data = await res.json();
+        setError(data.message ?? "Mot de passe incorrect");
+      }
+    } catch {
+      setError("Erreur réseau. Veuillez réessayer.");
+    } finally {
+      setIsPending(false);
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-sm">
+        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+          <div className="bg-[#1e293b] px-8 py-8 text-center">
+            <div className="h-1 bg-[#f97316] -mx-8 -mt-8 mb-8" />
+            <p className="text-2xl font-bold text-white tracking-tight">
+              Audrey<span className="text-[#f97316]">RH</span>
+            </p>
+            <p className="text-xs text-white/50 mt-1 uppercase tracking-widest">Espace administrateur</p>
+          </div>
+          <form onSubmit={handleSubmit} className="px-8 py-8 space-y-5">
+            <div className="space-y-2">
+              <label htmlFor="admin-password" className="block text-sm font-semibold text-slate-700">
+                Mot de passe
+              </label>
+              <input
+                id="admin-password"
+                data-testid="input-admin-password"
+                type="password"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="••••••••"
+                required
+                autoFocus
+                className="w-full px-4 py-3 rounded-lg border border-slate-200 bg-slate-50 text-slate-900 text-sm focus:outline-none focus:ring-2 focus:ring-[#f97316] focus:border-transparent transition"
+              />
+            </div>
+            {error && (
+              <p data-testid="text-login-error" className="text-sm text-red-600 font-medium">
+                {error}
+              </p>
+            )}
+            <button
+              data-testid="button-admin-login"
+              type="submit"
+              disabled={isPending}
+              className="w-full bg-[#f97316] hover:bg-[#ea6c0a] disabled:opacity-60 text-white font-bold py-3 rounded-lg text-sm transition-colors"
+            >
+              {isPending ? "Vérification…" : "Accéder au panneau"}
+            </button>
+          </form>
+        </div>
+        <p className="text-center text-xs text-slate-400 mt-4">AudreyRH · accès réservé</p>
+      </div>
+    </div>
+  );
+}
+
 export default function Admin() {
   const { toast } = useToast();
   const { t, language } = useLanguage();
   const dateLocale = language === "fr" ? fr : enUS;
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    () => sessionStorage.getItem("admin_auth") === "1"
+  );
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(addDays(new Date(), 1));
+
+  if (!isAuthenticated) {
+    return <AdminLogin onSuccess={() => setIsAuthenticated(true)} />;
+  }
   const { data: slots = [], isLoading } = useQuery<AvailabilitySlot[]>({
     queryKey: ['/api/availability'],
   });

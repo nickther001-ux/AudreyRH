@@ -168,6 +168,19 @@ export async function registerRoutes(
     }
   });
 
+  // Admin login — validates against ADMIN_PASSWORD secret
+  app.post('/api/admin/login', (req, res) => {
+    const { password } = req.body ?? {};
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword) {
+      return res.status(500).json({ message: 'Admin password not configured' });
+    }
+    if (!password || password !== adminPassword) {
+      return res.status(401).json({ message: 'Mot de passe incorrect' });
+    }
+    res.json({ success: true });
+  });
+
   // Admin routes - get all appointments
   app.get('/api/admin/appointments', async (req, res) => {
     try {
