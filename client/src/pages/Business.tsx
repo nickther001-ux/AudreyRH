@@ -78,21 +78,8 @@ export default function Business() {
       </section>
 
       {/* ── Section 2: Business Services (White) ── */}
-      <section className="py-24 bg-white relative overflow-hidden" data-testid="section-business-services">
-        {/* Grid pattern */}
-        <div
-          className="absolute inset-0 z-0 pointer-events-none"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, rgb(226 232 240 / 0.5) 1px, transparent 1px), linear-gradient(to bottom, rgb(226 232 240 / 0.5) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-        {/* Spotlight blobs */}
-        <div className="absolute -top-40 -left-40 w-[560px] h-[560px] rounded-full bg-[#f97316]/5 blur-3xl z-0 pointer-events-none" />
-        <div className="absolute -bottom-40 -right-40 w-[560px] h-[560px] rounded-full bg-[#3a3082]/5 blur-3xl z-0 pointer-events-none" />
-
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
+      <section className="py-24 bg-white" data-testid="section-business-services">
+        <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
               <Target className="w-4 h-4" />
@@ -112,7 +99,7 @@ export default function Business() {
               return (
                 <Card
                   key={svc.key}
-                  className="p-8 card-hover-lift border-slate-200 bg-white/90 backdrop-blur-sm shadow-sm"
+                  className="p-8 card-hover-lift border-slate-200 bg-white shadow-sm"
                   data-testid={`card-business-service-${svc.key}`}
                 >
                   <div className={`w-14 h-14 ${svc.bg} rounded-2xl flex items-center justify-center mb-6`}>
@@ -191,21 +178,8 @@ export default function Business() {
       </section>
 
       {/* ── Section 4: Why Choose AudreyRH (Light/White) ── */}
-      <section className="py-24 bg-slate-50 relative overflow-hidden">
-        {/* Grid pattern */}
-        <div
-          className="absolute inset-0 z-0 pointer-events-none"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, rgb(226 232 240 / 0.5) 1px, transparent 1px), linear-gradient(to bottom, rgb(226 232 240 / 0.5) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-        {/* Spotlight blobs */}
-        <div className="absolute -top-40 -right-40 w-[480px] h-[480px] rounded-full bg-[#f97316]/5 blur-3xl z-0 pointer-events-none" />
-        <div className="absolute -bottom-40 -left-40 w-[480px] h-[480px] rounded-full bg-[#3a3082]/5 blur-3xl z-0 pointer-events-none" />
-
-        <div className="container mx-auto px-4 md:px-6 max-w-5xl relative z-10">
+      <section className="py-24 bg-slate-50">
+        <div className="container mx-auto px-4 md:px-6 max-w-5xl">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">{t("business.why.title")}</h2>
             <p className="text-slate-500 text-lg">{t("business.why.subtitle")}</p>
@@ -214,7 +188,7 @@ export default function Business() {
             {reasons.map((r) => {
               const Icon = r.icon;
               return (
-                <div key={r.key} className="text-center bg-white/90 backdrop-blur-sm rounded-2xl p-8 border border-slate-200/80 shadow-sm" data-testid={`card-business-why-${r.key}`}>
+                <div key={r.key} className="text-center" data-testid={`card-business-why-${r.key}`}>
                   <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
                     <Icon className="w-8 h-8 text-primary" />
                   </div>
