@@ -61,32 +61,26 @@ export default function Individuals() {
 
       {/* ── Animated Service Modal ── */}
       <AnimatePresence>
-        {openDialog && (() => {
-          const key = openDialog;
-          const stats = getDialogStats(key);
-          return (
-            <>
-              {/* Backdrop */}
-              <motion.div
-                key="backdrop"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md"
-                onClick={() => setOpenDialog(null)}
-              />
-              {/* Panel */}
-              <motion.div
-                key="panel"
-                initial={{ opacity: 0, scale: 0.95, y: 24 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.96, y: 16 }}
-                transition={{ type: "spring", damping: 28, stiffness: 340 }}
-                className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
-              >
-                <div
-                  className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[88vh] overflow-hidden flex flex-col pointer-events-auto"
+        {openDialog && (
+          <motion.div
+            key={openDialog}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex items-center justify-center p-4"
+            onClick={() => setOpenDialog(null)}
+          >
+            {(() => {
+              const key = openDialog;
+              const stats = getDialogStats(key);
+              return (
+                <motion.div
+                  initial={{ scale: 0.95, y: 24, opacity: 0 }}
+                  animate={{ scale: 1, y: 0, opacity: 1 }}
+                  exit={{ scale: 0.96, y: 16, opacity: 0 }}
+                  transition={{ type: "spring", damping: 28, stiffness: 340 }}
+                  className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[88vh] overflow-hidden flex flex-col"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {/* Navy header */}
@@ -186,11 +180,11 @@ export default function Individuals() {
                       </Button>
                     </Link>
                   </div>
-                </div>
-              </motion.div>
-            </>
-          );
-        })()}
+                </motion.div>
+              );
+            })()}
+          </motion.div>
+        )}
       </AnimatePresence>
 
       <main className="flex-grow">
