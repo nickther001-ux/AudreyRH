@@ -165,69 +165,130 @@ export async function sendContactEmails(data: ContactEmailData) {
   </div>
 </body></html>`;
 
-  // 2 — Bilingual auto-reply to client
+  // 2 — Premium bilingual auto-reply to client
   const replyHtml = `
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>Merci — AudreyRH</title>
+  <title>Merci de votre intérêt — AudreyRH</title>
 </head>
-<body style="margin:0;padding:0;background:#f8fafc;font-family:Inter,ui-sans-serif,system-ui,sans-serif;">
-  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;padding:40px 0;">
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:48px 0;">
     <tr><td align="center">
-      <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
-        <!-- Header -->
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.10);">
+
+        <!-- ── Header ── -->
         <tr>
-          <td style="background:linear-gradient(135deg,#1e3a5f 0%,#2d5a8e 100%);padding:40px 48px;text-align:center;">
-            <p style="margin:0;font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.5px;">AudreyRH</p>
-            <p style="margin:6px 0 0;font-size:13px;color:rgba(255,255,255,0.7);letter-spacing:0.5px;text-transform:uppercase;">Conseillère en ressources humaines agréée · CRIA</p>
+          <td style="background:#1e293b;padding:0;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <!-- Orange top stripe -->
+              <tr><td style="background:#f97316;height:4px;font-size:0;">&nbsp;</td></tr>
+              <!-- Logo row -->
+              <tr>
+                <td style="padding:36px 48px 28px;text-align:center;">
+                  <p style="margin:0;font-size:32px;font-weight:800;color:#ffffff;letter-spacing:-1px;">
+                    Audrey<span style="color:#f97316;">RH</span><span style="color:#f97316;">.</span>
+                  </p>
+                  <p style="margin:8px 0 0;font-size:11px;color:rgba(255,255,255,0.55);letter-spacing:2px;text-transform:uppercase;">
+                    Conseillère en ressources humaines agréée &nbsp;·&nbsp; CRIA
+                  </p>
+                </td>
+              </tr>
+              <!-- Confirmation band -->
+              <tr>
+                <td style="padding:0 48px 36px;text-align:center;">
+                  <table cellpadding="0" cellspacing="0" style="margin:0 auto;background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.35);border-radius:100px;">
+                    <tr>
+                      <td style="padding:10px 24px;">
+                        <p style="margin:0;font-size:13px;font-weight:600;color:#f97316;letter-spacing:0.3px;">
+                          ✔&nbsp;&nbsp;Message reçu · Message received
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
-        <!-- Copper accent band -->
-        <tr>
-          <td style="background:#c87941;padding:14px 48px;text-align:center;">
-            <p style="margin:0;font-size:14px;font-weight:600;color:#fff;letter-spacing:0.3px;">Merci pour votre message · Thank you for reaching out</p>
-          </td>
-        </tr>
-        <!-- Body -->
+
+        <!-- ── Body ── -->
         <tr>
           <td style="padding:48px;">
 
-            <!-- French section -->
-            <p style="margin:0 0 8px;font-size:22px;font-weight:700;color:#1e3a5f;">Bonjour ${data.name},</p>
-            <p style="margin:0 0 20px;font-size:15px;color:#475569;line-height:1.7;">
-              Merci de nous avoir contactés ! Nous avons bien reçu votre demande concernant <strong>${typeLabel}</strong> et nous vous répondrons dans les <strong>24 à 48 heures</strong>.
+            <!-- FR greeting -->
+            <p style="margin:0 0 6px;font-size:24px;font-weight:700;color:#1e293b;">Bonjour ${data.name},</p>
+            <p style="margin:0 0 28px;font-size:15px;color:#64748b;line-height:1.75;">
+              Merci de nous avoir contactés. Votre demande concernant
+              <strong style="color:#1e293b;">${typeLabel}</strong>
+              a bien été reçue et nous vous répondrons sous
+              <strong style="color:#1e293b;">24 à 48 heures ouvrables</strong>.
             </p>
-            <div style="background:#f1f5f9;border-left:4px solid #1e3a5f;border-radius:0 8px 8px 0;padding:18px 24px;margin-bottom:28px;">
-              <p style="margin:0 0 6px;font-size:13px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;">Votre message</p>
-              <p style="margin:0;font-size:14px;color:#334155;line-height:1.6;">${data.projectDescription.replace(/\n/g, '<br/>')}</p>
-            </div>
-            <p style="margin:0 0 32px;font-size:15px;color:#475569;line-height:1.7;">
-              En attendant, vous pouvez réserver directement une consultation en ligne sur <a href="https://audreyrh.com/book" style="color:#c87941;font-weight:600;text-decoration:none;">audreyrh.com/book</a>.
+
+            <!-- Message recap box -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
+              <tr>
+                <td style="background:#f8fafc;border:1px solid #e2e8f0;border-left:4px solid #f97316;border-radius:0 10px 10px 0;padding:20px 24px;">
+                  <p style="margin:0 0 8px;font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Votre message / Your message</p>
+                  <p style="margin:0;font-size:14px;color:#334155;line-height:1.7;">${data.projectDescription.replace(/\n/g, '<br/>')}</p>
+                </td>
+              </tr>
+            </table>
+
+            <!-- FR CTA -->
+            <p style="margin:0 0 24px;font-size:15px;color:#64748b;line-height:1.75;">
+              En attendant notre réponse, vous pouvez réserver une consultation directement en ligne :
             </p>
+            <table cellpadding="0" cellspacing="0" style="margin-bottom:40px;">
+              <tr>
+                <td style="background:#f97316;border-radius:8px;">
+                  <a href="https://audreyrh.com/book" style="display:inline-block;padding:14px 32px;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;letter-spacing:0.2px;">
+                    Réserver une consultation →
+                  </a>
+                </td>
+              </tr>
+            </table>
 
             <!-- Divider -->
-            <hr style="border:none;border-top:2px dashed #e2e8f0;margin:32px 0;"/>
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 36px;">
+              <tr>
+                <td style="border-top:1px solid #e2e8f0;font-size:0;">&nbsp;</td>
+              </tr>
+            </table>
 
-            <!-- English section -->
-            <p style="margin:0 0 8px;font-size:18px;font-weight:700;color:#1e3a5f;">Hello ${data.name},</p>
-            <p style="margin:0 0 20px;font-size:15px;color:#475569;line-height:1.7;">
-              Thank you for reaching out! We have received your inquiry regarding <strong>${typeLabel}</strong> and will get back to you within <strong>24 to 48 hours</strong>.
+            <!-- EN greeting -->
+            <p style="margin:0 0 6px;font-size:20px;font-weight:700;color:#1e293b;">Hello ${data.name},</p>
+            <p style="margin:0 0 20px;font-size:15px;color:#64748b;line-height:1.75;">
+              Thank you for getting in touch. We have received your inquiry about
+              <strong style="color:#1e293b;">${typeLabel}</strong>
+              and will respond within
+              <strong style="color:#1e293b;">24 to 48 business hours</strong>.
             </p>
-            <p style="margin:0 0 32px;font-size:15px;color:#475569;line-height:1.7;">
-              In the meantime, you can book a consultation directly at <a href="https://audreyrh.com/book" style="color:#c87941;font-weight:600;text-decoration:none;">audreyrh.com/book</a>.
+            <p style="margin:0 0 40px;font-size:15px;color:#64748b;line-height:1.75;">
+              In the meantime, feel free to book a consultation at
+              <a href="https://audreyrh.com/book" style="color:#f97316;font-weight:600;text-decoration:none;">audreyrh.com/book</a>.
             </p>
 
-            <hr style="border:none;border-top:1px solid #e2e8f0;margin:32px 0;"/>
-            <p style="margin:0;font-size:13px;color:#94a3b8;text-align:center;line-height:1.8;">
-              AudreyRH · <a href="mailto:info@audreyrh.com" style="color:#94a3b8;">info@audreyrh.com</a><br/>
-              Montréal, Québec, Canada<br/>
-              <a href="https://audreyrh.com" style="color:#c87941;text-decoration:none;">audreyrh.com</a>
+          </td>
+        </tr>
+
+        <!-- ── Footer ── -->
+        <tr>
+          <td style="background:#1e293b;padding:28px 48px;text-align:center;">
+            <p style="margin:0 0 6px;font-size:13px;color:rgba(255,255,255,0.9);font-weight:600;">AudreyRH</p>
+            <p style="margin:0 0 12px;font-size:12px;color:rgba(255,255,255,0.45);">
+              Montréal, Québec, Canada &nbsp;·&nbsp;
+              <a href="mailto:info@audreyrh.com" style="color:rgba(255,255,255,0.45);text-decoration:none;">info@audreyrh.com</a> &nbsp;·&nbsp;
+              <a href="https://audreyrh.com" style="color:#f97316;text-decoration:none;">audreyrh.com</a>
+            </p>
+            <p style="margin:0;font-size:11px;color:rgba(255,255,255,0.25);">
+              Tous les paiements sont finaux — aucun remboursement. · All payments are final — no refunds.
             </p>
           </td>
         </tr>
+
       </table>
     </td></tr>
   </table>
@@ -237,7 +298,7 @@ export async function sendContactEmails(data: ContactEmailData) {
   console.log('[Resend] Sending contact emails — notify + reply to:', data.email);
   const [r1, r2] = await Promise.all([
     client.emails.send({ from: FROM, to: NOTIFY_TO, subject: `[AudreyRH] Nouvelle demande — ${data.name} (${typeLabel})`, html: notifyHtml }),
-    client.emails.send({ from: FROM, to: data.email, subject: 'Merci pour votre demande — AudreyRH / Thank you for reaching out', html: replyHtml }),
+    client.emails.send({ from: FROM, to: data.email, subject: `Merci de votre intérêt / Thank you for your interest — AudreyRH`, html: replyHtml }),
   ]);
   if (r1.error) console.error('[Resend] Contact notify email error:', JSON.stringify(r1.error));
   else console.log('[Resend] Contact notify email sent, id:', r1.data?.id);
