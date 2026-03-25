@@ -1,5 +1,7 @@
-import { Link } from "wouter";
-import { Palette, Lightbulb, Building2, Briefcase, ArrowRight, CheckCircle, DollarSign, Users, TrendingUp } from "lucide-react";
+import { useState } from "react";
+import { Link, useLocation } from "wouter";
+import { AnimatePresence, motion } from "framer-motion";
+import { Palette, Lightbulb, Building2, Briefcase, ArrowRight, CheckCircle, DollarSign, Users, TrendingUp, X, Calendar, Send } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -8,53 +10,307 @@ import { useLanguage } from "@/lib/i18n";
 import { CountUp } from "@/components/CountUp";
 import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
 
+type DiagnosticCategory = "artists" | "entrepreneurs" | "sme" | null;
+type ResultType = "high" | "review" | "early";
+
+interface Question { fr: string; en: string; }
+
+const diagnosticQuestions: Record<string, Question[]> = {
+  artists: [
+    { fr: "Êtes-vous incorporé(e) ou avez-vous un statut légal d'entreprise ?", en: "Are you incorporated or do you have a legal business status?" },
+    { fr: "Avez-vous 2 ans ou plus d'expérience professionnelle dans votre domaine artistique ?", en: "Do you have 2+ years of professional experience in your artistic field?" },
+    { fr: "Avez-vous réalisé 3 projets artistiques complétés ou plus ?", en: "Have you completed 3 or more artistic projects?" },
+  ],
+  entrepreneurs: [
+    { fr: "Votre entreprise est-elle officiellement enregistrée (Registraire des entreprises du Québec) ?", en: "Is your business officially registered (Quebec business registry)?" },
+    { fr: "Avez-vous un produit ou service minimum viable (MVP) en place ?", en: "Do you have a minimum viable product or service (MVP) in place?" },
+    { fr: "Recherchez-vous un financement de démarrage de moins de 50 000 $ ?", en: "Are you seeking startup funding of less than $50,000?" },
+  ],
+  sme: [
+    { fr: "Votre entreprise compte-t-elle 5 employés ou plus ?", en: "Does your business have 5 or more employees?" },
+    { fr: "Votre chiffre d'affaires annuel dépasse-t-il 100 000 $ ?", en: "Does your annual revenue exceed $100,000?" },
+    { fr: "Avez-vous un objectif d'expansion ou d'optimisation pour les 12 prochains mois ?", en: "Do you have an expansion or optimization goal for the next 12 months?" },
+  ],
+};
+
+const categoryLabels: Record<string, { fr: string; en: string }> = {
+  artists:      { fr: "Artistes & Créateurs", en: "Artists & Creators" },
+  entrepreneurs:{ fr: "Entrepreneurs",        en: "Entrepreneurs" },
+  sme:          { fr: "PMEs",                 en: "SMEs" },
+};
+
+function getResult(category: string, answers: boolean[]): ResultType {
+  if (category === "entrepreneurs" && !answers[0]) return "early";
+  return answers.every(Boolean) ? "high" : "review";
+}
+
 const grantCategories = [
-  {
-    key: "artists",
-    icon: Palette,
-    color: "text-accent",
-    bgColor: "bg-accent/10",
-    borderColor: "border-accent/20",
-    hoverBorder: "hover:border-accent/50",
-  },
-  {
-    key: "entrepreneurs",
-    icon: Lightbulb,
-    color: "text-primary",
-    bgColor: "bg-primary/10",
-    borderColor: "border-primary/20",
-    hoverBorder: "hover:border-primary/50",
-  },
-  {
-    key: "sme",
-    icon: Building2,
-    color: "text-secondary",
-    bgColor: "bg-secondary/10",
-    borderColor: "border-secondary/20",
-    hoverBorder: "hover:border-secondary/50",
-  },
-  {
-    key: "corporate",
-    icon: Briefcase,
-    color: "text-foreground",
-    bgColor: "bg-muted",
-    borderColor: "border-border",
-    hoverBorder: "hover:border-foreground/30",
-  },
+  { key: "artists",       icon: Palette,   color: "text-accent",    bgColor: "bg-accent/10",   borderColor: "border-accent/20",   hoverBorder: "hover:border-accent/50",     hasDiagnostic: true },
+  { key: "entrepreneurs", icon: Lightbulb, color: "text-primary",   bgColor: "bg-primary/10",  borderColor: "border-primary/20",  hoverBorder: "hover:border-primary/50",    hasDiagnostic: true },
+  { key: "sme",           icon: Building2, color: "text-secondary", bgColor: "bg-secondary/10",borderColor: "border-secondary/20",hoverBorder: "hover:border-secondary/50",  hasDiagnostic: true },
+  { key: "corporate",     icon: Briefcase, color: "text-foreground", bgColor: "bg-muted",       borderColor: "border-border",      hoverBorder: "hover:border-foreground/30", hasDiagnostic: false },
 ];
 
 const stats = [
-  { icon: DollarSign, from: 0, to: 4.5, duration: 2,   suffix: "B$", labelKey: "grants.stat1Label" },
-  { icon: Users,     from: 0, to: 500,  duration: 2.5, suffix: "+",  labelKey: "grants.stat2Label" },
-  { icon: TrendingUp,from: 0, to: 92,   duration: 2.2, suffix: "%",  labelKey: "grants.stat4Label" },
+  { icon: DollarSign,  from: 0, to: 4.5, duration: 2,   suffix: "B$", labelKey: "grants.stat1Label" },
+  { icon: Users,       from: 0, to: 500, duration: 2.5, suffix: "+",  labelKey: "grants.stat2Label" },
+  { icon: TrendingUp,  from: 0, to: 92,  duration: 2.2, suffix: "%",  labelKey: "grants.stat4Label" },
 ];
 
 export default function Grants() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const [, navigate] = useLocation();
+
+  const [diagnosticCategory, setDiagnosticCategory] = useState<DiagnosticCategory>(null);
+  const [step, setStep] = useState(0);
+  const [answers, setAnswers] = useState<boolean[]>([]);
+
+  const openDiagnostic = (category: DiagnosticCategory) => {
+    setDiagnosticCategory(category);
+    setStep(0);
+    setAnswers([]);
+  };
+
+  const closeDiagnostic = () => setDiagnosticCategory(null);
+
+  const handleAnswer = (answer: boolean) => {
+    const newAnswers = [...answers, answer];
+    setAnswers(newAnswers);
+    const questions = diagnosticCategory ? diagnosticQuestions[diagnosticCategory] : [];
+    if (newAnswers.length >= questions.length) {
+      setStep(questions.length); // result step
+    } else {
+      setStep(newAnswers.length);
+    }
+  };
+
+  const questions = diagnosticCategory ? diagnosticQuestions[diagnosticCategory] : [];
+  const totalSteps = questions.length;
+  const isResult = step === totalSteps && totalSteps > 0;
+  const result: ResultType | null = isResult && diagnosticCategory ? getResult(diagnosticCategory, answers) : null;
+  const isFr = language === "fr";
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
+
+      {/* ── Eligibility Diagnostic Modal ── */}
+      <AnimatePresence>
+        {diagnosticCategory && (
+          <motion.div
+            key={diagnosticCategory}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={closeDiagnostic}
+          >
+            <motion.div
+              initial={{ scale: 0.95, y: 20, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.97, y: 12, opacity: 0 }}
+              transition={{ type: "spring", damping: 28, stiffness: 340 }}
+              className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden flex flex-col"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Navy header */}
+              <div className="bg-[#0f172a] px-7 py-5 flex items-start justify-between">
+                <div>
+                  <p className="text-[#2563eb] text-xs font-semibold uppercase tracking-widest mb-1">
+                    {isFr ? "Diagnostic d'admissibilité" : "Admissibility Diagnostic"}
+                  </p>
+                  <h2 className="text-xl font-bold text-white">
+                    {diagnosticCategory ? (isFr ? categoryLabels[diagnosticCategory].fr : categoryLabels[diagnosticCategory].en) : ""}
+                  </h2>
+                </div>
+                <button
+                  onClick={closeDiagnostic}
+                  className="text-white/50 hover:text-white transition-colors rounded-full hover:bg-white/10 p-1 mt-0.5 flex-shrink-0"
+                  data-testid="button-close-diagnostic"
+                  aria-label="Close"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Step progress bar */}
+              {!isResult && (
+                <div className="px-7 pt-5 pb-1">
+                  <div className="flex items-center gap-1.5 mb-1">
+                    {questions.map((_, i) => (
+                      <div key={i} className="flex-1 flex items-center gap-1.5">
+                        <div
+                          className={`h-1.5 flex-1 rounded-full transition-all duration-300 ${
+                            i < step ? "bg-[#2563eb]" : i === step ? "bg-[#2563eb]/50" : "bg-slate-200"
+                          }`}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-slate-400 text-right">
+                    {isFr ? `Question ${step + 1} sur ${totalSteps}` : `Question ${step + 1} of ${totalSteps}`}
+                  </p>
+                </div>
+              )}
+
+              {/* Question or Result */}
+              <div className="px-7 py-6">
+                <AnimatePresence mode="wait">
+                  {!isResult ? (
+                    <motion.div
+                      key={`q-${step}`}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.18 }}
+                    >
+                      <p className="text-[#0f172a] font-semibold text-lg leading-snug mb-6">
+                        {isFr ? questions[step]?.fr : questions[step]?.en}
+                      </p>
+                      <div className="grid grid-cols-2 gap-3">
+                        <button
+                          className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-[#2563eb] text-[#2563eb] font-semibold hover:bg-[#2563eb] hover:text-white transition-all duration-200"
+                          onClick={() => handleAnswer(true)}
+                          data-testid={`button-yes-${step}`}
+                        >
+                          <CheckCircle className="w-4 h-4" />
+                          {isFr ? "Oui" : "Yes"}
+                        </button>
+                        <button
+                          className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-slate-200 text-slate-500 font-semibold hover:bg-slate-100 transition-all duration-200"
+                          onClick={() => handleAnswer(false)}
+                          data-testid={`button-no-${step}`}
+                        >
+                          <X className="w-4 h-4" />
+                          {isFr ? "Non" : "No"}
+                        </button>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="result"
+                      initial={{ opacity: 0, scale: 0.97 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.22 }}
+                    >
+                      {result === "high" && (
+                        <div className="text-center">
+                          <div className="w-16 h-16 bg-[#2563eb]/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <CheckCircle className="w-8 h-8 text-[#2563eb]" />
+                          </div>
+                          <div className="inline-block bg-[#2563eb] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3">
+                            {isFr ? "Correspondance élevée" : "High Match"}
+                          </div>
+                          <h3 className="text-xl font-bold text-[#0f172a] mb-2">
+                            {isFr ? "Vous êtes admissible !" : "You're eligible!"}
+                          </h3>
+                          <p className="text-slate-500 text-sm leading-relaxed mb-6">
+                            {isFr
+                              ? "Votre profil correspond aux critères d'admissibilité. Réservez une consultation pour commencer votre demande de subvention avec l'aide d'un expert CRIA."
+                              : "Your profile meets the eligibility criteria. Book a consultation to start your grant application with a certified CRIA expert."}
+                          </p>
+                          <Link href="/book">
+                            <Button
+                              className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold shadow-md shadow-blue-200 mb-3"
+                              size="lg"
+                              onClick={closeDiagnostic}
+                              data-testid="button-result-book"
+                            >
+                              <Calendar className="mr-2 w-4 h-4" />
+                              {isFr ? "Réserver une consultation" : "Book a Consultation"}
+                            </Button>
+                          </Link>
+                        </div>
+                      )}
+
+                      {result === "early" && (
+                        <div className="text-center">
+                          <div className="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Lightbulb className="w-8 h-8 text-amber-500" />
+                          </div>
+                          <div className="inline-block bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3">
+                            {isFr ? "Phase de démarrage" : "Early Stage"}
+                          </div>
+                          <h3 className="text-xl font-bold text-[#0f172a] mb-2">
+                            {isFr ? "Conseils prioritaires requis" : "Priority Advice Needed"}
+                          </h3>
+                          <p className="text-slate-500 text-sm leading-relaxed mb-6">
+                            {isFr
+                              ? "Avant d'accéder aux subventions, il faut formaliser votre structure. Envoyez-nous vos coordonnées pour un accompagnement personnalisé."
+                              : "Before accessing grants, your business structure needs to be formalized. Send us your details for personalized guidance."}
+                          </p>
+                          <Link href="/contact">
+                            <Button
+                              className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold shadow-md shadow-blue-200 mb-3"
+                              size="lg"
+                              onClick={closeDiagnostic}
+                              data-testid="button-result-contact-early"
+                            >
+                              <Send className="mr-2 w-4 h-4" />
+                              {isFr ? "Envoyer mes coordonnées" : "Send My Details"}
+                            </Button>
+                          </Link>
+                        </div>
+                      )}
+
+                      {result === "review" && (
+                        <div className="text-center">
+                          <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Users className="w-8 h-8 text-slate-500" />
+                          </div>
+                          <div className="inline-block bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3">
+                            {isFr ? "Révision personnalisée requise" : "Personal Review Required"}
+                          </div>
+                          <h3 className="text-xl font-bold text-[#0f172a] mb-2">
+                            {isFr ? "Un examen individuel est nécessaire" : "An Individual Review is Needed"}
+                          </h3>
+                          <p className="text-slate-500 text-sm leading-relaxed mb-6">
+                            {isFr
+                              ? "Votre profil présente des particularités qui méritent une analyse approfondie. Envoyez-nous vos détails pour qu'un expert évalue votre dossier."
+                              : "Your profile has specific characteristics that merit a deeper analysis. Send us your details so an expert can evaluate your file."}
+                          </p>
+                          <Link href="/contact">
+                            <Button
+                              className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold shadow-md shadow-blue-200 mb-3"
+                              size="lg"
+                              onClick={closeDiagnostic}
+                              data-testid="button-result-contact-review"
+                            >
+                              <Send className="mr-2 w-4 h-4" />
+                              {isFr ? "Envoyer mes détails pour révision" : "Send Details for Review"}
+                            </Button>
+                          </Link>
+                        </div>
+                      )}
+
+                      <button
+                        className="w-full text-center text-sm text-slate-400 hover:text-slate-600 transition-colors"
+                        onClick={() => { setStep(0); setAnswers([]); }}
+                        data-testid="button-restart-diagnostic"
+                      >
+                        {isFr ? "↺ Recommencer le diagnostic" : "↺ Restart diagnostic"}
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Footer */}
+              <div className="px-7 pb-5 flex justify-end border-t border-slate-100 pt-4">
+                <button
+                  onClick={closeDiagnostic}
+                  className="text-sm text-slate-400 hover:text-slate-600 transition-colors flex items-center gap-1"
+                  data-testid="button-close-diagnostic-footer"
+                >
+                  <X className="w-3.5 h-3.5" />
+                  {isFr ? "Fermer" : "Close"}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden pt-20">
@@ -178,18 +434,30 @@ export default function Grants() {
                       </li>
                     ))}
                   </ul>
-                  <div className="flex gap-3">
+                  <div className="flex gap-3 flex-wrap">
                     <Link href="/contact" data-testid={`link-apply-${category.key}`}>
                       <Button className="bg-foreground text-background hover:bg-foreground/90">
                         {t("grants.cta.apply")}
                         <ArrowRight className="ml-2 w-4 h-4" />
                       </Button>
                     </Link>
-                    <Link href="/contact" data-testid={`link-eligibility-${category.key}`}>
-                      <Button variant="outline">
+                    {category.hasDiagnostic ? (
+                      <Button
+                        variant="outline"
+                        className="border-[#2563eb]/40 text-[#2563eb] hover:bg-[#2563eb]/5 font-medium"
+                        onClick={() => openDiagnostic(category.key as DiagnosticCategory)}
+                        data-testid={`button-eligibility-${category.key}`}
+                      >
                         {t("grants.cta.eligibility")}
                       </Button>
-                    </Link>
+                    ) : (
+                      <Link href="/contact" data-testid={`link-contact-${category.key}`}>
+                        <Button variant="outline">
+                          {isFr ? "Nous contacter" : "Contact Us"}
+                          <ArrowRight className="ml-2 w-4 h-4" />
+                        </Button>
+                      </Link>
+                    )}
                   </div>
                 </Card>
               );
