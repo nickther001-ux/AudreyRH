@@ -150,20 +150,129 @@ export async function sendContactEmails(data: ContactEmailData) {
   const client = getClient();
   const typeLabel = grantTypeLabel[data.grantType] ?? data.grantType;
 
-  // 1 — Internal lead notification
+  // 1 — Internal lead notification to Audrey
   const notifyHtml = `
-<!DOCTYPE html><html><head><meta charset="UTF-8"/></head>
-<body style="font-family:Inter,sans-serif;background:#f8fafc;padding:32px;">
-  <div style="background:#fff;border-radius:10px;padding:32px;max-width:560px;margin:auto;border:1px solid #e2e8f0;">
-    <h2 style="color:#1e3a5f;margin:0 0 20px;">📬 Nouvelle demande de contact</h2>
-    <table cellpadding="0" cellspacing="0" width="100%">
-      <tr><td style="padding:8px 0;color:#64748b;font-size:14px;width:130px;">Nom</td><td style="padding:8px 0;font-weight:600;color:#1e3a5f;">${data.name}</td></tr>
-      <tr><td style="padding:8px 0;color:#64748b;font-size:14px;">Courriel</td><td style="padding:8px 0;"><a href="mailto:${data.email}" style="color:#c87941;">${data.email}</a></td></tr>
-      <tr><td style="padding:8px 0;color:#64748b;font-size:14px;">Type de projet</td><td style="padding:8px 0;font-weight:600;color:#1e3a5f;">${typeLabel}</td></tr>
-      <tr><td style="padding:8px 0;color:#64748b;font-size:14px;vertical-align:top;">Description</td><td style="padding:8px 0;color:#334155;line-height:1.6;">${data.projectDescription.replace(/\n/g, '<br/>')}</td></tr>
-    </table>
-  </div>
-</body></html>`;
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Nouveau Lead — AudreyRH</title>
+</head>
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:40px 0;">
+    <tr><td align="center">
+      <table width="580" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+
+        <!-- ── Header ── -->
+        <tr>
+          <td style="background:#1e293b;padding:0;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr><td style="background:#f97316;height:4px;font-size:0;">&nbsp;</td></tr>
+              <tr>
+                <td style="padding:28px 40px;">
+                  <p style="margin:0;font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;">AudreyRH · Notification interne</p>
+                  <p style="margin:0;font-size:22px;font-weight:700;color:#ffffff;">🔔 Nouveau lead entrant</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- ── Lead badge ── -->
+        <tr>
+          <td style="padding:28px 40px 0;">
+            <table cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:10px 18px;">
+                  <p style="margin:0;font-size:13px;font-weight:600;color:#ea580c;">
+                    ${typeLabel}
+                  </p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- ── Fields ── -->
+        <tr>
+          <td style="padding:24px 40px 32px;">
+
+            <!-- Name -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+              <tr>
+                <td style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;">
+                  <p style="margin:0 0 4px;font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Nom</p>
+                  <p style="margin:0;font-size:16px;font-weight:700;color:#1e293b;">${data.name}</p>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Email — reply-to prompt -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+              <tr>
+                <td style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;">
+                  <p style="margin:0 0 4px;font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Courriel · Répondre directement</p>
+                  <p style="margin:0;">
+                    <a href="mailto:${data.email}" style="font-size:16px;font-weight:700;color:#f97316;text-decoration:none;">${data.email}</a>
+                    <span style="font-size:12px;color:#94a3b8;margin-left:8px;">(appuyer sur Répondre)</span>
+                  </p>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Project type -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+              <tr>
+                <td style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;">
+                  <p style="margin:0 0 4px;font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Type de projet</p>
+                  <p style="margin:0;font-size:15px;font-weight:600;color:#1e293b;">${typeLabel}</p>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Message -->
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="background:#f8fafc;border:1px solid #e2e8f0;border-left:4px solid #f97316;border-radius:0 10px 10px 0;padding:16px 20px;">
+                  <p style="margin:0 0 8px;font-size:11px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Message</p>
+                  <p style="margin:0;font-size:14px;color:#334155;line-height:1.75;">${data.projectDescription.replace(/\n/g, '<br/>')}</p>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+
+        <!-- ── CTA ── -->
+        <tr>
+          <td style="padding:0 40px 36px;">
+            <table cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="background:#1e293b;border-radius:8px;">
+                  <a href="mailto:${data.email}" style="display:inline-block;padding:12px 28px;font-size:14px;font-weight:700;color:#ffffff;text-decoration:none;">
+                    Répondre à ${data.name} →
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- ── Footer ── -->
+        <tr>
+          <td style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:18px 40px;text-align:center;">
+            <p style="margin:0;font-size:12px;color:#94a3b8;">
+              AudreyRH · Notification automatique · <a href="https://audreyrh.com" style="color:#f97316;text-decoration:none;">audreyrh.com</a>
+            </p>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
 
   // 2 — Premium bilingual auto-reply to client
   const replyHtml = `
@@ -297,7 +406,7 @@ export async function sendContactEmails(data: ContactEmailData) {
 
   console.log('[Resend] Sending contact emails — notify + reply to:', data.email);
   const [r1, r2] = await Promise.all([
-    client.emails.send({ from: FROM, to: NOTIFY_TO, subject: `[AudreyRH] Nouvelle demande — ${data.name} (${typeLabel})`, html: notifyHtml }),
+    client.emails.send({ from: FROM, to: NOTIFY_TO, replyTo: data.email, subject: `🔔 Nouveau Lead : ${data.name} (${typeLabel})`, html: notifyHtml }),
     client.emails.send({ from: FROM, to: data.email, subject: `Merci de votre intérêt / Thank you for your interest — AudreyRH`, html: replyHtml }),
   ]);
   if (r1.error) console.error('[Resend] Contact notify email error:', JSON.stringify(r1.error));
