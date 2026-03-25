@@ -117,12 +117,16 @@ export async function sendBookingConfirmation(data: AppointmentEmailData) {
   </div>
 </body></html>`;
 
-  const [r1, r2] = await Promise.allSettled([
+  console.log('[Resend] Sending booking emails to:', data.clientEmail);
+  const [r1, r2] = await Promise.all([
     client.emails.send({ from: FROM, to: data.clientEmail, subject: 'Confirmation de votre consultation — AudreyRH', html: clientHtml }),
     client.emails.send({ from: FROM, to: NOTIFY_TO, subject: `[AudreyRH] Nouvelle réservation — ${data.clientName}`, html: notifyHtml }),
   ]);
-  if (r1.status === 'rejected') console.error('Booking client email failed:', r1.reason);
-  if (r2.status === 'rejected') console.error('Booking notify email failed:', r2.reason);
+  if (r1.error) console.error('[Resend] Booking client email error:', JSON.stringify(r1.error));
+  else console.log('[Resend] Booking client email sent, id:', r1.data?.id);
+  if (r2.error) console.error('[Resend] Booking notify email error:', JSON.stringify(r2.error));
+  else console.log('[Resend] Booking notify email sent, id:', r2.data?.id);
+  if (r1.error && r2.error) throw new Error(`Both booking emails failed: ${r1.error.message}`);
 }
 
 // ─── Contact / grant application ────────────────────────────────────────────
@@ -230,10 +234,14 @@ export async function sendContactEmails(data: ContactEmailData) {
 </body>
 </html>`;
 
-  const [r1, r2] = await Promise.allSettled([
+  console.log('[Resend] Sending contact emails — notify + reply to:', data.email);
+  const [r1, r2] = await Promise.all([
     client.emails.send({ from: FROM, to: NOTIFY_TO, subject: `[AudreyRH] Nouvelle demande — ${data.name} (${typeLabel})`, html: notifyHtml }),
     client.emails.send({ from: FROM, to: data.email, subject: 'Merci pour votre demande — AudreyRH / Thank you for reaching out', html: replyHtml }),
   ]);
-  if (r1.status === 'rejected') console.error('Contact notify email failed:', r1.reason);
-  if (r2.status === 'rejected') console.error('Contact auto-reply email failed:', r2.reason);
+  if (r1.error) console.error('[Resend] Contact notify email error:', JSON.stringify(r1.error));
+  else console.log('[Resend] Contact notify email sent, id:', r1.data?.id);
+  if (r2.error) console.error('[Resend] Contact auto-reply email error:', JSON.stringify(r2.error));
+  else console.log('[Resend] Contact auto-reply email sent, id:', r2.data?.id);
+  if (r1.error && r2.error) throw new Error(`Both contact emails failed: ${r1.error.message}`);
 }
