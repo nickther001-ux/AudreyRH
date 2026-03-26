@@ -1,0 +1,33 @@
+StarBorder.css
+/* This makes the border move and glow */
+.star-border-container {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  border-radius: 16px; 
+  width: 100%; 
+}
+
+.inner-content {
+  position: relative;
+  background-color: #ffffff; /* This keeps the card white inside */
+  border-radius: 15px; 
+  z-index: 1;
+}
+
+.border-gradient-top, .border-gradient-bottom {
+  position: absolute;
+  width: 300%;
+  height: 50%;
+  opacity: 0.8;
+  z-index: 0;
+  animation: move-light 8s linear infinite; /* 8s is a slow, professional speed */
+}
+
+.border-gradient-top { top: 0; left: -100%; }
+.border-gradient-bottom { bottom: 0; right: -100%; direction: reverse; }
+
+@keyframes move-light {
+  from { transform: translateX(0%); }
+  to { transform: translateX(50%); }
+}

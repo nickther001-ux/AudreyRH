@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import StarBorder from "@/components/StarBorder";
 import { useLanguage } from "@/lib/i18n";
 import { CountUp } from "@/components/CountUp";
 import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
@@ -411,12 +412,10 @@ export default function Grants() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {grantCategories.map((category) => {
               const Icon = category.icon;
-              return (
-                <Card
-                  key={category.key}
-                  className={`p-8 border-2 ${category.borderColor} ${category.hoverBorder} transition-all duration-300 hover:shadow-lg group`}
-                  data-testid={`card-grant-${category.key}`}
-                >
+              const useGlow = category.key === "entrepreneurs" || category.key === "sme";
+
+              const cardInner = (
+                <div className={`${useGlow ? "p-8" : ""}`}>
                   <div className={`w-14 h-14 ${category.bgColor} rounded-2xl flex items-center justify-center mb-6`}>
                     <Icon className={`w-7 h-7 ${category.color}`} />
                   </div>
@@ -459,6 +458,32 @@ export default function Grants() {
                       </Link>
                     )}
                   </div>
+                </div>
+              );
+
+              if (useGlow) {
+                return (
+                  <StarBorder
+                    key={category.key}
+                    as="div"
+                    color="#2563eb"
+                    speed="8s"
+                    thickness={1.5}
+                    data-testid={`card-grant-${category.key}`}
+                    className="transition-all duration-300 hover:shadow-lg hover:shadow-blue-100"
+                  >
+                    {cardInner}
+                  </StarBorder>
+                );
+              }
+
+              return (
+                <Card
+                  key={category.key}
+                  className={`p-8 border-2 ${category.borderColor} ${category.hoverBorder} transition-all duration-300 hover:shadow-lg`}
+                  data-testid={`card-grant-${category.key}`}
+                >
+                  {cardInner}
                 </Card>
               );
             })}

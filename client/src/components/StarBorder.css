@@ -1,0 +1,50 @@
+.star-border-container {
+  position: relative;
+  display: inline-block;
+  border-radius: 1.125rem;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.border-gradient-bottom {
+  position: absolute;
+  bottom: -0.875rem;
+  left: -200%;
+  width: 500%;
+  height: 1.75rem;
+  border-radius: 50%;
+  opacity: 0.9;
+  animation: star-border-bottom 8s linear infinite;
+  pointer-events: none;
+}
+
+.border-gradient-top {
+  position: absolute;
+  top: -0.875rem;
+  left: -200%;
+  width: 500%;
+  height: 1.75rem;
+  border-radius: 50%;
+  opacity: 0.9;
+  animation: star-border-top 8s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes star-border-bottom {
+  0%   { transform: translateX(0%); }
+  100% { transform: translateX(20%); }
+}
+
+@keyframes star-border-top {
+  0%   { transform: translateX(20%); }
+  100% { transform: translateX(0%); }
+}
+
+.inner-content {
+  position: relative;
+  z-index: 1;
+  border-radius: 1rem;
+  background: #ffffff;
+  height: 100%;
+}

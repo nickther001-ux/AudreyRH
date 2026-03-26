@@ -9,6 +9,7 @@ import { Card } from "@/components/ui/card";
 import { DarkVeil } from "@/components/DarkVeil";
 import { useLanguage } from "@/lib/i18n";
 import ShinyText from "@/components/ShinyText";
+import StarBorder from "@/components/StarBorder";
 import audreyPhoto from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
 import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
 import bokehBg from "@assets/IMM_1768534974735.png";
@@ -358,8 +359,17 @@ export default function Individuals() {
 
             <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {/* Discovery */}
-              <div className="relative overflow-hidden rounded-xl bg-white/[0.07] border border-white/20 p-6 card-hover-lift backdrop-blur-sm" data-testid="card-package-discovery">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
+              <StarBorder
+                as="div"
+                color="#2563eb"
+                speed="8s"
+                thickness={1.5}
+                innerBg="rgba(255,255,255,0.07)"
+                data-testid="card-package-discovery"
+                className="card-hover-lift"
+              >
+                <div className="relative p-6">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50 rounded-t-xl" />
                 <div className="text-center mb-6">
                   <h3 className="text-xl font-bold text-white">{t("packages.discovery.name")}</h3>
                   <p className="text-sm text-white/60">{t("packages.discovery.subtitle")}</p>
@@ -389,7 +399,8 @@ export default function Individuals() {
                 <div className="bg-accent/15 rounded-lg p-3 text-center border border-accent/30">
                   <p className="text-xs text-accent font-medium">{t("packages.discovery.note")}</p>
                 </div>
-              </div>
+                </div>
+              </StarBorder>
 
               {/* Essential – Popular */}
               <div className="relative overflow-hidden rounded-xl bg-accent/[0.15] border-2 border-accent/60 p-6 card-hover-lift backdrop-blur-sm shadow-lg shadow-accent/10" data-testid="card-package-essential">
