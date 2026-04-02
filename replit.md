@@ -52,10 +52,29 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - Footer: near-black background (via --foreground)
 
 ## Recent Changes
+- 2026-04-02: Full homepage redesign — pixel-level clone of consulting.framer.media with AudreyRH content
 - 2026-01-11: Redesigned booking page with hero banner, sticky sidebar, and numbered step sections
 - 2026-01-11: Added bilingual Terms & Conditions page (/terms)
 - 2026-01-11: Fixed duplicate translation keys in i18n.tsx
 - 2026-01-11: Added comprehensive bilingual support throughout application
+
+## Homepage Layout (consulting.framer.media clone)
+Home.tsx (/) sections in order:
+1. **Hero** — split layout: text (white bg) left, Audrey's photo right; two CTA buttons
+2. **Trust Strip** — infinite CSS marquee of partner organization names (Ordre des CRHA, CRIA, Service Canada, etc.)
+3. **Services** — "Nos services" label + heading/subtitle + 3 editorial photo cards + "Need customized?" CTA box
+4. **Approach** — large photo left with floating "+95%" stat card, text content right (label + heading + 2 checkmarks + journey photo)
+5. **Why Choose Us** — "Pourquoi nous choisir" + 3 linked feature cards (gap-px grid border technique)
+6. **Process** — large heading + 4 numbered step cards in 2×2 grid (gap-px border technique)
+7. **Stats** — large photo with "85+" / "95%" stats overlay, commitment text + CTA button
+8. **Testimonials** — 6 testimonial cards (3-column grid), initial avatars
+
+## Navbar (consulting template style)
+- Always white (no transparent phase)
+- Logo "AudreyRH." (green + black + orange dot) on left — clicking = home
+- Nav links: Particuliers | Entreprises | Subventions | Contact
+- Language toggle (FR/EN) + green "Prendre RV" CTA button on right
+- No "Accueil" link — logo serves as home
 
 ## Email (Live — via Resend)
 - Domain `audreyrh.com` verified on Resend; `RESEND_API_KEY` secret set
