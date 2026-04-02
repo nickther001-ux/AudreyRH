@@ -84,8 +84,8 @@ export default function Individuals() {
                   className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[88vh] overflow-hidden flex flex-col"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {/* Navy header */}
-                  <div className="bg-[#0f172a] px-8 py-6 flex items-start justify-between flex-shrink-0">
+                  {/* Deep-violet header */}
+                  <div className="bg-foreground px-8 py-6 flex items-start justify-between flex-shrink-0">
                     <div className="pr-4">
                       <h2 className="text-2xl font-bold text-white leading-tight">{t(`dialog.${key}.title`)}</h2>
                       <p className="text-white/60 text-sm mt-1.5 leading-relaxed">{t(`dialog.${key}.desc`)}</p>
@@ -104,7 +104,7 @@ export default function Individuals() {
                   <div className="overflow-y-auto flex-1 px-8 py-6 space-y-6">
                     {/* Premium insight */}
                     {hasInsight(key) && (
-                      <div className="bg-blue-50 border-l-4 border-[#2563eb] rounded-r-xl p-5">
+                      <div className="bg-primary/5 border-l-4 border-primary rounded-r-xl p-5">
                         <p className="text-slate-700 leading-relaxed text-[15px] italic">
                           "{t(`dialog.${key}.insight`)}"
                         </p>
@@ -114,8 +114,8 @@ export default function Individuals() {
                     {/* Stats */}
                     <div className="grid grid-cols-2 gap-4">
                       {stats.map((stat, idx) => (
-                        <div key={idx} className="bg-[#1e293b]/5 border border-[#1e293b]/15 rounded-xl p-4 text-center">
-                          <div className="text-3xl font-bold text-[#1e293b] mb-1">{stat.value}</div>
+                        <div key={idx} className="bg-foreground/5 border border-foreground/10 rounded-xl p-4 text-center">
+                          <div className="text-3xl font-bold text-foreground mb-1">{stat.value}</div>
                           <div className="text-sm text-slate-500 leading-tight">{t(`dialog.${key}.stat${idx + 1}`)}</div>
                           <div className="text-xs text-slate-400 mt-2 italic">Source: {stat.source}</div>
                         </div>
@@ -124,11 +124,11 @@ export default function Individuals() {
 
                     {/* Section h1 */}
                     <div>
-                      <h4 className="font-bold text-lg mb-3 text-[#0f172a]">{t(`dialog.${key}.h1`)}</h4>
+                      <h4 className="font-bold text-lg mb-3 text-foreground">{t(`dialog.${key}.h1`)}</h4>
                       <ul className="space-y-2">
                         {[1, 2, 3, 4].map((i) => (
                           <li key={i} className="flex items-start gap-2.5 text-slate-600">
-                            <CheckCircle className="w-5 h-5 text-[#2563eb] flex-shrink-0 mt-0.5" />
+                            <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                             <span className="text-sm leading-relaxed">{t(`dialog.${key}.p1.${i}`)}</span>
                           </li>
                         ))}
@@ -137,11 +137,11 @@ export default function Individuals() {
 
                     {/* Section h2 */}
                     <div>
-                      <h4 className="font-bold text-lg mb-3 text-[#0f172a]">{t(`dialog.${key}.h2`)}</h4>
+                      <h4 className="font-bold text-lg mb-3 text-foreground">{t(`dialog.${key}.h2`)}</h4>
                       <ul className="space-y-2">
                         {[1, 2, 3, 4].map((i) => (
                           <li key={i} className="flex items-start gap-2.5 text-slate-600">
-                            <CheckCircle className="w-5 h-5 text-[#2563eb] flex-shrink-0 mt-0.5" />
+                            <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                             <span className="text-sm leading-relaxed">{t(`dialog.${key}.p2.${i}`)}</span>
                           </li>
                         ))}
@@ -149,8 +149,8 @@ export default function Individuals() {
                     </div>
 
                     {/* Section h3 */}
-                    <div className="bg-slate-50 rounded-xl p-5">
-                      <h4 className="font-bold text-base mb-2 text-[#0f172a]">{t(`dialog.${key}.h3`)}</h4>
+                    <div className="bg-muted/60 rounded-xl p-5">
+                      <h4 className="font-bold text-base mb-2 text-foreground">{t(`dialog.${key}.h3`)}</h4>
                       <p className="text-slate-600 leading-relaxed text-sm">{t(`dialog.${key}.text`)}</p>
                     </div>
                   </div>
@@ -159,7 +159,7 @@ export default function Individuals() {
                   <div className="px-8 py-5 border-t border-slate-200 bg-white flex-shrink-0 flex flex-col sm:flex-row gap-3">
                     <Link href="/book" className="flex-1">
                       <Button
-                        className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold shadow-md shadow-blue-200"
+                        className="w-full bg-primary hover:bg-primary/90 text-white font-semibold shadow-md shadow-primary/20"
                         size="lg"
                         onClick={() => setOpenDialog(null)}
                         data-testid="button-modal-book"
@@ -361,7 +361,7 @@ export default function Individuals() {
               {/* Discovery */}
               <StarBorder
                 as="div"
-                color="#2563eb"
+                color="#6B2ED8"
                 speed="8s"
                 thickness={1.5}
                 innerBg="rgba(255,255,255,0.07)"

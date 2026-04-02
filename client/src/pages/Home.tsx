@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { User, Building2, ArrowRight, DollarSign } from "lucide-react";
+import { User, Building2, ArrowRight, Award } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { useLanguage } from "@/lib/i18n";
@@ -12,81 +12,85 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       <Navbar />
 
-      {/* Hero Gateway */}
       <main className="flex-grow flex flex-col">
         <section
           className="relative flex-grow flex flex-col items-center justify-center py-32 px-4 min-h-screen overflow-hidden"
           data-testid="section-gateway-hero"
         >
-          {/* Background */}
+          {/* Background photo */}
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${montrealSkyline})` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-foreground/80 via-foreground/75 to-foreground/90" />
+          {/* Purple-violet overlay — the 365talents palette */}
+          <div className="absolute inset-0" style={{
+            background: "linear-gradient(160deg, rgba(13,2,34,0.90) 0%, rgba(45,12,100,0.82) 45%, rgba(13,2,34,0.88) 100%)"
+          }} />
 
-          <div className="relative z-10 w-full max-w-6xl mx-auto text-center space-y-10">
+          <div className="relative z-10 w-full max-w-5xl mx-auto text-center space-y-10">
+
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-white/15 border border-white/30 text-white px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm">
-              <DollarSign className="w-4 h-4 text-accent" />
+            <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white/90 px-4 py-2 rounded-full text-sm font-medium backdrop-blur-sm">
+              <Award className="w-4 h-4 text-accent" />
               {t("gateway.badge")}
             </div>
 
             {/* Title */}
-            <div>
-              <h1 className="text-5xl md:text-7xl font-bold text-white leading-tight tracking-tight mb-4" data-testid="text-gateway-title">
-                <span className="text-white">Audrey</span>
+            <div className="space-y-4">
+              <h1 className="text-5xl md:text-7xl font-extrabold text-white leading-tight tracking-tight" data-testid="text-gateway-title">
+                <span className="text-primary">Audrey</span>
                 <span className="text-white">RH</span>
                 <span className="text-accent">.</span>
               </h1>
-              <p className="text-xl md:text-2xl text-white/90 font-light max-w-2xl mx-auto leading-relaxed" data-testid="text-gateway-subtitle">
+              <p className="text-xl md:text-2xl text-white/80 font-light max-w-2xl mx-auto leading-relaxed" data-testid="text-gateway-subtitle">
                 {t("gateway.subtitle")}
               </p>
             </div>
 
             {/* Dual Entry Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mt-10 max-w-3xl mx-auto">
+
               {/* For Individuals */}
               <Link href="/individuals" data-testid="link-gateway-individuals">
-                <div className="group relative bg-white/10 hover:bg-primary/80 border-2 border-white/30 hover:border-primary rounded-3xl p-10 text-left transition-all duration-300 cursor-pointer backdrop-blur-sm hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1">
-                  <div className="w-16 h-16 bg-white/20 group-hover:bg-white/25 rounded-2xl flex items-center justify-center mb-6 transition-colors">
-                    <User className="w-8 h-8 text-white" />
+                <div className="group relative bg-white/8 hover:bg-primary/70 border border-white/20 hover:border-primary/60 rounded-2xl p-8 text-left transition-all duration-300 cursor-pointer backdrop-blur-sm hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1">
+                  <div className="w-12 h-12 bg-primary/30 group-hover:bg-white/20 rounded-xl flex items-center justify-center mb-5 transition-colors">
+                    <User className="w-6 h-6 text-white" />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                  <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
                     {t("gateway.individuals.title")}
                   </h2>
-                  <p className="text-white/75 group-hover:text-white/90 text-base leading-relaxed mb-8 transition-colors">
+                  <p className="text-white/65 group-hover:text-white/85 text-sm leading-relaxed mb-6 transition-colors">
                     {t("gateway.individuals.subtitle")}
                   </p>
-                  <div className="flex items-center gap-2 text-accent font-semibold">
+                  <div className="flex items-center gap-2 text-accent font-semibold text-sm">
                     {t("gateway.individuals.cta")}
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
                   </div>
                 </div>
               </Link>
 
               {/* For Businesses */}
               <Link href="/business" data-testid="link-gateway-business">
-                <div className="group relative border-2 border-transparent hover:border-transparent rounded-3xl p-10 text-left transition-all duration-300 cursor-pointer backdrop-blur-sm hover:-translate-y-1" style={{ background: "rgba(249,115,22,0.13)" }} onMouseEnter={e => (e.currentTarget.style.background = "rgba(249,115,22,0.19)")} onMouseLeave={e => (e.currentTarget.style.background = "rgba(249,115,22,0.13)")}>
-                  <div className="w-16 h-16 bg-accent/20 group-hover:bg-accent/30 rounded-2xl flex items-center justify-center mb-6 transition-colors">
-                    <Building2 className="w-8 h-8 text-accent" />
+                <div className="group relative bg-accent/10 hover:bg-accent/20 border border-accent/25 hover:border-accent/50 rounded-2xl p-8 text-left transition-all duration-300 cursor-pointer backdrop-blur-sm hover:shadow-2xl hover:shadow-accent/20 hover:-translate-y-1">
+                  <div className="w-12 h-12 bg-accent/25 group-hover:bg-accent/35 rounded-xl flex items-center justify-center mb-5 transition-colors">
+                    <Building2 className="w-6 h-6 text-accent" />
                   </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                  <h2 className="text-xl md:text-2xl font-bold text-white mb-2">
                     {t("gateway.business.title")}
                   </h2>
-                  <p className="text-white/75 group-hover:text-white/90 text-base leading-relaxed mb-8 transition-colors">
+                  <p className="text-white/65 group-hover:text-white/85 text-sm leading-relaxed mb-6 transition-colors">
                     {t("gateway.business.subtitle")}
                   </p>
-                  <div className="flex items-center gap-2 text-accent font-semibold">
+                  <div className="flex items-center gap-2 text-accent font-semibold text-sm">
                     {t("gateway.business.cta")}
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
                   </div>
                 </div>
               </Link>
             </div>
 
-            {/* Bottom note */}
-            <p className="text-white/50 text-sm" data-testid="text-gateway-note">
+            {/* Note */}
+            <p className="text-white/35 text-sm" data-testid="text-gateway-note">
               {t("gateway.note")}
             </p>
           </div>

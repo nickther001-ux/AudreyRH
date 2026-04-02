@@ -133,8 +133,7 @@ export default function Book() {
 
             {/* Title */}
             <h1
-              className="text-3xl font-bold"
-              style={{ color: "#1e293b" }}
+              className="text-3xl font-bold text-foreground"
               data-testid="text-success-title"
             >
               {t("book.success.title")}
@@ -161,7 +160,7 @@ export default function Book() {
                   className="mt-0.5 shrink-0"
                   style={{ color: "#f97316" }}
                 />
-                <p className="text-sm leading-relaxed" style={{ color: "#1e293b" }}>
+                <p className="text-sm leading-relaxed text-foreground">
                   {t("book.success.emailNoticePrefix")}{" "}
                   <span className="font-bold" style={{ color: "#f97316" }}>
                     {confirmedEmail}
@@ -232,7 +231,7 @@ export default function Book() {
           className="absolute inset-0 bg-cover bg-center ken-burns-zoom"
           style={{ backgroundImage: `url(${montrealSkyline})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1a365d]/95 via-[#1a365d]/90 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1a0545]/95 via-[#1a0545]/85 to-background" />
         
         <div className="relative container mx-auto px-4 md:px-6 pt-12 pb-8">
           <div className="max-w-3xl mx-auto text-center space-y-4">

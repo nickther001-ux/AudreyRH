@@ -12,7 +12,7 @@ import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.p
 const services = [
   { icon: Users, key: "talent", color: "text-primary", bg: "bg-primary/10" },
   { icon: TrendingUp, key: "strategy", color: "text-accent", bg: "bg-accent/10" },
-  { icon: DollarSign, key: "grants", color: "text-secondary", bg: "bg-secondary/10" },
+  { icon: DollarSign, key: "grants", color: "text-emerald-600", bg: "bg-emerald-50" },
   { icon: ShieldCheck, key: "compliance", color: "text-slate-600", bg: "bg-slate-100" },
 ];
 
@@ -98,7 +98,7 @@ export default function Business() {
                 text={t("business.services.title")}
                 speed={3}
                 className="text-3xl md:text-5xl font-bold tracking-tight"
-                color="#1e293b"
+                color="#120430"
                 shineColor="#f97316"
                 spread={180}
               />

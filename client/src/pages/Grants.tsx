@@ -48,7 +48,7 @@ function getResult(category: string, answers: boolean[]): ResultType {
 const grantCategories = [
   { key: "artists",       icon: Palette,   color: "text-accent",    bgColor: "bg-accent/10",   borderColor: "border-accent/20",   hoverBorder: "hover:border-accent/50",     hasDiagnostic: true },
   { key: "entrepreneurs", icon: Lightbulb, color: "text-primary",   bgColor: "bg-primary/10",  borderColor: "border-primary/20",  hoverBorder: "hover:border-primary/50",    hasDiagnostic: true },
-  { key: "sme",           icon: Building2, color: "text-secondary", bgColor: "bg-secondary/10",borderColor: "border-secondary/20",hoverBorder: "hover:border-secondary/50",  hasDiagnostic: true },
+  { key: "sme",           icon: Building2, color: "text-violet-500", bgColor: "bg-violet-50",  borderColor: "border-violet-200",  hoverBorder: "hover:border-violet-400",    hasDiagnostic: true },
   { key: "corporate",     icon: Briefcase, color: "text-foreground", bgColor: "bg-muted",       borderColor: "border-border",      hoverBorder: "hover:border-foreground/30", hasDiagnostic: false },
 ];
 
@@ -115,10 +115,10 @@ export default function Grants() {
               className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Navy header */}
-              <div className="bg-[#0f172a] px-7 py-5 flex items-start justify-between">
+              {/* Deep-violet header */}
+              <div className="bg-foreground px-7 py-5 flex items-start justify-between">
                 <div>
-                  <p className="text-[#2563eb] text-xs font-semibold uppercase tracking-widest mb-1">
+                  <p className="text-primary text-xs font-semibold uppercase tracking-widest mb-1">
                     {isFr ? "Diagnostic d'admissibilité" : "Admissibility Diagnostic"}
                   </p>
                   <h2 className="text-xl font-bold text-white">
@@ -143,7 +143,7 @@ export default function Grants() {
                       <div key={i} className="flex-1 flex items-center gap-1.5">
                         <div
                           className={`h-1.5 flex-1 rounded-full transition-all duration-300 ${
-                            i < step ? "bg-[#2563eb]" : i === step ? "bg-[#2563eb]/50" : "bg-slate-200"
+                            i < step ? "bg-primary" : i === step ? "bg-primary/50" : "bg-slate-200"
                           }`}
                         />
                       </div>
@@ -166,12 +166,12 @@ export default function Grants() {
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ duration: 0.18 }}
                     >
-                      <p className="text-[#0f172a] font-semibold text-lg leading-snug mb-6">
+                      <p className="text-foreground font-semibold text-lg leading-snug mb-6">
                         {isFr ? questions[step]?.fr : questions[step]?.en}
                       </p>
                       <div className="grid grid-cols-2 gap-3">
                         <button
-                          className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-[#2563eb] text-[#2563eb] font-semibold hover:bg-[#2563eb] hover:text-white transition-all duration-200"
+                          className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-primary text-primary font-semibold hover:bg-primary hover:text-white transition-all duration-200"
                           onClick={() => handleAnswer(true)}
                           data-testid={`button-yes-${step}`}
                         >
@@ -197,13 +197,13 @@ export default function Grants() {
                     >
                       {result === "high" && (
                         <div className="text-center">
-                          <div className="w-16 h-16 bg-[#2563eb]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <CheckCircle className="w-8 h-8 text-[#2563eb]" />
+                          <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <CheckCircle className="w-8 h-8 text-primary" />
                           </div>
-                          <div className="inline-block bg-[#2563eb] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3">
+                          <div className="inline-block bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3">
                             {isFr ? "Correspondance élevée" : "High Match"}
                           </div>
-                          <h3 className="text-xl font-bold text-[#0f172a] mb-2">
+                          <h3 className="text-xl font-bold text-foreground mb-2">
                             {isFr ? "Vous êtes admissible !" : "You're eligible!"}
                           </h3>
                           <p className="text-slate-500 text-sm leading-relaxed mb-6">
@@ -213,7 +213,7 @@ export default function Grants() {
                           </p>
                           <Link href="/book">
                             <Button
-                              className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold shadow-md shadow-blue-200 mb-3"
+                              className="w-full bg-primary hover:bg-primary/90 text-white font-semibold shadow-md shadow-primary/25 mb-3"
                               size="lg"
                               onClick={closeDiagnostic}
                               data-testid="button-result-book"
@@ -233,7 +233,7 @@ export default function Grants() {
                           <div className="inline-block bg-amber-100 text-amber-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3">
                             {isFr ? "Phase de démarrage" : "Early Stage"}
                           </div>
-                          <h3 className="text-xl font-bold text-[#0f172a] mb-2">
+                          <h3 className="text-xl font-bold text-foreground mb-2">
                             {isFr ? "Conseils prioritaires requis" : "Priority Advice Needed"}
                           </h3>
                           <p className="text-slate-500 text-sm leading-relaxed mb-6">
@@ -243,7 +243,7 @@ export default function Grants() {
                           </p>
                           <Link href="/contact">
                             <Button
-                              className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold shadow-md shadow-blue-200 mb-3"
+                              className="w-full bg-primary hover:bg-primary/90 text-white font-semibold shadow-md shadow-primary/25 mb-3"
                               size="lg"
                               onClick={closeDiagnostic}
                               data-testid="button-result-contact-early"
@@ -263,7 +263,7 @@ export default function Grants() {
                           <div className="inline-block bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3">
                             {isFr ? "Révision personnalisée requise" : "Personal Review Required"}
                           </div>
-                          <h3 className="text-xl font-bold text-[#0f172a] mb-2">
+                          <h3 className="text-xl font-bold text-foreground mb-2">
                             {isFr ? "Un examen individuel est nécessaire" : "An Individual Review is Needed"}
                           </h3>
                           <p className="text-slate-500 text-sm leading-relaxed mb-6">
@@ -273,7 +273,7 @@ export default function Grants() {
                           </p>
                           <Link href="/contact">
                             <Button
-                              className="w-full bg-[#2563eb] hover:bg-[#1d4ed8] text-white font-semibold shadow-md shadow-blue-200 mb-3"
+                              className="w-full bg-primary hover:bg-primary/90 text-white font-semibold shadow-md shadow-primary/25 mb-3"
                               size="lg"
                               onClick={closeDiagnostic}
                               data-testid="button-result-contact-review"
@@ -443,7 +443,7 @@ export default function Grants() {
                     {category.hasDiagnostic ? (
                       <Button
                         variant="outline"
-                        className="border-[#2563eb]/40 text-[#2563eb] hover:bg-[#2563eb]/5 font-medium"
+                        className="border-primary/40 text-primary hover:bg-primary/5 font-medium"
                         onClick={() => openDiagnostic(category.key as DiagnosticCategory)}
                         data-testid={`button-eligibility-${category.key}`}
                       >
@@ -466,11 +466,11 @@ export default function Grants() {
                   <StarBorder
                     key={category.key}
                     as="div"
-                    color="#2563eb"
+                    color="#6B2ED8"
                     speed="8s"
                     thickness={1.5}
                     data-testid={`card-grant-${category.key}`}
-                    className="transition-all duration-300 hover:shadow-lg hover:shadow-blue-100"
+                    className="transition-all duration-300 hover:shadow-lg hover:shadow-primary/10"
                   >
                     {cardInner}
                   </StarBorder>

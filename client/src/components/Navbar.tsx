@@ -12,61 +12,60 @@ export function Navbar() {
   const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { href: "/", label: t("nav.home"), isAnchor: false },
-    { href: "/individuals", label: t("nav.individuals"), isAnchor: false },
-    { href: "/business", label: t("nav.business"), isAnchor: false },
-    { href: "/grants", label: t("nav.grants"), isAnchor: false },
-    { href: "/contact", label: t("nav.contact"), isAnchor: false },
+    { href: "/",           label: t("nav.home") },
+    { href: "/individuals",label: t("nav.individuals") },
+    { href: "/business",   label: t("nav.business") },
+    { href: "/grants",     label: t("nav.grants") },
+    { href: "/contact",    label: t("nav.contact") },
   ];
 
-  const toggleLanguage = () => {
-    setLanguage(language === "fr" ? "en" : "fr");
-  };
+  const toggleLanguage = () => setLanguage(language === "fr" ? "en" : "fr");
 
   return (
     <nav
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-background/95 backdrop-blur-md shadow-sm border-b border-border py-3"
+          ? "bg-white/97 backdrop-blur-md shadow-sm border-b border-purple-100 py-3"
           : "bg-transparent py-5"
       )}
       data-testid="navbar"
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between gap-4">
+
           {/* Logo */}
-          <Link
-            href="/"
-            className="text-2xl font-bold tracking-tight flex-shrink-0"
-            data-testid="link-logo"
-          >
-            <span className={cn(isScrolled ? "bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent" : "text-white")}>Audrey</span>
-            <span className={cn(isScrolled ? "text-foreground" : "text-white")}>RH</span>
+          <Link href="/" className="text-2xl font-bold tracking-tight flex-shrink-0" data-testid="link-logo">
+            <span className={cn(
+              "transition-colors duration-300",
+              isScrolled ? "text-primary" : "text-white"
+            )}>Audrey</span>
+            <span className={cn(
+              "transition-colors duration-300",
+              isScrolled ? "text-foreground" : "text-white"
+            )}>RH</span>
             <span className="text-accent">.</span>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-5 flex-wrap">
+          <div className="hidden lg:flex items-center gap-6">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 className={cn(
-                  "text-sm font-medium transition-colors",
+                  "text-sm font-medium transition-colors duration-200",
                   location === link.href
-                    ? isScrolled ? "text-primary" : "text-white font-semibold"
+                    ? isScrolled ? "text-primary font-semibold" : "text-white font-semibold"
                     : isScrolled
-                    ? "text-muted-foreground hover:text-primary"
-                    : "text-white hover:text-white/80"
+                    ? "text-slate-600 hover:text-primary"
+                    : "text-white/85 hover:text-white"
                 )}
                 data-testid={`link-nav-${link.href.replace("/", "") || "home"}`}
               >
@@ -74,30 +73,33 @@ export function Navbar() {
               </Link>
             ))}
 
-            {/* Language Toggle */}
+            {/* Language */}
             <Button
               variant="ghost"
               size="sm"
               onClick={toggleLanguage}
               className={cn(
-                "flex items-center gap-2",
-                !isScrolled && "text-white/80 hover:text-white hover:bg-white/10"
+                "flex items-center gap-1.5 text-sm font-medium px-2",
+                isScrolled
+                  ? "text-slate-500 hover:text-primary hover:bg-purple-50"
+                  : "text-white/80 hover:text-white hover:bg-white/10"
               )}
               data-testid="button-language-toggle"
             >
               <Globe className="w-4 h-4" />
-              <span className="uppercase font-medium">{language === "fr" ? "EN" : "FR"}</span>
+              <span className="uppercase">{language === "fr" ? "EN" : "FR"}</span>
             </Button>
 
+            {/* CTA */}
             <Link href="/book" data-testid="link-book-consultation">
-              <Button className="bg-gradient-to-r from-primary to-primary/80 text-white shadow-lg shadow-primary/25 border-0">
+              <Button className="bg-primary hover:bg-primary/90 text-white shadow-md shadow-primary/25 rounded-full px-5 font-semibold">
                 {t("nav.book")}
               </Button>
             </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <div className="flex items-center gap-2 lg:hidden">
+          {/* Mobile controls */}
+          <div className="flex items-center gap-1 lg:hidden">
             <Button
               variant="ghost"
               size="icon"
@@ -107,7 +109,6 @@ export function Navbar() {
             >
               <Globe className="w-5 h-5" />
             </Button>
-
             <Button
               variant="ghost"
               size="icon"
@@ -121,28 +122,30 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Nav */}
+      {/* Mobile drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 bg-background border-b border-border shadow-lg p-4 flex flex-col gap-2 animate-in slide-in-from-top-2">
+        <div className="lg:hidden absolute top-full left-0 right-0 bg-white border-b border-purple-100 shadow-lg p-4 flex flex-col gap-1 animate-in slide-in-from-top-2">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
               className={cn(
-                "block py-3 px-4 text-base font-medium rounded-lg transition-colors",
+                "block py-3 px-4 text-base font-medium rounded-xl transition-colors",
                 location === link.href
-                  ? "text-primary bg-primary/5"
-                  : "text-foreground hover:bg-muted"
+                  ? "text-primary bg-purple-50"
+                  : "text-slate-700 hover:bg-slate-50"
               )}
               data-testid={`link-mobile-${link.href.replace("/", "") || "home"}`}
             >
               {link.label}
             </Link>
           ))}
-          <div className="pt-2 border-t border-border mt-2">
+          <div className="pt-3 border-t border-slate-100 mt-2">
             <Link href="/book" onClick={() => setMobileMenuOpen(false)} data-testid="link-mobile-book">
-              <Button className="w-full bg-primary text-white">{t("nav.book")}</Button>
+              <Button className="w-full bg-primary text-white rounded-full font-semibold">
+                {t("nav.book")}
+              </Button>
             </Link>
           </div>
         </div>

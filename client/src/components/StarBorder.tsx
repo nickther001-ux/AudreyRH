@@ -15,7 +15,7 @@ interface StarBorderProps {
 const StarBorder = ({
   as: Component = 'div',
   className = '',
-  color = '#2563eb',
+  color = '#6B2ED8',
   speed = '8s',
   thickness = 1.5,
   innerBg = '#ffffff',

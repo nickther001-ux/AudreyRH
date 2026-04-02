@@ -41,10 +41,15 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - Platform options: Zoom or Google Meet
 
 ## Design System
-- Navy/Sage/Copper color palette
-- Montreal cityscape background in hero sections
-- Dark overlay for text readability on images
+- **365talents-inspired palette**: Deep violet primary (#6B2ED8), pure white backgrounds, orange brand accent
+- CSS variables: `--primary: 263 70% 54%`, `--foreground: 263 50% 8%` (deep violet-black), `--background: 0 0% 100%`
+- Montreal cityscape background in hero sections with purple gradient overlay
+- DarkVeil animated sections: deep violet gradients (not navy)
+- StarBorder animation: purple (#6B2ED8, was blue #2563eb)
+- Modal headers: bg-foreground (deep violet), primary accent buttons
 - Sticky sidebar for consultation details on booking page
+- Navbar: transparent over hero, white with purple brand on scroll
+- Footer: deep violet background (via --foreground)
 
 ## Recent Changes
 - 2026-01-11: Redesigned booking page with hero banner, sticky sidebar, and numbered step sections
