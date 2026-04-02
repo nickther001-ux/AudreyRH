@@ -355,19 +355,19 @@ export default function Grants() {
       </section>
 
       {/* Stats Bar */}
-      <section className="bg-foreground text-background py-12">
+      <section className="bg-white border-b border-border py-12">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {stats.map((stat) => (
               <div key={stat.labelKey} className="text-center">
                 <div className="flex justify-center mb-2">
-                  <stat.icon className="w-6 h-6 text-accent" />
+                  <stat.icon className="w-6 h-6 text-primary" />
                 </div>
-                <div className="text-3xl font-bold text-white mb-1">
+                <div className="text-3xl font-bold text-foreground mb-1">
                   <CountUp from={stat.from} to={stat.to} duration={stat.duration} />
                   <span>{stat.suffix}</span>
                 </div>
-                <div className="text-background/60 text-sm">{t(stat.labelKey)}</div>
+                <div className="text-muted-foreground text-sm">{t(stat.labelKey)}</div>
               </div>
             ))}
           </div>
@@ -435,7 +435,7 @@ export default function Grants() {
                   </ul>
                   <div className="flex gap-3 flex-wrap">
                     <Link href="/contact" data-testid={`link-apply-${category.key}`}>
-                      <Button className="bg-foreground text-background hover:bg-foreground/90">
+                      <Button className="bg-primary text-white hover:bg-primary/90">
                         {t("grants.cta.apply")}
                         <ArrowRight className="ml-2 w-4 h-4" />
                       </Button>
@@ -466,7 +466,7 @@ export default function Grants() {
                   <StarBorder
                     key={category.key}
                     as="div"
-                    color="#6B2ED8"
+                    color="#239b56"
                     speed="8s"
                     thickness={1.5}
                     data-testid={`card-grant-${category.key}`}
@@ -521,19 +521,19 @@ export default function Grants() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-foreground text-background">
+      <section className="py-24 bg-primary">
         <div className="container mx-auto px-4 md:px-6 text-center max-w-3xl">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             {t("grants.finalCta.title")}
           </h2>
-          <p className="text-background/70 text-lg mb-10 leading-relaxed">
+          <p className="text-white/80 text-lg mb-10 leading-relaxed">
             {t("grants.finalCta.text")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact" data-testid="link-grants-final-apply">
               <Button
                 size="lg"
-                className="bg-accent text-white hover:bg-accent/90 shadow-xl shadow-accent/30 px-8 py-6 text-base font-semibold"
+                className="bg-white text-primary hover:bg-white/90 shadow-xl px-8 py-6 text-base font-semibold"
               >
                 {t("grants.finalCta.apply")}
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -543,7 +543,7 @@ export default function Grants() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-white/40 text-white hover:bg-white/10 px-8 py-6 text-base"
+                className="border-white/50 text-white hover:bg-white/10 px-8 py-6 text-base"
               >
                 {t("grants.finalCta.consult")}
               </Button>

@@ -6,7 +6,6 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { DarkVeil } from "@/components/DarkVeil";
 import { useLanguage } from "@/lib/i18n";
 import ShinyText from "@/components/ShinyText";
 import StarBorder from "@/components/StarBorder";
@@ -342,93 +341,82 @@ export default function Individuals() {
           </div>
         </section>
 
-        {/* ── Section 4: Packages (DarkVeil) ── */}
-        <section id="packages" className="py-24 relative overflow-hidden" data-testid="section-packages">
-          <DarkVeil zIndex={0} speed={0.5} noiseIntensity={0} warpIntensity={0} />
+        {/* ── Section 4: Packages (Light/White) ── */}
+        <section id="packages" className="py-24 bg-muted/40" data-testid="section-packages">
 
-          <div className="container mx-auto px-4 md:px-6 relative" style={{ zIndex: 1 }}>
+          <div className="container mx-auto px-4 md:px-6">
             <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 border border-accent/40 text-accent text-sm font-medium mb-6">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-6">
                 <Briefcase className="w-4 h-4" />
                 {t("packages.badge")}
               </div>
-              <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight text-white">{t("packages.title")}</h2>
+              <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight text-foreground">{t("packages.title")}</h2>
               <div className="accent-line" />
-              <p className="text-white/65 text-lg max-w-2xl mx-auto">{t("packages.subtitle")}</p>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">{t("packages.subtitle")}</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
               {/* Discovery */}
-              <StarBorder
-                as="div"
-                color="#6B2ED8"
-                speed="8s"
-                thickness={1.5}
-                innerBg="rgba(255,255,255,0.07)"
-                data-testid="card-package-discovery"
-                className="card-hover-lift"
-              >
-                <div className="relative p-6">
+              <div className="relative bg-white rounded-xl border border-border shadow-sm p-6 card-hover-lift" data-testid="card-package-discovery">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50 rounded-t-xl" />
                 <div className="text-center mb-6">
-                  <h3 className="text-xl font-bold text-white">{t("packages.discovery.name")}</h3>
-                  <p className="text-sm text-white/60">{t("packages.discovery.subtitle")}</p>
+                  <h3 className="text-xl font-bold text-foreground">{t("packages.discovery.name")}</h3>
+                  <p className="text-sm text-muted-foreground">{t("packages.discovery.subtitle")}</p>
                 </div>
                 <div className="text-center mb-6">
-                  <div className="text-4xl font-bold text-white">{t("packages.discovery.price")}</div>
-                  <p className="text-sm text-white/60">{t("packages.discovery.currency")}</p>
+                  <div className="text-4xl font-bold text-foreground">{t("packages.discovery.price")}</div>
+                  <p className="text-sm text-muted-foreground">{t("packages.discovery.currency")}</p>
                   <p className="text-xs text-accent font-medium mt-1">{t("packages.discovery.noFees")}</p>
                 </div>
-                <div className="bg-white/[0.08] rounded-lg p-3 mb-4">
-                  <p className="text-sm font-medium text-white">{t("packages.discovery.for")}</p>
-                  <p className="text-xs text-white/60">{t("packages.discovery.forDetail")}</p>
+                <div className="bg-muted/60 rounded-lg p-3 mb-4">
+                  <p className="text-sm font-medium text-foreground">{t("packages.discovery.for")}</p>
+                  <p className="text-xs text-muted-foreground">{t("packages.discovery.forDetail")}</p>
                 </div>
                 <ul className="space-y-3 mb-6">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     <div>
-                      <span className="text-sm font-medium text-white">{t("packages.discovery.feature1")}</span>
-                      <p className="text-xs text-white/60">{t("packages.discovery.feature1Detail")}</p>
+                      <span className="text-sm font-medium text-foreground">{t("packages.discovery.feature1")}</span>
+                      <p className="text-xs text-muted-foreground">{t("packages.discovery.feature1Detail")}</p>
                     </div>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white">{t("packages.discovery.feature2")}</span>
+                    <span className="text-sm text-foreground">{t("packages.discovery.feature2")}</span>
                   </li>
                 </ul>
-                <div className="bg-accent/15 rounded-lg p-3 text-center border border-accent/30">
+                <div className="bg-accent/10 rounded-lg p-3 text-center border border-accent/25">
                   <p className="text-xs text-accent font-medium">{t("packages.discovery.note")}</p>
                 </div>
-                </div>
-              </StarBorder>
+              </div>
 
               {/* Essential – Popular */}
-              <div className="relative overflow-hidden rounded-xl bg-accent/[0.15] border-2 border-accent/60 p-6 card-hover-lift backdrop-blur-sm shadow-lg shadow-accent/10" data-testid="card-package-essential">
+              <div className="relative overflow-hidden rounded-xl bg-white border-2 border-primary p-6 card-hover-lift shadow-lg shadow-primary/10" data-testid="card-package-essential">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-accent via-primary to-accent" />
                 <div className="absolute -top-1 right-4">
-                  <span className="bg-accent text-white text-xs font-bold px-3 py-1 rounded-b-md">Populaire</span>
+                  <span className="bg-primary text-white text-xs font-bold px-3 py-1 rounded-b-md">Populaire</span>
                 </div>
                 <div className="text-center mb-6 pt-2">
-                  <h3 className="text-xl font-bold text-white">{t("packages.essential.name")}</h3>
-                  <p className="text-sm text-white/60">{t("packages.essential.subtitle")}</p>
+                  <h3 className="text-xl font-bold text-foreground">{t("packages.essential.name")}</h3>
+                  <p className="text-sm text-muted-foreground">{t("packages.essential.subtitle")}</p>
                 </div>
                 <div className="text-center mb-6">
-                  <div className="text-4xl font-bold text-accent">{t("packages.essential.price")}</div>
-                  <p className="text-xs text-white/60">{t("packages.essential.consultation")}</p>
-                  <p className="text-xs text-white/60">{t("packages.essential.openingFee")}</p>
-                  <p className="text-sm font-bold text-white mt-2">{t("packages.essential.total")}</p>
+                  <div className="text-4xl font-bold text-primary">{t("packages.essential.price")}</div>
+                  <p className="text-xs text-muted-foreground">{t("packages.essential.consultation")}</p>
+                  <p className="text-xs text-muted-foreground">{t("packages.essential.openingFee")}</p>
+                  <p className="text-sm font-bold text-foreground mt-2">{t("packages.essential.total")}</p>
                 </div>
-                <div className="bg-white/[0.08] rounded-lg p-3 mb-4">
-                  <p className="text-sm font-medium text-white">{t("packages.essential.for")}</p>
-                  <p className="text-xs text-white/60">{t("packages.essential.forDetail")}</p>
+                <div className="bg-muted/60 rounded-lg p-3 mb-4">
+                  <p className="text-sm font-medium text-foreground">{t("packages.essential.for")}</p>
+                  <p className="text-xs text-muted-foreground">{t("packages.essential.forDetail")}</p>
                 </div>
                 <ul className="space-y-3 mb-4">
                   {[1, 2, 3].map((i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <CheckCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                       <div>
-                        <span className="text-sm font-medium text-white">{t(`packages.essential.feature${i}`)}</span>
-                        <p className="text-xs text-white/60">{t(`packages.essential.feature${i}Detail`)}</p>
+                        <span className="text-sm font-medium text-foreground">{t(`packages.essential.feature${i}`)}</span>
+                        <p className="text-xs text-muted-foreground">{t(`packages.essential.feature${i}Detail`)}</p>
                       </div>
                     </li>
                   ))}
@@ -436,29 +424,29 @@ export default function Individuals() {
               </div>
 
               {/* Plan */}
-              <div className="relative overflow-hidden rounded-xl bg-white/[0.07] border border-white/20 p-6 card-hover-lift backdrop-blur-sm" data-testid="card-package-plan">
+              <div className="relative overflow-hidden rounded-xl bg-white border border-border p-6 card-hover-lift shadow-sm" data-testid="card-package-plan">
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary to-primary/50" />
                 <div className="text-center mb-6">
-                  <h3 className="text-xl font-bold text-white">{t("packages.plan.name")}</h3>
-                  <p className="text-sm text-white/60">{t("packages.plan.subtitle")}</p>
+                  <h3 className="text-xl font-bold text-foreground">{t("packages.plan.name")}</h3>
+                  <p className="text-sm text-muted-foreground">{t("packages.plan.subtitle")}</p>
                 </div>
                 <div className="text-center mb-6">
-                  <div className="text-4xl font-bold text-white">{t("packages.plan.price")}</div>
-                  <p className="text-xs text-white/60">{t("packages.plan.consultation")}</p>
-                  <p className="text-xs text-white/60">{t("packages.plan.openingFee")}</p>
-                  <p className="text-sm font-bold text-white mt-2">{t("packages.plan.total")}</p>
+                  <div className="text-4xl font-bold text-foreground">{t("packages.plan.price")}</div>
+                  <p className="text-xs text-muted-foreground">{t("packages.plan.consultation")}</p>
+                  <p className="text-xs text-muted-foreground">{t("packages.plan.openingFee")}</p>
+                  <p className="text-sm font-bold text-foreground mt-2">{t("packages.plan.total")}</p>
                 </div>
-                <div className="bg-white/[0.08] rounded-lg p-3 mb-4">
-                  <p className="text-sm font-medium text-white">{t("packages.plan.for")}</p>
-                  <p className="text-xs text-white/60">{t("packages.plan.forDetail")}</p>
+                <div className="bg-muted/60 rounded-lg p-3 mb-4">
+                  <p className="text-sm font-medium text-foreground">{t("packages.plan.for")}</p>
+                  <p className="text-xs text-muted-foreground">{t("packages.plan.forDetail")}</p>
                 </div>
                 <ul className="space-y-3 mb-4">
                   {[1, 2, 3].map((i) => (
                     <li key={i} className="flex items-start gap-2">
                       <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                       <div>
-                        <span className="text-sm font-medium text-white">{t(`packages.plan.feature${i}`)}</span>
-                        <p className="text-xs text-white/60">{t(`packages.plan.feature${i}Detail`)}</p>
+                        <span className="text-sm font-medium text-foreground">{t(`packages.plan.feature${i}`)}</span>
+                        <p className="text-xs text-muted-foreground">{t(`packages.plan.feature${i}Detail`)}</p>
                       </div>
                     </li>
                   ))}
@@ -466,15 +454,12 @@ export default function Individuals() {
               </div>
             </div>
 
-            <div className="text-center mt-10" style={{ position: "relative", zIndex: 1 }}>
-              <p className="text-sm text-white/60 mb-6">{t("packages.note")}</p>
+            <div className="text-center mt-10">
+              <p className="text-sm text-muted-foreground mb-6">{t("packages.note")}</p>
               <Link href="/book">
                 <Button
                   size="lg"
-                  className="border border-accent/50 text-white px-8 py-6 text-base font-semibold backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5"
-                  style={{ background: "rgba(249,115,22,0.22)" }}
-                  onMouseEnter={e => (e.currentTarget.style.background = "rgba(249,115,22,0.35)")}
-                  onMouseLeave={e => (e.currentTarget.style.background = "rgba(249,115,22,0.22)")}
+                  className="bg-primary text-white hover:bg-primary/90 px-8 py-6 text-base font-semibold transition-all duration-300 hover:-translate-y-0.5 shadow-lg shadow-primary/25"
                 >
                   {t("packages.cta")}
                   <ArrowRight className="ml-2 w-4 h-4" />
@@ -584,41 +569,36 @@ export default function Individuals() {
           </div>
         </section>
 
-        {/* ── Section 7: Quote (DarkVeil) ── */}
-        <section className="py-20 relative overflow-hidden" data-testid="section-quote">
-          <DarkVeil zIndex={0} speed={0.4} noiseIntensity={0} warpIntensity={0} />
-          <div className="container mx-auto px-4 md:px-6 relative" style={{ zIndex: 1 }}>
+        {/* ── Section 7: Quote (Light/Muted) ── */}
+        <section className="py-20 bg-white border-y border-border" data-testid="section-quote">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-3xl mx-auto text-center">
-              <div className="text-6xl text-white/20 font-serif mb-4">"</div>
-              <blockquote className="text-2xl md:text-3xl font-medium text-white leading-relaxed mb-6" data-testid="text-quote">
+              <div className="text-6xl text-primary/20 font-serif mb-4">"</div>
+              <blockquote className="text-2xl md:text-3xl font-medium text-foreground leading-relaxed mb-6" data-testid="text-quote">
                 {t("quote.text")}
               </blockquote>
-              <p className="text-white/60">{t("quote.author")}</p>
+              <p className="text-muted-foreground">{t("quote.author")}</p>
             </div>
           </div>
         </section>
 
-        {/* ── Section 8: CTA (DarkVeil) ── */}
-        <section className="py-24 relative overflow-hidden" data-testid="section-cta">
-          <DarkVeil zIndex={0} speed={0.5} noiseIntensity={0} warpIntensity={0} />
-          <div className="container mx-auto px-4 md:px-6 relative" style={{ zIndex: 1 }}>
+        {/* ── Section 8: CTA (Solid Primary Green) ── */}
+        <section className="py-24 bg-primary" data-testid="section-cta">
+          <div className="container mx-auto px-4 md:px-6">
             <div className="max-w-3xl mx-auto text-center space-y-8">
               <h2 className="text-3xl md:text-5xl font-bold text-white" data-testid="text-cta-title">{t("cta.title")}</h2>
-              <p className="text-xl text-white/70">{t("cta.text")}</p>
+              <p className="text-xl text-white/80">{t("cta.text")}</p>
               <div className="pt-4">
                 <Link href="/book">
                   <Button
                     size="lg"
-                    className="border border-accent/50 text-white px-10 h-14 text-lg font-bold backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5"
-                    style={{ background: "rgba(249,115,22,0.22)" }}
-                    onMouseEnter={e => (e.currentTarget.style.background = "rgba(249,115,22,0.35)")}
-                    onMouseLeave={e => (e.currentTarget.style.background = "rgba(249,115,22,0.22)")}
+                    className="bg-white text-primary hover:bg-white/90 px-10 h-14 text-lg font-bold transition-all duration-300 hover:-translate-y-0.5 shadow-xl"
                     data-testid="button-cta-book"
                   >
                     {t("cta.button")}
                   </Button>
                 </Link>
-                <p className="mt-4 text-sm text-white/50">{t("cta.secure")}</p>
+                <p className="mt-4 text-sm text-white/60">{t("cta.secure")}</p>
               </div>
             </div>
           </div>

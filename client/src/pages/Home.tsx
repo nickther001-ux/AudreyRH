@@ -22,9 +22,9 @@ export default function Home() {
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: `url(${montrealSkyline})` }}
           />
-          {/* Purple-violet overlay — the 365talents palette */}
+          {/* Near-black editorial overlay — consulting.framer.media aesthetic */}
           <div className="absolute inset-0" style={{
-            background: "linear-gradient(160deg, rgba(13,2,34,0.90) 0%, rgba(45,12,100,0.82) 45%, rgba(13,2,34,0.88) 100%)"
+            background: "linear-gradient(160deg, rgba(8,8,8,0.88) 0%, rgba(15,30,15,0.80) 50%, rgba(8,8,8,0.88) 100%)"
           }} />
 
           <div className="relative z-10 w-full max-w-5xl mx-auto text-center space-y-10">

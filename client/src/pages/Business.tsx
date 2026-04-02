@@ -5,7 +5,6 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/lib/i18n";
-import { DarkVeil } from "@/components/DarkVeil";
 import ShinyText from "@/components/ShinyText";
 import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
 
@@ -98,7 +97,7 @@ export default function Business() {
                 text={t("business.services.title")}
                 speed={3}
                 className="text-3xl md:text-5xl font-bold tracking-tight"
-                color="#120430"
+                color="#111111"
                 shineColor="#f97316"
                 spread={180}
               />
@@ -141,50 +140,39 @@ export default function Business() {
         </div>
       </section>
 
-      {/* ── Section 3: Who We Serve (DarkVeil) ── */}
-      <section className="py-24 relative overflow-hidden">
-        <DarkVeil zIndex={0} speed={0.5} noiseIntensity={0} warpIntensity={0} />
-        {/* Dot grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            zIndex: 1,
-            backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
-            backgroundSize: "28px 28px",
-          }}
-        />
-
-        <div className="container mx-auto px-4 md:px-6 relative max-w-5xl" style={{ zIndex: 2 }}>
+      {/* ── Section 3: Who We Serve (Light/Muted) ── */}
+      <section className="py-24 bg-muted/40">
+        <div className="container mx-auto px-4 md:px-6 max-w-5xl">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-accent/20 border border-accent/40 text-accent px-4 py-2 rounded-full text-sm font-medium mb-5">
+            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium mb-5">
               <Users className="w-4 h-4" />
               {t("business.who.title")}
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">{t("business.who.title")}</h2>
-            <p className="text-white/65 text-lg max-w-2xl mx-auto leading-relaxed">{t("business.who.subtitle")}</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">{t("business.who.title")}</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">{t("business.who.subtitle")}</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {[
-              { type: "sme",       Icon: Factory,   color: "text-accent",    bg: "bg-accent/20",   border: "border-accent/30",   num: "01" },
-              { type: "startup",   Icon: Rocket,    color: "text-secondary", bg: "bg-secondary/20",border: "border-secondary/30",num: "02" },
-              { type: "corporate", Icon: Building2, color: "text-white",     bg: "bg-white/15",    border: "border-white/25",    num: "03" },
-              { type: "nonprofit", Icon: Heart,     color: "text-accent",    bg: "bg-accent/20",   border: "border-accent/30",   num: "04" },
+              { type: "sme",       Icon: Factory,   color: "text-accent",   bg: "bg-accent/15",    border: "border-accent/25",   num: "01" },
+              { type: "startup",   Icon: Rocket,    color: "text-primary",  bg: "bg-primary/10",   border: "border-primary/20",  num: "02" },
+              { type: "corporate", Icon: Building2, color: "text-foreground", bg: "bg-muted",      border: "border-border",      num: "03" },
+              { type: "nonprofit", Icon: Heart,     color: "text-accent",   bg: "bg-accent/15",    border: "border-accent/25",   num: "04" },
             ].map(({ type, Icon, color, bg, border, num }) => (
               <div
                 key={type}
-                className={`group relative bg-white/[0.06] hover:bg-white/[0.11] border ${border} rounded-2xl p-7 flex items-start gap-5 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-black/20`}
+                className={`group relative bg-white hover:bg-muted/20 border ${border} rounded-2xl p-7 flex items-start gap-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
                 data-testid={`card-business-who-${type}`}
               >
-                <span className="absolute top-4 right-5 text-5xl font-black text-white/[0.06] select-none leading-none">
+                <span className="absolute top-4 right-5 text-5xl font-black text-foreground/[0.05] select-none leading-none">
                   {num}
                 </span>
                 <div className={`w-12 h-12 ${bg} rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5`}>
                   <Icon className={`w-6 h-6 ${color}`} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-white text-base mb-2">{t(`business.who.${type}.title`)}</h3>
-                  <p className="text-white/65 text-sm leading-relaxed">{t(`business.who.${type}.desc`)}</p>
+                  <h3 className="font-bold text-foreground text-base mb-2">{t(`business.who.${type}.title`)}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">{t(`business.who.${type}.desc`)}</p>
                 </div>
               </div>
             ))}
@@ -216,27 +204,21 @@ export default function Business() {
         </div>
       </section>
 
-      {/* ── Section 5: Grants CTA (DarkVeil) ── */}
-      <section className="py-16 relative overflow-hidden">
-        <DarkVeil zIndex={0} speed={0.5} noiseIntensity={0} warpIntensity={0} />
-        <div className="container mx-auto px-4 md:px-6 max-w-4xl relative" style={{ zIndex: 1 }}>
+      {/* ── Section 5: Grants CTA (Light with accent border) ── */}
+      <section className="py-16 bg-white border-y border-border">
+        <div className="container mx-auto px-4 md:px-6 max-w-4xl">
           <div className="flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="flex items-start gap-5">
-              <div className="w-14 h-14 bg-accent/20 rounded-2xl flex items-center justify-center flex-shrink-0">
+              <div className="w-14 h-14 bg-accent/15 rounded-2xl flex items-center justify-center flex-shrink-0">
                 <DollarSign className="w-7 h-7 text-accent" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white mb-2">{t("business.grants.title")}</h3>
-                <p className="text-white/70 leading-relaxed">{t("business.grants.text")}</p>
+                <h3 className="text-xl font-bold text-foreground mb-2">{t("business.grants.title")}</h3>
+                <p className="text-muted-foreground leading-relaxed">{t("business.grants.text")}</p>
               </div>
             </div>
             <Link href="/grants" data-testid="link-business-grants">
-              <Button
-                className="whitespace-nowrap px-6 border border-accent/50 text-white backdrop-blur-sm"
-                style={{ background: "rgba(249,115,22,0.22)" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(249,115,22,0.35)")}
-                onMouseLeave={e => (e.currentTarget.style.background = "rgba(249,115,22,0.22)")}
-              >
+              <Button className="whitespace-nowrap px-6 bg-accent text-white hover:bg-accent/90 shadow-lg shadow-accent/20">
                 {t("business.grants.cta")}
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Button>
@@ -245,20 +227,16 @@ export default function Business() {
         </div>
       </section>
 
-      {/* ── Section 6: Final CTA (DarkVeil) ── */}
-      <section className="py-24 relative overflow-hidden">
-        <DarkVeil zIndex={0} speed={0.3} noiseIntensity={0} warpIntensity={0} />
-        <div className="container mx-auto px-4 md:px-6 text-center max-w-3xl relative" style={{ zIndex: 1 }}>
+      {/* ── Section 6: Final CTA (Solid Primary Green) ── */}
+      <section className="py-24 bg-primary">
+        <div className="container mx-auto px-4 md:px-6 text-center max-w-3xl">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{t("business.cta.title")}</h2>
-          <p className="text-white/70 text-lg mb-10 leading-relaxed">{t("business.cta.text")}</p>
+          <p className="text-white/80 text-lg mb-10 leading-relaxed">{t("business.cta.text")}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/contact" data-testid="link-business-cta-contact">
               <Button
                 size="lg"
-                className="border border-accent/50 text-white px-8 py-6 text-base font-semibold backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5"
-                style={{ background: "rgba(249,115,22,0.22)" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(249,115,22,0.35)")}
-                onMouseLeave={e => (e.currentTarget.style.background = "rgba(249,115,22,0.22)")}
+                className="bg-white text-primary hover:bg-white/90 px-8 py-6 text-base font-semibold transition-all duration-300 hover:-translate-y-0.5 shadow-xl"
               >
                 {t("business.cta.contact")}
                 <ArrowRight className="ml-2 w-5 h-5" />
@@ -268,7 +246,7 @@ export default function Business() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-white/40 text-white hover:bg-white/10 px-8 py-6 text-base"
+                className="border-white/50 text-white hover:bg-white/10 px-8 py-6 text-base"
               >
                 {t("business.cta.book")}
               </Button>

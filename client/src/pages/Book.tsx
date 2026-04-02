@@ -231,7 +231,7 @@ export default function Book() {
           className="absolute inset-0 bg-cover bg-center ken-burns-zoom"
           style={{ backgroundImage: `url(${montrealSkyline})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1a0545]/95 via-[#1a0545]/85 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/80 to-background" />
         
         <div className="relative container mx-auto px-4 md:px-6 pt-12 pb-8">
           <div className="max-w-3xl mx-auto text-center space-y-4">
