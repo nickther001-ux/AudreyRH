@@ -18,56 +18,53 @@ const APPROACH_PHOTO = approachPhoto;
 const JOURNEY_PHOTO  = "https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=400&q=80";
 const STATS_PHOTO    = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80";
 
-type Partner = { name: string; logo?: string; icon?: "linkedin" };
+// Quebec flag from Wikimedia Commons (blue cross + fleur-de-lis)
+const QC_FLAG = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Flag_of_Quebec.svg/80px-Flag_of_Quebec.svg.png";
 
-// Direct confirmed logo URLs from official sources / Wikimedia Commons
+type Partner =
+  | { kind: "logo";   name: string; logo: string }
+  | { kind: "icon";   name: string; icon: "linkedin" }
+  | { kind: "flag-qc"; name: string };
+
 const PARTNERS: Partner[] = [
-  {
-    name: "Ordre des CRHA",
-    logo: "https://logo.clearbit.com/ordrecrha.org",
-  },
-  { name: "LinkedIn", icon: "linkedin" },
-  {
-    name: "Service Canada",
-    // Government of Canada official wordmark SVG (Wikimedia Commons)
-    logo: "https://upload.wikimedia.org/wikipedia/commons/8/83/Canada_wordmark.svg",
-  },
-  {
-    name: "Gouvernement du Québec",
-    // Official Quebec government logo (Wikimedia Commons)
-    logo: "https://upload.wikimedia.org/wikipedia/commons/e/e8/Logo_du_gouvernement_du_Qu%C3%A9bec.svg",
-  },
-  {
-    name: "CPMT Québec",
-    // Quebec government design system logo (CPMT is a Quebec gov body)
-    logo: "https://www.quebec.ca/assets/trousse-sdg/dist/img/QUEBEC_couleur.svg",
-  },
-  {
-    name: "Services Québec",
-    logo: "https://www.quebec.ca/assets/trousse-sdg/dist/img/QUEBEC_couleur.svg",
-  },
-  {
-    name: "CRIA",
-    logo: "https://logo.clearbit.com/ordrecrha.org",
-  },
+  { kind: "logo",    name: "Ordre des CRHA",         logo: "https://logo.clearbit.com/ordrecrha.org" },
+  { kind: "icon",    name: "LinkedIn",                icon: "linkedin" },
+  { kind: "logo",    name: "Service Canada",          logo: "https://upload.wikimedia.org/wikipedia/commons/8/83/Canada_wordmark.svg" },
+  { kind: "flag-qc", name: "Gouvernement du Québec" },
+  { kind: "flag-qc", name: "Emploi-Québec" },
+  { kind: "flag-qc", name: "CPMT Québec" },
+  { kind: "logo",    name: "CRIA",                   logo: "https://logo.clearbit.com/ordrecrha.org" },
 ];
 
 function PartnerLogo({ p }: { p: Partner }) {
-  if (p.icon === "linkedin") {
+  if (p.kind === "icon") {
     return (
-      <span className="flex items-center gap-2 text-foreground/30 select-none whitespace-nowrap">
-        <SiLinkedin size={20} />
-        <span className="font-semibold text-[13px]">LinkedIn</span>
+      <span className="flex items-center gap-1.5 text-foreground/30 select-none whitespace-nowrap">
+        <SiLinkedin size={18} />
+        <span className="font-semibold text-[12px]">LinkedIn</span>
       </span>
     );
   }
+
+  if (p.kind === "flag-qc") {
+    return (
+      <span className="flex items-center gap-2 select-none whitespace-nowrap opacity-35">
+        <img
+          src={QC_FLAG}
+          alt="Drapeau du Québec"
+          className="h-5 w-auto object-contain grayscale"
+        />
+        <span className="font-semibold text-[12px] text-foreground">{p.name}</span>
+      </span>
+    );
+  }
+
   return (
     <span className="inline-flex items-center select-none">
       <img
         src={p.logo}
         alt={p.name}
         className="h-7 w-auto max-w-[130px] object-contain grayscale opacity-35"
-        style={{ filter: "grayscale(100%) opacity(0.35)" }}
         onError={(e) => {
           const target = e.currentTarget;
           target.style.display = "none";
@@ -76,7 +73,7 @@ function PartnerLogo({ p }: { p: Partner }) {
         }}
       />
       <span
-        className="font-semibold text-[13px] whitespace-nowrap text-foreground/30"
+        className="font-semibold text-[12px] whitespace-nowrap text-foreground/30"
         style={{ display: "none" }}
       >
         {p.name}
