@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 import audreyPhoto from "@assets/Gemini_Generated_Image_oiinvioiinvioiin_1775503767318.png";
+import approachPhoto from "@assets/Gemini_Generated_Image_ujepw0ujepw0ujep_1775505394811.png";
 
 const SERVICE_PHOTOS = [
   "https://images.unsplash.com/photo-1552664730-d307ca884978?w=700&q=80",
@@ -13,7 +14,7 @@ const SERVICE_PHOTOS = [
   "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=700&q=80",
 ];
 
-const APPROACH_PHOTO = "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=900&q=80";
+const APPROACH_PHOTO = approachPhoto;
 const JOURNEY_PHOTO  = "https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=400&q=80";
 const STATS_PHOTO    = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80";
 
@@ -260,11 +261,12 @@ export default function Home() {
                 className="w-full h-[480px] object-cover"
                 data-testid="img-approach"
               />
-              <div className="absolute bottom-6 left-6 bg-white shadow-2xl p-5 min-w-[180px]">
-                <p className="text-[11px] text-muted-foreground uppercase tracking-widest mb-1">
+              {/* Stat card — top-left covers the baked-in text from the image */}
+              <div className="absolute top-4 left-4 bg-white shadow-2xl px-6 py-5 min-w-[190px]">
+                <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-1">
                   {t("home.approach.stat")}
                 </p>
-                <p className="text-[2.5rem] font-bold text-foreground leading-none">
+                <p className="text-[2.6rem] font-bold text-foreground leading-none">
                   {t("home.approach.statValue")}
                 </p>
               </div>
