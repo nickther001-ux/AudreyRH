@@ -1,7 +1,7 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
 import { AnimatePresence, motion } from "framer-motion";
-import { Palette, Lightbulb, Building2, Briefcase, ArrowRight, CheckCircle, DollarSign, Users, TrendingUp, X, Calendar, Send, ChevronLeft, ChevronRight } from "lucide-react";
+import { Palette, Lightbulb, Building2, Briefcase, ArrowRight, CheckCircle, DollarSign, Users, X, Calendar, Send, Plus, Minus } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -69,11 +69,43 @@ const GRANT_CARDS = [
   },
 ];
 
-const TESTIMONIALS = [
-  { initials: "Y.K.", name: "Youssouf K.", role: "Directeur de banque, Montréal", quote: "Grâce à AudreyRH, j'ai accédé à un financement que je ne savais même pas qu'il existait. Le dossier a été préparé en 3 semaines." },
-  { initials: "A.S.", name: "Aïssatou S.", role: "Entrepreneur, Laval",           quote: "Le diagnostic d'admissibilité m'a évité de perdre des mois sur les mauvaises subventions. Très efficace." },
-  { initials: "F.D.", name: "Fatou D.", role: "Fondatrice OBNL, Montréal",        quote: "Audrey m'a aidée à structurer la demande. Nous avons obtenu 45 000 $ pour notre organisme communautaire." },
-  { initials: "J.N.", name: "Jean-Baptiste N.", role: "PME, Québec",               quote: "Sans cet accompagnement, on n'aurait jamais su qu'on était admissibles. Résultat : 80 000 $ de subvention obtenu." },
+const FAQS = [
+  {
+    qFr: "Qui peut faire une demande de subvention ?",
+    qEn: "Who can apply for a grant?",
+    aFr: "Les artistes, entrepreneurs, PMEs, OBNL et OBE établis au Québec peuvent faire une demande. Certains programmes s'adressent spécifiquement aux nouvelles arrivantes et nouveaux arrivants, aux minorités visibles ou aux femmes entrepreneures.",
+    aEn: "Artists, entrepreneurs, SMEs, nonprofits (OBNL) and volunteer organizations (OBE) based in Quebec can apply. Some programs specifically target newcomers, visible minorities, or women entrepreneurs.",
+  },
+  {
+    qFr: "Est-ce que je dois rembourser la subvention ?",
+    qEn: "Do I have to repay the grant?",
+    aFr: "Non — les subventions sont des financements non remboursables. Contrairement à un prêt, vous n'avez pas à rembourser les montants obtenus, à condition de respecter les conditions du programme.",
+    aEn: "No — grants are non-repayable funding. Unlike a loan, you do not have to repay the amounts received, as long as you meet the program conditions.",
+  },
+  {
+    qFr: "Combien de temps prend le processus de demande ?",
+    qEn: "How long does the application process take?",
+    aFr: "En général, de 4 à 12 semaines selon le programme. AudreyRH prépare votre dossier en 2 à 3 semaines, puis les délais de traitement varient selon l'organisme financeur.",
+    aEn: "Generally 4 to 12 weeks depending on the program. AudreyRH prepares your file within 2 to 3 weeks; processing times then vary by funding body.",
+  },
+  {
+    qFr: "Quels documents sont nécessaires pour une demande ?",
+    qEn: "What documents are required for an application?",
+    aFr: "Les exigences varient, mais on demande généralement : un plan d'affaires ou de projet, des états financiers récents, une preuve de statut légal et une description détaillée du projet. AudreyRH vous guide étape par étape.",
+    aEn: "Requirements vary, but typically include: a business or project plan, recent financial statements, proof of legal status, and a detailed project description. AudreyRH guides you step by step.",
+  },
+  {
+    qFr: "Puis-je faire plusieurs demandes en même temps ?",
+    qEn: "Can I apply for multiple grants at once?",
+    aFr: "Oui, c'est même recommandé. AudreyRH identifie tous les programmes auxquels vous êtes admissible et peut gérer plusieurs demandes simultanément pour maximiser votre financement total.",
+    aEn: "Yes, and it's actually recommended. AudreyRH identifies all programs you qualify for and can manage multiple simultaneous applications to maximize your total funding.",
+  },
+  {
+    qFr: "Quel est le coût de l'accompagnement AudreyRH ?",
+    qEn: "What is the cost of AudreyRH's support?",
+    aFr: "Une consultation initiale de 50 $ permet de faire le point sur votre situation et d'identifier vos opportunités. Les frais d'accompagnement pour la préparation de dossier sont discutés lors de cette consultation.",
+    aEn: "An initial $50 consultation allows us to assess your situation and identify your opportunities. Coaching fees for application preparation are discussed during this consultation.",
+  },
 ];
 
 const STATS = [
@@ -90,7 +122,7 @@ export default function Grants() {
   const [diagnosticCategory, setDiagnosticCategory] = useState<DiagnosticCategory>(null);
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<boolean[]>([]);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   const openDiagnostic = (category: DiagnosticCategory) => { setDiagnosticCategory(category); setStep(0); setAnswers([]); };
   const closeDiagnostic = () => setDiagnosticCategory(null);
@@ -107,11 +139,6 @@ export default function Grants() {
   const totalSteps = questions.length;
   const isResult = step === totalSteps && totalSteps > 0;
   const result: ResultType | null = isResult && diagnosticCategory ? getResult(diagnosticCategory, answers) : null;
-
-  const scrollCarousel = (dir: "left" | "right") => {
-    if (!carouselRef.current) return;
-    carouselRef.current.scrollBy({ left: dir === "right" ? 360 : -360, behavior: "smooth" });
-  };
 
   return (
     <div className="min-h-screen bg-white text-foreground flex flex-col">
@@ -369,49 +396,69 @@ export default function Grants() {
           </div>
         </section>
 
-        {/* ── 4. TESTIMONIALS — white with horizontal carousel ── */}
-        <section className="py-28 bg-white overflow-hidden" data-testid="section-grants-testimonials">
+        {/* ── 4. FAQ ── */}
+        <section className="py-28 bg-white" data-testid="section-grants-faq">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
-            <FadeUp className="flex items-end justify-between mb-12">
-              <div>
-                <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{isFr ? "Témoignages" : "Testimonials"}</p>
-                <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-lg">
-                  {isFr ? <>Ce que disent <em className="not-italic text-primary">nos clients</em></> : <>What our <em className="not-italic text-primary">clients say</em></>}
-                </h2>
-              </div>
-              <div className="hidden md:flex gap-2 flex-shrink-0">
-                <button onClick={() => scrollCarousel("left")} className="w-10 h-10 border border-border flex items-center justify-center hover:bg-muted/40 transition-colors" data-testid="button-carousel-prev"><ChevronLeft className="w-5 h-5" /></button>
-                <button onClick={() => scrollCarousel("right")} className="w-10 h-10 border border-border flex items-center justify-center hover:bg-muted/40 transition-colors" data-testid="button-carousel-next"><ChevronRight className="w-5 h-5" /></button>
-              </div>
-            </FadeUp>
-          </div>
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_1.6fr] gap-16 items-start">
 
-          {/* Scrollable strip — bleeds to edges */}
-          <div ref={carouselRef} className="flex gap-px overflow-x-auto scroll-smooth scrollbar-hide pl-6 md:pl-[max(24px,calc((100vw-72rem)/2+24px))]" style={{ scrollbarWidth: "none" }}>
-            {TESTIMONIALS.map((t2, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="flex-shrink-0 w-[320px] md:w-[360px] bg-white border border-border p-8 group hover:bg-muted/20 transition-colors"
-                data-testid={`card-grant-testimonial-${i}`}
-              >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 bg-[#1e3a5f] text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
-                    {t2.initials}
-                  </div>
-                  <div>
-                    <p className="font-bold text-foreground text-[15px]">{t2.name}</p>
-                    <p className="text-[12px] text-muted-foreground">{t2.role}</p>
-                  </div>
-                </div>
-                <p className="text-foreground/70 text-[14px] leading-relaxed italic">"{t2.quote}"</p>
-              </motion.div>
-            ))}
-            {/* spacer */}
-            <div className="flex-shrink-0 w-6 md:w-[max(24px,calc((100vw-72rem)/2+24px))]" />
+              {/* Left — sticky label + heading */}
+              <FadeUp className="md:sticky md:top-32">
+                <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-5">
+                  {isFr ? "Questions fréquentes" : "Frequently Asked"}
+                </p>
+                <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight mb-6">
+                  {isFr ? <>Tout ce que vous devez <em className="not-italic text-primary">savoir</em></> : <>Everything you need to <em className="not-italic text-primary">know</em></>}
+                </h2>
+                <p className="text-[14px] text-muted-foreground leading-relaxed mb-8">
+                  {isFr ? "Des réponses claires sur le processus de subvention, les conditions d'admissibilité et l'accompagnement AudreyRH." : "Clear answers about the grant process, eligibility requirements, and AudreyRH's support."}
+                </p>
+                <Link href="/contact" data-testid="link-faq-contact">
+                  <Button className="bg-[#1e3a5f] hover:bg-[#1e3a5f]/90 text-white rounded-none h-11 px-6 text-[13px]">
+                    {isFr ? "Poser une autre question" : "Ask Another Question"} <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
+                </Link>
+              </FadeUp>
+
+              {/* Right — accordion */}
+              <div className="divide-y divide-border border-t border-border">
+                {FAQS.map((faq, i) => {
+                  const isOpen = openFaq === i;
+                  return (
+                    <div key={i} data-testid={`faq-item-${i}`}>
+                      <button
+                        className="w-full flex items-center justify-between gap-4 py-6 text-left group"
+                        onClick={() => setOpenFaq(isOpen ? null : i)}
+                        data-testid={`faq-toggle-${i}`}
+                      >
+                        <span className="font-semibold text-[16px] text-foreground group-hover:text-[#1e3a5f] transition-colors leading-snug">
+                          {isFr ? faq.qFr : faq.qEn}
+                        </span>
+                        <span className="flex-shrink-0 w-7 h-7 border border-border flex items-center justify-center text-muted-foreground group-hover:border-[#1e3a5f] group-hover:text-[#1e3a5f] transition-colors">
+                          {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                        </span>
+                      </button>
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            key="answer"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+                            className="overflow-hidden"
+                          >
+                            <p className="text-[14px] text-muted-foreground leading-relaxed pb-6 max-w-lg">
+                              {isFr ? faq.aFr : faq.aEn}
+                            </p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
+              </div>
+
+            </div>
           </div>
         </section>
 
