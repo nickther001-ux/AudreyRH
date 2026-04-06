@@ -336,25 +336,24 @@ export default function Individuals() {
           </div>
         </section>
 
-        {/* ── 3. GUIDE — accordion on midnight blue ── */}
-        <section className="bg-[#1e3a5f] py-28" data-testid="section-guide">
+        {/* ── 3. GUIDE — accordion on white ── */}
+        <section className="bg-white py-28" data-testid="section-guide">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
 
             {/* Header */}
             <FadeUp className="mb-16">
-              <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{t("individuals.guide.badge" as any)}</p>
+              <p className="text-[11px] text-[#1e3a5f]/40 uppercase tracking-[0.2em] mb-4">{t("individuals.guide.badge" as any)}</p>
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-                <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight max-w-sm">
+                <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a5f] leading-tight max-w-sm">
                   {t("individuals.guide.title" as any)}<span className="text-orange-400">.</span>
                 </h2>
-                <p className="text-white/50 text-[14px] leading-relaxed max-w-sm">{t("individuals.guide.subtitle" as any)}</p>
+                <p className="text-[#1e3a5f]/60 text-[14px] leading-relaxed max-w-sm">{t("individuals.guide.subtitle" as any)}</p>
               </div>
             </FadeUp>
 
             {/* Accordion items */}
-            <div className="border-t border-white/10">
+            <div className="border-t border-[#1e3a5f]/10">
 
-              {/* ── 1. RESUME ANATOMY ── */}
               {([
                 {
                   idx: 1,
@@ -362,17 +361,17 @@ export default function Individuals() {
                   titleKey: "individuals.guide.resume.title",
                   subtitleKey: "individuals.guide.resume.subtitle",
                   content: (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 mt-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#1e3a5f]/10 mt-8">
                       {([1,2,3,4,5,6,7] as const).map((n) => (
-                        <div key={n} className="bg-[#1e3a5f] p-7 hover:bg-white/5 transition-colors">
-                          <p className="text-[2.2rem] font-black text-white/8 leading-none mb-3 select-none">0{n}</p>
-                          <h4 className="font-bold text-white text-[14px] mb-2">{t(`individuals.guide.resume.s${n}.title` as any)}</h4>
-                          <p className="text-white/50 text-[13px] leading-relaxed">{t(`individuals.guide.resume.s${n}.desc` as any)}</p>
+                        <div key={n} className="bg-white p-7 hover:bg-[#1e3a5f]/3 transition-colors">
+                          <p className="text-[2.2rem] font-black text-[#1e3a5f]/8 leading-none mb-3 select-none">0{n}</p>
+                          <h4 className="font-bold text-[#1e3a5f] text-[14px] mb-2">{t(`individuals.guide.resume.s${n}.title` as any)}</h4>
+                          <p className="text-[#1e3a5f]/55 text-[13px] leading-relaxed">{t(`individuals.guide.resume.s${n}.desc` as any)}</p>
                         </div>
                       ))}
-                      <div className="bg-[#162c48] p-7 flex flex-col justify-center border-l border-white/10">
-                        <p className="text-[#93c5fd] text-[11px] uppercase tracking-[0.15em] mb-3 font-semibold">Conseil AudreyRH</p>
-                        <p className="text-white/80 text-[14px] leading-relaxed italic">"{t("individuals.guide.resume.tip" as any)}"</p>
+                      <div className="bg-[#1e3a5f] p-7 flex flex-col justify-center">
+                        <p className="text-white/60 text-[11px] uppercase tracking-[0.15em] mb-3 font-semibold">Conseil AudreyRH</p>
+                        <p className="text-white text-[14px] leading-relaxed italic">"{t("individuals.guide.resume.tip" as any)}"</p>
                       </div>
                     </div>
                   ),
@@ -383,36 +382,36 @@ export default function Individuals() {
                   titleKey: "individuals.guide.dos.title",
                   subtitleKey: "individuals.guide.dos.subtitle",
                   content: (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10 mt-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#1e3a5f]/10 mt-8">
                       {/* DO */}
-                      <div className="bg-[#1e3a5f] p-8">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
-                          <span className="w-6 h-6 flex items-center justify-center border border-[#93c5fd] flex-shrink-0">
-                            <svg className="w-3.5 h-3.5 text-[#93c5fd]" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                      <div className="bg-white p-8">
+                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#1e3a5f]/10">
+                          <span className="w-6 h-6 flex items-center justify-center border border-[#1e3a5f] flex-shrink-0">
+                            <svg className="w-3.5 h-3.5 text-[#1e3a5f]" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                           </span>
-                          <span className="font-bold text-white text-[13px] uppercase tracking-[0.15em]">{t("individuals.guide.dos.do.label" as any)}</span>
+                          <span className="font-bold text-[#1e3a5f] text-[13px] uppercase tracking-[0.15em]">{t("individuals.guide.dos.do.label" as any)}</span>
                         </div>
                         <ul className="space-y-3.5">
                           {([1,2,3,4,5,6,7,8] as const).map((n) => (
-                            <li key={n} className="flex items-start gap-3 text-[13px] text-white/70 leading-relaxed" data-testid={`guide-do-${n}`}>
-                              <span className="flex-shrink-0 w-1 h-1 rounded-full bg-[#93c5fd] mt-2" />
+                            <li key={n} className="flex items-start gap-3 text-[13px] text-[#1e3a5f]/70 leading-relaxed" data-testid={`guide-do-${n}`}>
+                              <span className="flex-shrink-0 w-1 h-1 rounded-full bg-[#1e3a5f] mt-2" />
                               {t(`individuals.guide.dos.do.${n}` as any)}
                             </li>
                           ))}
                         </ul>
                       </div>
                       {/* DON'T */}
-                      <div className="bg-[#1e3a5f] p-8">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
-                          <span className="w-6 h-6 flex items-center justify-center border border-white/30 flex-shrink-0">
-                            <svg className="w-3.5 h-3.5 text-white/50" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                      <div className="bg-white p-8">
+                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#1e3a5f]/10">
+                          <span className="w-6 h-6 flex items-center justify-center border border-[#1e3a5f]/30 flex-shrink-0">
+                            <svg className="w-3.5 h-3.5 text-[#1e3a5f]/40" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                           </span>
-                          <span className="font-bold text-white/50 text-[13px] uppercase tracking-[0.15em]">{t("individuals.guide.dos.dont.label" as any)}</span>
+                          <span className="font-bold text-[#1e3a5f]/50 text-[13px] uppercase tracking-[0.15em]">{t("individuals.guide.dos.dont.label" as any)}</span>
                         </div>
                         <ul className="space-y-3.5">
                           {([1,2,3,4,5,6,7,8] as const).map((n) => (
-                            <li key={n} className="flex items-start gap-3 text-[13px] text-white/50 leading-relaxed" data-testid={`guide-dont-${n}`}>
-                              <span className="flex-shrink-0 w-1 h-1 rounded-full bg-white/30 mt-2" />
+                            <li key={n} className="flex items-start gap-3 text-[13px] text-[#1e3a5f]/45 leading-relaxed" data-testid={`guide-dont-${n}`}>
+                              <span className="flex-shrink-0 w-1 h-1 rounded-full bg-[#1e3a5f]/30 mt-2" />
                               {t(`individuals.guide.dos.dont.${n}` as any)}
                             </li>
                           ))}
@@ -427,12 +426,12 @@ export default function Individuals() {
                   titleKey: "individuals.guide.interview.title",
                   subtitleKey: "individuals.guide.interview.subtitle",
                   content: (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10 mt-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1e3a5f]/10 mt-8">
                       {([1,2,3,4,5,6] as const).map((n) => (
-                        <div key={n} className="bg-[#1e3a5f] p-7 hover:bg-white/5 transition-colors" data-testid={`guide-interview-${n}`}>
-                          <p className="text-[2.2rem] font-black text-white/8 leading-none mb-3 select-none">0{n}</p>
-                          <h4 className="font-bold text-white text-[14px] mb-2">{t(`individuals.guide.interview.s${n}.title` as any)}</h4>
-                          <p className="text-white/50 text-[13px] leading-relaxed">{t(`individuals.guide.interview.s${n}.desc` as any)}</p>
+                        <div key={n} className="bg-white p-7 hover:bg-[#1e3a5f]/3 transition-colors" data-testid={`guide-interview-${n}`}>
+                          <p className="text-[2.2rem] font-black text-[#1e3a5f]/8 leading-none mb-3 select-none">0{n}</p>
+                          <h4 className="font-bold text-[#1e3a5f] text-[14px] mb-2">{t(`individuals.guide.interview.s${n}.title` as any)}</h4>
+                          <p className="text-[#1e3a5f]/55 text-[13px] leading-relaxed">{t(`individuals.guide.interview.s${n}.desc` as any)}</p>
                         </div>
                       ))}
                     </div>
@@ -441,24 +440,24 @@ export default function Individuals() {
               ] as const).map(({ idx, badgeKey, titleKey, subtitleKey, content }) => {
                 const isOpen = openGuide === idx;
                 return (
-                  <div key={idx} className="border-b border-white/10" data-testid={`guide-accordion-${idx}`}>
+                  <div key={idx} className="border-b border-[#1e3a5f]/10" data-testid={`guide-accordion-${idx}`}>
                     <button
                       onClick={() => setOpenGuide(isOpen ? null : idx)}
                       className="w-full flex items-center justify-between gap-6 py-8 text-left group"
                       data-testid={`guide-toggle-${idx}`}
                     >
                       <div className="flex items-start gap-6">
-                        <span className="text-[11px] font-black text-white/20 mt-1 select-none w-6 flex-shrink-0">0{idx}</span>
+                        <span className="text-[11px] font-black text-[#1e3a5f]/20 mt-1 select-none w-6 flex-shrink-0">0{idx}</span>
                         <div>
-                          <p className="text-[10px] text-[#93c5fd] uppercase tracking-[0.2em] mb-1">{t(badgeKey as any)}</p>
-                          <h3 className="text-lg md:text-xl font-bold text-white leading-snug">{t(titleKey as any)}</h3>
-                          {!isOpen && <p className="text-white/40 text-[13px] mt-1 leading-relaxed max-w-lg">{t(subtitleKey as any)}</p>}
+                          <p className="text-[10px] text-[#1e3a5f]/40 uppercase tracking-[0.2em] mb-1">{t(badgeKey as any)}</p>
+                          <h3 className="text-lg md:text-xl font-bold text-[#1e3a5f] leading-snug">{t(titleKey as any)}</h3>
+                          {!isOpen && <p className="text-[#1e3a5f]/45 text-[13px] mt-1 leading-relaxed max-w-lg">{t(subtitleKey as any)}</p>}
                         </div>
                       </div>
                       <span className="flex-shrink-0">
                         {isOpen
-                          ? <Minus className="w-4 h-4 text-[#93c5fd]" />
-                          : <Plus className="w-4 h-4 text-white/30 group-hover:text-white/60 transition-colors" />
+                          ? <Minus className="w-4 h-4 text-[#1e3a5f]" />
+                          : <Plus className="w-4 h-4 text-[#1e3a5f]/30 group-hover:text-[#1e3a5f]/60 transition-colors" />
                         }
                       </span>
                     </button>
