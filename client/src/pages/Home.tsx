@@ -44,46 +44,44 @@ export default function Home() {
       <Navbar />
 
       {/* ─────────────────────────────────────────────────────────
-          1. HERO — full-bleed photo, heavy gradient hides baked-in text
+          1. HERO — full-width background, text bottom-left
       ───────────────────────────────────────────────────────── */}
       <section
-        className="relative min-h-screen flex items-center overflow-hidden"
+        className="relative min-h-screen flex flex-col justify-end overflow-hidden"
+        style={{
+          backgroundImage: `url(${audreyPhoto})`,
+          backgroundSize: "cover",
+          backgroundPosition: "right center",
+          backgroundRepeat: "no-repeat",
+        }}
         data-testid="section-hero"
       >
-        {/* Full-bleed background photo */}
-        <img
-          src={audreyPhoto}
-          alt="Audrey Mondesir CRIA"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-          data-testid="img-hero"
-        />
-
-        {/* Gradient: nearly opaque black on left (buries baked-in text), fades right so face shows */}
+        {/* Subtle dark overlay for contrast */}
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to right, rgba(6,6,6,0.97) 0%, rgba(6,6,6,0.93) 30%, rgba(6,6,6,0.72) 50%, rgba(6,6,6,0.28) 70%, rgba(6,6,6,0.08) 100%)",
+              "linear-gradient(to top, rgba(6,6,6,0.85) 0%, rgba(6,6,6,0.55) 40%, rgba(6,6,6,0.20) 100%)",
           }}
         />
 
-        {/* HTML text — the only visible text */}
-        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 lg:px-8 py-40">
-          <div className="max-w-[520px]">
+        {/* Text + buttons — bottom-left */}
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 lg:px-8 pb-20 md:pb-28">
+          <div className="max-w-[540px]">
             <p
-              className="text-[11px] text-white/55 uppercase tracking-[0.22em] mb-6"
+              className="text-[11px] text-white/60 uppercase tracking-[0.22em] mb-5"
               data-testid="text-hero-label"
             >
               {t("home.hero.label")}
             </p>
             <h1
-              className="text-5xl md:text-[3.6rem] font-bold leading-[1.08] tracking-tight text-white mb-6"
+              className="text-5xl md:text-[3.6rem] font-bold leading-[1.08] tracking-tight text-white mb-5"
               data-testid="text-hero-title"
             >
               {t("home.hero.title")}
             </h1>
             <p
-              className="text-[15px] text-white/65 leading-relaxed mb-10 max-w-[400px]"
+              className="text-[15px] text-white/70 leading-relaxed mb-9 max-w-[420px]"
               data-testid="text-hero-subtitle"
             >
               {t("home.hero.subtitle")}
@@ -101,7 +99,7 @@ export default function Home() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="rounded-none px-8 h-12 text-[13px] border-white/35 text-white hover:bg-white/10 hover:border-white/55 bg-transparent"
+                  className="rounded-none px-8 h-12 text-[13px] border-white/40 text-white hover:bg-white/10 hover:border-white/60 bg-transparent"
                 >
                   {t("home.hero.cta2")}
                 </Button>
