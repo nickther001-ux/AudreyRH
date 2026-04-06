@@ -335,7 +335,113 @@ export default function Individuals() {
           </div>
         </section>
 
-        {/* ── 3. PROCESS — dark, numbered steps ── */}
+        {/* ── 3. GUIDE — resume, dos/don'ts, interview ── */}
+        <section className="py-28 bg-white" data-testid="section-guide">
+          <div className="max-w-6xl mx-auto px-6 lg:px-8">
+
+            {/* Header */}
+            <FadeUp className="mb-20">
+              <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{t("individuals.guide.badge" as any)}</p>
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+                <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-sm">
+                  {t("individuals.guide.title" as any)}<span className="text-orange-400">.</span>
+                </h2>
+                <p className="text-muted-foreground text-[14px] leading-relaxed max-w-sm">{t("individuals.guide.subtitle" as any)}</p>
+              </div>
+            </FadeUp>
+
+            {/* ── RESUME ANATOMY ── */}
+            <FadeUp className="mb-16">
+              <div className="bg-foreground p-10 md:p-14">
+                <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{t("individuals.guide.resume.badge" as any)}</p>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">{t("individuals.guide.resume.title" as any)}</h3>
+                <p className="text-white/50 text-[14px] leading-relaxed mb-10 max-w-2xl">{t("individuals.guide.resume.subtitle" as any)}</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10">
+                  {([1,2,3,4,5,6,7] as const).map((n) => (
+                    <div key={n} className="bg-foreground p-7 hover:bg-white/5 transition-colors group">
+                      <p className="text-[2.5rem] font-black text-white/8 leading-none mb-3 select-none">0{n}</p>
+                      <h4 className="font-bold text-white text-[15px] mb-2">{t(`individuals.guide.resume.s${n}.title` as any)}</h4>
+                      <p className="text-white/50 text-[13px] leading-relaxed">{t(`individuals.guide.resume.s${n}.desc` as any)}</p>
+                    </div>
+                  ))}
+                  {/* 8th cell — tip */}
+                  <div className="bg-primary/90 p-7 flex flex-col justify-center">
+                    <p className="text-white/80 text-[12px] uppercase tracking-[0.15em] mb-3 font-semibold">Conseil AudreyRH</p>
+                    <p className="text-white text-[14px] leading-relaxed font-medium">"{t("individuals.guide.resume.tip" as any)}"</p>
+                  </div>
+                </div>
+              </div>
+            </FadeUp>
+
+            {/* ── DOS & DON'TS ── */}
+            <FadeUp className="mb-16">
+              <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{t("individuals.guide.dos.badge" as any)}</p>
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+                <h3 className="text-2xl md:text-3xl font-bold text-foreground leading-tight max-w-md">{t("individuals.guide.dos.title" as any)}</h3>
+                <p className="text-muted-foreground text-[14px] leading-relaxed max-w-sm">{t("individuals.guide.dos.subtitle" as any)}</p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border">
+                {/* DO column */}
+                <div className="bg-white p-8">
+                  <div className="flex items-center gap-3 mb-6 pb-5 border-b border-border">
+                    <span className="w-7 h-7 rounded-full bg-emerald-600 flex items-center justify-center flex-shrink-0">
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                    </span>
+                    <span className="font-bold text-foreground text-[15px] uppercase tracking-wider">{t("individuals.guide.dos.do.label" as any)}</span>
+                  </div>
+                  <ul className="space-y-3.5">
+                    {([1,2,3,4,5,6,7,8] as const).map((n) => (
+                      <li key={n} className="flex items-start gap-3 text-[13px] text-foreground/80 leading-relaxed" data-testid={`guide-do-${n}`}>
+                        <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5" />
+                        {t(`individuals.guide.dos.do.${n}` as any)}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                {/* DON'T column */}
+                <div className="bg-white p-8">
+                  <div className="flex items-center gap-3 mb-6 pb-5 border-b border-border">
+                    <span className="w-7 h-7 rounded-full bg-red-600 flex items-center justify-center flex-shrink-0">
+                      <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                    </span>
+                    <span className="font-bold text-foreground text-[15px] uppercase tracking-wider">{t("individuals.guide.dos.dont.label" as any)}</span>
+                  </div>
+                  <ul className="space-y-3.5">
+                    {([1,2,3,4,5,6,7,8] as const).map((n) => (
+                      <li key={n} className="flex items-start gap-3 text-[13px] text-foreground/80 leading-relaxed" data-testid={`guide-dont-${n}`}>
+                        <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5" />
+                        {t(`individuals.guide.dos.dont.${n}` as any)}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </FadeUp>
+
+            {/* ── INTERVIEW TIPS ── */}
+            <FadeUp>
+              <div className="bg-[#1e3a5f] p-10 md:p-14">
+                <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{t("individuals.guide.interview.badge" as any)}</p>
+                <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+                  <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight max-w-sm">{t("individuals.guide.interview.title" as any)}</h3>
+                  <p className="text-white/50 text-[14px] leading-relaxed max-w-sm">{t("individuals.guide.interview.subtitle" as any)}</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10">
+                  {([1,2,3,4,5,6] as const).map((n) => (
+                    <div key={n} className="bg-[#1e3a5f] p-7 hover:bg-white/5 transition-colors" data-testid={`guide-interview-${n}`}>
+                      <p className="text-[2.5rem] font-black text-white/8 leading-none mb-3 select-none">0{n}</p>
+                      <h4 className="font-bold text-white text-[15px] mb-2">{t(`individuals.guide.interview.s${n}.title` as any)}</h4>
+                      <p className="text-white/50 text-[13px] leading-relaxed">{t(`individuals.guide.interview.s${n}.desc` as any)}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FadeUp>
+
+          </div>
+        </section>
+
+        {/* ── 4. PROCESS — dark, numbered steps ── */}
         <section className="bg-foreground py-28" data-testid="section-process">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
             <FadeUp className="mb-16">
