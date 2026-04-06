@@ -294,7 +294,7 @@ export default function Grants() {
                 {rotatingWords[wordIndex]}
               </span>
               <br />
-              {isFr ? "votre projet." : "your project."}
+              {isFr ? "votre projet" : "your project"}<span className="text-orange-400">.</span>
             </motion.h1>
             <motion.p className="text-white/60 text-lg max-w-xl leading-relaxed mb-12" variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.65 } } }}>
               {isFr ? "AudreyRH identifie les subventions auxquelles vous êtes admissible et vous accompagne jusqu'à l'obtention du financement." : "AudreyRH identifies the grants you qualify for and guides you all the way to securing the funding."}
