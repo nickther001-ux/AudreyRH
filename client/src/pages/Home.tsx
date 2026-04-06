@@ -262,11 +262,11 @@ export default function Home() {
                 data-testid="img-approach"
               />
               {/* Stat card — top-left covers the baked-in text from the image */}
-              <div className="absolute top-0 left-0 bg-white shadow-2xl px-7 py-6 min-w-[260px]">
-                <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-1">
+              <div className="absolute top-0 left-0 bg-white shadow-2xl px-5 py-4 min-w-[200px]">
+                <p className="text-[9px] text-muted-foreground uppercase tracking-widest mb-1">
                   {t("home.approach.stat")}
                 </p>
-                <p className="text-[2.6rem] font-bold text-foreground leading-none">
+                <p className="text-[2.1rem] font-bold text-foreground leading-none">
                   {t("home.approach.statValue")}
                 </p>
               </div>
