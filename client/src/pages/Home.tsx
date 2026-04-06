@@ -18,8 +18,6 @@ const APPROACH_PHOTO = approachPhoto;
 const JOURNEY_PHOTO  = "https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=400&q=80";
 const STATS_PHOTO    = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80";
 
-// Quebec flag from Wikimedia Commons (blue cross + fleur-de-lis)
-const QC_FLAG = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Flag_of_Quebec.svg/80px-Flag_of_Quebec.svg.png";
 
 type Partner =
   | { kind: "logo";   name: string; logo: string }
@@ -48,13 +46,9 @@ function PartnerLogo({ p }: { p: Partner }) {
 
   if (p.kind === "flag-qc") {
     return (
-      <span className="flex items-center gap-2 select-none whitespace-nowrap opacity-35">
-        <img
-          src={QC_FLAG}
-          alt="Drapeau du Québec"
-          className="h-5 w-auto object-contain grayscale"
-        />
-        <span className="font-semibold text-[12px] text-foreground">{p.name}</span>
+      <span className="flex items-center gap-1.5 select-none whitespace-nowrap text-foreground/30">
+        <span className="text-[14px]">⚜</span>
+        <span className="font-semibold text-[12px]">{p.name}</span>
       </span>
     );
   }
