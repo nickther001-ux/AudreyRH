@@ -1,9 +1,11 @@
 import { Link } from "wouter";
-import { ArrowRight, Users, TrendingUp, Award, CheckCircle, Briefcase, Target, Building2, DollarSign, ShieldCheck, Rocket, Heart, Factory, X } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight, Users, TrendingUp, Award, CheckCircle, Briefcase, Target, Building2, DollarSign, ShieldCheck, Rocket, Heart, Factory } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
+import { FadeUp, FadeIn, Stagger, StaggerItem } from "@/lib/animations";
 
 const SERVICE_PHOTOS: Record<string, string> = {
   talent:     "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&q=80",
@@ -46,20 +48,36 @@ export default function Business() {
             className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
             style={{ backgroundImage: "url(https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1400&q=80)" }}
           />
-          <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full">
-            <p className="text-[11px] text-white/40 uppercase tracking-[0.22em] mb-8" data-testid="text-business-badge">
+          <motion.div
+            className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full"
+            initial="hidden"
+            animate="show"
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.13, delayChildren: 0.2 } } }}
+          >
+            <motion.p
+              className="text-[11px] text-white/40 uppercase tracking-[0.22em] mb-8"
+              data-testid="text-business-badge"
+              variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            >
               {t("business.badge")}
-            </p>
-            <h1
+            </motion.p>
+            <motion.h1
               className="text-[clamp(3.2rem,8vw,6.5rem)] font-bold leading-[0.95] tracking-tighter text-white mb-8 max-w-4xl"
               data-testid="text-business-title"
+              variants={{ hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.25,0.1,0.25,1] } } }}
             >
               {t("business.hero.title")}
-            </h1>
-            <p className="text-white/60 text-lg max-w-xl leading-relaxed mb-12">
+            </motion.h1>
+            <motion.p
+              className="text-white/60 text-lg max-w-xl leading-relaxed mb-12"
+              variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.65 } } }}
+            >
               {t("business.hero.description")}
-            </p>
-            <div className="flex flex-wrap gap-4">
+            </motion.p>
+            <motion.div
+              className="flex flex-wrap gap-4"
+              variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            >
               <Link href="/contact" data-testid="link-business-hero-contact">
                 <Button size="lg" className="bg-white text-foreground hover:bg-white/90 rounded-none px-8 h-12 text-[13px] font-semibold">
                   {t("business.hero.cta")} <ArrowRight className="ml-2 w-4 h-4" />
@@ -70,29 +88,29 @@ export default function Business() {
                   {t("business.hero.book")}
                 </Button>
               </Link>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Stat strip */}
-          <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full mt-20 pt-10 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-8">
+          <Stagger className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full mt-20 pt-10 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { value: "100+", label: t("home.stats.clients") },
               { value: "CRIA", label: t("home.stats.certified") },
               { value: "4",    label: t("business.stats.services") },
               { value: "MTL",  label: t("home.stats.location") },
             ].map((s) => (
-              <div key={s.label}>
+              <StaggerItem key={s.label} variant="fadeUp">
                 <p className="text-2xl font-bold text-white">{s.value}</p>
                 <p className="text-[11px] text-white/40 uppercase tracking-widest mt-1">{s.label}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </section>
 
         {/* ── 2. SERVICES — editorial photo-card grid ── */}
         <section className="py-28 bg-white" data-testid="section-business-services">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
-            <div className="mb-16">
+            <FadeUp className="mb-16">
               <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{t("business.services.badge")}</p>
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                 <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-sm">
@@ -100,13 +118,13 @@ export default function Business() {
                 </h2>
                 <p className="text-[14px] text-muted-foreground leading-relaxed max-w-sm">{t("business.services.subtitle")}</p>
               </div>
-            </div>
+            </FadeUp>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border">
+            <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border">
               {services.map((svc) => {
                 const Icon = svc.icon;
                 return (
-                  <div key={svc.key} className="bg-white group" data-testid={`card-business-service-${svc.key}`}>
+                  <StaggerItem key={svc.key} variant="fadeUp" className="bg-white group" data-testid={`card-business-service-${svc.key}`}>
                     <div className="overflow-hidden h-[240px]">
                       <img
                         src={SERVICE_PHOTOS[svc.key]}
@@ -129,17 +147,17 @@ export default function Business() {
                         ))}
                       </ul>
                     </div>
-                  </div>
+                  </StaggerItem>
                 );
               })}
-            </div>
+            </Stagger>
           </div>
         </section>
 
         {/* ── 3. WHO WE SERVE — dark ── */}
         <section className="bg-foreground py-28" data-testid="section-business-who">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
-            <div className="mb-16">
+            <FadeUp className="mb-16">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{t("business.who.badge")}</p>
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                 <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight max-w-sm">
@@ -147,75 +165,75 @@ export default function Business() {
                 </h2>
                 <p className="text-white/50 text-[14px] leading-relaxed max-w-sm">{t("business.who.subtitle")}</p>
               </div>
-            </div>
+            </FadeUp>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10">
+            <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10">
               {WHO_CARDS.map(({ type, Icon, num }) => (
-                <div key={type} className="bg-foreground p-10 group hover:bg-white/5 transition-colors relative" data-testid={`card-business-who-${type}`}>
+                <StaggerItem key={type} variant="fadeUp" className="bg-foreground p-10 group hover:bg-white/5 transition-colors relative" data-testid={`card-business-who-${type}`}>
                   <span className="absolute top-6 right-8 text-6xl font-black text-white/5 leading-none select-none">{num}</span>
                   <div className="w-12 h-12 bg-white/8 flex items-center justify-center mb-6">
                     <Icon className="w-6 h-6 text-white/60" />
                   </div>
                   <h3 className="font-bold text-white text-xl mb-3">{t(`business.who.${type}.title` as any)}</h3>
                   <p className="text-white/50 text-[14px] leading-relaxed">{t(`business.who.${type}.desc` as any)}</p>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
           </div>
         </section>
 
         {/* ── 4. WHY CHOOSE — white, 3-column ── */}
         <section className="py-28 bg-white" data-testid="section-business-why">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
-            <div className="mb-16 text-center">
+            <FadeUp className="mb-16 text-center">
               <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{t("business.why.badge")}</p>
               <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">{t("business.why.title")}</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border border border-border">
+            </FadeUp>
+            <Stagger className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border border border-border">
               {reasons.map((r) => {
                 const Icon = r.icon;
                 return (
-                  <div key={r.key} className="bg-white p-10" data-testid={`card-business-why-${r.key}`}>
+                  <StaggerItem key={r.key} variant="fadeUp" className="bg-white p-10" data-testid={`card-business-why-${r.key}`}>
                     <div className="w-12 h-12 bg-foreground flex items-center justify-center mb-6">
                       <Icon className="w-6 h-6 text-white" />
                     </div>
                     <h3 className="font-bold text-foreground text-xl mb-3">{t(`business.why.${r.key}.title` as any)}</h3>
                     <p className="text-muted-foreground text-[14px] leading-relaxed">{t(`business.why.${r.key}.text` as any)}</p>
-                  </div>
+                  </StaggerItem>
                 );
               })}
-            </div>
+            </Stagger>
           </div>
         </section>
 
         {/* ── 5. PROCESS — light gray, numbered ── */}
         <section className="py-28 bg-muted/30" data-testid="section-business-process">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
-            <div className="mb-16">
+            <FadeUp className="mb-16">
               <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{t("home.process.label")}</p>
               <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-xl">
                 {t("home.process.title")}
               </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            </FadeUp>
+            <Stagger className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 { num: "01", titleKey: "home.process.1.title", textKey: "home.process.1.text" },
                 { num: "02", titleKey: "home.process.2.title", textKey: "home.process.2.text" },
                 { num: "03", titleKey: "home.process.3.title", textKey: "home.process.3.text" },
               ].map((step) => (
-                <div key={step.num}>
+                <StaggerItem key={step.num} variant="fadeUp">
                   <p className="text-[4rem] font-black text-foreground/8 leading-none mb-4">{step.num}</p>
                   <h3 className="font-bold text-foreground text-xl mb-3">{t(step.titleKey as any)}</h3>
                   <p className="text-muted-foreground text-[14px] leading-relaxed">{t(step.textKey as any)}</p>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
           </div>
         </section>
 
         {/* ── 6. GRANTS CTA — white, highlighted ── */}
         <section className="py-20 bg-white border-y border-border" data-testid="section-business-grants">
-          <div className="max-w-6xl mx-auto px-6 lg:px-8">
+          <FadeUp className="max-w-6xl mx-auto px-6 lg:px-8">
             <div className="flex flex-col md:flex-row items-center justify-between gap-10">
               <div className="max-w-lg">
                 <div className="w-10 h-10 bg-accent/10 flex items-center justify-center mb-5">
@@ -230,12 +248,12 @@ export default function Business() {
                 </Button>
               </Link>
             </div>
-          </div>
+          </FadeUp>
         </section>
 
         {/* ── 7. FINAL CTA — dark ── */}
         <section className="bg-foreground py-28" data-testid="section-business-cta">
-          <div className="max-w-6xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-12">
+          <FadeUp className="max-w-6xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-12">
             <div className="max-w-xl">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-5">{t("business.cta.badge")}</p>
               <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">{t("business.cta.title")}</h2>
@@ -253,7 +271,7 @@ export default function Business() {
                 </Button>
               </Link>
             </div>
-          </div>
+          </FadeUp>
         </section>
 
       </main>

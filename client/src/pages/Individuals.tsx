@@ -6,6 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
+import { FadeUp, Stagger, StaggerItem } from "@/lib/animations";
 
 type ServiceKey = "strategy" | "credentials" | "employability" | "integration" | null;
 
@@ -216,64 +217,73 @@ export default function Individuals() {
             className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
             style={{ backgroundImage: "url(https://images.unsplash.com/photo-1529390079861-591de354faf5?w=1400&q=80)" }}
           />
-          <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full">
-            <p className="text-[11px] text-white/40 uppercase tracking-[0.22em] mb-8" data-testid="text-hero-badge">
+          <motion.div
+            className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full"
+            initial="hidden"
+            animate="show"
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.13, delayChildren: 0.2 } } }}
+          >
+            <motion.p
+              className="text-[11px] text-white/40 uppercase tracking-[0.22em] mb-8"
+              data-testid="text-hero-badge"
+              variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            >
               {t("hero.badge")}
-            </p>
-            <h1
+            </motion.p>
+            <motion.h1
               className="text-[clamp(3.2rem,8vw,6.5rem)] font-bold leading-[0.95] tracking-tighter text-white mb-8 max-w-4xl"
               data-testid="text-hero-title"
+              variants={{ hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.25,0.1,0.25,1] } } }}
             >
               {t("hero.title1")}<br />
               <span key={wordIndex} className="inline-block text-[#93c5fd] animate-in fade-in slide-in-from-bottom-2 duration-300">
                 {rotatingWords[wordIndex]}
               </span>
-            </h1>
-            <p className="text-white/60 text-lg max-w-xl leading-relaxed mb-12" data-testid="text-hero-description">
+            </motion.h1>
+            <motion.p
+              className="text-white/60 text-lg max-w-xl leading-relaxed mb-12"
+              data-testid="text-hero-description"
+              variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.65 } } }}
+            >
               {t("hero.description")}
-            </p>
-            <div className="flex flex-wrap gap-4">
+            </motion.p>
+            <motion.div
+              className="flex flex-wrap gap-4"
+              variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            >
               <Link href="/book" data-testid="button-hero-book">
-                <Button
-                  size="lg"
-                  className="bg-white text-foreground hover:bg-white/90 rounded-none px-8 h-13 text-[13px] font-semibold tracking-wide h-12"
-                >
-                  {t("hero.cta")}
-                  <ArrowRight className="ml-2 w-4 h-4" />
+                <Button size="lg" className="bg-white text-foreground hover:bg-white/90 rounded-none px-8 h-13 text-[13px] font-semibold tracking-wide h-12">
+                  {t("hero.cta")} <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
               <a href="#services" data-testid="button-hero-services">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="rounded-none px-8 h-12 text-[13px] border-white/25 text-white hover:bg-white/10 bg-transparent"
-                >
+                <Button size="lg" variant="outline" className="rounded-none px-8 h-12 text-[13px] border-white/25 text-white hover:bg-white/10 bg-transparent">
                   {t("hero.services")}
                 </Button>
               </a>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Stat strip */}
-          <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full mt-20 pt-10 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-8">
+          <Stagger className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full mt-20 pt-10 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { value: "100+", label: t("home.stats.clients") },
               { value: "+95%", label: t("home.stats.satisfaction") },
               { value: "CRIA", label: t("home.stats.certified") },
               { value: "MTL", label: t("home.stats.location") },
             ].map((s) => (
-              <div key={s.label}>
+              <StaggerItem key={s.label} variant="fadeUp">
                 <p className="text-2xl font-bold text-white">{s.value}</p>
                 <p className="text-[11px] text-white/40 uppercase tracking-widest mt-1">{s.label}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </section>
 
         {/* ── 2. SERVICES — editorial photo-card grid ── */}
         <section id="services" className="py-28 bg-white" data-testid="section-services">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
-            <div className="mb-16">
+            <FadeUp className="mb-16">
               <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{t("services.badge")}</p>
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                 <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-sm" data-testid="text-services-title">
@@ -281,13 +291,13 @@ export default function Individuals() {
                 </h2>
                 <p className="text-[14px] text-muted-foreground leading-relaxed max-w-sm">{t("services.description")}</p>
               </div>
-            </div>
+            </FadeUp>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border">
+            <Stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border">
               {SERVICE_CARDS.map((svc) => {
                 const Icon = svc.icon;
                 return (
-                  <div key={svc.key} className="bg-white group" data-testid={`card-service-${svc.key}`}>
+                  <StaggerItem key={svc.key} variant="fadeUp" className="bg-white group" data-testid={`card-service-${svc.key}`}>
                     <div className="overflow-hidden h-[220px]">
                       <img
                         src={svc.photo}
@@ -318,42 +328,42 @@ export default function Individuals() {
                         </Link>
                       )}
                     </div>
-                  </div>
+                  </StaggerItem>
                 );
               })}
-            </div>
+            </Stagger>
           </div>
         </section>
 
         {/* ── 3. PROCESS — dark, numbered steps ── */}
         <section className="bg-foreground py-28" data-testid="section-process">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
-            <div className="mb-16">
+            <FadeUp className="mb-16">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{t("home.process.label")}</p>
               <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight max-w-xl">
                 {t("home.process.title")}
               </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10">
+            </FadeUp>
+            <Stagger className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10">
               {[
                 { num: "01", titleKey: "home.process.1.title", textKey: "home.process.1.text" },
                 { num: "02", titleKey: "home.process.2.title", textKey: "home.process.2.text" },
                 { num: "03", titleKey: "home.process.3.title", textKey: "home.process.3.text" },
               ].map((step) => (
-                <div key={step.num} className="bg-foreground p-10">
+                <StaggerItem key={step.num} variant="fadeUp" className="bg-foreground p-10">
                   <p className="text-[4rem] font-black text-white/10 leading-none mb-6">{step.num}</p>
                   <h3 className="font-bold text-white text-xl mb-3">{t(step.titleKey as any)}</h3>
                   <p className="text-white/50 text-[14px] leading-relaxed">{t(step.textKey as any)}</p>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
           </div>
         </section>
 
         {/* ── 4. PACKAGES — white ── */}
         <section id="packages" className="py-28 bg-white" data-testid="section-packages">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
-            <div className="mb-16">
+            <FadeUp className="mb-16">
               <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{t("packages.badge")}</p>
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                 <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-sm">
@@ -361,11 +371,11 @@ export default function Individuals() {
                 </h2>
                 <p className="text-[14px] text-muted-foreground leading-relaxed max-w-sm">{t("packages.subtitle")}</p>
               </div>
-            </div>
+            </FadeUp>
 
-            <div className="grid md:grid-cols-3 gap-px bg-border border border-border">
+            <Stagger className="grid md:grid-cols-3 gap-px bg-border border border-border">
               {/* Discovery */}
-              <div className="bg-white p-8 relative" data-testid="card-package-discovery">
+              <StaggerItem variant="fadeUp" className="bg-white p-8 relative" data-testid="card-package-discovery">
                 <div className="mb-8">
                   <h3 className="text-xl font-bold text-foreground mb-1">{t("packages.discovery.name")}</h3>
                   <p className="text-[12px] text-muted-foreground uppercase tracking-wider">{t("packages.discovery.subtitle")}</p>
@@ -389,10 +399,10 @@ export default function Individuals() {
                     {t("nav.book")} <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </Link>
-              </div>
+              </StaggerItem>
 
               {/* Essential – Popular */}
-              <div className="bg-foreground p-8 relative" data-testid="card-package-essential">
+              <StaggerItem variant="fadeUp" className="bg-foreground p-8 relative" data-testid="card-package-essential">
                 <div className="absolute top-4 right-4">
                   <span className="bg-[#1e3a5f] text-white text-[10px] font-bold px-3 py-1 uppercase tracking-wider">Populaire</span>
                 </div>
@@ -417,10 +427,10 @@ export default function Individuals() {
                     {t("nav.book")} <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </Link>
-              </div>
+              </StaggerItem>
 
               {/* Plan */}
-              <div className="bg-white p-8 relative" data-testid="card-package-plan">
+              <StaggerItem variant="fadeUp" className="bg-white p-8 relative" data-testid="card-package-plan">
                 <div className="mb-8">
                   <h3 className="text-xl font-bold text-foreground mb-1">{t("packages.plan.name")}</h3>
                   <p className="text-[12px] text-muted-foreground uppercase tracking-wider">{t("packages.plan.subtitle")}</p>
@@ -442,22 +452,22 @@ export default function Individuals() {
                     {t("nav.book")} <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </Link>
-              </div>
-            </div>
+              </StaggerItem>
+            </Stagger>
           </div>
         </section>
 
         {/* ── 5. COMPARISON — light gray ── */}
         <section className="py-28 bg-muted/30" data-testid="section-comparison">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
-            <div className="mb-16 text-center">
+            <FadeUp className="mb-16 text-center">
               <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{t("comparison.label")}</p>
               <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">{t("comparison.title")}</h2>
-            </div>
+            </FadeUp>
 
-            <div className="grid md:grid-cols-2 gap-px bg-border border border-border">
+            <Stagger className="grid md:grid-cols-2 gap-px bg-border border border-border">
               {/* Without */}
-              <div className="bg-white p-10">
+              <StaggerItem variant="fadeLeft" className="bg-white p-10">
                 <h3 className="text-[13px] font-semibold uppercase tracking-widest text-muted-foreground mb-8">{t("comparison.without.title")}</h3>
                 <ul className="space-y-5">
                   {[1, 2, 3, 4, 5].map((i) => (
@@ -469,9 +479,9 @@ export default function Individuals() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </StaggerItem>
               {/* With AudreyRH */}
-              <div className="bg-foreground p-10">
+              <StaggerItem variant="fadeRight" className="bg-foreground p-10">
                 <h3 className="text-[13px] font-semibold uppercase tracking-widest text-white/40 mb-8">{t("comparison.with.title")}</h3>
                 <ul className="space-y-5">
                   {[1, 2, 3, 4, 5].map((i) => (
@@ -481,23 +491,23 @@ export default function Individuals() {
                     </li>
                   ))}
                 </ul>
-              </div>
-            </div>
+              </StaggerItem>
+            </Stagger>
           </div>
         </section>
 
         {/* ── 6. TESTIMONIALS — white ── */}
         <section className="py-28 bg-white" data-testid="section-testimonials">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
-            <div className="mb-16">
+            <FadeUp className="mb-16">
               <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{t("home.testimonials.label")}</p>
               <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-lg">
                 {t("home.testimonials.title")}
               </h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border">
+            </FadeUp>
+            <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border">
               {TESTIMONIALS.map((t2, i) => (
-                <div key={i} className="bg-white p-8 group hover:bg-muted/20 transition-colors" data-testid={`card-testimonial-${i}`}>
+                <StaggerItem key={i} variant="fadeUp" className="bg-white p-8 group hover:bg-muted/20 transition-colors" data-testid={`card-testimonial-${i}`}>
                   <div className="flex items-center gap-4 mb-6">
                     <div className="w-12 h-12 bg-foreground text-white flex items-center justify-center font-bold text-sm flex-shrink-0">
                       {t2.initials}
@@ -510,15 +520,15 @@ export default function Individuals() {
                   <p className="text-foreground/70 text-[14px] leading-relaxed italic">
                     "{t(t2.quote as any)}"
                   </p>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
           </div>
         </section>
 
         {/* ── 7. FINAL CTA — dark ── */}
         <section className="bg-foreground py-28" data-testid="section-cta">
-          <div className="max-w-6xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-12">
+          <FadeUp className="max-w-6xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-12">
             <div className="max-w-xl">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-5">{t("cta.label")}</p>
               <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">{t("cta.title")}</h2>
@@ -535,7 +545,7 @@ export default function Individuals() {
                 </Button>
               </Link>
             </div>
-          </div>
+          </FadeUp>
         </section>
 
       </main>
