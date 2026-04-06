@@ -1,260 +1,262 @@
 import { Link } from "wouter";
-import { ArrowRight, Users, TrendingUp, Award, CheckCircle, Briefcase, Target, Building2, DollarSign, ShieldCheck, Rocket, Heart, Factory } from "lucide-react";
+import { ArrowRight, Users, TrendingUp, Award, CheckCircle, Briefcase, Target, Building2, DollarSign, ShieldCheck, Rocket, Heart, Factory, X } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { useLanguage } from "@/lib/i18n";
-import ShinyText from "@/components/ShinyText";
-import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
+
+const SERVICE_PHOTOS: Record<string, string> = {
+  talent:     "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
+  strategy:   "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
+  grants:     "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&q=80",
+  compliance: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80",
+};
 
 const services = [
-  { icon: Users, key: "talent", color: "text-primary", bg: "bg-primary/10" },
-  { icon: TrendingUp, key: "strategy", color: "text-accent", bg: "bg-accent/10" },
-  { icon: DollarSign, key: "grants", color: "text-emerald-600", bg: "bg-emerald-50" },
-  { icon: ShieldCheck, key: "compliance", color: "text-slate-600", bg: "bg-slate-100" },
+  { icon: Users,       key: "talent",     color: "text-primary" },
+  { icon: TrendingUp,  key: "strategy",   color: "text-accent" },
+  { icon: DollarSign,  key: "grants",     color: "text-emerald-600" },
+  { icon: ShieldCheck, key: "compliance", color: "text-slate-600" },
+];
+
+const WHO_CARDS = [
+  { type: "sme",       Icon: Factory,   num: "01" },
+  { type: "startup",   Icon: Rocket,    num: "02" },
+  { type: "corporate", Icon: Building2, num: "03" },
+  { type: "nonprofit", Icon: Heart,     num: "04" },
 ];
 
 const reasons = [
-  { icon: Award, key: "cria" },
-  { icon: Briefcase, key: "experience" },
-  { icon: Target, key: "results" },
+  { icon: Award,    key: "cria" },
+  { icon: Briefcase,key: "experience" },
+  { icon: Target,   key: "results" },
 ];
 
 export default function Business() {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-white text-foreground flex flex-col">
       <Navbar />
+      <main className="flex-grow">
 
-      {/* ── Section 1: Hero (Dark/Skyline) ── keep as-is */}
-      <section className="relative min-h-[65vh] flex items-center justify-center pt-20 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${montrealSkyline})` }}
-        />
-        <div className="absolute inset-0 bg-black/60" />
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/70 via-transparent to-accent/20" />
-
-        <div className="relative z-10 container mx-auto px-4 md:px-6 text-center py-24">
-          <div className="inline-flex items-center gap-2 bg-black/50 border border-accent/60 text-accent px-4 py-2 rounded-full text-sm font-medium mb-6 backdrop-blur-sm">
-            <Building2 className="w-4 h-4" />
-            {t("business.badge")}
-          </div>
-          <h1
-            className="text-4xl md:text-6xl font-bold mb-6 leading-tight"
-            data-testid="text-business-title"
-          >
-            <ShinyText
-              text={t("business.hero.title")}
-              speed={3}
-              className="text-4xl md:text-6xl font-bold leading-tight"
-              color="white"
-              shineColor="#f97316"
-              spread={200}
-            />
-          </h1>
-          <p className="text-white/80 text-lg md:text-xl max-w-3xl mx-auto mb-10 leading-relaxed">
-            {t("business.hero.description")}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact" data-testid="link-business-hero-contact">
-              <Button
-                size="lg"
-                className="border border-accent/40 text-white px-8 py-6 text-base font-semibold backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5"
-                style={{ background: "rgba(249,115,22,0.18)" }}
-                onMouseEnter={e => (e.currentTarget.style.background = "rgba(249,115,22,0.28)")}
-                onMouseLeave={e => (e.currentTarget.style.background = "rgba(249,115,22,0.18)")}
-              >
-                {t("business.hero.cta")}
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-            <Link href="/book" data-testid="link-business-hero-book">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white/40 text-white hover:bg-white/10 px-8 py-6 text-base"
-              >
-                {t("business.hero.book")}
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Section 2: Business Services (White) ── */}
-      <section className="py-24 bg-white" data-testid="section-business-services">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
-              <Target className="w-4 h-4" />
-              {t("business.services.badge")}
-            </div>
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">
-              <ShinyText
-                text={t("business.services.title")}
-                speed={3}
-                className="text-3xl md:text-5xl font-bold tracking-tight"
-                color="#111111"
-                shineColor="#f97316"
-                spread={180}
-              />
-            </h2>
-            <p className="text-slate-500 text-lg max-w-2xl mx-auto">
-              {t("business.services.subtitle")}
+        {/* ── 1. HERO — dark full-height editorial ── */}
+        <section className="bg-foreground min-h-screen flex flex-col justify-end pb-24 pt-40 overflow-hidden relative" data-testid="section-hero">
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
+            style={{ backgroundImage: "url(https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1400&q=80)" }}
+          />
+          <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full">
+            <p className="text-[11px] text-white/40 uppercase tracking-[0.22em] mb-8" data-testid="text-business-badge">
+              {t("business.badge")}
             </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-            {services.map((svc) => {
-              const Icon = svc.icon;
-              return (
-                <Card
-                  key={svc.key}
-                  className="p-8 card-hover-lift border-slate-200 bg-white shadow-sm"
-                  data-testid={`card-business-service-${svc.key}`}
-                >
-                  <div className={`w-14 h-14 ${svc.bg} rounded-2xl flex items-center justify-center mb-6`}>
-                    <Icon className={`w-7 h-7 ${svc.color}`} />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 text-slate-900">
-                    {t(`business.service.${svc.key}.title`)}
-                  </h3>
-                  <p className="text-slate-500 leading-relaxed mb-5">
-                    {t(`business.service.${svc.key}.desc`)}
-                  </p>
-                  <ul className="space-y-2">
-                    {[1, 2, 3].map((i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-slate-600">
-                        <CheckCircle className={`w-4 h-4 ${svc.color} flex-shrink-0 mt-0.5`} />
-                        {t(`business.service.${svc.key}.point${i}`)}
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Section 3: Who We Serve (Light/Muted) ── */}
-      <section className="py-24 bg-muted/40">
-        <div className="container mx-auto px-4 md:px-6 max-w-5xl">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium mb-5">
-              <Users className="w-4 h-4" />
-              {t("business.who.title")}
+            <h1
+              className="text-[clamp(3.2rem,8vw,6.5rem)] font-bold leading-[0.95] tracking-tighter text-white mb-8 max-w-4xl"
+              data-testid="text-business-title"
+            >
+              {t("business.hero.title")}
+            </h1>
+            <p className="text-white/60 text-lg max-w-xl leading-relaxed mb-12">
+              {t("business.hero.description")}
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/contact" data-testid="link-business-hero-contact">
+                <Button size="lg" className="bg-white text-foreground hover:bg-white/90 rounded-none px-8 h-12 text-[13px] font-semibold">
+                  {t("business.hero.cta")} <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
+              <Link href="/book" data-testid="link-business-hero-book">
+                <Button size="lg" variant="outline" className="rounded-none px-8 h-12 text-[13px] border-white/25 text-white hover:bg-white/10 bg-transparent">
+                  {t("business.hero.book")}
+                </Button>
+              </Link>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">{t("business.who.title")}</h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto leading-relaxed">{t("business.who.subtitle")}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Stat strip */}
+          <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full mt-20 pt-10 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { type: "sme",       Icon: Factory,   color: "text-accent",   bg: "bg-accent/15",    border: "border-accent/25",   num: "01" },
-              { type: "startup",   Icon: Rocket,    color: "text-primary",  bg: "bg-primary/10",   border: "border-primary/20",  num: "02" },
-              { type: "corporate", Icon: Building2, color: "text-foreground", bg: "bg-muted",      border: "border-border",      num: "03" },
-              { type: "nonprofit", Icon: Heart,     color: "text-accent",   bg: "bg-accent/15",    border: "border-accent/25",   num: "04" },
-            ].map(({ type, Icon, color, bg, border, num }) => (
-              <div
-                key={type}
-                className={`group relative bg-white hover:bg-muted/20 border ${border} rounded-2xl p-7 flex items-start gap-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-lg`}
-                data-testid={`card-business-who-${type}`}
-              >
-                <span className="absolute top-4 right-5 text-5xl font-black text-foreground/[0.05] select-none leading-none">
-                  {num}
-                </span>
-                <div className={`w-12 h-12 ${bg} rounded-xl flex items-center justify-center flex-shrink-0 mt-0.5`}>
-                  <Icon className={`w-6 h-6 ${color}`} />
-                </div>
-                <div>
-                  <h3 className="font-bold text-foreground text-base mb-2">{t(`business.who.${type}.title`)}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{t(`business.who.${type}.desc`)}</p>
-                </div>
+              { value: "100+", label: t("home.stats.clients") },
+              { value: "CRIA", label: t("home.stats.certified") },
+              { value: "4",    label: t("business.stats.services") },
+              { value: "MTL",  label: t("home.stats.location") },
+            ].map((s) => (
+              <div key={s.label}>
+                <p className="text-2xl font-bold text-white">{s.value}</p>
+                <p className="text-[11px] text-white/40 uppercase tracking-widest mt-1">{s.label}</p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── Section 4: Why Choose AudreyRH (Light/White) ── */}
-      <section className="py-24 bg-slate-50">
-        <div className="container mx-auto px-4 md:px-6 max-w-5xl">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">{t("business.why.title")}</h2>
-            <p className="text-slate-500 text-lg">{t("business.why.subtitle")}</p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {reasons.map((r) => {
-              const Icon = r.icon;
-              return (
-                <div key={r.key} className="text-center" data-testid={`card-business-why-${r.key}`}>
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
-                    <Icon className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="font-bold text-slate-900 mb-2">{t(`business.why.${r.key}.title`)}</h3>
-                  <p className="text-slate-500 text-sm leading-relaxed">{t(`business.why.${r.key}.text`)}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ── Section 5: Grants CTA (Light with accent border) ── */}
-      <section className="py-16 bg-white border-y border-border">
-        <div className="container mx-auto px-4 md:px-6 max-w-4xl">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="flex items-start gap-5">
-              <div className="w-14 h-14 bg-accent/15 rounded-2xl flex items-center justify-center flex-shrink-0">
-                <DollarSign className="w-7 h-7 text-accent" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground mb-2">{t("business.grants.title")}</h3>
-                <p className="text-muted-foreground leading-relaxed">{t("business.grants.text")}</p>
+        {/* ── 2. SERVICES — editorial photo-card grid ── */}
+        <section className="py-28 bg-white" data-testid="section-business-services">
+          <div className="max-w-6xl mx-auto px-6 lg:px-8">
+            <div className="mb-16">
+              <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{t("business.services.badge")}</p>
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+                <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-sm">
+                  {t("business.services.title")}
+                </h2>
+                <p className="text-[14px] text-muted-foreground leading-relaxed max-w-sm">{t("business.services.subtitle")}</p>
               </div>
             </div>
-            <Link href="/grants" data-testid="link-business-grants">
-              <Button className="whitespace-nowrap px-6 bg-accent text-white hover:bg-accent/90 shadow-lg shadow-accent/20">
-                {t("business.grants.cta")}
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
 
-      {/* ── Section 6: Final CTA (Solid Primary Green) ── */}
-      <section className="py-24 bg-primary">
-        <div className="container mx-auto px-4 md:px-6 text-center max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">{t("business.cta.title")}</h2>
-          <p className="text-white/80 text-lg mb-10 leading-relaxed">{t("business.cta.text")}</p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact" data-testid="link-business-cta-contact">
-              <Button
-                size="lg"
-                className="bg-white text-primary hover:bg-white/90 px-8 py-6 text-base font-semibold transition-all duration-300 hover:-translate-y-0.5 shadow-xl"
-              >
-                {t("business.cta.contact")}
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </Link>
-            <Link href="/book" data-testid="link-business-cta-book">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-white/50 text-white hover:bg-white/10 px-8 py-6 text-base"
-              >
-                {t("business.cta.book")}
-              </Button>
-            </Link>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border">
+              {services.map((svc) => {
+                const Icon = svc.icon;
+                return (
+                  <div key={svc.key} className="bg-white group" data-testid={`card-business-service-${svc.key}`}>
+                    <div className="overflow-hidden h-[240px]">
+                      <img
+                        src={SERVICE_PHOTOS[svc.key]}
+                        alt={t(`business.service.${svc.key}.title` as any)}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                      />
+                    </div>
+                    <div className="p-8">
+                      <div className="w-10 h-10 bg-foreground/5 flex items-center justify-center mb-4">
+                        <Icon className={`w-5 h-5 ${svc.color}`} />
+                      </div>
+                      <h3 className="font-bold text-foreground text-xl mb-3">{t(`business.service.${svc.key}.title` as any)}</h3>
+                      <p className="text-muted-foreground text-[14px] leading-relaxed mb-5">{t(`business.service.${svc.key}.desc` as any)}</p>
+                      <ul className="space-y-2">
+                        {[1, 2, 3].map((i) => (
+                          <li key={i} className="flex items-start gap-2 text-[13px] text-foreground/70">
+                            <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                            {t(`business.service.${svc.key}.point${i}` as any)}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
+        {/* ── 3. WHO WE SERVE — dark ── */}
+        <section className="bg-foreground py-28" data-testid="section-business-who">
+          <div className="max-w-6xl mx-auto px-6 lg:px-8">
+            <div className="mb-16">
+              <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{t("business.who.badge")}</p>
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+                <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight max-w-sm">
+                  {t("business.who.title")}
+                </h2>
+                <p className="text-white/50 text-[14px] leading-relaxed max-w-sm">{t("business.who.subtitle")}</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10">
+              {WHO_CARDS.map(({ type, Icon, num }) => (
+                <div key={type} className="bg-foreground p-10 group hover:bg-white/5 transition-colors relative" data-testid={`card-business-who-${type}`}>
+                  <span className="absolute top-6 right-8 text-6xl font-black text-white/5 leading-none select-none">{num}</span>
+                  <div className="w-12 h-12 bg-white/8 flex items-center justify-center mb-6">
+                    <Icon className="w-6 h-6 text-white/60" />
+                  </div>
+                  <h3 className="font-bold text-white text-xl mb-3">{t(`business.who.${type}.title` as any)}</h3>
+                  <p className="text-white/50 text-[14px] leading-relaxed">{t(`business.who.${type}.desc` as any)}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 4. WHY CHOOSE — white, 3-column ── */}
+        <section className="py-28 bg-white" data-testid="section-business-why">
+          <div className="max-w-6xl mx-auto px-6 lg:px-8">
+            <div className="mb-16 text-center">
+              <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{t("business.why.badge")}</p>
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight">{t("business.why.title")}</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border border border-border">
+              {reasons.map((r) => {
+                const Icon = r.icon;
+                return (
+                  <div key={r.key} className="bg-white p-10" data-testid={`card-business-why-${r.key}`}>
+                    <div className="w-12 h-12 bg-foreground flex items-center justify-center mb-6">
+                      <Icon className="w-6 h-6 text-white" />
+                    </div>
+                    <h3 className="font-bold text-foreground text-xl mb-3">{t(`business.why.${r.key}.title` as any)}</h3>
+                    <p className="text-muted-foreground text-[14px] leading-relaxed">{t(`business.why.${r.key}.text` as any)}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 5. PROCESS — light gray, numbered ── */}
+        <section className="py-28 bg-muted/30" data-testid="section-business-process">
+          <div className="max-w-6xl mx-auto px-6 lg:px-8">
+            <div className="mb-16">
+              <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{t("home.process.label")}</p>
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-xl">
+                {t("home.process.title")}
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                { num: "01", titleKey: "home.process.1.title", textKey: "home.process.1.text" },
+                { num: "02", titleKey: "home.process.2.title", textKey: "home.process.2.text" },
+                { num: "03", titleKey: "home.process.3.title", textKey: "home.process.3.text" },
+              ].map((step) => (
+                <div key={step.num}>
+                  <p className="text-[4rem] font-black text-foreground/8 leading-none mb-4">{step.num}</p>
+                  <h3 className="font-bold text-foreground text-xl mb-3">{t(step.titleKey as any)}</h3>
+                  <p className="text-muted-foreground text-[14px] leading-relaxed">{t(step.textKey as any)}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── 6. GRANTS CTA — white, highlighted ── */}
+        <section className="py-20 bg-white border-y border-border" data-testid="section-business-grants">
+          <div className="max-w-6xl mx-auto px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-10">
+              <div className="max-w-lg">
+                <div className="w-10 h-10 bg-accent/10 flex items-center justify-center mb-5">
+                  <DollarSign className="w-5 h-5 text-accent" />
+                </div>
+                <h3 className="text-2xl font-bold text-foreground mb-3">{t("business.grants.title")}</h3>
+                <p className="text-muted-foreground text-[14px] leading-relaxed">{t("business.grants.text")}</p>
+              </div>
+              <Link href="/grants" data-testid="link-business-grants">
+                <Button className="whitespace-nowrap px-8 h-12 bg-foreground text-white hover:bg-foreground/90 rounded-none text-[13px] font-semibold">
+                  {t("business.grants.cta")} <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ── 7. FINAL CTA — dark ── */}
+        <section className="bg-foreground py-28" data-testid="section-business-cta">
+          <div className="max-w-6xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-12">
+            <div className="max-w-xl">
+              <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-5">{t("business.cta.badge")}</p>
+              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">{t("business.cta.title")}</h2>
+              <p className="text-white/50 text-[14px] leading-relaxed mt-5 max-w-md">{t("business.cta.text")}</p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 flex-shrink-0">
+              <Link href="/contact" data-testid="link-business-cta-contact">
+                <Button size="lg" className="bg-white text-foreground hover:bg-white/90 rounded-none px-8 h-12 text-[13px] font-semibold">
+                  {t("business.cta.contact")} <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+              </Link>
+              <Link href="/book" data-testid="link-business-cta-book">
+                <Button size="lg" variant="outline" className="rounded-none px-8 h-12 text-[13px] border-white/25 text-white hover:bg-white/10 bg-transparent">
+                  {t("business.cta.book")}
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+      </main>
       <Footer />
     </div>
   );
