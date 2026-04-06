@@ -235,10 +235,10 @@ export default function Individuals() {
               data-testid="text-hero-title"
               variants={{ hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.25,0.1,0.25,1] } } }}
             >
-              {t("hero.title1")}<span className="text-orange-400">.</span><br />
+              {t("hero.title1")}<br />
               <span key={wordIndex} className="inline-block text-[#93c5fd] animate-in fade-in slide-in-from-bottom-2 duration-300">
                 {rotatingWords[wordIndex]}
-              </span>
+              </span><span className="text-orange-400">.</span>
             </motion.h1>
             <motion.p
               className="text-white/60 text-lg max-w-xl leading-relaxed mb-12"
