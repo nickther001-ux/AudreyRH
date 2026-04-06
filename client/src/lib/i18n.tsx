@@ -618,6 +618,16 @@ const translations = {
     "business.why.badge": "Notre expertise",
     "business.stats.services": "Services spécialisés",
     "business.cta.badge": "Passez à l'action",
+
+    "portal.individuals.label": "Pour les particuliers",
+    "portal.individuals.title": "Vous êtes un nouvel arrivant ?",
+    "portal.individuals.desc": "Stratégie de carrière, reconnaissance des acquis et intégration au marché québécois — accompagné par une experte CRIA.",
+    "portal.individuals.cta": "Accéder à l'espace Particuliers",
+
+    "portal.business.label": "Pour les entreprises",
+    "portal.business.title": "Vous êtes une organisation ?",
+    "portal.business.desc": "Acquisition de talents, stratégie RH, subventions gouvernementales et conformité — des solutions sur mesure pour votre croissance.",
+    "portal.business.cta": "Accéder à l'espace Entreprises",
   },
   en: {
     "nav.home": "Home",
@@ -1227,6 +1237,16 @@ const translations = {
     "business.why.badge": "Our Expertise",
     "business.stats.services": "Specialized Services",
     "business.cta.badge": "Take Action",
+
+    "portal.individuals.label": "For Individuals",
+    "portal.individuals.title": "Are you a newcomer?",
+    "portal.individuals.desc": "Career strategy, credential recognition, and integration into the Quebec job market — guided by a CRIA-certified expert.",
+    "portal.individuals.cta": "Enter Individual Space",
+
+    "portal.business.label": "For Businesses",
+    "portal.business.title": "Are you an organization?",
+    "portal.business.desc": "Talent acquisition, HR strategy, government grants, and compliance — tailored solutions to fuel your growth.",
+    "portal.business.cta": "Enter Business Space",
   },
 };
 

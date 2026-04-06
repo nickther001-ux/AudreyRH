@@ -58,16 +58,13 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - 2026-01-11: Fixed duplicate translation keys in i18n.tsx
 - 2026-01-11: Added comprehensive bilingual support throughout application
 
-## Homepage Layout (consulting.framer.media clone)
-Home.tsx (/) sections in order:
-1. **Hero** — split layout: text (white bg) left, Audrey's photo right; two CTA buttons
-2. **Trust Strip** — infinite CSS marquee of partner organization names (Ordre des CRHA, CRIA, Service Canada, etc.)
-3. **Services** — "Nos services" label + heading/subtitle + 3 editorial photo cards + "Need customized?" CTA box
-4. **Approach** — large photo left with floating "+95%" stat card, text content right (label + heading + 2 checkmarks + journey photo)
-5. **Why Choose Us** — "Pourquoi nous choisir" + 3 linked feature cards (gap-px grid border technique)
-6. **Process** — large heading + 4 numbered step cards in 2×2 grid (gap-px border technique)
-7. **Stats** — large photo with "85+" / "95%" stats overlay, commitment text + CTA button
-8. **Testimonials** — 6 testimonial cards (3-column grid), initial avatars
+## Homepage Layout (Portal Gateway)
+Home.tsx (/) — clean full-screen split portal, archio editorial style:
+- **Two full-height panels side by side** (stacked on mobile)
+- Left panel: Particuliers — diverse photo bg, "Vous êtes un nouvel arrivant ?" heading, desc, animated arrow CTA → /individuals
+- Right panel: Entreprises — office/team photo bg, "Vous êtes une organisation ?" heading, desc, animated arrow CTA → /business
+- Hover: panel photo zooms in + arrow gap increases
+- Slim footer strip: "AudreyRH · CRIA · Montréal" + copyright
 
 ## Navbar (consulting template style)
 - Always white (no transparent phase)
