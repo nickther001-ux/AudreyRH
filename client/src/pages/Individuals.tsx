@@ -463,7 +463,7 @@ export default function Individuals() {
           <img
             src="/audrey.png"
             alt="Audrey Mondesir, CRIA"
-            className="absolute inset-0 w-full h-full object-cover object-center"
+            className="absolute inset-0 w-full h-full object-cover object-right"
             data-testid="img-audrey"
           />
           {/* Gradient overlay — stronger on left where text sits, lighter on right */}
