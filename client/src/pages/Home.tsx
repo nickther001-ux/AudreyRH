@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { CheckCircle, ArrowRight, ChevronRight } from "lucide-react";
+import { SiLinkedin } from "react-icons/si";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -16,16 +17,49 @@ const APPROACH_PHOTO = "https://images.unsplash.com/photo-1551836022-d5d88e9218d
 const JOURNEY_PHOTO  = "https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=400&q=80";
 const STATS_PHOTO    = "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80";
 
-const PARTNERS = [
-  "Ordre des CRHA",
-  "CRIA",
-  "LinkedIn",
-  "Service Canada",
-  "Gouvernement du Québec",
-  "CPMT Québec",
-  "MIDI Québec",
-  "Emploi-Québec",
+type Partner = { name: string; logo?: string; icon?: "linkedin" };
+
+const PARTNERS: Partner[] = [
+  { name: "Ordre des CRHA",         logo: "https://logo.clearbit.com/ordrecrha.org" },
+  { name: "LinkedIn",               icon: "linkedin" },
+  { name: "Service Canada",         logo: "https://logo.clearbit.com/canada.ca" },
+  { name: "Gouvernement du Québec", logo: "https://logo.clearbit.com/quebec.ca" },
+  { name: "CPMT Québec",            logo: "https://logo.clearbit.com/cpmt.gouv.qc.ca" },
+  { name: "MIFI Québec",            logo: "https://logo.clearbit.com/immigration-quebec.gouv.qc.ca" },
+  { name: "Emploi-Québec",          logo: "https://logo.clearbit.com/emploiquebec.gouv.qc.ca" },
+  { name: "CRIA",                   logo: "https://logo.clearbit.com/crha.ca" },
 ];
+
+function PartnerLogo({ p }: { p: Partner }) {
+  if (p.icon === "linkedin") {
+    return (
+      <span className="flex items-center gap-2 text-foreground/25 select-none">
+        <SiLinkedin size={22} />
+        <span className="font-semibold text-[14px] whitespace-nowrap">LinkedIn</span>
+      </span>
+    );
+  }
+  return (
+    <span className="flex items-center gap-2 select-none">
+      <img
+        src={p.logo}
+        alt={p.name}
+        className="h-6 w-auto object-contain grayscale opacity-30"
+        onError={(e) => {
+          const target = e.currentTarget;
+          target.style.display = "none";
+          if (target.nextSibling) (target.nextSibling as HTMLElement).style.display = "inline";
+        }}
+      />
+      <span
+        className="font-semibold text-[14px] whitespace-nowrap text-foreground/25"
+        style={{ display: "none" }}
+      >
+        {p.name}
+      </span>
+    </span>
+  );
+}
 
 const TESTIMONIALS = [
   { id: 1, initials: "Y.K." },
@@ -119,14 +153,9 @@ export default function Home() {
         <p className="text-center text-[10px] text-muted-foreground/50 uppercase tracking-[0.2em] mb-7">
           {t("home.trust.text")}
         </p>
-        <div className="flex gap-20 animate-marquee">
+        <div className="flex items-center gap-20 animate-marquee">
           {[...PARTNERS, ...PARTNERS, ...PARTNERS].map((p, i) => (
-            <span
-              key={i}
-              className="text-muted-foreground/35 font-semibold text-[15px] whitespace-nowrap select-none"
-            >
-              {p}
-            </span>
+            <PartnerLogo key={i} p={p} />
           ))}
         </div>
       </section>
