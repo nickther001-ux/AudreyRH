@@ -40,11 +40,11 @@ export function Navbar() {
           {/* Logo */}
           <Link
             href="/"
-            className="text-[1.3rem] font-bold tracking-tight flex-shrink-0"
+            className="text-[1.3rem] font-bold tracking-tight flex-shrink-0 inline-flex items-baseline"
             data-testid="link-logo"
           >
-            <span className="text-primary">Audrey</span>
-            <span className="text-foreground">RH</span>
+            <span className="bg-foreground text-white px-1.5 py-0.5 leading-none mr-0.5">Audrey</span>
+            <span style={{ color: "#2563eb" }}>RH</span>
             <span className="text-accent">.</span>
           </Link>
 

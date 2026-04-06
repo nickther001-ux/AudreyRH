@@ -13,8 +13,8 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-2 space-y-5">
             <h3 className="text-3xl font-bold tracking-tight">
-              <span className="text-primary">Audrey</span>
-              <span className="text-white">RH</span>
+              <span className="text-white">Audrey</span>
+              <span style={{ color: "#2563eb" }}>RH</span>
               <span className="text-accent">.</span>
             </h3>
             <p className="text-white/55 max-w-sm leading-relaxed text-base">
