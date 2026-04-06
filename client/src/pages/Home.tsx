@@ -262,7 +262,7 @@ export default function Home() {
                 data-testid="img-approach"
               />
               {/* Stat card — top-left covers the baked-in text from the image */}
-              <div className="absolute top-4 left-4 bg-white shadow-2xl px-6 py-5 min-w-[190px]">
+              <div className="absolute top-0 left-0 bg-white shadow-2xl px-7 py-6 min-w-[260px]">
                 <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-1">
                   {t("home.approach.stat")}
                 </p>
