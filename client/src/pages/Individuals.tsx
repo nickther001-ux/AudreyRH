@@ -342,17 +342,17 @@ export default function Individuals() {
 
             {/* Header */}
             <FadeUp className="mb-16">
-              <p className="text-[11px] text-[#1e3a5f]/40 uppercase tracking-[0.2em] mb-4">{t("individuals.guide.badge" as any)}</p>
+              <p className="text-[11px] text-black/40 uppercase tracking-[0.2em] mb-4">{t("individuals.guide.badge" as any)}</p>
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-                <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a5f] leading-tight max-w-sm">
+                <h2 className="text-4xl md:text-5xl font-bold text-black leading-tight max-w-sm">
                   {t("individuals.guide.title" as any)}<span className="text-orange-400">.</span>
                 </h2>
-                <p className="text-[#1e3a5f]/60 text-[14px] leading-relaxed max-w-sm">{t("individuals.guide.subtitle" as any)}</p>
+                <p className="text-black/60 text-[14px] leading-relaxed max-w-sm">{t("individuals.guide.subtitle" as any)}</p>
               </div>
             </FadeUp>
 
             {/* Accordion items */}
-            <div className="border-t border-[#1e3a5f]/10">
+            <div className="border-t border-black/10">
 
               {([
                 {
@@ -361,12 +361,12 @@ export default function Individuals() {
                   titleKey: "individuals.guide.resume.title",
                   subtitleKey: "individuals.guide.resume.subtitle",
                   content: (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#1e3a5f]/10 mt-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/8 mt-8">
                       {([1,2,3,4,5,6,7] as const).map((n) => (
-                        <div key={n} className="bg-white p-7 hover:bg-[#1e3a5f]/3 transition-colors">
-                          <p className="text-[2.2rem] font-black text-[#1e3a5f]/8 leading-none mb-3 select-none">0{n}</p>
-                          <h4 className="font-bold text-[#1e3a5f] text-[14px] mb-2">{t(`individuals.guide.resume.s${n}.title` as any)}</h4>
-                          <p className="text-[#1e3a5f]/55 text-[13px] leading-relaxed">{t(`individuals.guide.resume.s${n}.desc` as any)}</p>
+                        <div key={n} className="bg-white p-7 hover:bg-black/3 transition-colors">
+                          <p className="text-[2.2rem] font-black text-black/8 leading-none mb-3 select-none">0{n}</p>
+                          <h4 className="font-bold text-black text-[14px] mb-2">{t(`individuals.guide.resume.s${n}.title` as any)}</h4>
+                          <p className="text-black/55 text-[13px] leading-relaxed">{t(`individuals.guide.resume.s${n}.desc` as any)}</p>
                         </div>
                       ))}
                       <div className="bg-[#1e3a5f] p-7 flex flex-col justify-center">
@@ -382,19 +382,19 @@ export default function Individuals() {
                   titleKey: "individuals.guide.dos.title",
                   subtitleKey: "individuals.guide.dos.subtitle",
                   content: (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-[#1e3a5f]/10 mt-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/8 mt-8">
                       {/* DO */}
                       <div className="bg-white p-8">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#1e3a5f]/10">
-                          <span className="w-6 h-6 flex items-center justify-center border border-[#1e3a5f] flex-shrink-0">
-                            <svg className="w-3.5 h-3.5 text-[#1e3a5f]" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-black/10">
+                          <span className="w-6 h-6 flex items-center justify-center border border-black flex-shrink-0">
+                            <svg className="w-3.5 h-3.5 text-black" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
                           </span>
-                          <span className="font-bold text-[#1e3a5f] text-[13px] uppercase tracking-[0.15em]">{t("individuals.guide.dos.do.label" as any)}</span>
+                          <span className="font-bold text-black text-[13px] uppercase tracking-[0.15em]">{t("individuals.guide.dos.do.label" as any)}</span>
                         </div>
                         <ul className="space-y-3.5">
                           {([1,2,3,4,5,6,7,8] as const).map((n) => (
-                            <li key={n} className="flex items-start gap-3 text-[13px] text-[#1e3a5f]/70 leading-relaxed" data-testid={`guide-do-${n}`}>
-                              <span className="flex-shrink-0 w-1 h-1 rounded-full bg-[#1e3a5f] mt-2" />
+                            <li key={n} className="flex items-start gap-3 text-[13px] text-black/70 leading-relaxed" data-testid={`guide-do-${n}`}>
+                              <span className="flex-shrink-0 w-1 h-1 rounded-full bg-black mt-2" />
                               {t(`individuals.guide.dos.do.${n}` as any)}
                             </li>
                           ))}
@@ -402,16 +402,16 @@ export default function Individuals() {
                       </div>
                       {/* DON'T */}
                       <div className="bg-white p-8">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-[#1e3a5f]/10">
-                          <span className="w-6 h-6 flex items-center justify-center border border-[#1e3a5f]/30 flex-shrink-0">
-                            <svg className="w-3.5 h-3.5 text-[#1e3a5f]/40" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-black/10">
+                          <span className="w-6 h-6 flex items-center justify-center border border-black/30 flex-shrink-0">
+                            <svg className="w-3.5 h-3.5 text-black/40" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                           </span>
-                          <span className="font-bold text-[#1e3a5f]/50 text-[13px] uppercase tracking-[0.15em]">{t("individuals.guide.dos.dont.label" as any)}</span>
+                          <span className="font-bold text-black/50 text-[13px] uppercase tracking-[0.15em]">{t("individuals.guide.dos.dont.label" as any)}</span>
                         </div>
                         <ul className="space-y-3.5">
                           {([1,2,3,4,5,6,7,8] as const).map((n) => (
-                            <li key={n} className="flex items-start gap-3 text-[13px] text-[#1e3a5f]/45 leading-relaxed" data-testid={`guide-dont-${n}`}>
-                              <span className="flex-shrink-0 w-1 h-1 rounded-full bg-[#1e3a5f]/30 mt-2" />
+                            <li key={n} className="flex items-start gap-3 text-[13px] text-black/45 leading-relaxed" data-testid={`guide-dont-${n}`}>
+                              <span className="flex-shrink-0 w-1 h-1 rounded-full bg-black/30 mt-2" />
                               {t(`individuals.guide.dos.dont.${n}` as any)}
                             </li>
                           ))}
@@ -426,12 +426,12 @@ export default function Individuals() {
                   titleKey: "individuals.guide.interview.title",
                   subtitleKey: "individuals.guide.interview.subtitle",
                   content: (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#1e3a5f]/10 mt-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-black/8 mt-8">
                       {([1,2,3,4,5,6] as const).map((n) => (
-                        <div key={n} className="bg-white p-7 hover:bg-[#1e3a5f]/3 transition-colors" data-testid={`guide-interview-${n}`}>
-                          <p className="text-[2.2rem] font-black text-[#1e3a5f]/8 leading-none mb-3 select-none">0{n}</p>
-                          <h4 className="font-bold text-[#1e3a5f] text-[14px] mb-2">{t(`individuals.guide.interview.s${n}.title` as any)}</h4>
-                          <p className="text-[#1e3a5f]/55 text-[13px] leading-relaxed">{t(`individuals.guide.interview.s${n}.desc` as any)}</p>
+                        <div key={n} className="bg-white p-7 hover:bg-black/3 transition-colors" data-testid={`guide-interview-${n}`}>
+                          <p className="text-[2.2rem] font-black text-black/8 leading-none mb-3 select-none">0{n}</p>
+                          <h4 className="font-bold text-black text-[14px] mb-2">{t(`individuals.guide.interview.s${n}.title` as any)}</h4>
+                          <p className="text-black/55 text-[13px] leading-relaxed">{t(`individuals.guide.interview.s${n}.desc` as any)}</p>
                         </div>
                       ))}
                     </div>
@@ -440,24 +440,24 @@ export default function Individuals() {
               ] as const).map(({ idx, badgeKey, titleKey, subtitleKey, content }) => {
                 const isOpen = openGuide === idx;
                 return (
-                  <div key={idx} className="border-b border-[#1e3a5f]/10" data-testid={`guide-accordion-${idx}`}>
+                  <div key={idx} className="border-b border-black/10" data-testid={`guide-accordion-${idx}`}>
                     <button
                       onClick={() => setOpenGuide(isOpen ? null : idx)}
                       className="w-full flex items-center justify-between gap-6 py-8 text-left group"
                       data-testid={`guide-toggle-${idx}`}
                     >
                       <div className="flex items-start gap-6">
-                        <span className="text-[11px] font-black text-[#1e3a5f]/20 mt-1 select-none w-6 flex-shrink-0">0{idx}</span>
+                        <span className="text-[11px] font-black text-black/20 mt-1 select-none w-6 flex-shrink-0">0{idx}</span>
                         <div>
-                          <p className="text-[10px] text-[#1e3a5f]/40 uppercase tracking-[0.2em] mb-1">{t(badgeKey as any)}</p>
-                          <h3 className="text-lg md:text-xl font-bold text-[#1e3a5f] leading-snug">{t(titleKey as any)}</h3>
-                          {!isOpen && <p className="text-[#1e3a5f]/45 text-[13px] mt-1 leading-relaxed max-w-lg">{t(subtitleKey as any)}</p>}
+                          <p className="text-[10px] text-black/40 uppercase tracking-[0.2em] mb-1">{t(badgeKey as any)}</p>
+                          <h3 className="text-lg md:text-xl font-bold text-black leading-snug">{t(titleKey as any)}</h3>
+                          {!isOpen && <p className="text-black/45 text-[13px] mt-1 leading-relaxed max-w-lg">{t(subtitleKey as any)}</p>}
                         </div>
                       </div>
                       <span className="flex-shrink-0">
                         {isOpen
-                          ? <Minus className="w-4 h-4 text-[#1e3a5f]" />
-                          : <Plus className="w-4 h-4 text-[#1e3a5f]/30 group-hover:text-[#1e3a5f]/60 transition-colors" />
+                          ? <Minus className="w-4 h-4 text-black" />
+                          : <Plus className="w-4 h-4 text-black/30 group-hover:text-black/60 transition-colors" />
                         }
                       </span>
                     </button>
