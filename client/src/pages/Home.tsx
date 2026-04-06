@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 import audreyPhoto from "@assets/Gemini_Generated_Image_oiinvioiinvioiin_1775503767318.png";
-import approachPhoto from "@assets/Gemini_Generated_Image_ujepw0ujepw0ujep_1775505394811.png";
+import approachPhoto from "@assets/Gemini_Generated_Image_8kmtv78kmtv78kmt_1775506001928.png";
 
 const SERVICE_PHOTOS = [
   "https://images.unsplash.com/photo-1552664730-d307ca884978?w=700&q=80",
