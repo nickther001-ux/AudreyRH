@@ -52,6 +52,7 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - Footer: near-black background (via --foreground)
 
 ## Recent Changes
+- 2026-04-06: Grants.tsx full rewrite — Stratwell Consulting editorial dark layout: full-height hero with italic accent word in #93c5fd, 4-up animated stat strip, 2×2 photo-backed grant card grid with hover zoom, numbered dark process steps (01-04), horizontal scroll testimonial carousel with prev/next arrows, midnight-blue final CTA. Diagnostic modal preserved with updated styling.
 - 2026-04-02: Full homepage redesign — pixel-level clone of consulting.framer.media with AudreyRH content
 - 2026-01-11: Redesigned booking page with hero banner, sticky sidebar, and numbered step sections
 - 2026-01-11: Added bilingual Terms & Conditions page (/terms)
