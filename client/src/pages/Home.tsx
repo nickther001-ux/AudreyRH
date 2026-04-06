@@ -34,17 +34,17 @@ export default function Home() {
 
           {/* Content */}
           <div className="relative z-10">
-            <div className="w-10 h-10 border border-white/30 flex items-center justify-center mb-6 group-hover:border-white/60 transition-colors">
-              <Users className="w-5 h-5 text-white" />
+            <div className="inline-flex items-center gap-2.5 bg-white/15 backdrop-blur-sm border border-white/25 px-4 py-2 mb-8">
+              <Users className="w-4 h-4 text-white" />
+              <span className="text-white text-[13px] font-semibold uppercase tracking-[0.18em]">{t("portal.individuals.label")}</span>
             </div>
-            <p className="text-[10px] text-white/40 uppercase tracking-[0.25em] mb-3">{t("portal.individuals.label")}</p>
-            <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-bold text-white leading-[1] tracking-tighter mb-4">
+            <h2 className="text-[clamp(2.4rem,5vw,4.5rem)] font-bold text-white leading-[1] tracking-tighter mb-5">
               {t("portal.individuals.title")}
             </h2>
-            <p className="text-white/60 text-[14px] leading-relaxed max-w-xs mb-8">
+            <p className="text-white/75 text-[15px] leading-relaxed max-w-xs mb-10">
               {t("portal.individuals.desc")}
             </p>
-            <div className="inline-flex items-center gap-3 text-white font-semibold text-[13px] uppercase tracking-wider group-hover:gap-5 transition-all duration-300">
+            <div className="inline-flex items-center gap-3 text-white font-semibold text-[13px] uppercase tracking-wider border-b border-white/40 pb-1 group-hover:gap-5 group-hover:border-white transition-all duration-300">
               {t("portal.individuals.cta")}
               <ArrowRight className="w-4 h-4" />
             </div>
@@ -64,17 +64,17 @@ export default function Home() {
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20 group-hover:from-black/70 transition-all duration-500" />
 
           <div className="relative z-10">
-            <div className="w-10 h-10 border border-white/30 flex items-center justify-center mb-6 group-hover:border-white/60 transition-colors">
-              <Building2 className="w-5 h-5 text-white" />
+            <div className="inline-flex items-center gap-2.5 bg-white/15 backdrop-blur-sm border border-white/25 px-4 py-2 mb-8">
+              <Building2 className="w-4 h-4 text-white" />
+              <span className="text-white text-[13px] font-semibold uppercase tracking-[0.18em]">{t("portal.business.label")}</span>
             </div>
-            <p className="text-[10px] text-white/40 uppercase tracking-[0.25em] mb-3">{t("portal.business.label")}</p>
-            <h2 className="text-[clamp(2.2rem,5vw,4rem)] font-bold text-white leading-[1] tracking-tighter mb-4">
+            <h2 className="text-[clamp(2.4rem,5vw,4.5rem)] font-bold text-white leading-[1] tracking-tighter mb-5">
               {t("portal.business.title")}
             </h2>
-            <p className="text-white/60 text-[14px] leading-relaxed max-w-xs mb-8">
+            <p className="text-white/75 text-[15px] leading-relaxed max-w-xs mb-10">
               {t("portal.business.desc")}
             </p>
-            <div className="inline-flex items-center gap-3 text-white font-semibold text-[13px] uppercase tracking-wider group-hover:gap-5 transition-all duration-300">
+            <div className="inline-flex items-center gap-3 text-white font-semibold text-[13px] uppercase tracking-wider border-b border-white/40 pb-1 group-hover:gap-5 group-hover:border-white transition-all duration-300">
               {t("portal.business.cta")}
               <ArrowRight className="w-4 h-4" />
             </div>
