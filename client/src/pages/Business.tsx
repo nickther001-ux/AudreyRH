@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 
 const SERVICE_PHOTOS: Record<string, string> = {
-  talent:     "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
-  strategy:   "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
-  grants:     "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&q=80",
-  compliance: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80",
+  talent:     "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&q=80",
+  strategy:   "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80",
+  grants:     "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80",
+  compliance: "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&q=80",
 };
 
 const services = [
@@ -44,7 +44,7 @@ export default function Business() {
         <section className="bg-foreground min-h-screen flex flex-col justify-end pb-24 pt-40 overflow-hidden relative" data-testid="section-hero">
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
-            style={{ backgroundImage: "url(https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1400&q=80)" }}
+            style={{ backgroundImage: "url(https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1400&q=80)" }}
           />
           <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full">
             <p className="text-[11px] text-white/40 uppercase tracking-[0.22em] mb-8" data-testid="text-business-badge">
