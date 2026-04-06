@@ -154,8 +154,8 @@ export default function Business() {
           </div>
         </section>
 
-        {/* ── 3. WHO WE SERVE — dark ── */}
-        <section className="bg-foreground py-28" data-testid="section-business-who">
+        {/* ── 3. WHO WE SERVE — midnight blue ── */}
+        <section className="bg-[#1e3a5f] py-28" data-testid="section-business-who">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
             <FadeUp className="mb-16">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{t("business.who.badge")}</p>
@@ -169,7 +169,7 @@ export default function Business() {
 
             <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10">
               {WHO_CARDS.map(({ type, Icon, num }) => (
-                <StaggerItem key={type} variant="fadeUp" className="bg-foreground p-10 group hover:bg-white/5 transition-colors relative" data-testid={`card-business-who-${type}`}>
+                <StaggerItem key={type} variant="fadeUp" className="bg-[#1e3a5f] p-10 group hover:bg-white/5 transition-colors relative" data-testid={`card-business-who-${type}`}>
                   <span className="absolute top-6 right-8 text-6xl font-black text-white/5 leading-none select-none">{num}</span>
                   <div className="w-12 h-12 bg-white/8 flex items-center justify-center mb-6">
                     <Icon className="w-6 h-6 text-white/60" />
@@ -251,8 +251,8 @@ export default function Business() {
           </FadeUp>
         </section>
 
-        {/* ── 7. FINAL CTA — dark ── */}
-        <section className="bg-foreground py-28" data-testid="section-business-cta">
+        {/* ── 7. FINAL CTA — midnight blue ── */}
+        <section className="bg-[#1e3a5f] py-28" data-testid="section-business-cta">
           <FadeUp className="max-w-6xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-12">
             <div className="max-w-xl">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-5">{t("business.cta.badge")}</p>

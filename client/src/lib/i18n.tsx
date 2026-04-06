@@ -466,13 +466,13 @@ const translations = {
 
     "business.who.title": "Qui nous accompagnons",
     "business.who.subtitle": "Nos services s'adressent à tous les types d'organisations souhaitant optimiser leur stratégie de capital humain.",
-    "business.who.sme.title": "PMEs & Moyennes entreprises",
+    "business.who.sme.title": "Petites à Moyennes Entreprises",
     "business.who.sme.desc": "Structurez vos RH, accédez aux talents et aux subventions gouvernementales pour accélérer votre croissance.",
     "business.who.startup.title": "Startups & Entrepreneurs",
     "business.who.startup.desc": "Construisez votre équipe fondatrice, définissez votre culture d'entreprise et accédez aux financements de démarrage.",
     "business.who.corporate.title": "Grandes entreprises",
     "business.who.corporate.desc": "Optimisez votre stratégie RH à grande échelle, développez vos programmes D&I et accédez aux subventions corporatives.",
-    "business.who.nonprofit.title": "OBNL & Organismes",
+    "business.who.nonprofit.title": "OBNL & OBE",
     "business.who.nonprofit.desc": "Structurez vos pratiques RH, gérez vos bénévoles et accédez aux financements spécifiques au secteur à but non lucratif.",
 
     "business.why.title": "Pourquoi choisir AudreyRH ?",
@@ -1086,13 +1086,13 @@ const translations = {
 
     "business.who.title": "Who We Support",
     "business.who.subtitle": "Our services are designed for all types of organizations looking to optimize their human capital strategy.",
-    "business.who.sme.title": "SMEs & Small Businesses",
+    "business.who.sme.title": "Small to Mid Enterprises",
     "business.who.sme.desc": "Structure your HR, access talent, and leverage government grants to accelerate your growth.",
     "business.who.startup.title": "Startups & Entrepreneurs",
     "business.who.startup.desc": "Build your founding team, define your company culture, and access early-stage funding programs.",
     "business.who.corporate.title": "Large Corporations",
     "business.who.corporate.desc": "Optimize your HR strategy at scale, develop D&I programs, and access corporate-level government grants.",
-    "business.who.nonprofit.title": "Non-profits & Organizations",
+    "business.who.nonprofit.title": "NPOs & OBEs",
     "business.who.nonprofit.desc": "Structure your HR practices, manage volunteers effectively, and access sector-specific funding programs.",
 
     "business.why.title": "Why Choose AudreyRH?",
