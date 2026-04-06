@@ -79,7 +79,7 @@ export function Navbar() {
             </Button>
 
             <Link href="/book" data-testid="link-book-consultation">
-              <Button className="bg-primary hover:bg-primary/90 text-white rounded-none px-5 h-9 text-[13px] font-medium">
+              <Button className="text-white rounded-none px-5 h-9 text-[13px] font-medium" style={{ backgroundColor: "#1e3a5f" }} onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#162d4a")} onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#1e3a5f")}>
                 {t("nav.book")}
               </Button>
             </Link>
@@ -130,7 +130,7 @@ export function Navbar() {
           ))}
           <div className="px-6 pt-4 pb-3 border-t border-border mt-2">
             <Link href="/book" onClick={() => setMobileMenuOpen(false)} data-testid="link-mobile-book">
-              <Button className="w-full bg-primary text-white rounded-none font-medium text-[13px] h-10">
+              <Button className="w-full text-white rounded-none font-medium text-[13px] h-10" style={{ backgroundColor: "#1e3a5f" }}>
                 {t("nav.book")}
               </Button>
             </Link>
