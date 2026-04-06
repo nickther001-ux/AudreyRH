@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { AnimatePresence, motion } from "framer-motion";
 import { Palette, Lightbulb, Building2, Briefcase, ArrowRight, CheckCircle, DollarSign, Users, X, Calendar, Send, Plus, Minus } from "lucide-react";
@@ -123,6 +123,16 @@ export default function Grants() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<boolean[]>([]);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [wordIndex, setWordIndex] = useState(0);
+
+  const rotatingWords = [t("grants.hero.rotating.1" as any), t("grants.hero.rotating.2" as any), t("grants.hero.rotating.3" as any)];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIndex((prev) => (prev + 1) % 3);
+    }, 900);
+    return () => clearInterval(interval);
+  }, []);
 
   const openDiagnostic = (category: DiagnosticCategory) => { setDiagnosticCategory(category); setStep(0); setAnswers([]); };
   const closeDiagnostic = () => setDiagnosticCategory(null);
@@ -279,7 +289,12 @@ export default function Grants() {
               variants={{ hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.25,0.1,0.25,1] } } }}
               data-testid="text-grants-hero-title"
             >
-              {isFr ? <>Le financement qui <em className="not-italic text-[#93c5fd]">propulse</em><br />votre projet.</> : <>The funding that <em className="not-italic text-[#93c5fd]">powers</em><br />your project.</>}
+              {isFr ? "Le financement qui" : "The funding that"}{" "}
+              <span key={wordIndex} className="inline-block text-[#93c5fd] animate-in fade-in slide-in-from-bottom-2 duration-300">
+                {rotatingWords[wordIndex]}
+              </span>
+              <br />
+              {isFr ? "votre projet." : "your project."}
             </motion.h1>
             <motion.p className="text-white/60 text-lg max-w-xl leading-relaxed mb-12" variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.65 } } }}>
               {isFr ? "AudreyRH identifie les subventions auxquelles vous êtes admissible et vous accompagne jusqu'à l'obtention du financement." : "AudreyRH identifies the grants you qualify for and guides you all the way to securing the funding."}

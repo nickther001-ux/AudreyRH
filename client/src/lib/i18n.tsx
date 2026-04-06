@@ -493,6 +493,10 @@ const translations = {
     "business.cta.contact": "Nous contacter",
     "business.cta.book": "Réserver une consultation",
 
+    "grants.hero.rotating.1": "accélère",
+    "grants.hero.rotating.2": "catapulte",
+    "grants.hero.rotating.3": "transforme",
+
     "grants.badge": "Subventions & Financement",
     "grants.hero.title": "Subventions & Programmes de Financement",
     "grants.hero.description": "AudreyRH offre des subventions directes et identifie les financements disponibles pour soutenir les artistes, entrepreneurs, PMEs et entreprises issues de l'immigration vers les États-Unis.",
@@ -1112,6 +1116,10 @@ const translations = {
     "business.cta.text": "Contact us to discuss your HR needs and discover how AudreyRH can transform your organization.",
     "business.cta.contact": "Contact Us",
     "business.cta.book": "Book a Consultation",
+
+    "grants.hero.rotating.1": "accelerates",
+    "grants.hero.rotating.2": "catapults",
+    "grants.hero.rotating.3": "transforms",
 
     "grants.badge": "Grants & Funding",
     "grants.hero.title": "Grants & Funding Programs",
