@@ -13,37 +13,43 @@ const SERVICE_CARDS = [
   {
     key: "strategy" as const,
     icon: TrendingUp,
-    photo: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80",
+    // Confident Black professional man reviewing career documents
+    photo: "https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?w=800&q=80",
     dialog: true,
   },
   {
     key: "credentials" as const,
     icon: GraduationCap,
-    photo: "https://images.unsplash.com/photo-1586281380349-632531db7ed4?w=800&q=80",
+    // South Asian woman studying / holding diploma
+    photo: "https://images.unsplash.com/photo-1529220502050-f15e570c634e?w=800&q=80",
     dialog: true,
   },
   {
     key: "employability" as const,
     icon: Briefcase,
-    photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
+    // Black woman in professional interview setting
+    photo: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=80",
     dialog: true,
   },
   {
     key: "integration" as const,
     icon: Users,
-    photo: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800&q=80",
+    // Diverse group networking / collaborating in office
+    photo: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&q=80",
     dialog: true,
   },
   {
     key: "coaching" as const,
     icon: Target,
-    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80",
+    // Latin / Hispanic man smiling confidently
+    photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=800&q=80",
     dialog: false,
   },
   {
     key: "orientation" as const,
     icon: Award,
-    photo: "https://images.unsplash.com/photo-1573496799652-408c2ac9fe98?w=800&q=80",
+    // Middle Eastern / Arab woman professional portrait
+    photo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800&q=80",
     dialog: false,
   },
 ];
@@ -196,7 +202,7 @@ export default function Individuals() {
         <section className="bg-foreground min-h-screen flex flex-col justify-end pb-24 pt-40 overflow-hidden relative" data-testid="section-hero">
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
-            style={{ backgroundImage: "url(https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1400&q=80)" }}
+            style={{ backgroundImage: "url(https://images.unsplash.com/photo-1529390079861-591de354faf5?w=1400&q=80)" }}
           />
           <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full">
             <p className="text-[11px] text-white/40 uppercase tracking-[0.22em] mb-8" data-testid="text-hero-badge">
