@@ -4,7 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
-import audreyPhoto from "@assets/Gemini_Generated_Image_nsmo44nsmo44nsmo_1775502902951.png";
+import audreyPhoto from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
 
 const SERVICE_PHOTOS = [
   "https://images.unsplash.com/photo-1552664730-d307ca884978?w=700&q=80",
