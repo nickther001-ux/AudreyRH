@@ -4,7 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
-import audreyPhoto from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
+import audreyPhoto from "@assets/Gemini_Generated_Image_nsmo44nsmo44nsmo_1775502902951.png";
 
 const SERVICE_PHOTOS = [
   "https://images.unsplash.com/photo-1552664730-d307ca884978?w=700&q=80",
@@ -44,29 +44,46 @@ export default function Home() {
       <Navbar />
 
       {/* ─────────────────────────────────────────────────────────
-          1. HERO — split: text left (white bg), photo right
+          1. HERO — full-bleed photo background, text overlay left
       ───────────────────────────────────────────────────────── */}
       <section
-        className="min-h-screen grid lg:grid-cols-2 overflow-hidden"
+        className="relative min-h-screen flex items-center overflow-hidden"
         data-testid="section-hero"
       >
-        {/* Text panel */}
-        <div className="flex items-center px-8 md:px-14 lg:px-20 py-36 lg:py-0 bg-white order-2 lg:order-1">
-          <div className="max-w-[480px]">
+        {/* Full-bleed background photo */}
+        <img
+          src={audreyPhoto}
+          alt="Audrey Mondesir CRIA"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          data-testid="img-hero"
+        />
+
+        {/* Dark gradient overlay — heavier on left so text pops */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to right, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.55) 55%, rgba(10,10,10,0.10) 100%)",
+          }}
+        />
+
+        {/* Text content */}
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-6 lg:px-8 py-40">
+          <div className="max-w-[520px]">
             <p
-              className="text-[11px] text-muted-foreground uppercase tracking-[0.18em] mb-6"
+              className="text-[11px] text-white/60 uppercase tracking-[0.22em] mb-6"
               data-testid="text-hero-label"
             >
               {t("home.hero.label")}
             </p>
             <h1
-              className="text-5xl md:text-[3.5rem] font-bold leading-[1.08] tracking-tight text-foreground mb-6"
+              className="text-5xl md:text-[3.6rem] font-bold leading-[1.08] tracking-tight text-white mb-6"
               data-testid="text-hero-title"
             >
               {t("home.hero.title")}
             </h1>
             <p
-              className="text-[15px] text-muted-foreground leading-relaxed mb-10"
+              className="text-[15px] text-white/70 leading-relaxed mb-10 max-w-[400px]"
               data-testid="text-hero-subtitle"
             >
               {t("home.hero.subtitle")}
@@ -84,23 +101,13 @@ export default function Home() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="rounded-none px-8 h-12 text-[13px] border-foreground/20 text-foreground hover:bg-foreground/5"
+                  className="rounded-none px-8 h-12 text-[13px] border-white/40 text-white hover:bg-white/10 hover:border-white/60 bg-transparent"
                 >
                   {t("home.hero.cta2")}
                 </Button>
               </Link>
             </div>
           </div>
-        </div>
-
-        {/* Photo panel */}
-        <div className="relative min-h-[60vh] lg:min-h-0 order-1 lg:order-2 bg-muted">
-          <img
-            src={audreyPhoto}
-            alt="Audrey Mondesir CRIA"
-            className="absolute inset-0 w-full h-full object-cover object-center"
-            data-testid="img-hero"
-          />
         </div>
       </section>
 
