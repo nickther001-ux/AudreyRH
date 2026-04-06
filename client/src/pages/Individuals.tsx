@@ -457,79 +457,74 @@ export default function Individuals() {
           </div>
         </section>
 
-        {/* ── 5. POURQUOI UNE EXPERTE — dark editorial split ── */}
-        <section className="bg-foreground py-0 overflow-hidden" data-testid="section-about">
-          <div className="max-w-6xl mx-auto flex flex-col md:flex-row">
+        {/* ── 5. POURQUOI UNE EXPERTE — full-bleed photo background ── */}
+        <section className="relative overflow-hidden min-h-[640px]" data-testid="section-about">
+          {/* Background photo */}
+          <img
+            src="/audrey.png"
+            alt="Audrey Mondesir, CRIA"
+            className="absolute inset-0 w-full h-full object-cover object-center"
+            data-testid="img-audrey"
+          />
+          {/* Gradient overlay — stronger on left where text sits, lighter on right */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/15" />
 
-            {/* Content column — LEFT */}
-            <motion.div
-              className="flex-1 px-8 md:px-14 py-16 md:py-20 flex flex-col justify-center order-2 md:order-1"
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, amount: 0.25 }}
-              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.11, delayChildren: 0.1 } } }}
+          {/* Content — left-aligned over the overlay */}
+          <motion.div
+            className="relative z-10 max-w-6xl mx-auto px-8 lg:px-8 py-20 md:py-28 w-full md:max-w-[60%]"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.25 }}
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.11, delayChildren: 0.1 } } }}
+          >
+            <motion.p
+              className="text-[11px] text-[#93c5fd] uppercase tracking-[0.22em] mb-6"
+              variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: { duration: 0.55 } } }}
             >
-              <motion.p
-                className="text-[11px] text-[#93c5fd] uppercase tracking-[0.22em] mb-6"
-                variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: { duration: 0.55 } } }}
-              >
-                {t("about.expertLabel")}
-              </motion.p>
-              <motion.h2
-                className="text-3xl md:text-4xl font-bold text-white leading-tight mb-2"
-                variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.65 } } }}
-              >
-                Audrey Mondesir
-              </motion.h2>
-              <motion.p
-                className="text-[12px] text-white/40 uppercase tracking-widest mb-8"
-                variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
-              >
-                CRIA · Conseillère en Relations Industrielles Agréée
-              </motion.p>
-              <motion.p
-                className="text-white/70 text-[15px] leading-relaxed mb-5"
-                variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
-              >
-                {t("about.text1")}
-              </motion.p>
-              <motion.p
-                className="text-white/55 text-[14px] leading-relaxed mb-10 italic border-l-2 border-[#93c5fd]/40 pl-4"
-                variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: { duration: 0.55 } } }}
-              >
-                {t("about.mission")}
-              </motion.p>
+              {t("about.expertLabel")}
+            </motion.p>
+            <motion.h2
+              className="text-3xl md:text-4xl font-bold text-white leading-tight mb-2"
+              variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.65 } } }}
+            >
+              Audrey Mondesir
+            </motion.h2>
+            <motion.p
+              className="text-[12px] text-white/45 uppercase tracking-widest mb-8"
+              variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
+            >
+              CRIA · Conseillère en Relations Industrielles Agréée
+            </motion.p>
+            <motion.p
+              className="text-white/80 text-[15px] leading-relaxed mb-5"
+              variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+            >
+              {t("about.text1")}
+            </motion.p>
+            <motion.p
+              className="text-white/60 text-[14px] leading-relaxed mb-10 italic border-l-2 border-[#93c5fd]/50 pl-4"
+              variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: { duration: 0.55 } } }}
+            >
+              {t("about.mission")}
+            </motion.p>
 
-              {/* 3 credential pills */}
-              <motion.div
-                className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/10"
-                variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.4, delay: 0.3 } } }}
-              >
-                {[
-                  { title: t("about.reason1Title"), text: t("about.reason1Text") },
-                  { title: t("about.reason2Title"), text: t("about.reason2Text") },
-                  { title: t("about.reason3Title"), text: t("about.reason3Text") },
-                ].map((r, i) => (
-                  <div key={i} className="bg-white/5 px-5 py-4" data-testid={`card-reason-${i}`}>
-                    <p className="text-white text-[13px] font-semibold mb-1">{r.title}</p>
-                    <p className="text-white/45 text-[12px] leading-relaxed">{r.text}</p>
-                  </div>
-                ))}
-              </motion.div>
+            {/* 3 credential cards */}
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/10"
+              variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.4, delay: 0.3 } } }}
+            >
+              {[
+                { title: t("about.reason1Title"), text: t("about.reason1Text") },
+                { title: t("about.reason2Title"), text: t("about.reason2Text") },
+                { title: t("about.reason3Title"), text: t("about.reason3Text") },
+              ].map((r, i) => (
+                <div key={i} className="bg-black/30 backdrop-blur-sm px-5 py-4" data-testid={`card-reason-${i}`}>
+                  <p className="text-white text-[13px] font-semibold mb-1">{r.title}</p>
+                  <p className="text-white/50 text-[12px] leading-relaxed">{r.text}</p>
+                </div>
+              ))}
             </motion.div>
-
-            {/* Photo column — RIGHT */}
-            <FadeIn className="md:w-[45%] flex-shrink-0 order-1 md:order-2">
-              <div className="h-[380px] md:h-full min-h-[560px] overflow-hidden">
-                <img
-                  src="/audrey.png"
-                  alt="Audrey Mondesir, CRIA"
-                  className="w-full h-full object-cover object-center"
-                  data-testid="img-audrey"
-                />
-              </div>
-            </FadeIn>
-          </div>
+          </motion.div>
         </section>
 
         {/* ── 6. COMPARISON — light gray ── */}
