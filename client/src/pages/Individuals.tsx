@@ -461,21 +461,9 @@ export default function Individuals() {
         <section className="bg-foreground py-0 overflow-hidden" data-testid="section-about">
           <div className="max-w-6xl mx-auto flex flex-col md:flex-row">
 
-            {/* Photo column */}
-            <FadeIn className="md:w-[42%] flex-shrink-0">
-              <div className="h-[420px] md:h-full min-h-[480px] overflow-hidden">
-                <img
-                  src="/audrey.png"
-                  alt="Audrey Mondesir, CRIA"
-                  className="w-full h-full object-cover object-top"
-                  data-testid="img-audrey"
-                />
-              </div>
-            </FadeIn>
-
-            {/* Content column */}
+            {/* Content column — LEFT */}
             <motion.div
-              className="flex-1 px-8 md:px-14 py-16 md:py-20 flex flex-col justify-center"
+              className="flex-1 px-8 md:px-14 py-16 md:py-20 flex flex-col justify-center order-2 md:order-1"
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.25 }}
@@ -529,6 +517,18 @@ export default function Individuals() {
                 ))}
               </motion.div>
             </motion.div>
+
+            {/* Photo column — RIGHT */}
+            <FadeIn className="md:w-[45%] flex-shrink-0 order-1 md:order-2">
+              <div className="h-[380px] md:h-full min-h-[560px] overflow-hidden">
+                <img
+                  src="/audrey.png"
+                  alt="Audrey Mondesir, CRIA"
+                  className="w-full h-full object-cover object-center"
+                  data-testid="img-audrey"
+                />
+              </div>
+            </FadeIn>
           </div>
         </section>
 
