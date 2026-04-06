@@ -469,9 +469,9 @@ export default function Individuals() {
           {/* Gradient overlay — stronger on left where text sits, lighter on right */}
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/15" />
 
-          {/* Content — left-aligned over the overlay */}
+          {/* Content — pinned to left edge */}
           <motion.div
-            className="relative z-10 max-w-6xl mx-auto px-8 lg:px-8 py-20 md:py-28 w-full md:max-w-[60%]"
+            className="relative z-10 px-8 md:px-16 py-20 md:py-28 w-full md:max-w-[52%]"
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.25 }}
