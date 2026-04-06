@@ -4,7 +4,7 @@ import { useLanguage } from "@/lib/i18n";
 import { Navbar } from "@/components/Navbar";
 
 const INDIVIDUAL_PHOTO = "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=1200&q=80";
-const BUSINESS_PHOTO   = "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1200&q=80";
+const BUSINESS_PHOTO   = "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80";
 
 export default function Home() {
   const { t } = useLanguage();
