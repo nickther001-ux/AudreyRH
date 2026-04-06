@@ -103,8 +103,8 @@ const FAQS = [
   {
     qFr: "Quel est le coût de l'accompagnement AudreyRH ?",
     qEn: "What is the cost of AudreyRH's support?",
-    aFr: "Une consultation initiale de 50 $ permet de faire le point sur votre situation et d'identifier vos opportunités. Les frais d'accompagnement pour la préparation de dossier sont discutés lors de cette consultation.",
-    aEn: "An initial $50 consultation allows us to assess your situation and identify your opportunities. Coaching fees for application preparation are discussed during this consultation.",
+    aFr: "Une consultation initiale de 80 $ permet de faire le point sur votre situation et d'identifier vos opportunités. Les frais d'accompagnement pour la préparation de dossier sont discutés lors de cette consultation.",
+    aEn: "An initial $80 consultation allows us to assess your situation and identify your opportunities. Coaching fees for application preparation are discussed during this consultation.",
   },
 ];
 

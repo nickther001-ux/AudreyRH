@@ -1,7 +1,7 @@
 # Audrey Mondesir - Career Consultation Website
 
 ## Overview
-A professional bilingual (French/English) consultation website for Audrey Mondesir, CRIA (Certified Industrial Relations Advisor), providing career strategy guidance for newcomers to Quebec. Features booking system with Stripe payment integration ($50 USD per consultation).
+A professional bilingual (French/English) consultation website for Audrey Mondesir, CRIA (Certified Industrial Relations Advisor), providing career strategy guidance for newcomers to Quebec. Features booking system with Stripe payment integration ($80 initial consultation).
 
 ## Project Structure
 - `client/` - React frontend with Vite
