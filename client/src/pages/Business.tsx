@@ -175,7 +175,15 @@ export default function Business() {
                     <Icon className="w-6 h-6 text-white/60" />
                   </div>
                   <h3 className="font-bold text-white text-xl mb-3">{t(`business.who.${type}.title` as any)}</h3>
-                  <p className="text-white/50 text-[14px] leading-relaxed">{t(`business.who.${type}.desc` as any)}</p>
+                  <p className="text-white/50 text-[14px] leading-relaxed mb-6">{t(`business.who.${type}.desc` as any)}</p>
+                  <ul className="space-y-2.5 border-t border-white/10 pt-5">
+                    {[1, 2, 3].map((i) => (
+                      <li key={i} className="flex items-start gap-2.5 text-[13px] text-white/60">
+                        <span className="flex-shrink-0 w-1 h-1 rounded-full bg-[#93c5fd] mt-2" />
+                        {t(`business.who.${type}.point${i}` as any)}
+                      </li>
+                    ))}
+                  </ul>
                 </StaggerItem>
               ))}
             </Stagger>
