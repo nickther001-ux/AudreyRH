@@ -13,6 +13,7 @@ import Grants from "@/pages/Grants";
 import Contact from "@/pages/Contact";
 import Individuals from "@/pages/Individuals";
 import Business from "@/pages/Business";
+import Faq from "@/pages/Faq";
 
 function Router() {
   return (
@@ -24,6 +25,7 @@ function Router() {
       <Route path="/admin" component={Admin} />
       <Route path="/terms" component={Terms} />
       <Route path="/grants" component={Grants} />
+      <Route path="/faq" component={Faq} />
       <Route path="/contact" component={Contact} />
       <Route component={NotFound} />
     </Switch>

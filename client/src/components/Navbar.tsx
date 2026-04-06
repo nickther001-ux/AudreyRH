@@ -21,6 +21,7 @@ export function Navbar() {
     { href: "/individuals", label: t("nav.individuals") },
     { href: "/business",   label: t("nav.business") },
     { href: "/grants",     label: t("nav.grants") },
+    { href: "/faq",        label: t("nav.faq") },
     { href: "/contact",    label: t("nav.contact") },
   ];
 

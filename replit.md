@@ -33,6 +33,7 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - `/admin` - Admin page for managing availability
 - `/terms` - Terms & Conditions page
 - `/grants` - Grants & Funding portal (4 categories: Artists, Entrepreneurs, SMEs, Corporate)
+- `/faq` - FAQ page (4 categories: Général, Consultation, Particuliers, Entreprises — accordion with 16 bilingual Q&As)
 - `/contact` - Contact & Grant Application form page
 
 ## User Preferences
