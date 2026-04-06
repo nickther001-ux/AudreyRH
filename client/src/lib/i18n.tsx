@@ -34,6 +34,7 @@ const translations = {
     "services.title": "Comment puis-je vous accompagner",
     "services.description": "Des services personnalisés pour maximiser vos chances de réussite professionnelle au Québec.",
     
+    "about.expertLabel": "Pourquoi une experte ?",
     "about.badge": "À propos d'Audrey RH",
     "about.title": "L'expertise de terrain au service de votre talent.",
     "about.text1": "Derrière Audrey RH, il y a une conviction : le talent n'a pas de frontières, mais le marché a ses règles. Forte d'un parcours de 16 ans dans les secteurs de la construction et de la fabrication, j'ai développé une compréhension profonde des réalités du travail au Québec. Aujourd'hui Conseillère en relations industrielles agréée (CRIA), je mets cette double expertise — ma connaissance du terrain et ma maîtrise des RH — au service de votre projet.",
@@ -653,6 +654,7 @@ const translations = {
     "services.title": "How I can support you",
     "services.description": "Personalized services to maximize your chances of professional success in Quebec.",
     
+    "about.expertLabel": "Why an expert?",
     "about.badge": "About Audrey RH",
     "about.title": "Field expertise at the service of your talent.",
     "about.text1": "Behind Audrey RH, there's a conviction: talent knows no borders, but the market has its rules. With a 16-year career in the construction and manufacturing sectors, I've developed a deep understanding of Quebec's work realities. Now a Certified Industrial Relations Advisor (CRIA), I put this dual expertise — my field knowledge and HR mastery — at the service of your project.",

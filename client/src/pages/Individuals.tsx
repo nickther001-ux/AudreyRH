@@ -6,7 +6,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
-import { FadeUp, Stagger, StaggerItem } from "@/lib/animations";
+import { FadeUp, FadeIn, Stagger, StaggerItem } from "@/lib/animations";
 
 type ServiceKey = "strategy" | "credentials" | "employability" | "integration" | null;
 
@@ -80,7 +80,7 @@ export default function Individuals() {
   useEffect(() => {
     const interval = setInterval(() => {
       setWordIndex((prev) => (prev + 1) % 3);
-    }, 1800);
+    }, 900);
     return () => clearInterval(interval);
   }, []);
 
@@ -457,7 +457,82 @@ export default function Individuals() {
           </div>
         </section>
 
-        {/* ── 5. COMPARISON — light gray ── */}
+        {/* ── 5. POURQUOI UNE EXPERTE — dark editorial split ── */}
+        <section className="bg-foreground py-0 overflow-hidden" data-testid="section-about">
+          <div className="max-w-6xl mx-auto flex flex-col md:flex-row">
+
+            {/* Photo column */}
+            <FadeIn className="md:w-[42%] flex-shrink-0">
+              <div className="h-[420px] md:h-full min-h-[480px] overflow-hidden">
+                <img
+                  src="/audrey.png"
+                  alt="Audrey Mondesir, CRIA"
+                  className="w-full h-full object-cover object-top"
+                  data-testid="img-audrey"
+                />
+              </div>
+            </FadeIn>
+
+            {/* Content column */}
+            <motion.div
+              className="flex-1 px-8 md:px-14 py-16 md:py-20 flex flex-col justify-center"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.25 }}
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.11, delayChildren: 0.1 } } }}
+            >
+              <motion.p
+                className="text-[11px] text-[#93c5fd] uppercase tracking-[0.22em] mb-6"
+                variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: { duration: 0.55 } } }}
+              >
+                {t("about.expertLabel")}
+              </motion.p>
+              <motion.h2
+                className="text-3xl md:text-4xl font-bold text-white leading-tight mb-2"
+                variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.65 } } }}
+              >
+                Audrey Mondesir
+              </motion.h2>
+              <motion.p
+                className="text-[12px] text-white/40 uppercase tracking-widest mb-8"
+                variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
+              >
+                CRIA · Conseillère en Relations Industrielles Agréée
+              </motion.p>
+              <motion.p
+                className="text-white/70 text-[15px] leading-relaxed mb-5"
+                variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
+              >
+                {t("about.text1")}
+              </motion.p>
+              <motion.p
+                className="text-white/55 text-[14px] leading-relaxed mb-10 italic border-l-2 border-[#93c5fd]/40 pl-4"
+                variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: { duration: 0.55 } } }}
+              >
+                {t("about.mission")}
+              </motion.p>
+
+              {/* 3 credential pills */}
+              <motion.div
+                className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-white/10"
+                variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.4, delay: 0.3 } } }}
+              >
+                {[
+                  { title: t("about.reason1Title"), text: t("about.reason1Text") },
+                  { title: t("about.reason2Title"), text: t("about.reason2Text") },
+                  { title: t("about.reason3Title"), text: t("about.reason3Text") },
+                ].map((r, i) => (
+                  <div key={i} className="bg-white/5 px-5 py-4" data-testid={`card-reason-${i}`}>
+                    <p className="text-white text-[13px] font-semibold mb-1">{r.title}</p>
+                    <p className="text-white/45 text-[12px] leading-relaxed">{r.text}</p>
+                  </div>
+                ))}
+              </motion.div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* ── 6. COMPARISON — light gray ── */}
         <section className="py-28 bg-muted/30" data-testid="section-comparison">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
             <FadeUp className="mb-16 text-center">
