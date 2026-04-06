@@ -46,25 +46,25 @@ const GRANT_CARDS = [
   {
     key: "artists",
     icon: Palette,
-    photo: "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&q=80",
+    photo: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80",
     hasDiagnostic: true,
   },
   {
     key: "entrepreneurs",
     icon: Lightbulb,
-    photo: "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&q=80",
+    photo: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80",
     hasDiagnostic: true,
   },
   {
     key: "sme",
     icon: Building2,
-    photo: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
+    photo: "https://images.unsplash.com/photo-1664575599736-c5197c684128?w=800&q=80",
     hasDiagnostic: true,
   },
   {
     key: "corporate",
     icon: Briefcase,
-    photo: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80",
+    photo: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
     hasDiagnostic: false,
   },
 ];
@@ -238,7 +238,7 @@ export default function Grants() {
         {/* ── 1. HERO — full-height dark editorial ── */}
         <section className="bg-foreground min-h-screen flex flex-col justify-end pb-24 pt-40 overflow-hidden relative" data-testid="section-grants-hero">
           <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-12"
-            style={{ backgroundImage: "url(https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80)" }} />
+            style={{ backgroundImage: "url(https://images.unsplash.com/photo-1565372195458-9de0b320ef04?w=1600&q=80)" }} />
           <motion.div
             className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full"
             initial="hidden" animate="show"
