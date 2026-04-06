@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, Briefcase, GraduationCap, TrendingUp, Users, CheckCircle, Target, Award, X } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
@@ -67,9 +67,21 @@ const TESTIMONIALS = [
   { initials: "F.D.", name: "Fatou D.", role: "Réceptionniste, MTL",              quote: "testimonial.4.text" },
 ];
 
+const NAVY = "[#1e3a5f]";
+
 export default function Individuals() {
   const [openDialog, setOpenDialog] = useState<ServiceKey>(null);
+  const [wordIndex, setWordIndex] = useState(0);
   const { t } = useLanguage();
+
+  const rotatingWords = [t("hero.rotating.1"), t("hero.rotating.2"), t("hero.rotating.3")];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIndex((prev) => (prev + 1) % 3);
+    }, 1800);
+    return () => clearInterval(interval);
+  }, []);
 
   const getDialogStats = (key: "strategy" | "credentials" | "employability" | "integration") => {
     const stats: Record<string, { value: string; source: string }[]> = {
@@ -128,14 +140,14 @@ export default function Individuals() {
                   </div>
                   <div className="overflow-y-auto flex-1 px-8 py-6 space-y-6">
                     {hasInsight(key) && (
-                      <div className="border-l-4 border-primary bg-primary/5 p-5">
+                      <div className="border-l-4 border-[#1e3a5f] bg-[#1e3a5f]/5 p-5">
                         <p className="text-slate-700 leading-relaxed text-[15px] italic">"{t(`dialog.${key}.insight`)}"</p>
                       </div>
                     )}
                     <div className="grid grid-cols-2 gap-4">
                       {stats.map((stat, idx) => (
-                        <div key={idx} className="border border-foreground/10 bg-foreground/5 p-4 text-center">
-                          <div className="text-3xl font-bold text-foreground mb-1">{stat.value}</div>
+                        <div key={idx} className="border border-[#1e3a5f]/10 bg-[#1e3a5f]/5 p-4 text-center">
+                          <div className="text-3xl font-bold text-[#1e3a5f] mb-1">{stat.value}</div>
                           <div className="text-sm text-slate-500">{t(`dialog.${key}.stat${idx + 1}`)}</div>
                           <div className="text-xs text-slate-400 mt-2 italic">Source: {stat.source}</div>
                         </div>
@@ -146,7 +158,7 @@ export default function Individuals() {
                       <ul className="space-y-2">
                         {[1, 2, 3, 4].map((i) => (
                           <li key={i} className="flex items-start gap-2.5 text-slate-600">
-                            <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                            <CheckCircle className="w-5 h-5 text-[#1e3a5f] flex-shrink-0 mt-0.5" />
                             <span className="text-sm leading-relaxed">{t(`dialog.${key}.p1.${i}`)}</span>
                           </li>
                         ))}
@@ -157,7 +169,7 @@ export default function Individuals() {
                       <ul className="space-y-2">
                         {[1, 2, 3, 4].map((i) => (
                           <li key={i} className="flex items-start gap-2.5 text-slate-600">
-                            <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                            <CheckCircle className="w-5 h-5 text-[#1e3a5f] flex-shrink-0 mt-0.5" />
                             <span className="text-sm leading-relaxed">{t(`dialog.${key}.p2.${i}`)}</span>
                           </li>
                         ))}
@@ -171,7 +183,7 @@ export default function Individuals() {
                   <div className="px-8 py-5 border-t border-slate-200 bg-white flex-shrink-0 flex flex-col sm:flex-row gap-3">
                     <Link href="/book" className="flex-1">
                       <Button
-                        className="w-full bg-primary hover:bg-primary/90 text-white font-semibold rounded-none h-12"
+                        className="w-full bg-[#1e3a5f] hover:bg-[#1e3a5f]/90 text-white font-semibold rounded-none h-12"
                         onClick={() => setOpenDialog(null)}
                         data-testid="button-modal-book"
                       >
@@ -213,7 +225,9 @@ export default function Individuals() {
               data-testid="text-hero-title"
             >
               {t("hero.title1")}<br />
-              <span className="text-primary">{t("hero.rotating.1")}</span>
+              <span key={wordIndex} className="inline-block text-[#93c5fd] animate-in fade-in slide-in-from-bottom-2 duration-300">
+                {rotatingWords[wordIndex]}
+              </span>
             </h1>
             <p className="text-white/60 text-lg max-w-xl leading-relaxed mb-12" data-testid="text-hero-description">
               {t("hero.description")}
@@ -282,15 +296,15 @@ export default function Individuals() {
                       />
                     </div>
                     <div className="p-6">
-                      <div className="w-10 h-10 bg-primary/10 flex items-center justify-center mb-4">
-                        <Icon className="w-5 h-5 text-primary" />
+                      <div className="w-10 h-10 bg-[#1e3a5f]/10 flex items-center justify-center mb-4">
+                        <Icon className="w-5 h-5 text-[#1e3a5f]" />
                       </div>
                       <h3 className="font-bold text-foreground text-[17px] mb-2">{t(`services.${svc.key}.title`)}</h3>
                       <p className="text-muted-foreground text-[13px] leading-relaxed mb-4">{t(`services.${svc.key}.desc`)}</p>
                       {svc.dialog ? (
                         <button
                           onClick={() => setOpenDialog(svc.key as ServiceKey)}
-                          className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-foreground uppercase tracking-wider hover:text-primary transition-colors"
+                          className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-foreground uppercase tracking-wider hover:text-[#1e3a5f] transition-colors"
                           data-testid={`button-learn-more-${svc.key}`}
                         >
                           {t(`services.${svc.key}.more`)} <ArrowRight className="w-3.5 h-3.5" />
@@ -298,7 +312,7 @@ export default function Individuals() {
                       ) : (
                         <Link
                           href="/book"
-                          className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-foreground uppercase tracking-wider hover:text-primary transition-colors"
+                          className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-foreground uppercase tracking-wider hover:text-[#1e3a5f] transition-colors"
                         >
                           {t(`services.${svc.key}.book` as any) || t("services.bookConsultation")} <ArrowRight className="w-3.5 h-3.5" />
                         </Link>
@@ -362,11 +376,11 @@ export default function Individuals() {
                 </div>
                 <ul className="space-y-3 mb-8">
                   <li className="flex items-start gap-2.5">
-                    <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-4 h-4 text-[#1e3a5f] flex-shrink-0 mt-0.5" />
                     <span className="text-[13px] text-foreground">{t("packages.discovery.feature1")}</span>
                   </li>
                   <li className="flex items-start gap-2.5">
-                    <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                    <CheckCircle className="w-4 h-4 text-[#1e3a5f] flex-shrink-0 mt-0.5" />
                     <span className="text-[13px] text-foreground">{t("packages.discovery.feature2")}</span>
                   </li>
                 </ul>
@@ -380,7 +394,7 @@ export default function Individuals() {
               {/* Essential – Popular */}
               <div className="bg-foreground p-8 relative" data-testid="card-package-essential">
                 <div className="absolute top-4 right-4">
-                  <span className="bg-primary text-white text-[10px] font-bold px-3 py-1 uppercase tracking-wider">Populaire</span>
+                  <span className="bg-[#1e3a5f] text-white text-[10px] font-bold px-3 py-1 uppercase tracking-wider">Populaire</span>
                 </div>
                 <div className="mb-8">
                   <h3 className="text-xl font-bold text-white mb-1">{t("packages.essential.name")}</h3>
@@ -393,13 +407,13 @@ export default function Individuals() {
                 <ul className="space-y-3 mb-8">
                   {[1, 2, 3].map((i) => (
                     <li key={i} className="flex items-start gap-2.5">
-                      <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                      <CheckCircle className="w-4 h-4 text-[#93c5fd] flex-shrink-0 mt-0.5" />
                       <span className="text-[13px] text-white/80">{t(`packages.essential.feature${i}` as any)}</span>
                     </li>
                   ))}
                 </ul>
                 <Link href="/book">
-                  <Button className="w-full rounded-none bg-primary hover:bg-primary/90 text-white h-11 text-[13px]">
+                  <Button className="w-full rounded-none bg-[#1e3a5f] hover:bg-[#1e3a5f]/90 text-white h-11 text-[13px]">
                     {t("nav.book")} <ArrowRight className="ml-2 w-4 h-4" />
                   </Button>
                 </Link>
@@ -418,7 +432,7 @@ export default function Individuals() {
                 <ul className="space-y-3 mb-8">
                   {[1, 2, 3].map((i) => (
                     <li key={i} className="flex items-start gap-2.5">
-                      <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                      <CheckCircle className="w-4 h-4 text-[#1e3a5f] flex-shrink-0 mt-0.5" />
                       <span className="text-[13px] text-foreground">{t(`packages.plan.feature${i}` as any)}</span>
                     </li>
                   ))}
@@ -462,7 +476,7 @@ export default function Individuals() {
                 <ul className="space-y-5">
                   {[1, 2, 3, 4, 5].map((i) => (
                     <li key={i} className="flex items-start gap-3 text-white/80 text-[14px]">
-                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <CheckCircle className="w-5 h-5 text-[#93c5fd] flex-shrink-0 mt-0.5" />
                       {t(`comparison.with.${i}` as any)}
                     </li>
                   ))}
