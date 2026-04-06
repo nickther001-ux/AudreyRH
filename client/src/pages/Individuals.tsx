@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 import { FadeUp, FadeIn, Stagger, StaggerItem } from "@/lib/animations";
+import audreyGuide from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
 
 type ServiceKey = "strategy" | "credentials" | "employability" | "integration" | null;
 
@@ -340,14 +341,31 @@ export default function Individuals() {
         <section className="bg-white py-28" data-testid="section-guide">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
 
-            {/* Header */}
+            {/* Header — two columns: text left, photo right */}
             <FadeUp className="mb-16">
-              <p className="text-[11px] text-black/40 uppercase tracking-[0.2em] mb-4">{t("individuals.guide.badge" as any)}</p>
-              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-                <h2 className="text-4xl md:text-5xl font-bold text-black leading-tight max-w-sm">
-                  {t("individuals.guide.title" as any)}<span className="text-orange-400">.</span>
-                </h2>
-                <p className="text-black/60 text-[14px] leading-relaxed max-w-sm">{t("individuals.guide.subtitle" as any)}</p>
+              <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-center">
+                {/* Text */}
+                <div className="flex-1 min-w-0">
+                  <p className="text-[11px] text-black/40 uppercase tracking-[0.2em] mb-4">{t("individuals.guide.badge" as any)}</p>
+                  <h2 className="text-4xl md:text-5xl font-bold text-black leading-tight mb-5">
+                    {t("individuals.guide.title" as any)}<span className="text-orange-400">.</span>
+                  </h2>
+                  <p className="text-black/60 text-[15px] leading-relaxed max-w-md">{t("individuals.guide.subtitle" as any)}</p>
+                </div>
+                {/* Photo */}
+                <div className="w-full md:w-64 lg:w-72 flex-shrink-0">
+                  <div className="relative">
+                    <img
+                      src={audreyGuide}
+                      alt="Audrey Mondesir, CRIA"
+                      className="w-full h-72 md:h-80 object-cover object-top"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-[#1e3a5f] px-4 py-3">
+                      <p className="text-white text-[13px] font-bold leading-tight">Audrey Mondesir</p>
+                      <p className="text-white/55 text-[11px] uppercase tracking-[0.1em]">CRIA · Conseillère agréée</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </FadeUp>
 
