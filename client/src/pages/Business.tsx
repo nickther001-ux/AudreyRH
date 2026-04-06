@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { ArrowRight, Users, TrendingUp, Award, CheckCircle, Briefcase, Target, Building2, DollarSign, ShieldCheck, Rocket, Heart, Factory } from "lucide-react";
@@ -36,6 +37,18 @@ const reasons = [
 
 export default function Business() {
   const { t } = useLanguage();
+  const [wordIndex, setWordIndex] = useState(0);
+  const rotatingWords = [
+    t("business.hero.rotating.1" as any),
+    t("business.hero.rotating.2" as any),
+    t("business.hero.rotating.3" as any),
+    t("business.hero.rotating.4" as any),
+  ];
+
+  useEffect(() => {
+    const id = setInterval(() => setWordIndex(i => (i + 1) % rotatingWords.length), 900);
+    return () => clearInterval(id);
+  }, [rotatingWords.length]);
 
   return (
     <div className="min-h-screen bg-white text-foreground flex flex-col">
@@ -66,7 +79,11 @@ export default function Business() {
               data-testid="text-business-title"
               variants={{ hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.25,0.1,0.25,1] } } }}
             >
-              {t("business.hero.title")}<span className="text-orange-400">.</span>
+              {t("business.hero.title.line1" as any)}<br />
+              <span key={wordIndex} className="inline-block text-[#93c5fd] animate-in fade-in slide-in-from-bottom-2 duration-300">
+                {rotatingWords[wordIndex]}
+              </span>{" "}
+              {t("business.hero.title.line2" as any)}<span className="text-orange-400">.</span>
             </motion.h1>
             <motion.p
               className="text-white/60 text-lg max-w-xl leading-relaxed mb-12"
