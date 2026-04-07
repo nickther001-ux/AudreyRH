@@ -7,7 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 import { FadeUp, FadeIn, Stagger, StaggerItem } from "@/lib/animations";
-import whoSmeBg       from "@assets/Gemini_Generated_Image_8kmtv78kmtv78kmt_1775506001928.png";
+import whoSmeBg       from "@assets/Gemini_Generated_Image_rn7mwxrn7mwxrn7m_1775523007407.png";
 import whoStartupBg   from "@assets/generated_images/who_startup.png";
 import whoCorporateBg from "@assets/generated_images/who_corporate.png";
 import whoNonprofitBg from "@assets/generated_images/who_nonprofit.png";
