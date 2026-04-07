@@ -182,20 +182,20 @@ export default function Business() {
           </div>
         </section>
 
-        {/* ── 3. WHO WE SERVE — midnight blue ── */}
-        <section className="bg-[#1e3a5f] py-28" data-testid="section-business-who">
+        {/* ── 3. WHO WE SERVE — white ── */}
+        <section className="bg-white py-28" data-testid="section-business-who">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
             <FadeUp className="mb-16">
-              <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{t("business.who.badge")}</p>
+              <p className="text-[11px] text-black/40 uppercase tracking-[0.2em] mb-4">{t("business.who.badge")}</p>
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-                <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+                <h2 className="text-4xl md:text-5xl font-bold text-black leading-tight">
                   {t("business.who.title")}
                 </h2>
-                <p className="text-white/50 text-[14px] leading-relaxed max-w-sm">{t("business.who.subtitle")}</p>
+                <p className="text-black/55 text-[14px] leading-relaxed max-w-sm">{t("business.who.subtitle")}</p>
               </div>
             </FadeUp>
 
-            <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10">
+            <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/8">
               {WHO_CARDS.map(({ type, Icon, image }) => (
                 <StaggerItem key={type} variant="fadeUp" className="relative overflow-hidden group" data-testid={`card-business-who-${type}`}>
                   {/* Background photo */}
