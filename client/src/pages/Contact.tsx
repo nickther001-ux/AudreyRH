@@ -165,7 +165,8 @@ export default function Contact() {
                 <div className="space-y-3" data-testid="contact-response-info">
                   {[
                     { label: language === "en" ? "Format" : "Format", value: "Zoom · Google Meet" },
-                    { label: language === "en" ? "Duration" : "Durée", value: "60 min" },
+                    { label: language === "en" ? "Free call" : "Appel gratuit", value: "15 min" },
+                    { label: language === "en" ? "Paid session" : "Consultation payante", value: "60 min" },
                     { label: language === "en" ? "Response" : "Réponse", value: t("contact.info.responseTime") },
                     { label: "Email", value: "info@audreyrh.com" },
                   ].map(({ label, value }) => (
