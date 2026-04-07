@@ -12,13 +12,17 @@ import whoStartupBg   from "@assets/generated_images/who_startup.png";
 import whoCorporateBg from "@assets/generated_images/who_corporate.png";
 import whoNonprofitBg from "@assets/generated_images/who_nonprofit.png";
 import processStepsBg from "@assets/generated_images/process_steps_bg.png";
+import svcTalentImg    from "@assets/stock_images/talent_acquisition.jpg";
+import svcStrategyImg  from "@assets/stock_images/hr_strategy.jpg";
+import svcGrantsImg    from "@assets/stock_images/grants_funding.jpg";
+import svcComplianceImg from "@assets/stock_images/compliance_labour.jpg";
 
 
 const services = [
-  { icon: Users,       key: "talent",     color: "text-primary" },
-  { icon: TrendingUp,  key: "strategy",   color: "text-accent" },
-  { icon: DollarSign,  key: "grants",     color: "text-emerald-600" },
-  { icon: ShieldCheck, key: "compliance", color: "text-slate-600" },
+  { icon: Users,       key: "talent",     photo: svcTalentImg },
+  { icon: TrendingUp,  key: "strategy",   photo: svcStrategyImg },
+  { icon: DollarSign,  key: "grants",     photo: svcGrantsImg },
+  { icon: ShieldCheck, key: "compliance", photo: svcComplianceImg },
 ];
 
 const WHO_CARDS = [
@@ -142,21 +146,30 @@ export default function Business() {
               {services.map((svc) => {
                 const Icon = svc.icon;
                 return (
-                  <StaggerItem key={svc.key} variant="fadeUp" className="bg-foreground min-h-[380px] flex flex-col" data-testid={`card-business-service-${svc.key}`}>
-                    <div className="flex flex-col h-full p-10">
-                      <div className="w-10 h-10 bg-white/10 flex items-center justify-center mb-5 flex-shrink-0">
-                        <Icon className="w-5 h-5 text-white" />
+                  <StaggerItem key={svc.key} variant="fadeUp" className="relative overflow-hidden group min-h-[420px] flex flex-col" data-testid={`card-business-service-${svc.key}`}>
+                    {/* Photo */}
+                    <img
+                      src={svc.photo}
+                      alt=""
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    />
+                    {/* Gradient — transparent top → dark navy bottom */}
+                    <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(10,20,50,0.25) 0%, rgba(10,20,50,0.70) 50%, rgba(10,20,50,0.92) 100%)" }} />
+                    {/* Content pinned to bottom */}
+                    <div className="relative z-10 flex flex-col justify-end h-full p-10">
+                      <div className="w-9 h-9 bg-white/20 backdrop-blur-sm flex items-center justify-center mb-4 flex-shrink-0">
+                        <Icon className="w-4 h-4 text-white" />
                       </div>
-                      <h3 className="font-bold text-white text-xl mb-3">
+                      <h3 className="font-bold text-white text-xl mb-2">
                         {t(`business.service.${svc.key}.title` as any)}
                       </h3>
-                      <p className="text-white/70 text-[14px] leading-relaxed mb-5">
+                      <p className="text-white/80 text-[14px] leading-relaxed mb-5">
                         {t(`business.service.${svc.key}.desc` as any)}
                       </p>
-                      <ul className="space-y-2 mt-auto border-t border-white/10 pt-5">
+                      <ul className="space-y-2 border-t border-white/20 pt-4">
                         {[1, 2, 3].map((i) => (
-                          <li key={i} className="flex items-start gap-2 text-[13px] text-white/60">
-                            <CheckCircle className="w-4 h-4 text-white/40 flex-shrink-0 mt-0.5" />
+                          <li key={i} className="flex items-start gap-2 text-[13px] text-white/75">
+                            <CheckCircle className="w-4 h-4 text-white/50 flex-shrink-0 mt-0.5" />
                             {t(`business.service.${svc.key}.point${i}` as any)}
                           </li>
                         ))}

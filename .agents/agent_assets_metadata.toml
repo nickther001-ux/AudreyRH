@@ -1,5 +1,4 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "Ck7dLxwBhvjcsbncgQVdn"
@@ -42,3 +41,21 @@ id = "lSLF1x5aHJLeXCTeieEbv"
 uri = "file://attached_assets/generated_images/process_steps_bg.png"
 type = "image"
 title = "generated_image"
+
+[[outputs]]
+id = "t9ncZGut59z-QeD3P2SPN"
+uri = "file://attached_assets/stock_images/talent_acquisition.jpg"
+type = "image"
+title = "professional diverse team recruitment interview modern office"
+
+[[outputs]]
+id = "FWfJXWZzP44ujT9QYDRYA"
+uri = "file://attached_assets/stock_images/hr_strategy.jpg"
+type = "image"
+title = "corporate HR strategy business meeting boardroom executives"
+
+[[outputs]]
+id = "vFb97cbpNxZrSS1qgSGre"
+uri = "file://attached_assets/stock_images/grants_funding.jpg"
+type = "image"
+title = "government funding grant business financial growth success"
