@@ -13,12 +13,6 @@ import whoCorporateBg from "@assets/generated_images/who_corporate.png";
 import whoNonprofitBg from "@assets/generated_images/who_nonprofit.png";
 import processStepsBg from "@assets/generated_images/process_steps_bg.png";
 
-const SERVICE_PHOTOS: Record<string, string> = {
-  talent:     "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&q=80",
-  strategy:   "https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80",
-  grants:     "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80",
-  compliance: "https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&q=80",
-};
 
 const services = [
   { icon: Users,       key: "talent",     color: "text-primary" },
@@ -148,40 +142,21 @@ export default function Business() {
               {services.map((svc) => {
                 const Icon = svc.icon;
                 return (
-                  <StaggerItem key={svc.key} variant="fadeUp" className="relative overflow-hidden group min-h-[380px] flex flex-col" data-testid={`card-business-service-${svc.key}`}>
-                    {/* Background photo */}
-                    <img
-                      src={SERVICE_PHOTOS[svc.key]}
-                      alt=""
-                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-                    />
-                    {/* Linear gradient overlay */}
-                    <div className="absolute inset-0" style={{ background: "linear-gradient(rgba(0,0,0,0.40), rgba(0,0,0,0.40))" }} />
-                    {/* Content — 40px padding on all sides */}
-                    <div className="relative z-10 flex flex-col h-full p-10">
-                      <div className="w-10 h-10 bg-white/15 flex items-center justify-center mb-5 flex-shrink-0">
+                  <StaggerItem key={svc.key} variant="fadeUp" className="bg-foreground min-h-[380px] flex flex-col" data-testid={`card-business-service-${svc.key}`}>
+                    <div className="flex flex-col h-full p-10">
+                      <div className="w-10 h-10 bg-white/10 flex items-center justify-center mb-5 flex-shrink-0">
                         <Icon className="w-5 h-5 text-white" />
                       </div>
-                      <h3
-                        className="font-bold text-white text-xl mb-3"
-                        style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}
-                      >
+                      <h3 className="font-bold text-white text-xl mb-3">
                         {t(`business.service.${svc.key}.title` as any)}
                       </h3>
-                      <p
-                        className="text-white/85 text-[14px] leading-relaxed mb-5"
-                        style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}
-                      >
+                      <p className="text-white/70 text-[14px] leading-relaxed mb-5">
                         {t(`business.service.${svc.key}.desc` as any)}
                       </p>
-                      <ul className="space-y-2 mt-auto border-t border-white/20 pt-5">
+                      <ul className="space-y-2 mt-auto border-t border-white/10 pt-5">
                         {[1, 2, 3].map((i) => (
-                          <li
-                            key={i}
-                            className="flex items-start gap-2 text-[13px] text-white/85"
-                            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}
-                          >
-                            <CheckCircle className="w-4 h-4 text-white/70 flex-shrink-0 mt-0.5" />
+                          <li key={i} className="flex items-start gap-2 text-[13px] text-white/60">
+                            <CheckCircle className="w-4 h-4 text-white/40 flex-shrink-0 mt-0.5" />
                             {t(`business.service.${svc.key}.point${i}` as any)}
                           </li>
                         ))}
