@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 import { FadeUp, FadeIn, Stagger, StaggerItem } from "@/lib/animations";
 import whoSmeBg       from "@assets/Gemini_Generated_Image_8kmtv78kmtv78kmt_1775506001928.png";
-import whoStartupBg   from "@assets/Gemini_Generated_Image_ujepw0ujepw0ujep_1775505394811.png";
-import whoCorporateBg from "@assets/Gemini_Generated_Image_oiinvioiinvioiin_1775503767318.png";
-import whoNonprofitBg from "@assets/Gemini_Generated_Image_nsmo44nsmo44nsmo_1775502902951.png";
+import whoStartupBg   from "@assets/Gemini_Generated_Image_oiinvioiinvioiin_1775511258303.png";
+import whoCorporateBg from "@assets/image_1774339960070.png";
+import whoNonprofitBg from "@assets/image_1774481027027.png";
 
 const SERVICE_PHOTOS: Record<string, string> = {
   talent:     "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&q=80",
@@ -27,10 +27,10 @@ const services = [
 ];
 
 const WHO_CARDS = [
-  { type: "sme",       Icon: Factory,   num: "1", image: whoSmeBg },
-  { type: "startup",   Icon: Rocket,    num: "2", image: whoStartupBg },
-  { type: "corporate", Icon: Building2, num: "3", image: whoCorporateBg },
-  { type: "nonprofit", Icon: Heart,     num: "4", image: whoNonprofitBg },
+  { type: "sme",       Icon: Factory,   image: whoSmeBg },
+  { type: "startup",   Icon: Rocket,    image: whoStartupBg },
+  { type: "corporate", Icon: Building2, image: whoCorporateBg },
+  { type: "nonprofit", Icon: Heart,     image: whoNonprofitBg },
 ];
 
 const reasons = [
@@ -191,7 +191,7 @@ export default function Business() {
             </FadeUp>
 
             <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/10">
-              {WHO_CARDS.map(({ type, Icon, num, image }) => (
+              {WHO_CARDS.map(({ type, Icon, image }) => (
                 <StaggerItem key={type} variant="fadeUp" className="relative overflow-hidden group" data-testid={`card-business-who-${type}`}>
                   {/* Background photo */}
                   <img
@@ -199,19 +199,18 @@ export default function Business() {
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  {/* Dark overlay — lightens slightly on hover */}
-                  <div className="absolute inset-0 bg-[#1e3a5f]/82 group-hover:bg-[#1e3a5f]/72 transition-colors duration-500" />
+                  {/* Dark overlay — light enough to see the photo */}
+                  <div className="absolute inset-0 bg-[#1e3a5f]/62 group-hover:bg-[#1e3a5f]/55 transition-colors duration-500" />
                   {/* Content */}
                   <div className="relative z-10 p-10">
-                    <span className="absolute top-6 right-8 text-6xl font-black text-white/8 leading-none select-none">{num}</span>
                     <div className="w-12 h-12 bg-white/10 flex items-center justify-center mb-6">
                       <Icon className="w-6 h-6 text-white/70" />
                     </div>
-                    <h3 className="font-bold text-white text-xl mb-3">{t(`business.who.${type}.title` as any)}</h3>
-                    <p className="text-white/55 text-[14px] leading-relaxed mb-6">{t(`business.who.${type}.desc` as any)}</p>
-                    <ul className="space-y-2.5 border-t border-white/15 pt-5">
+                    <h3 className="font-bold text-white text-xl mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">{t(`business.who.${type}.title` as any)}</h3>
+                    <p className="text-white/80 text-[14px] leading-relaxed mb-6 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]">{t(`business.who.${type}.desc` as any)}</p>
+                    <ul className="space-y-2.5 border-t border-white/20 pt-5">
                       {[1, 2, 3].map((i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-[13px] text-white/65">
+                        <li key={i} className="flex items-start gap-2.5 text-[13px] text-white/80 drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
                           <span className="flex-shrink-0 w-1 h-1 rounded-full bg-[#93c5fd] mt-2" />
                           {t(`business.who.${type}.point${i}` as any)}
                         </li>
