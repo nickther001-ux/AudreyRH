@@ -519,7 +519,7 @@ export default function Individuals() {
 
         {/* ── 4. PROCESS — dark ── */}
         <section className="bg-foreground py-28 relative overflow-hidden" data-testid="section-process">
-          <img src={processStepsBg} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none select-none" />
+          <img src={processStepsBg} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-40 pointer-events-none select-none" />
           <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
             <FadeUp className="mb-16">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{t("home.process.label")}</p>
@@ -533,7 +533,7 @@ export default function Individuals() {
                 { titleKey: "home.process.2.title", textKey: "home.process.2.text" },
                 { titleKey: "home.process.3.title", textKey: "home.process.3.text" },
               ].map((step) => (
-                <StaggerItem key={step.titleKey} variant="fadeUp" className="bg-foreground p-10">
+                <StaggerItem key={step.titleKey} variant="fadeUp" className="bg-black/50 backdrop-blur-sm p-10">
                   <h3 className="font-bold text-white text-xl mb-3">{t(step.titleKey as any)}</h3>
                   <p className="text-white/50 text-[14px] leading-relaxed">{t(step.textKey as any)}</p>
                 </StaggerItem>
