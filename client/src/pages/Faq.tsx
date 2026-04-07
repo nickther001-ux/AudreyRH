@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Plus, Minus, ArrowRight } from "lucide-react";
+import { Plus, Minus, ArrowRight, ChevronRight } from "lucide-react";
 import { Link } from "wouter";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -24,6 +24,14 @@ export default function Faq() {
   const [openFaq, setOpenFaq] = useState<string | null>(null);
 
   const toggle = (id: string) => setOpenFaq(openFaq === id ? null : id);
+
+  const jumpTo = useCallback((id: string) => {
+    setOpenFaq(id);
+    setTimeout(() => {
+      const el = document.getElementById(`faq-item-${id}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 50);
+  }, []);
 
   return (
     <div className="min-h-screen bg-white text-foreground flex flex-col">
@@ -59,7 +67,47 @@ export default function Faq() {
           </motion.div>
         </section>
 
-        {/* ── ALL FAQ SECTIONS ── */}
+        {/* ── QUESTIONS INDEX ── white section at top showing all titles ── */}
+        <section className="bg-white py-16 border-b border-gray-100" data-testid="section-faq-index">
+          <div className="max-w-6xl mx-auto px-6 lg:px-8">
+            <p className="text-[11px] text-muted-foreground uppercase tracking-[0.22em] mb-10">
+              {t("faq.badge" as any)} — {FAQ_COUNT * CATEGORIES.length} {t("faq.hero.title3" as any)}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
+              {CATEGORIES.map(({ key, num }) => (
+                <div key={key}>
+                  <div className="flex items-center gap-3 mb-5">
+                    <span className="text-[10px] font-black text-[#93c5fd] uppercase tracking-[0.2em]">{num}</span>
+                    <h3 className="text-[13px] font-bold text-foreground uppercase tracking-[0.12em]">
+                      {t(`faq.category.${key}` as any)}
+                    </h3>
+                  </div>
+                  <ul className="space-y-2">
+                    {Array.from({ length: FAQ_COUNT }, (_, i) => i + 1).map((n) => {
+                      const id = `${key}-${n}`;
+                      return (
+                        <li key={id}>
+                          <button
+                            onClick={() => jumpTo(id)}
+                            data-testid={`index-link-${id}`}
+                            className="group flex items-start gap-2 text-left text-[13px] text-muted-foreground hover:text-[#1e3a5f] transition-colors leading-snug w-full"
+                          >
+                            <ChevronRight className="w-3.5 h-3.5 mt-0.5 flex-shrink-0 text-[#93c5fd] opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <span className="group-hover:underline underline-offset-2">
+                              {t(`faq.${key}.q${n}` as any)}
+                            </span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── ALL FAQ SECTIONS — accordions ── */}
         <section className="bg-[#1e3a5f] py-20" data-testid="section-faq-content">
           <div className="max-w-5xl mx-auto px-6 lg:px-8 space-y-20">
             {CATEGORIES.map(({ key, num }) => (
@@ -79,7 +127,7 @@ export default function Faq() {
                     const id = `${key}-${n}`;
                     const isOpen = openFaq === id;
                     return (
-                      <div key={id} data-testid={`faq-item-${key}-${n}`}>
+                      <div key={id} id={`faq-item-${id}`} data-testid={`faq-item-${key}-${n}`}>
                         <button
                           onClick={() => toggle(id)}
                           className="w-full flex items-start justify-between gap-6 py-6 text-left group hover:bg-white/5 transition-colors px-4 -mx-4 rounded"
