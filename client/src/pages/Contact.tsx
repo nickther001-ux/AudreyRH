@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Mail, MapPin, Clock, ArrowRight, Send, CheckCircle } from "lucide-react";
+import { Mail, ArrowRight, Send, CheckCircle, User, CalendarDays, Clock } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Input } from "@/components/ui/input";
@@ -8,10 +8,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useLanguage } from "@/lib/i18n";
 import bokehBg from "@assets/IMM_1768534974735.png";
-import audreyPhoto from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
 
 export default function Contact() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
@@ -101,77 +100,83 @@ export default function Contact() {
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-5">
 
-            {/* ── LEFT — midnight blue sidebar ── */}
-            <div className="lg:col-span-2 bg-[#1e3a5f] py-16 px-10 flex flex-col gap-10">
+            {/* ── LEFT — 3 info blocks ── */}
+            <div className="lg:col-span-2 bg-[#1e3a5f] py-16 px-10 flex flex-col divide-y divide-white/10">
 
-              {/* Audrey photo */}
-              <div className="relative">
-                <img
-                  src={audreyPhoto}
-                  alt="Audrey Mondesir, CRIA"
-                  className="w-full h-56 object-cover object-top"
-                />
-                <div className="absolute bottom-0 left-0 right-0 bg-[#162c48]/90 px-4 py-3">
-                  <p className="text-white text-[13px] font-bold">Audrey Mondesir</p>
-                  <p className="text-white/45 text-[10px] uppercase tracking-[0.12em]">CRIA · Conseillère agréée</p>
+              {/* 01 — Who you'll meet */}
+              <div className="pb-10">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-7 h-7 border border-white/20 flex items-center justify-center flex-shrink-0">
+                    <User className="w-3.5 h-3.5 text-white/50" />
+                  </div>
+                  <p className="text-[10px] text-white/35 uppercase tracking-[0.22em]">
+                    {language === "en" ? "Who you'll meet" : "Avec qui vous échangerez"}
+                  </p>
+                </div>
+                <h3 className="text-white text-[18px] font-bold mb-1 leading-snug">Audrey Mondesir</h3>
+                <p className="text-white/45 text-[11px] uppercase tracking-[0.12em] mb-4">CRIA · Conseillère agréée</p>
+                <p className="text-white/60 text-[13px] leading-relaxed">
+                  {language === "en"
+                    ? "Certified Industrial Relations Advisor with 16+ years of experience. Audrey specialises in helping newcomers navigate the Quebec job market."
+                    : "Conseillère en relations industrielles agréée avec 16 ans d'expérience. Audrey aide les nouveaux arrivants à naviguer le marché du travail québécois."}
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {["CRIA", "Zoom", "Google Meet", "Montréal"].map((tag) => (
+                    <span key={tag} className="text-[10px] text-white/40 border border-white/12 px-2.5 py-1 uppercase tracking-[0.1em]">{tag}</span>
+                  ))}
                 </div>
               </div>
 
-              {/* Contact info */}
-              <div className="space-y-7">
-                <p className="text-[10px] text-white/30 uppercase tracking-[0.25em]">{t("contact.info.title")}</p>
-
-                <div className="flex items-start gap-4" data-testid="contact-email-info">
-                  <div className="w-8 h-8 border border-white/15 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Mail className="w-3.5 h-3.5 text-white/50" />
+              {/* 02 — Choose a time */}
+              <div className="py-10">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-7 h-7 border border-white/20 flex items-center justify-center flex-shrink-0">
+                    <CalendarDays className="w-3.5 h-3.5 text-white/50" />
                   </div>
-                  <div>
-                    <p className="text-white/40 text-[10px] uppercase tracking-[0.12em] mb-1">{t("contact.info.email")}</p>
-                    <a href="mailto:info@audreyrh.com" className="text-white text-[14px] font-semibold hover:text-white/80 transition-colors">
-                      info@audreyrh.com
-                    </a>
-                  </div>
+                  <p className="text-[10px] text-white/35 uppercase tracking-[0.22em]">
+                    {language === "en" ? "Choose a time & date" : "Choisissez un moment"}
+                  </p>
                 </div>
-
-                <div className="flex items-start gap-4" data-testid="contact-location-info">
-                  <div className="w-8 h-8 border border-white/15 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <MapPin className="w-3.5 h-3.5 text-white/50" />
-                  </div>
-                  <div>
-                    <p className="text-white/40 text-[10px] uppercase tracking-[0.12em] mb-1">{t("contact.info.location")}</p>
-                    <p className="text-white text-[14px] font-semibold">Montréal, Québec</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4" data-testid="contact-response-info">
-                  <div className="w-8 h-8 border border-white/15 flex items-center justify-center flex-shrink-0 mt-0.5">
-                    <Clock className="w-3.5 h-3.5 text-white/50" />
-                  </div>
-                  <div>
-                    <p className="text-white/40 text-[10px] uppercase tracking-[0.12em] mb-1">{t("contact.info.response")}</p>
-                    <p className="text-white text-[14px] font-semibold">{t("contact.info.responseTime")}</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Divider */}
-              <div className="border-t border-white/10" />
-
-              {/* Book CTA */}
-              <div>
-                <p className="text-[10px] text-white/30 uppercase tracking-[0.25em] mb-4">{t("contact.sidebar.consultTitle")}</p>
-                <p className="text-white/55 text-[13px] leading-relaxed mb-6">
-                  {t("contact.sidebar.consultText")}
+                <p className="text-white/60 text-[13px] leading-relaxed mb-6">
+                  {language === "en"
+                    ? "Prefer to book directly? Pick an available slot and we'll confirm within 24 hours."
+                    : "Vous préférez réserver directement ? Choisissez un créneau disponible et nous confirmons sous 24h."}
                 </p>
                 <a
                   href="/book"
                   data-testid="link-contact-book"
-                  className="inline-flex items-center gap-3 text-white text-[12px] font-bold uppercase tracking-[0.15em] border border-white/20 px-5 py-3 hover:bg-white/8 transition-colors group"
+                  className="inline-flex items-center gap-3 text-white text-[11px] font-bold uppercase tracking-[0.18em] border border-white/25 px-5 py-3 hover:bg-white/8 transition-colors group w-full justify-center"
                 >
                   {t("contact.sidebar.consultCta")}
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
+
+              {/* 03 — Availability */}
+              <div className="pt-10">
+                <div className="flex items-center gap-3 mb-5">
+                  <div className="w-7 h-7 border border-white/20 flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-3.5 h-3.5 text-white/50" />
+                  </div>
+                  <p className="text-[10px] text-white/35 uppercase tracking-[0.22em]">
+                    {language === "en" ? "Availability" : "Disponibilités"}
+                  </p>
+                </div>
+                <div className="space-y-3" data-testid="contact-response-info">
+                  {[
+                    { label: language === "en" ? "Format" : "Format", value: "Zoom · Google Meet" },
+                    { label: language === "en" ? "Duration" : "Durée", value: "60 min" },
+                    { label: language === "en" ? "Response" : "Réponse", value: t("contact.info.responseTime") },
+                    { label: "Email", value: "info@audreyrh.com" },
+                  ].map(({ label, value }) => (
+                    <div key={label} className="flex items-start justify-between gap-4 text-[13px]">
+                      <span className="text-white/35 flex-shrink-0">{label}</span>
+                      <span className="text-white text-right font-medium">{value}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
             </div>
 
             {/* ── RIGHT — form ── */}
