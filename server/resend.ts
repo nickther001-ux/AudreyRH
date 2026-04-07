@@ -300,6 +300,192 @@ export async function sendBookingConfirmation(data: AppointmentEmailData) {
   if (r1.error && r2.error) throw new Error(`Both booking emails failed: ${r1.error.message}`);
 }
 
+// ─── Free Consultation Request ───────────────────────────────────────────────
+
+export type FreeConsultationData = {
+  clientName: string;
+  clientEmail: string;
+  phone?: string | null;
+  preferredDate: string;
+  preferredTime: string;
+  platform: string;
+  reason: string;
+};
+
+export async function sendFreeConsultationRequest(data: FreeConsultationData) {
+  const client = getClient();
+  const platformLabel = data.platform === 'google_meet' ? 'Google Meet' : 'Zoom';
+  const timeDisplay = data.preferredTime || '—';
+
+  // 1 — Internal notification to Audrey
+  const notifyHtml = `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"/><title>Nouvelle Demande — AudreyRH</title></head>
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:Inter,ui-sans-serif,system-ui,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:40px 0;">
+    <tr><td align="center">
+      <table width="520" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
+        <tr>
+          <td style="background:#1e3a5f;padding:0;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr><td style="background:#f97316;height:4px;font-size:0;">&nbsp;</td></tr>
+              <tr>
+                <td style="padding:24px 32px;">
+                  <p style="margin:0;font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">AudreyRH · Demande de consultation</p>
+                  <p style="margin:0;font-size:20px;font-weight:700;color:#fff;">📅 Nouvelle demande — À CONFIRMER</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:28px 32px 32px;">
+            <table cellpadding="0" cellspacing="0" style="margin-bottom:20px;">
+              <tr><td style="background:#fef9c3;border:1px solid #fde047;border-radius:8px;padding:10px 18px;">
+                <p style="margin:0;font-size:13px;font-weight:600;color:#854d0e;">⏳ Statut : EN ATTENTE — Veuillez confirmer ou refuser cette demande</p>
+              </td></tr>
+            </table>
+            <div style="margin-bottom:16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;">
+              <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Client</p>
+              <p style="margin:0;font-size:16px;color:#1e293b;font-weight:700;">${data.clientName}
+                <a href="mailto:${data.clientEmail}" style="font-size:14px;color:#f97316;text-decoration:none;margin-left:6px;">(${data.clientEmail})</a>
+              </p>
+              ${data.phone ? `<p style="margin:4px 0 0;font-size:14px;color:#64748b;">${data.phone}</p>` : ''}
+            </div>
+            <div style="margin-bottom:16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;">
+              <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Date souhaitée</p>
+              <p style="margin:0;font-size:15px;font-weight:600;color:#1e293b;">${data.preferredDate} · ${timeDisplay}</p>
+            </div>
+            <div style="margin-bottom:16px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:16px 20px;">
+              <p style="margin:0 0 4px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Plateforme</p>
+              <p style="margin:0;font-size:15px;font-weight:600;color:#1e293b;">${platformLabel}</p>
+            </div>
+            <div style="margin-bottom:24px;background:#f8fafc;border:1px solid #e2e8f0;border-left:4px solid #1e3a5f;border-radius:0 10px 10px 0;padding:16px 20px;">
+              <p style="margin:0 0 6px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:1px;">Message</p>
+              <p style="margin:0;font-size:14px;color:#334155;line-height:1.75;">${data.reason.replace(/\n/g, '<br/>')}</p>
+            </div>
+            <table cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="background:#1e3a5f;border-radius:8px;">
+                  <a href="mailto:${data.clientEmail}" style="display:inline-block;padding:12px 28px;font-size:14px;font-weight:700;color:#fff;text-decoration:none;">
+                    Répondre à ${data.clientName} →
+                  </a>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#f8fafc;border-top:1px solid #e2e8f0;padding:16px 32px;text-align:center;">
+            <p style="margin:0;font-size:12px;color:#94a3b8;">AudreyRH · Notification automatique · <a href="https://audreyrh.com" style="color:#f97316;text-decoration:none;">audreyrh.com</a></p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`;
+
+  // 2 — Client acknowledgement (pending, not confirmed)
+  const clientHtml = `
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"/><title>Demande reçue — AudreyRH</title></head>
+<body style="margin:0;padding:0;background:#f1f5f9;font-family:Inter,ui-sans-serif,system-ui,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f1f5f9;padding:48px 0;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.10);">
+        <tr>
+          <td style="background:#1e3a5f;padding:0;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr><td style="background:#f97316;height:4px;font-size:0;">&nbsp;</td></tr>
+              <tr>
+                <td style="padding:32px 48px 24px;text-align:center;">
+                  <p style="margin:0;font-size:30px;font-weight:800;color:#fff;letter-spacing:-1px;">Audrey<span style="color:#f97316;">RH</span><span style="color:#f97316;">.</span></p>
+                  <p style="margin:6px 0 0;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:2px;text-transform:uppercase;">Conseillère en ressources humaines agréée · CRIA</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:0 48px 32px;text-align:center;">
+                  <table cellpadding="0" cellspacing="0" style="margin:0 auto;background:rgba(249,115,22,0.15);border:1px solid rgba(249,115,22,0.35);border-radius:100px;">
+                    <tr><td style="padding:10px 24px;">
+                      <p style="margin:0;font-size:13px;font-weight:600;color:#f97316;">📩&nbsp;&nbsp;Demande reçue — Confirmation sous 48h</p>
+                    </td></tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:48px;">
+            <p style="margin:0 0 6px;font-size:24px;font-weight:700;color:#1e293b;">Bonjour ${data.clientName},</p>
+            <p style="margin:0 0 28px;font-size:15px;color:#64748b;line-height:1.75;">
+              Merci pour votre demande de consultation gratuite.<br/>
+              <em>Thank you for your free consultation request.</em><br/><br/>
+              Votre demande a bien été reçue. <strong style="color:#1e293b;">Audrey Mondesir, CRIA</strong> vous confirmera la date dans les <strong>24 à 48 heures ouvrables</strong>.
+            </p>
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;">
+              <tr><td style="padding:24px 28px;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                    <span style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Date souhaitée / Preferred Date</span><br/>
+                    <span style="font-size:15px;font-weight:600;color:#1e293b;">${data.preferredDate}</span>
+                  </td></tr>
+                  <tr><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                    <span style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Heure / Time</span><br/>
+                    <span style="font-size:15px;font-weight:600;color:#1e293b;">${timeDisplay}</span>
+                  </td></tr>
+                  <tr><td style="padding:8px 0;border-bottom:1px solid #e2e8f0;">
+                    <span style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Plateforme</span><br/>
+                    <span style="font-size:15px;font-weight:600;color:#1e293b;">${platformLabel}</span>
+                  </td></tr>
+                  <tr><td style="padding:8px 0;">
+                    <span style="font-size:11px;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Statut / Status</span><br/>
+                    <span style="font-size:14px;font-weight:600;color:#d97706;">⏳ En attente de confirmation / Pending confirmation</span>
+                  </td></tr>
+                </table>
+              </td></tr>
+            </table>
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+              <tr><td style="background:#fef9c3;border:1px solid #fde047;border-radius:10px;padding:20px 24px;">
+                <p style="margin:0 0 8px;font-size:14px;font-weight:700;color:#92400e;">ℹ️ Important</p>
+                <p style="margin:0;font-size:13px;color:#78350f;line-height:1.7;">
+                  <strong>FR :</strong> Cette demande n'est pas encore confirmée. Vous recevrez un email de confirmation d'Audrey avec le lien de connexion.<br/>
+                  <em>EN: This request is not yet confirmed. You will receive a confirmation email from Audrey with the meeting link.</em>
+                </p>
+              </td></tr>
+            </table>
+            <p style="margin:0 0 8px;font-size:14px;color:#64748b;">
+              Questions ? <a href="mailto:info@audreyrh.com" style="color:#f97316;font-weight:600;text-decoration:none;">info@audreyrh.com</a>
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="background:#1e3a5f;padding:24px 48px;text-align:center;">
+            <p style="margin:0 0 6px;font-size:13px;color:rgba(255,255,255,0.85);font-weight:600;">AudreyRH</p>
+            <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.4);">
+              Montréal, Québec, Canada &nbsp;·&nbsp;
+              <a href="mailto:info@audreyrh.com" style="color:rgba(255,255,255,0.4);text-decoration:none;">info@audreyrh.com</a> &nbsp;·&nbsp;
+              <a href="https://audreyrh.com" style="color:#f97316;text-decoration:none;">audreyrh.com</a>
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body></html>`;
+
+  console.log('[Resend] Sending free consultation request emails for:', data.clientEmail);
+  const [r1, r2] = await Promise.all([
+    client.emails.send({ from: FROM, to: data.clientEmail, subject: 'Demande de consultation reçue — AudreyRH', html: clientHtml }),
+    client.emails.send({ from: FROM, to: NOTIFY_TO, replyTo: data.clientEmail, subject: `📅 Nouvelle demande gratuite : ${data.clientName} — ${data.preferredDate}`, html: notifyHtml }),
+  ]);
+  if (r1.error) console.error('[Resend] Free consult client email error:', JSON.stringify(r1.error));
+  if (r2.error) console.error('[Resend] Free consult notify email error:', JSON.stringify(r2.error));
+  if (r1.error && r2.error) throw new Error(`Both free consultation emails failed`);
+}
+
 // ─── Contact / grant application ────────────────────────────────────────────
 
 export type ContactEmailData = {

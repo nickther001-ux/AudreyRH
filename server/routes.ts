@@ -12,24 +12,49 @@ export async function registerRoutes(
   app.post(api.appointments.create.path, async (req, res) => {
     try {
       const input = api.appointments.create.input.parse(req.body);
-      
-      // If a slot was selected, verify it exists and try to book it atomically
-      if (input.slotId) {
+      const isFree = input.appointmentType === 'free_consultation';
+
+      // For PAID bookings only: lock the slot atomically
+      if (!isFree && input.slotId) {
         const bookedSlot = await storage.bookSlot(input.slotId);
         if (!bookedSlot) {
-          // Either slot doesn't exist or was already booked by another request
           return res.status(400).json({ message: 'Ce créneau n\'est plus disponible. Veuillez en choisir un autre.' });
         }
       }
-      
+
       const appointment = await storage.createAppointment(input);
-      
+
+      // ── FREE CONSULTATION — send notification emails, no payment ──
+      if (isFree) {
+        try {
+          const { sendFreeConsultationRequest } = await import('./resend');
+          const dateStr = appointment.date
+            ? new Date(appointment.date).toLocaleDateString('fr-CA', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+              })
+            : '';
+          await sendFreeConsultationRequest({
+            clientName: appointment.name,
+            clientEmail: appointment.email,
+            phone: appointment.phone,
+            preferredDate: dateStr,
+            preferredTime: appointment.startTime
+              ? `${appointment.startTime}${appointment.endTime ? ' – ' + appointment.endTime : ''}`
+              : '',
+            platform: appointment.platform,
+            reason: appointment.reason,
+          });
+        } catch (emailErr: any) {
+          console.error('Free consultation email failed (non-fatal):', emailErr.message);
+        }
+        return res.status(201).json({ appointment, checkoutUrl: null, type: 'free_consultation' });
+      }
+
+      // ── PAID SERVICE — create Stripe checkout session ──
       let checkoutUrl: string | null = null;
-      
       try {
         const { getUncachableStripeClient } = await import("./stripeClient");
         const stripe = await getUncachableStripeClient();
-        
         const session = await stripe.checkout.sessions.create({
           payment_method_types: ['card'],
           line_items: [
@@ -48,21 +73,15 @@ export async function registerRoutes(
           mode: 'payment',
           success_url: `${req.protocol}://${req.get('host')}/book?success=true&appointmentId=${appointment.id}&email=${encodeURIComponent(appointment.email)}&session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${req.protocol}://${req.get('host')}/book?canceled=true`,
-          metadata: {
-            appointmentId: appointment.id.toString(),
-          },
+          metadata: { appointmentId: appointment.id.toString() },
           customer_email: input.email,
         });
-
         checkoutUrl = session.url;
       } catch (stripeError: any) {
         console.error('Stripe checkout creation failed:', stripeError.message);
       }
 
-      res.status(201).json({ 
-        appointment, 
-        checkoutUrl 
-      });
+      res.status(201).json({ appointment, checkoutUrl, type: 'paid_service' });
     } catch (err) {
       if (err instanceof z.ZodError) {
         return res.status(400).json({

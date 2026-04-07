@@ -13,6 +13,7 @@ export const appointments = pgTable("appointments", {
   startTime: text("start_time"),
   endTime: text("end_time"),
   platform: text("platform", { enum: ["zoom", "google_meet"] }).default("zoom").notNull(),
+  appointmentType: text("appointment_type", { enum: ["free_consultation", "paid_service"] }).default("paid_service").notNull(),
   status: text("status", { enum: ["pending", "confirmed", "completed", "cancelled"] }).default("pending").notNull(),
   paymentStatus: text("payment_status", { enum: ["unpaid", "paid"] }).default("unpaid").notNull(),
   stripePaymentIntentId: text("stripe_payment_intent_id"),
@@ -29,6 +30,7 @@ export const insertAppointmentSchema = createInsertSchema(appointments).omit({
   date: z.coerce.date(),
   email: z.string().email("Invalid email address"),
   platform: z.enum(["zoom", "google_meet"]).default("zoom"),
+  appointmentType: z.enum(["free_consultation", "paid_service"]).default("paid_service"),
   slotId: z.number().optional(),
   startTime: z.string().optional(),
   endTime: z.string().optional(),
@@ -41,8 +43,8 @@ export type InsertAppointment = z.infer<typeof insertAppointmentSchema>;
 export const availabilitySlots = pgTable("availability_slots", {
   id: serial("id").primaryKey(),
   date: timestamp("date").notNull(),
-  startTime: text("start_time").notNull(), // Format: "09:00"
-  endTime: text("end_time").notNull(), // Format: "10:00"
+  startTime: text("start_time").notNull(),
+  endTime: text("end_time").notNull(),
   isBooked: boolean("is_booked").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });

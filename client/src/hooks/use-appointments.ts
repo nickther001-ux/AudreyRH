@@ -2,7 +2,12 @@ import { useMutation } from "@tanstack/react-query";
 import { api, type CreateAppointmentInput } from "@shared/routes";
 import { useToast } from "@/hooks/use-toast";
 
-export function useCreateAppointment() {
+type UseCreateAppointmentOptions = {
+  onPaidRedirect?: () => void;
+  onFreeSuccess?: (email: string) => void;
+};
+
+export function useCreateAppointment(options: UseCreateAppointmentOptions = {}) {
   const { toast } = useToast();
 
   return useMutation({
@@ -27,24 +32,29 @@ export function useCreateAppointment() {
       return result;
     },
     onSuccess: (data) => {
-      if (data.checkoutUrl) {
+      if (data.type === 'free_consultation') {
+        // Free consultation — request sent, pending Audrey's confirmation
+        options.onFreeSuccess?.(data.appointment?.email ?? '');
+      } else if (data.checkoutUrl) {
+        // Paid service — redirect to Stripe
+        options.onPaidRedirect?.();
         toast({
-          title: "Redirecting to Payment",
-          description: "Taking you to secure checkout...",
+          title: "Redirection vers le paiement",
+          description: "Vous êtes redirigé vers le paiement sécurisé...",
         });
         setTimeout(() => {
           window.location.href = data.checkoutUrl;
         }, 500);
       } else {
         toast({
-          title: "Appointment Booked",
-          description: "Your appointment has been scheduled. You will receive a confirmation email shortly.",
+          title: "Réservation enregistrée",
+          description: "Vous recevrez un email de confirmation sous peu.",
         });
       }
     },
     onError: (error) => {
       toast({
-        title: "Booking Failed",
+        title: "Erreur",
         description: error.message,
         variant: "destructive",
       });
