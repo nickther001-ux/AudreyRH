@@ -648,8 +648,8 @@ export default function Individuals() {
             className="absolute inset-0 w-full h-full object-cover object-right"
             data-testid="img-audrey"
           />
-          {/* Gradient overlay — stronger on left where text sits, lighter on right */}
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/15" />
+          {/* Gradient overlay — strong on left for text, fully clear on right for face */}
+          <div className="absolute inset-0" style={{ background: "linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.70) 38%, rgba(0,0,0,0.25) 58%, rgba(0,0,0,0) 75%)" }} />
 
           {/* Content — pinned to left edge */}
           <motion.div
