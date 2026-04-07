@@ -214,7 +214,7 @@ export default function Contact() {
                     exit={{ opacity: 0, y: -16 }}
                     transition={{ duration: 0.35, ease: "easeOut" }}
                   >
-                    <p className="text-[11px] text-[#1e3a5f]/40 uppercase tracking-[0.2em] mb-3">{t("contact.form.title")}</p>
+                    <p className="text-[11px] text-[#1e3a5f] uppercase tracking-[0.2em] mb-3 font-semibold">{t("contact.form.title")}</p>
                     <h2 className="text-3xl md:text-4xl font-bold text-[#1e3a5f] leading-tight mb-2">
                       {t("contact.form.subtitle")}
                     </h2>
@@ -224,8 +224,8 @@ export default function Contact() {
 
                       {/* Name */}
                       <div>
-                        <label className="block text-[10px] text-[#1e3a5f]/50 uppercase tracking-[0.18em] mb-2.5" htmlFor="contact-name">
-                          {t("contact.form.name")} <span className="text-[#1e3a5f]/30">*</span>
+                        <label className="block text-[11px] text-[#1e3a5f] font-bold uppercase tracking-[0.18em] mb-2.5" htmlFor="contact-name">
+                          {t("contact.form.name")} <span className="text-orange-500">*</span>
                         </label>
                         <Input
                           id="contact-name"
@@ -234,14 +234,14 @@ export default function Contact() {
                           placeholder={t("contact.form.namePlaceholder")}
                           required
                           data-testid="input-contact-name"
-                          className="rounded-none border-0 border-b-2 border-[#1e3a5f]/12 bg-transparent focus-visible:ring-0 focus-visible:border-[#1e3a5f]/50 px-0 text-[#1e3a5f] placeholder:text-[#1e3a5f]/25 text-[15px] h-12 transition-colors"
+                          className="rounded-none border-0 border-b-2 border-black/30 bg-transparent focus-visible:ring-0 focus-visible:border-[#1e3a5f] px-0 text-black placeholder:text-black/40 text-[15px] h-12 transition-colors"
                         />
                       </div>
 
                       {/* Email */}
                       <div>
-                        <label className="block text-[10px] text-[#1e3a5f]/50 uppercase tracking-[0.18em] mb-2.5" htmlFor="contact-email">
-                          {t("contact.form.email")} <span className="text-[#1e3a5f]/30">*</span>
+                        <label className="block text-[11px] text-[#1e3a5f] font-bold uppercase tracking-[0.18em] mb-2.5" htmlFor="contact-email">
+                          {t("contact.form.email")} <span className="text-orange-500">*</span>
                         </label>
                         <Input
                           id="contact-email"
@@ -251,14 +251,14 @@ export default function Contact() {
                           placeholder={t("contact.form.emailPlaceholder")}
                           required
                           data-testid="input-contact-email"
-                          className="rounded-none border-0 border-b-2 border-[#1e3a5f]/12 bg-transparent focus-visible:ring-0 focus-visible:border-[#1e3a5f]/50 px-0 text-[#1e3a5f] placeholder:text-[#1e3a5f]/25 text-[15px] h-12 transition-colors"
+                          className="rounded-none border-0 border-b-2 border-black/30 bg-transparent focus-visible:ring-0 focus-visible:border-[#1e3a5f] px-0 text-black placeholder:text-black/40 text-[15px] h-12 transition-colors"
                         />
                       </div>
 
                       {/* Grant Type */}
                       <div>
-                        <label className="block text-[10px] text-[#1e3a5f]/50 uppercase tracking-[0.18em] mb-2.5">
-                          {t("contact.form.grantType")} <span className="text-[#1e3a5f]/30">*</span>
+                        <label className="block text-[11px] text-[#1e3a5f] font-bold uppercase tracking-[0.18em] mb-2.5">
+                          {t("contact.form.grantType")} <span className="text-orange-500">*</span>
                         </label>
                         <Select
                           value={form.grantType}
@@ -266,7 +266,7 @@ export default function Contact() {
                         >
                           <SelectTrigger
                             data-testid="select-grant-type"
-                            className="rounded-none border-0 border-b-2 border-[#1e3a5f]/12 bg-transparent focus:ring-0 px-0 text-[15px] text-[#1e3a5f] h-12 data-[placeholder]:text-[#1e3a5f]/25"
+                            className="rounded-none border-0 border-b-2 border-black/30 bg-transparent focus:ring-0 px-0 text-[15px] text-black h-12 data-[placeholder]:text-black/40"
                           >
                             <SelectValue placeholder={t("contact.form.grantTypePlaceholder")} />
                           </SelectTrigger>
@@ -282,8 +282,8 @@ export default function Contact() {
 
                       {/* Project Description */}
                       <div>
-                        <label className="block text-[10px] text-[#1e3a5f]/50 uppercase tracking-[0.18em] mb-2.5" htmlFor="contact-project">
-                          {t("contact.form.project")} <span className="text-[#1e3a5f]/30">*</span>
+                        <label className="block text-[11px] text-[#1e3a5f] font-bold uppercase tracking-[0.18em] mb-2.5" htmlFor="contact-project">
+                          {t("contact.form.project")} <span className="text-orange-500">*</span>
                         </label>
                         <Textarea
                           id="contact-project"
@@ -293,9 +293,9 @@ export default function Contact() {
                           rows={5}
                           required
                           data-testid="textarea-contact-project"
-                          className="rounded-none border border-[#1e3a5f]/12 bg-transparent focus-visible:ring-0 focus-visible:border-[#1e3a5f]/40 text-[#1e3a5f] placeholder:text-[#1e3a5f]/25 text-[15px] resize-none"
+                          className="rounded-none border border-black/25 bg-transparent focus-visible:ring-0 focus-visible:border-[#1e3a5f] text-black placeholder:text-black/40 text-[15px] resize-none"
                         />
-                        <p className="text-[11px] text-[#1e3a5f]/35 mt-2 leading-relaxed">{t("contact.form.projectHint")}</p>
+                        <p className="text-[12px] text-black/55 mt-2 leading-relaxed">{t("contact.form.projectHint")}</p>
                       </div>
 
                       {/* Submit */}
@@ -304,7 +304,7 @@ export default function Contact() {
                           type="submit"
                           disabled={loading || !form.name || !form.email || !form.grantType || !form.projectDescription}
                           data-testid="button-contact-submit"
-                          className="w-full bg-[#1e3a5f] text-white py-5 text-[12px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3 disabled:opacity-35 hover:bg-[#162c48] transition-colors"
+                          className="w-full bg-[#1e3a5f] text-white py-5 text-[12px] font-bold uppercase tracking-[0.2em] flex items-center justify-center gap-3 disabled:opacity-40 hover:bg-[#162c48] transition-colors"
                         >
                           {loading ? (
                             <>
@@ -318,7 +318,7 @@ export default function Contact() {
                             </>
                           )}
                         </button>
-                        <p className="text-[11px] text-[#1e3a5f]/30 text-center mt-5 leading-relaxed">
+                        <p className="text-[11px] text-black/45 text-center mt-5 leading-relaxed">
                           {t("contact.form.privacy")}
                         </p>
                       </div>
