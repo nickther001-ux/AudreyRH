@@ -88,7 +88,7 @@ export default function Business() {
                 <span key={wordIndex} className="inline-block text-[#93c5fd] animate-in fade-in slide-in-from-bottom-2 duration-300">
                   {rotatingWords[wordIndex]}
                 </span>
-                <span className="text-[#93c5fd]">.</span>
+                <span className="text-orange-400">.</span>
               </span>
             </motion.h1>
             <motion.p
