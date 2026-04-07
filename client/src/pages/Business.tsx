@@ -147,24 +147,40 @@ export default function Business() {
               {services.map((svc) => {
                 const Icon = svc.icon;
                 return (
-                  <StaggerItem key={svc.key} variant="fadeUp" className="bg-white group" data-testid={`card-business-service-${svc.key}`}>
-                    <div className="overflow-hidden h-[240px]">
-                      <img
-                        src={SERVICE_PHOTOS[svc.key]}
-                        alt={t(`business.service.${svc.key}.title` as any)}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-                      />
-                    </div>
-                    <div className="p-8">
-                      <div className="w-10 h-10 bg-foreground/5 flex items-center justify-center mb-4">
-                        <Icon className={`w-5 h-5 ${svc.color}`} />
+                  <StaggerItem key={svc.key} variant="fadeUp" className="relative overflow-hidden group min-h-[380px] flex flex-col" data-testid={`card-business-service-${svc.key}`}>
+                    {/* Background photo */}
+                    <img
+                      src={SERVICE_PHOTOS[svc.key]}
+                      alt=""
+                      className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                    />
+                    {/* Linear gradient overlay */}
+                    <div className="absolute inset-0" style={{ background: "linear-gradient(rgba(0,0,0,0.62), rgba(0,0,0,0.62))" }} />
+                    {/* Content — 40px padding on all sides */}
+                    <div className="relative z-10 flex flex-col h-full p-10">
+                      <div className="w-10 h-10 bg-white/15 flex items-center justify-center mb-5 flex-shrink-0">
+                        <Icon className="w-5 h-5 text-white" />
                       </div>
-                      <h3 className="font-bold text-foreground text-xl mb-3">{t(`business.service.${svc.key}.title` as any)}</h3>
-                      <p className="text-muted-foreground text-[14px] leading-relaxed mb-5">{t(`business.service.${svc.key}.desc` as any)}</p>
-                      <ul className="space-y-2">
+                      <h3
+                        className="font-bold text-white text-xl mb-3"
+                        style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}
+                      >
+                        {t(`business.service.${svc.key}.title` as any)}
+                      </h3>
+                      <p
+                        className="text-white/85 text-[14px] leading-relaxed mb-5"
+                        style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}
+                      >
+                        {t(`business.service.${svc.key}.desc` as any)}
+                      </p>
+                      <ul className="space-y-2 mt-auto border-t border-white/20 pt-5">
                         {[1, 2, 3].map((i) => (
-                          <li key={i} className="flex items-start gap-2 text-[13px] text-foreground/70">
-                            <CheckCircle className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                          <li
+                            key={i}
+                            className="flex items-start gap-2 text-[13px] text-white/85"
+                            style={{ textShadow: "2px 2px 4px rgba(0,0,0,0.5)" }}
+                          >
+                            <CheckCircle className="w-4 h-4 text-white/70 flex-shrink-0 mt-0.5" />
                             {t(`business.service.${svc.key}.point${i}` as any)}
                           </li>
                         ))}
