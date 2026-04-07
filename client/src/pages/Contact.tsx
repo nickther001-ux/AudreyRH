@@ -65,8 +65,8 @@ export default function Contact() {
           alt=""
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        {/* Midnight blue overlay */}
-        <div className="absolute inset-0 bg-[#1e3a5f]/82" />
+        {/* Midnight blue overlay — light enough to see the bokeh */}
+        <div className="absolute inset-0 bg-[#1e3a5f]/55" />
 
         {/* Content */}
         <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 pt-40 pb-20 w-full">
@@ -84,8 +84,8 @@ export default function Contact() {
           <div className="mt-16 grid grid-cols-3 gap-px bg-white/10 max-w-xl">
             {[
               { num: "24h", label: t("contact.info.responseTime") },
-              { num: "16+", label: t("individuals.about.experience") || "ans d'expérience" },
-              { num: "95%", label: t("individuals.stat2.label") || "satisfaction client" },
+              { num: "16+", label: "Ans d'expérience" },
+              { num: "95%", label: "Satisfaction client" },
             ].map((s) => (
               <div key={s.num} className="bg-[#1e3a5f]/60 px-6 py-5">
                 <p className="text-2xl font-black text-white mb-1">{s.num}</p>

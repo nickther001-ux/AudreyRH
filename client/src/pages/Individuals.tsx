@@ -477,8 +477,8 @@ export default function Individuals() {
                         alt=""
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
-                      {/* Overlay — darker when open */}
-                      <div className={`absolute inset-0 transition-colors duration-300 ${isOpen ? "bg-[#1e3a5f]/88" : "bg-[#1e3a5f]/75 group-hover:bg-[#1e3a5f]/82"}`} />
+                      {/* Overlay — lighter so image shows, darkens when open */}
+                      <div className={`absolute inset-0 transition-colors duration-300 ${isOpen ? "bg-[#1e3a5f]/72" : "bg-[#1e3a5f]/48 group-hover:bg-[#1e3a5f]/58"}`} />
                       {/* Content */}
                       <div className="relative z-10 flex items-center justify-between w-full py-8 gap-6">
                         <div className="flex items-start gap-6">
