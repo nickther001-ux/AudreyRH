@@ -185,10 +185,14 @@ export async function registerRoutes(
     }
   });
 
-  // Contact / grant application form — sends lead + auto-reply emails
+  // Contact / grant questionnaire — sends lead + auto-reply emails
   app.post('/api/contact', async (req, res) => {
-    const { name, email, grantType, projectDescription } = req.body;
-    if (!name || !email || !grantType || !projectDescription) {
+    const {
+      name, email, companyName, registrationInfo, cities, activities,
+      fundingNeeds, dreams, pastGrants, employees, planToHire, openToInterns, desjardins,
+    } = req.body;
+    if (!name || !email || !companyName || !registrationInfo || !cities || !activities ||
+        !fundingNeeds || !dreams || !pastGrants || !employees || !planToHire || !openToInterns || !desjardins) {
       return res.status(400).json({ message: 'All fields are required' });
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -197,7 +201,10 @@ export async function registerRoutes(
     }
     try {
       const { sendContactEmails } = await import('./resend');
-      await sendContactEmails({ name, email, grantType, projectDescription });
+      await sendContactEmails({
+        name, email, companyName, registrationInfo, cities, activities,
+        fundingNeeds, dreams, pastGrants, employees, planToHire, openToInterns, desjardins,
+      });
       res.json({ success: true });
     } catch (err: any) {
       console.error('Contact form email error:', err.message);

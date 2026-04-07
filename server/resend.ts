@@ -344,58 +344,78 @@ ${emailWrapperClose}`;
   if (r1.error && r2.error) throw new Error(`Both free consultation emails failed`);
 }
 
-// ─── Contact / grant application ────────────────────────────────────────────
+// ─── Contact / grant questionnaire ──────────────────────────────────────────
 
 export type ContactEmailData = {
   name: string;
   email: string;
-  grantType: string;
-  projectDescription: string;
+  companyName: string;
+  registrationInfo: string;
+  cities: string;
+  activities: string;
+  fundingNeeds: string;
+  dreams: string;
+  pastGrants: string;
+  employees: string;
+  planToHire: string;
+  openToInterns: string;
+  desjardins: string;
 };
 
-const grantTypeLabel: Record<string, string> = {
-  artists: 'Artistes / Créateurs',
-  entrepreneurs: 'Entrepreneurs',
-  sme: 'PME / Entreprises établies',
-  corporate: 'Grandes entreprises',
-  other: 'Autre',
-};
+const yesNo = (val: string) => val === 'oui' ? 'Oui ✓' : val === 'non' ? 'Non' : val;
+
+const longFieldBox = (label: string, value: string) =>
+  `<table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+    <tr><td style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:10px;padding:14px 18px;">
+      <p style="margin:0 0 5px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;">${label}</p>
+      <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.8);line-height:1.7;">${value.replace(/\n/g, '<br/>')}</p>
+    </td></tr>
+  </table>`;
 
 export async function sendContactEmails(data: ContactEmailData) {
   const client = getClient();
-  const typeLabel = grantTypeLabel[data.grantType] ?? data.grantType;
 
-  // 1 — Internal lead notification to Audrey
-  const notifyHtml = `${emailWrapperOpen(560)}
-${compactHeader('AudreyRH · Notification interne', 'Nouveau lead entrant')}
+  // 1 — Internal lead notification to Audrey (full questionnaire)
+  const notifyHtml = `${emailWrapperOpen(620)}
+${compactHeader('AudreyRH · Questionnaire subventions', 'Nouvelle demande de recherche de subventions')}
         <tr>
-          <td style="padding:22px 36px 0;">
-            <table cellpadding="0" cellspacing="0" style="margin-bottom:18px;">
-              <tr><td style="background:rgba(147,197,253,0.08);border:1px solid rgba(147,197,253,0.2);border-radius:8px;padding:9px 16px;">
-                <p style="margin:0;font-size:12px;font-weight:600;color:#93c5fd;">${typeLabel}</p>
+          <td style="padding:20px 36px 0;">
+            <table cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+              <tr><td style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);border-radius:8px;padding:9px 16px;">
+                <p style="margin:0;font-size:11px;font-weight:600;color:#93c5fd;">
+                  ${data.name} &nbsp;·&nbsp;
+                  <a href="mailto:${data.email}" style="color:#93c5fd;text-decoration:none;">${data.email}</a> &nbsp;·&nbsp;
+                  ${data.companyName}
+                </p>
               </td></tr>
             </table>
           </td>
         </tr>
         <tr>
           <td style="padding:4px 36px 32px;">
-            ${fieldBox('Nom', data.name)}
-            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:12px;">
-              <tr><td style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.10);border-radius:10px;padding:14px 18px;">
-                <p style="margin:0 0 4px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;">Courriel — répondre directement</p>
-                <p style="margin:0;">
-                  <a href="mailto:${data.email}" style="font-size:15px;font-weight:700;color:#93c5fd;text-decoration:none;">${data.email}</a>
-                </p>
-              </td></tr>
-            </table>
-            ${fieldBox('Type de projet', typeLabel)}
-            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
-              <tr><td style="background:rgba(255,255,255,0.05);border:1px solid rgba(147,197,253,0.18);border-left:3px solid #93c5fd;border-radius:0 10px 10px 0;padding:14px 18px;">
-                <p style="margin:0 0 6px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;">Message</p>
-                <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.75;">${data.projectDescription.replace(/\n/g, '<br/>')}</p>
-              </td></tr>
-            </table>
-            ${ctaButton(`mailto:${data.email}`, `Répondre à ${data.name} →`)}
+
+            <p style="margin:0 0 12px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;">Organisation</p>
+            ${longFieldBox('Nom de l\'entreprise ou organisme', data.companyName)}
+            ${longFieldBox('Enregistrement (année & forme)', data.registrationInfo)}
+            ${longFieldBox('Ville(s)', data.cities)}
+
+            <p style="margin:16px 0 12px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;">Activités & Besoins</p>
+            ${longFieldBox('Activités de l\'entreprise', data.activities)}
+            ${longFieldBox('Besoins de financement', data.fundingNeeds)}
+            ${longFieldBox('Projets / Rêves non réalisés', data.dreams)}
+
+            <p style="margin:16px 0 12px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;">Historique & Ressources humaines</p>
+            ${longFieldBox('Demandes de subventions passées', data.pastGrants)}
+            ${fieldBox('Employés', data.employees)}
+            ${fieldBox('Planifie embaucher d\'ici 1 an', yesNo(data.planToHire))}
+            ${fieldBox('Ouvert aux stagiaires', yesNo(data.openToInterns))}
+
+            <p style="margin:16px 0 12px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;">Finances</p>
+            ${fieldBox('Compte bancaire Desjardins', yesNo(data.desjardins))}
+
+            <div style="margin-top:24px;">
+              ${ctaButton(`mailto:${data.email}`, `Répondre à ${data.name} →`)}
+            </div>
           </td>
         </tr>
 ${emailFooter()}
@@ -403,56 +423,39 @@ ${emailWrapperClose}`;
 
   // 2 — Bilingual auto-reply to client
   const replyHtml = `${emailWrapperOpen(600)}
-${logoHeader('Message reçu · Message received')}
+${logoHeader('Questionnaire reçu · Questionnaire received')}
         <tr>
           <td style="padding:40px 48px;">
             <p style="margin:0 0 6px;font-size:23px;font-weight:700;color:#ffffff;">Bonjour ${data.name},</p>
             <p style="margin:0 0 28px;font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;">
-              Merci de nous avoir contactés. Votre demande concernant
-              <strong style="color:#ffffff;">${typeLabel}</strong>
-              a bien été reçue et nous vous répondrons sous
-              <strong style="color:#ffffff;">24 à 48 heures ouvrables</strong>.
+              Merci d'avoir rempli le questionnaire de recherche de subventions pour <strong style="color:#ffffff;">${data.companyName}</strong>.
+              Vos réponses ont bien été reçues — Audrey vous contactera dans les <strong style="color:#ffffff;">24 à 48 heures ouvrables</strong>.
             </p>
 
-            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
-              <tr>
-                <td style="background:rgba(255,255,255,0.05);border:1px solid rgba(147,197,253,0.18);border-left:3px solid #93c5fd;border-radius:0 10px 10px 0;padding:18px 22px;">
-                  <p style="margin:0 0 8px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;">Votre message / Your message</p>
-                  <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.65);line-height:1.75;">${data.projectDescription.replace(/\n/g, '<br/>')}</p>
-                </td>
-              </tr>
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:12px;">
+              <tr><td style="padding:20px 24px;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  ${fieldRow('Organisation', data.companyName)}
+                  ${fieldRow('Courriel', data.email)}
+                  ${fieldRow('Statut', 'Questionnaire reçu — En cours d\'analyse', true)}
+                </table>
+              </td></tr>
             </table>
 
-            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
-              <tr>
-                <td style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:12px;padding:22px 26px;">
-                  <p style="margin:0 0 16px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1.5px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;">
-                    Préparation &nbsp;/&nbsp; Preparation
-                  </p>
-                  ${[
-                    ['Documents', 'CV à jour, lettres de refus, offres d\'emploi pertinentes', 'Updated CV, rejection letters, relevant job postings'],
-                    ['Objectifs / Goals', 'Notez vos 2–3 priorités pour cette consultation', 'Write down your 2–3 priorities for this session'],
-                    ['Environnement / Environment', 'Endroit calme, connexion stable, caméra fonctionnelle', 'Quiet space, stable connection, working camera'],
-                  ].map(([title, fr, en]) => `
-                  <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:12px;">
-                    <tr>
-                      <td width="26" valign="top" style="padding-top:1px;">${checkBullet}</td>
-                      <td>
-                        <p style="margin:0 0 2px;font-size:13px;font-weight:700;color:#ffffff;">${title}</p>
-                        <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.5);line-height:1.6;">
-                          ${fr}<br/><em style="color:rgba(255,255,255,0.3);">${en}</em>
-                        </p>
-                      </td>
-                    </tr>
-                  </table>`).join('')}
-                </td>
-              </tr>
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+              <tr><td style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:18px 22px;">
+                <p style="margin:0 0 8px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);">Note de confidentialité</p>
+                <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.75;">
+                  Soyez assuré(e) de la confidentialité des données que vous nous avez partagées.<br/>
+                  <em style="color:rgba(255,255,255,0.35);">Rest assured of the confidentiality of all information you have shared with us.</em>
+                </p>
+              </td></tr>
             </table>
 
             <p style="margin:0 0 20px;font-size:14px;color:rgba(255,255,255,0.55);line-height:1.75;">
-              En attendant notre réponse, vous pouvez réserver une consultation directement en ligne :
+              En attendant, vous pouvez aussi réserver une consultation directement en ligne :
             </p>
-            <table cellpadding="0" cellspacing="0" style="margin-bottom:36px;">
+            <table cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
               ${ctaButton('https://audreyrh.com/book', 'Réserver une consultation →')}
             </table>
 
@@ -462,10 +465,8 @@ ${logoHeader('Message reçu · Message received')}
 
             <p style="margin:0 0 6px;font-size:19px;font-weight:700;color:#ffffff;">Hello ${data.name},</p>
             <p style="margin:0 0 16px;font-size:14px;color:rgba(255,255,255,0.55);line-height:1.8;">
-              Thank you for getting in touch. We have received your inquiry about
-              <strong style="color:#ffffff;">${typeLabel}</strong>
-              and will respond within
-              <strong style="color:#ffffff;">24 to 48 business hours</strong>.
+              Thank you for completing the grant research questionnaire for <strong style="color:#ffffff;">${data.companyName}</strong>.
+              Your answers have been received — Audrey will reach out within <strong style="color:#ffffff;">24 to 48 business hours</strong>.
             </p>
             <p style="margin:0;font-size:14px;color:rgba(255,255,255,0.55);line-height:1.75;">
               In the meantime, feel free to book a consultation at
@@ -473,13 +474,13 @@ ${logoHeader('Message reçu · Message received')}
             </p>
           </td>
         </tr>
-${emailFooter('Tous les paiements sont finaux — aucun remboursement. · All payments are final — no refunds.')}
+${emailFooter()}
 ${emailWrapperClose}`;
 
-  console.log('[Resend] Sending contact emails — notify + reply to:', data.email);
+  console.log('[Resend] Sending grant questionnaire emails — notify + reply to:', data.email);
   const [r1, r2] = await Promise.all([
-    client.emails.send({ from: FROM, to: NOTIFY_TO, replyTo: data.email, subject: `Nouveau lead : ${data.name} (${typeLabel})`, html: notifyHtml }),
-    client.emails.send({ from: FROM, to: data.email, subject: `Merci de votre intérêt / Thank you for your interest — AudreyRH`, html: replyHtml }),
+    client.emails.send({ from: FROM, to: NOTIFY_TO, replyTo: data.email, subject: `Questionnaire subventions : ${data.name} — ${data.companyName}`, html: notifyHtml }),
+    client.emails.send({ from: FROM, to: data.email, subject: `Questionnaire reçu / Questionnaire received — AudreyRH`, html: replyHtml }),
   ]);
   if (r1.error) console.error('[Resend] Contact notify email error:', JSON.stringify(r1.error));
   else console.log('[Resend] Contact notify email sent, id:', r1.data?.id);
