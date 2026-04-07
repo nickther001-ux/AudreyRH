@@ -79,7 +79,7 @@ export default function Individuals() {
   const [openDialog, setOpenDialog] = useState<ServiceKey>(null);
   const [wordIndex, setWordIndex] = useState(0);
   const [openGuide, setOpenGuide] = useState<number | null>(null);
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const rotatingWords = [t("hero.rotating.1"), t("hero.rotating.2"), t("hero.rotating.3")];
 
@@ -347,7 +347,7 @@ export default function Individuals() {
 
             {/* Header — two columns: text left, photo right */}
             <FadeUp className="mb-16">
-              <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-center">
+              <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-center relative">
                 {/* Text */}
                 <div className="flex-1 min-w-0">
                   <p className="text-[11px] text-black/40 uppercase tracking-[0.2em] mb-4">{t("individuals.guide.badge" as any)}</p>
@@ -355,6 +355,37 @@ export default function Individuals() {
                     {t("individuals.guide.title" as any)}<span className="text-orange-400">.</span>
                   </h2>
                   <p className="text-black/60 text-[15px] leading-relaxed max-w-md">{t("individuals.guide.subtitle" as any)}</p>
+                  {/* Arrow label — visible on md+ only */}
+                  <div className="hidden md:flex items-end gap-3 mt-8 select-none">
+                    <div className="text-right">
+                      <p className="text-[#1e3a5f] font-bold text-[13px] leading-snug" style={{ fontFamily: "'Georgia', serif", fontStyle: "italic" }}>
+                        {language === "en" ? "She's the one you need!" : "C'est elle qu'il vous faut !"}
+                      </p>
+                      <p className="text-black/40 text-[11px] mt-0.5">
+                        {language === "en" ? "Expert. CRIA. Results." : "Experte. CRIA. Résultats."}
+                      </p>
+                    </div>
+                    {/* Curved SVG arrow pointing right toward the photo */}
+                    <svg width="80" height="52" viewBox="0 0 80 52" fill="none" className="flex-shrink-0 text-[#1e3a5f]">
+                      <path
+                        d="M4 44 C 18 44, 30 8, 70 10"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        fill="none"
+                        strokeDasharray="0"
+                      />
+                      {/* Arrowhead */}
+                      <path
+                        d="M62 4 L72 10 L60 16"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        fill="none"
+                      />
+                    </svg>
+                  </div>
                 </div>
                 {/* Photo */}
                 <div className="w-full md:w-64 lg:w-72 flex-shrink-0">
