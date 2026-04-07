@@ -481,8 +481,7 @@ export default function Individuals() {
                       <div className={`absolute inset-0 transition-colors duration-300 ${isOpen ? "bg-[#1e3a5f]/88" : "bg-[#1e3a5f]/80 group-hover:bg-[#1e3a5f]/84"}`} />
                       {/* Content */}
                       <div className="relative z-10 flex items-center justify-between w-full py-8 gap-6">
-                        <div className="flex items-start gap-6">
-                          <span className="text-[11px] font-black text-white/40 mt-0.5 select-none w-6 flex-shrink-0">{idx + 1}</span>
+                        <div className="flex items-start gap-4">
                           <div>
                             <p className="text-[10px] text-white/80 uppercase tracking-[0.2em] mb-1">{t(badgeKey as any)}</p>
                             <h3 className="text-lg md:text-xl font-bold text-white leading-snug">{t(titleKey as any)}</h3>
