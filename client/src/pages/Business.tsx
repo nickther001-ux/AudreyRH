@@ -11,6 +11,7 @@ import whoSmeBg       from "@assets/Gemini_Generated_Image_rn7mwxrn7mwxrn7m_1775
 import whoStartupBg   from "@assets/generated_images/who_startup.png";
 import whoCorporateBg from "@assets/generated_images/who_corporate.png";
 import whoNonprofitBg from "@assets/generated_images/who_nonprofit.png";
+import processStepsBg from "@assets/generated_images/process_steps_bg.png";
 
 const SERVICE_PHOTOS: Record<string, string> = {
   talent:     "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&q=80",
@@ -263,9 +264,10 @@ export default function Business() {
           </div>
         </section>
 
-        {/* ── 5. PROCESS — light gray, numbered ── */}
-        <section className="py-28 bg-muted/30" data-testid="section-business-process">
-          <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        {/* ── 5. PROCESS — steps bg ── */}
+        <section className="py-28 relative overflow-hidden bg-muted/30" data-testid="section-business-process">
+          <img src={processStepsBg} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-15 pointer-events-none select-none" />
+          <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
             <FadeUp className="mb-16">
               <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{t("home.process.label")}</p>
               <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-xl">

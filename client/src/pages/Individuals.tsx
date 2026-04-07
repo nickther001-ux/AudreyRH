@@ -11,6 +11,7 @@ import audreyGuide from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
 import guideCvImg from "@assets/generated_images/guide_cv_resume.png";
 import guideChecklistImg from "@assets/generated_images/guide_checklist.png";
 import guideInterviewImg from "@assets/generated_images/guide_interview.png";
+import processStepsBg from "@assets/generated_images/process_steps_bg.png";
 
 type ServiceKey = "strategy" | "credentials" | "employability" | "integration" | null;
 
@@ -517,9 +518,10 @@ export default function Individuals() {
           </div>
         </section>
 
-        {/* ── 4. PROCESS — dark, numbered steps ── */}
-        <section className="bg-foreground py-28" data-testid="section-process">
-          <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        {/* ── 4. PROCESS — dark, steps bg ── */}
+        <section className="bg-foreground py-28 relative overflow-hidden" data-testid="section-process">
+          <img src={processStepsBg} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none select-none" />
+          <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
             <FadeUp className="mb-16">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{t("home.process.label")}</p>
               <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight max-w-xl">
