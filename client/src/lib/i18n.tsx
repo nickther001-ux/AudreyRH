@@ -611,7 +611,7 @@ const translations = {
     "business.service.compliance.point2": "Gestion des conflits et médiation en milieu de travail",
     "business.service.compliance.point3": "Mise en conformité avec la Loi 25 et la LSST",
 
-    "business.who.title": "Qui nous accompagnons",
+    "business.who.title": "Qui nous accompagnons ?",
     "business.who.subtitle": "Nos services s'adressent à tous les types d'organisations souhaitant optimiser leur stratégie de capital humain.",
     "business.who.sme.title": "Petites à Moyennes Entreprises",
     "business.who.sme.desc": "Structurez vos RH, accédez aux talents et aux subventions gouvernementales pour accélérer votre croissance.",
@@ -1394,7 +1394,7 @@ const translations = {
     "business.service.compliance.point2": "Conflict management and workplace mediation",
     "business.service.compliance.point3": "Law 25 and LSST compliance implementation",
 
-    "business.who.title": "Who We Support",
+    "business.who.title": "Who We Support?",
     "business.who.subtitle": "Our services are designed for all types of organizations looking to optimize their human capital strategy.",
     "business.who.sme.title": "Small to Mid Enterprises",
     "business.who.sme.desc": "Structure your HR, access talent, and leverage government grants to accelerate your growth.",
