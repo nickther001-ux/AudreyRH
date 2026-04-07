@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 import { FadeUp, Stagger, StaggerItem } from "@/lib/animations";
 import { CountUp } from "@/components/CountUp";
-import processBg from "@assets/IMM_1768534974735.png";
 
 type DiagnosticCategory = "artists" | "entrepreneurs" | "sme" | null;
 type ResultType = "high" | "review" | "early";
@@ -386,18 +385,9 @@ export default function Grants() {
           </div>
         </section>
 
-        {/* ── 3. HOW IT WORKS — dark editorial numbered with photo bg ── */}
-        <section className="relative py-28 overflow-hidden" data-testid="section-grants-process">
-          {/* Background photo */}
-          <img
-            src={processBg}
-            alt=""
-            className="absolute inset-0 w-full h-full object-cover object-center"
-          />
-          {/* Dark midnight blue overlay */}
-          <div className="absolute inset-0 bg-[#1e3a5f]/88" />
-
-          <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8">
+        {/* ── 3. HOW IT WORKS — solid dark navy ── */}
+        <section className="py-28 bg-[#0d1f3c]" data-testid="section-grants-process">
+          <div className="max-w-6xl mx-auto px-6 lg:px-8">
             <FadeUp className="mb-16">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{isFr ? "Notre approche" : "Our Approach"}</p>
               <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight max-w-xl">
@@ -411,9 +401,9 @@ export default function Grants() {
                 { titleFr: "Préparation du dossier", textFr: "Accompagnement dans la rédaction d'un dossier de demande solide, maximisant vos chances.", titleEn: "Application Prep", textEn: "Guided preparation of a strong application file, maximizing your approval odds." },
                 { titleFr: "Soumission & Suivi", textFr: "Soumission du dossier et suivi stratégique jusqu'à l'obtention de votre financement.", titleEn: "Submit & Follow-up", textEn: "Filing and strategic follow-up until your funding is secured." },
               ].map((step, i) => (
-                <StaggerItem key={i} variant="fadeUp" className="bg-white/5 backdrop-blur-sm p-8" data-testid={`step-process-${i + 1}`}>
+                <StaggerItem key={i} variant="fadeUp" className="bg-white/5 border border-white/10 p-8" data-testid={`step-process-${i + 1}`}>
                   <h3 className="font-bold text-white text-[16px] mb-3">{isFr ? step.titleFr : step.titleEn}</h3>
-                  <p className="text-white/50 text-[13px] leading-relaxed">{isFr ? step.textFr : step.textEn}</p>
+                  <p className="text-white/70 text-[13px] leading-relaxed">{isFr ? step.textFr : step.textEn}</p>
                 </StaggerItem>
               ))}
             </Stagger>
