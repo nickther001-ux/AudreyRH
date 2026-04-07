@@ -156,7 +156,7 @@ export default function Business() {
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
                     />
                     {/* Linear gradient overlay */}
-                    <div className="absolute inset-0" style={{ background: "linear-gradient(rgba(0,0,0,0.62), rgba(0,0,0,0.62))" }} />
+                    <div className="absolute inset-0" style={{ background: "linear-gradient(rgba(0,0,0,0.40), rgba(0,0,0,0.40))" }} />
                     {/* Content — 40px padding on all sides */}
                     <div className="relative z-10 flex flex-col h-full p-10">
                       <div className="w-10 h-10 bg-white/15 flex items-center justify-center mb-5 flex-shrink-0">
