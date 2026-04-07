@@ -6,30 +6,24 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
-import { FadeUp, Stagger, StaggerItem } from "@/lib/animations";
+import { FadeUp } from "@/lib/animations";
 
 type Category = "general" | "booking" | "individuals" | "business";
 
-const CATEGORIES: { key: Category; icon: string }[] = [
-  { key: "general",     icon: "01" },
-  { key: "booking",     icon: "02" },
-  { key: "individuals", icon: "03" },
-  { key: "business",    icon: "04" },
+const CATEGORIES: { key: Category; num: string }[] = [
+  { key: "general",     num: "01" },
+  { key: "booking",     num: "02" },
+  { key: "individuals", num: "03" },
+  { key: "business",    num: "04" },
 ];
 
 const FAQ_COUNT = 10;
 
 export default function Faq() {
   const { t } = useLanguage();
-  const [activeCategory, setActiveCategory] = useState<Category>("general");
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [openFaq, setOpenFaq] = useState<string | null>(null);
 
-  const handleCategory = (key: Category) => {
-    setActiveCategory(key);
-    setOpenFaq(null);
-  };
-
-  const toggle = (i: number) => setOpenFaq(openFaq === i ? null : i);
+  const toggle = (id: string) => setOpenFaq(openFaq === id ? null : id);
 
   return (
     <div className="min-h-screen bg-white text-foreground flex flex-col">
@@ -37,7 +31,7 @@ export default function Faq() {
       <main className="flex-grow">
 
         {/* ── HERO — dark editorial ── */}
-        <section className="bg-foreground min-h-[70vh] flex flex-col justify-end pb-20 pt-40 relative overflow-hidden" data-testid="section-faq-hero">
+        <section className="bg-foreground min-h-[60vh] flex flex-col justify-end pb-20 pt-40 relative overflow-hidden" data-testid="section-faq-hero">
           <div
             className="absolute inset-0 bg-cover bg-center opacity-10"
             style={{ backgroundImage: "url(https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1400&q=80)" }}
@@ -65,57 +59,36 @@ export default function Faq() {
           </motion.div>
         </section>
 
-        {/* ── CATEGORY TABS ── */}
-        <section className="bg-[#162030] border-b border-white/10 sticky top-16 z-30" data-testid="section-faq-tabs">
-          <div className="max-w-6xl mx-auto px-6 lg:px-8">
-            <div className="flex overflow-x-auto scrollbar-hide">
-              {CATEGORIES.map(({ key, icon }) => (
-                <button
-                  key={key}
-                  onClick={() => handleCategory(key)}
-                  data-testid={`tab-faq-${key}`}
-                  className={`flex-shrink-0 flex items-center gap-3 px-6 py-5 text-[12px] font-semibold uppercase tracking-[0.15em] border-b-2 transition-colors ${
-                    activeCategory === key
-                      ? "border-[#93c5fd] text-[#93c5fd]"
-                      : "border-transparent text-white/40 hover:text-white/70"
-                  }`}
-                >
-                  <span className="text-white/20 font-black">{icon}</span>
-                  {t(`faq.category.${key}` as any)}
-                </button>
-              ))}
-            </div>
-          </div>
-        </section>
+        {/* ── ALL FAQ SECTIONS ── */}
+        <section className="bg-[#1e3a5f] py-20" data-testid="section-faq-content">
+          <div className="max-w-5xl mx-auto px-6 lg:px-8 space-y-20">
+            {CATEGORIES.map(({ key, num }) => (
+              <div key={key} data-testid={`section-faq-${key}`}>
 
-        {/* ── FAQ ACCORDIONS ── */}
-        <section className="bg-[#1e3a5f] py-24" data-testid="section-faq-content">
-          <div className="max-w-6xl mx-auto px-6 lg:px-8">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeCategory}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.35 }}
-              >
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-white/10">
+                {/* Category header */}
+                <div className="flex items-center gap-5 mb-10 pb-6 border-b border-white/10">
+                  <span className="text-[#93c5fd] text-[11px] font-black uppercase tracking-[0.2em]">{num}</span>
+                  <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+                    {t(`faq.category.${key}` as any)}
+                  </h2>
+                </div>
+
+                {/* Questions */}
+                <div className="divide-y divide-white/10">
                   {Array.from({ length: FAQ_COUNT }, (_, i) => i + 1).map((n) => {
-                    const isOpen = openFaq === n;
+                    const id = `${key}-${n}`;
+                    const isOpen = openFaq === id;
                     return (
-                      <div key={n} className="bg-[#1e3a5f]" data-testid={`faq-item-${activeCategory}-${n}`}>
+                      <div key={id} data-testid={`faq-item-${key}-${n}`}>
                         <button
-                          onClick={() => toggle(n)}
-                          className="w-full flex items-start justify-between gap-4 p-8 text-left group hover:bg-white/5 transition-colors"
-                          data-testid={`faq-toggle-${activeCategory}-${n}`}
+                          onClick={() => toggle(id)}
+                          className="w-full flex items-start justify-between gap-6 py-6 text-left group hover:bg-white/5 transition-colors px-4 -mx-4 rounded"
+                          data-testid={`faq-toggle-${key}-${n}`}
                         >
                           <span className="text-white font-semibold text-[15px] leading-snug flex-1">
-                            <span className="text-[#93c5fd] text-[11px] font-black uppercase tracking-[0.15em] block mb-2">
-                              {String(n).padStart(2, "0")}
-                            </span>
-                            {t(`faq.${activeCategory}.q${n}` as any)}
+                            {t(`faq.${key}.q${n}` as any)}
                           </span>
-                          <span className="flex-shrink-0 mt-1">
+                          <span className="flex-shrink-0 mt-0.5">
                             {isOpen
                               ? <Minus className="w-4 h-4 text-[#93c5fd]" />
                               : <Plus className="w-4 h-4 text-white/40 group-hover:text-white/70 transition-colors" />
@@ -128,11 +101,11 @@ export default function Faq() {
                               initial={{ height: 0, opacity: 0 }}
                               animate={{ height: "auto", opacity: 1 }}
                               exit={{ height: 0, opacity: 0 }}
-                              transition={{ duration: 0.3, ease: "easeInOut" }}
+                              transition={{ duration: 0.28, ease: "easeInOut" }}
                               className="overflow-hidden"
                             >
-                              <p className="px-8 pb-8 text-white/60 text-[14px] leading-relaxed border-t border-white/10 pt-5">
-                                {t(`faq.${activeCategory}.a${n}` as any)}
+                              <p className="pb-6 px-4 text-white/60 text-[14px] leading-relaxed">
+                                {t(`faq.${key}.a${n}` as any)}
                               </p>
                             </motion.div>
                           )}
@@ -141,8 +114,8 @@ export default function Faq() {
                     );
                   })}
                 </div>
-              </motion.div>
-            </AnimatePresence>
+              </div>
+            ))}
           </div>
         </section>
 
