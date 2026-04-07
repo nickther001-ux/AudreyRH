@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useLanguage } from "@/lib/i18n";
-import bokehBg from "@assets/IMM_1768534974735.png";
+import heroBg from "@assets/stock_images/hr_strategy.jpg";
 
 export default function Contact() {
   const { t, language } = useLanguage();
@@ -60,12 +60,12 @@ export default function Contact() {
       <section className="relative min-h-[72vh] flex flex-col justify-end overflow-hidden">
         {/* Background image */}
         <img
-          src={bokehBg}
+          src={heroBg}
           alt=""
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        {/* Midnight blue overlay — light enough to see the bokeh */}
-        <div className="absolute inset-0 bg-[#1e3a5f]/55" />
+        {/* Dark overlay — professional editorial style */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(13,31,60,0.82) 0%, rgba(13,31,60,0.72) 60%, rgba(13,31,60,0.88) 100%)" }} />
 
         {/* Content */}
         <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 pt-40 pb-20 w-full">
