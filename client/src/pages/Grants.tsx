@@ -115,6 +115,13 @@ const STATS = [
   { from: 0, to: 16,   duration: 1.8, suffix: " ans",labelFr: "D'expérience terrain",          labelEn: "Years of field expertise" },
 ];
 
+const GRANT_EMPTY = {
+  name: "", email: "", companyName: "", registrationInfo: "",
+  cities: "", activities: "", fundingNeeds: "", dreams: "",
+  pastGrants: "", employees: "", planToHire: "", openToInterns: "", desjardins: "",
+};
+type GrantForm = typeof GRANT_EMPTY;
+
 export default function Grants() {
   const { t, language } = useLanguage();
   const isFr = language === "fr";
@@ -125,6 +132,42 @@ export default function Grants() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [wordIndex, setWordIndex] = useState(0);
 
+  const [showQuestionnaire, setShowQuestionnaire] = useState(false);
+  const [grantForm, setGrantForm] = useState<GrantForm>(GRANT_EMPTY);
+  const [grantLoading, setGrantLoading] = useState(false);
+  const [grantSubmitted, setGrantSubmitted] = useState(false);
+
+  const setGF = (key: keyof GrantForm) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+      setGrantForm((f) => ({ ...f, [key]: e.target.value }));
+  const setYN = (key: keyof GrantForm) => (val: string) =>
+    setGrantForm((f) => ({ ...f, [key]: val }));
+
+  const grantValid =
+    grantForm.name && grantForm.email && grantForm.companyName && grantForm.registrationInfo &&
+    grantForm.cities && grantForm.activities && grantForm.fundingNeeds && grantForm.dreams &&
+    grantForm.pastGrants && grantForm.employees && grantForm.planToHire &&
+    grantForm.openToInterns && grantForm.desjardins;
+
+  const handleGrantSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!grantValid) return;
+    setGrantLoading(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(grantForm),
+      });
+      if (!res.ok) throw new Error("failed");
+      setGrantSubmitted(true);
+    } catch {
+      alert(isFr ? "Une erreur s'est produite. Veuillez réessayer." : "An error occurred. Please try again.");
+    } finally {
+      setGrantLoading(false);
+    }
+  };
+
   const rotatingWords = [t("grants.hero.rotating.1" as any), t("grants.hero.rotating.2" as any), t("grants.hero.rotating.3" as any)];
 
   useEffect(() => {
@@ -134,8 +177,14 @@ export default function Grants() {
     return () => clearInterval(interval);
   }, []);
 
-  const openDiagnostic = (category: DiagnosticCategory) => { setDiagnosticCategory(category); setStep(0); setAnswers([]); };
-  const closeDiagnostic = () => setDiagnosticCategory(null);
+  const openDiagnostic = (category: DiagnosticCategory) => {
+    setDiagnosticCategory(category); setStep(0); setAnswers([]);
+    setShowQuestionnaire(false); setGrantForm(GRANT_EMPTY); setGrantSubmitted(false);
+  };
+  const closeDiagnostic = () => {
+    setDiagnosticCategory(null);
+    setShowQuestionnaire(false); setGrantForm(GRANT_EMPTY); setGrantSubmitted(false);
+  };
 
   const handleAnswer = (answer: boolean) => {
     const newAnswers = [...answers, answer];
@@ -169,16 +218,20 @@ export default function Grants() {
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.96, y: 16, opacity: 0 }}
               transition={{ type: "spring", damping: 28, stiffness: 340 }}
-              className="bg-white max-w-lg w-full overflow-hidden flex flex-col shadow-2xl rounded-none"
+              className={`bg-white w-full overflow-hidden flex flex-col shadow-2xl rounded-none transition-all duration-300 ${showQuestionnaire ? "max-w-2xl" : "max-w-lg"}`}
               onClick={(e) => e.stopPropagation()}
             >
               <div className="bg-[#1e3a5f] px-7 py-5 flex items-start justify-between">
                 <div>
                   <p className="text-[#93c5fd] text-[11px] font-semibold uppercase tracking-[0.2em] mb-1">
-                    {isFr ? "Diagnostic d'admissibilité" : "Admissibility Diagnostic"}
+                    {showQuestionnaire
+                      ? (isFr ? "Questionnaire de subventions" : "Grant questionnaire")
+                      : (isFr ? "Diagnostic d'admissibilité" : "Admissibility Diagnostic")}
                   </p>
                   <h2 className="text-xl font-bold text-white">
-                    {diagnosticCategory ? (isFr ? categoryLabels[diagnosticCategory].fr : categoryLabels[diagnosticCategory].en) : ""}
+                    {showQuestionnaire
+                      ? (isFr ? "Parlez-nous de votre organisation" : "Tell us about your organization")
+                      : (diagnosticCategory ? (isFr ? categoryLabels[diagnosticCategory].fr : categoryLabels[diagnosticCategory].en) : "")}
                   </h2>
                 </div>
                 <button onClick={closeDiagnostic} className="text-white/50 hover:text-white transition-colors p-1 mt-0.5 flex-shrink-0" data-testid="button-close-diagnostic" aria-label="Close">
@@ -186,7 +239,7 @@ export default function Grants() {
                 </button>
               </div>
 
-              {!isResult && (
+              {!showQuestionnaire && !isResult && (
                 <div className="px-7 pt-5 pb-1">
                   <div className="flex items-center gap-1.5 mb-1">
                     {questions.map((_, i) => (
@@ -201,70 +254,279 @@ export default function Grants() {
                 </div>
               )}
 
-              <div className="px-7 py-6">
-                <AnimatePresence mode="wait">
-                  {!isResult ? (
-                    <motion.div key={`q-${step}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.18 }}>
-                      <p className="text-foreground font-semibold text-lg leading-snug mb-6">
-                        {isFr ? questions[step]?.fr : questions[step]?.en}
-                      </p>
-                      <div className="grid grid-cols-2 gap-3">
-                        <button className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-[#1e3a5f] text-[#1e3a5f] font-semibold hover:bg-[#1e3a5f] hover:text-white transition-all duration-200" onClick={() => handleAnswer(true)} data-testid={`button-yes-${step}`}>
-                          <CheckCircle className="w-4 h-4" />{isFr ? "Oui" : "Yes"}
-                        </button>
-                        <button className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-slate-200 text-slate-500 font-semibold hover:bg-slate-100 transition-all duration-200" onClick={() => handleAnswer(false)} data-testid={`button-no-${step}`}>
-                          <X className="w-4 h-4" />{isFr ? "Non" : "No"}
-                        </button>
-                      </div>
-                    </motion.div>
-                  ) : (
-                    <motion.div key="result" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.22 }}>
-                      {result === "high" && (
-                        <div className="text-center">
-                          <div className="w-14 h-14 bg-[#1e3a5f]/10 flex items-center justify-center mx-auto mb-4">
-                            <CheckCircle className="w-7 h-7 text-[#1e3a5f]" />
+              {/* Questionnaire view */}
+              {showQuestionnaire ? (
+                <div className="flex flex-col" style={{ maxHeight: "75vh" }}>
+                  <div className="overflow-y-auto flex-1 px-7 py-6">
+                    <AnimatePresence mode="wait">
+                      {grantSubmitted ? (
+                        <motion.div key="q-success" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="text-center py-8">
+                          <div className="w-14 h-14 bg-[#1e3a5f] flex items-center justify-center mx-auto mb-4">
+                            <CheckCircle className="w-7 h-7 text-white" />
                           </div>
-                          <div className="inline-block bg-[#1e3a5f] text-white text-[11px] font-bold px-3 py-1 uppercase tracking-widest mb-3">
-                            {isFr ? "Correspondance élevée" : "High Match"}
-                          </div>
-                          <h3 className="text-xl font-bold text-foreground mb-2">{isFr ? "Vous êtes admissible !" : "You're eligible!"}</h3>
-                          <p className="text-slate-500 text-sm leading-relaxed mb-6">
-                            {isFr ? "Votre profil correspond aux critères. Réservez une consultation pour commencer votre demande avec un expert CRIA." : "Your profile meets the criteria. Book a consultation to start your application with a CRIA expert."}
+                          <h3 className="text-xl font-bold text-[#1e3a5f] mb-2">
+                            {isFr ? "Questionnaire envoyé !" : "Questionnaire submitted!"}
+                          </h3>
+                          <p className="text-slate-500 text-sm leading-relaxed mb-6 max-w-xs mx-auto">
+                            {isFr
+                              ? "Merci pour vos réponses. Audrey communiquera avec vous dans les 24 à 48 heures."
+                              : "Thank you for your answers. Audrey will get back to you within 24 to 48 hours."}
                           </p>
-                          <Link href="/book"><Button className="w-full bg-[#1e3a5f] hover:bg-[#1e3a5f]/90 text-white font-semibold rounded-none h-12 mb-3" size="lg" onClick={closeDiagnostic} data-testid="button-result-book"><Calendar className="mr-2 w-4 h-4" />{isFr ? "Réserver une consultation" : "Book a Consultation"}</Button></Link>
-                        </div>
+                          <button onClick={closeDiagnostic} className="text-[12px] text-[#1e3a5f] uppercase tracking-[0.15em] font-semibold underline underline-offset-4">
+                            {isFr ? "Fermer" : "Close"}
+                          </button>
+                        </motion.div>
+                      ) : (
+                        <motion.div key="q-form" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                          <p className="text-slate-400 text-[12px] leading-relaxed mb-6">
+                            {isFr
+                              ? "Remplissez ce questionnaire pour qu'Audrey identifie les meilleures subventions pour votre organisation."
+                              : "Fill out this questionnaire so Audrey can identify the best grants for your organization."}
+                          </p>
+                          <form id="grant-q-form" onSubmit={handleGrantSubmit} className="space-y-5">
+                            {/* Coordonnées */}
+                            <p className="text-[10px] text-[#1e3a5f] font-bold uppercase tracking-[0.2em] border-b border-slate-100 pb-2">
+                              {isFr ? "Vos coordonnées" : "Contact info"}
+                            </p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div>
+                                <label className="block text-[11px] text-slate-500 font-semibold uppercase tracking-[0.14em] mb-1.5">
+                                  {isFr ? "Prénom et nom" : "Full name"} <span className="text-red-400">*</span>
+                                </label>
+                                <input value={grantForm.name} onChange={setGF("name")} required data-testid="input-grant-name"
+                                  placeholder={isFr ? "Marie Dupont" : "Jane Smith"}
+                                  className="w-full border-0 border-b-2 border-slate-200 bg-transparent focus:outline-none focus:border-[#1e3a5f] text-[14px] h-10 text-slate-800 placeholder:text-slate-300 transition-colors" />
+                              </div>
+                              <div>
+                                <label className="block text-[11px] text-slate-500 font-semibold uppercase tracking-[0.14em] mb-1.5">
+                                  {isFr ? "Courriel" : "Email"} <span className="text-red-400">*</span>
+                                </label>
+                                <input type="email" value={grantForm.email} onChange={setGF("email")} required data-testid="input-grant-email"
+                                  placeholder="exemple@organisation.com"
+                                  className="w-full border-0 border-b-2 border-slate-200 bg-transparent focus:outline-none focus:border-[#1e3a5f] text-[14px] h-10 text-slate-800 placeholder:text-slate-300 transition-colors" />
+                              </div>
+                            </div>
+                            {/* Organisation */}
+                            <p className="text-[10px] text-[#1e3a5f] font-bold uppercase tracking-[0.2em] border-b border-slate-100 pb-2 pt-2">
+                              {isFr ? "Votre organisation" : "Your organization"}
+                            </p>
+                            <div>
+                              <label className="block text-[11px] text-slate-500 font-semibold uppercase tracking-[0.14em] mb-1.5">
+                                {isFr ? "Nom de l'entreprise" : "Company name"} <span className="text-red-400">*</span>
+                              </label>
+                              <input value={grantForm.companyName} onChange={setGF("companyName")} required data-testid="input-grant-company"
+                                className="w-full border-0 border-b-2 border-slate-200 bg-transparent focus:outline-none focus:border-[#1e3a5f] text-[14px] h-10 text-slate-800 transition-colors" />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] text-slate-500 font-semibold uppercase tracking-[0.14em] mb-1.5">
+                                {isFr
+                                  ? "Depuis quand et sous quelle forme êtes-vous enregistré(e) ?"
+                                  : "Since when and in what form are you registered?"} <span className="text-red-400">*</span>
+                              </label>
+                              <textarea value={grantForm.registrationInfo} onChange={setGF("registrationInfo")} required rows={2} data-testid="textarea-grant-registration"
+                                placeholder={isFr ? "Ex : depuis mars 2015, incorporé" : "e.g. Since March 2015, incorporated"}
+                                className="w-full border border-slate-200 bg-transparent focus:outline-none focus:border-[#1e3a5f] text-[13px] text-slate-800 placeholder:text-slate-300 p-2.5 resize-none transition-colors" />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] text-slate-500 font-semibold uppercase tracking-[0.14em] mb-1.5">
+                                {isFr ? "Ville(s) d'opération" : "City/cities of operation"} <span className="text-red-400">*</span>
+                              </label>
+                              <textarea value={grantForm.cities} onChange={setGF("cities")} required rows={2} data-testid="textarea-grant-cities"
+                                placeholder={isFr ? "Ex : Montréal (siège social), Laval (évènements)" : "e.g. Montréal (head office), Laval (events)"}
+                                className="w-full border border-slate-200 bg-transparent focus:outline-none focus:border-[#1e3a5f] text-[13px] text-slate-800 placeholder:text-slate-300 p-2.5 resize-none transition-colors" />
+                            </div>
+                            {/* Activités */}
+                            <p className="text-[10px] text-[#1e3a5f] font-bold uppercase tracking-[0.2em] border-b border-slate-100 pb-2 pt-2">
+                              {isFr ? "Activités & besoins" : "Activities & needs"}
+                            </p>
+                            <div>
+                              <label className="block text-[11px] text-slate-500 font-semibold uppercase tracking-[0.14em] mb-1.5">
+                                {isFr ? "Décrivez les activités de votre organisation" : "Describe your organization's activities"} <span className="text-red-400">*</span>
+                              </label>
+                              <textarea value={grantForm.activities} onChange={setGF("activities")} required rows={3} data-testid="textarea-grant-activities"
+                                className="w-full border border-slate-200 bg-transparent focus:outline-none focus:border-[#1e3a5f] text-[13px] text-slate-800 p-2.5 resize-none transition-colors" />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] text-slate-500 font-semibold uppercase tracking-[0.14em] mb-1.5">
+                                {isFr ? "Quels sont vos besoins de financement actuels ?" : "What are your current funding needs?"} <span className="text-red-400">*</span>
+                              </label>
+                              <textarea value={grantForm.fundingNeeds} onChange={setGF("fundingNeeds")} required rows={3} data-testid="textarea-grant-funding"
+                                className="w-full border border-slate-200 bg-transparent focus:outline-none focus:border-[#1e3a5f] text-[13px] text-slate-800 p-2.5 resize-none transition-colors" />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] text-slate-500 font-semibold uppercase tracking-[0.14em] mb-1.5">
+                                {isFr
+                                  ? "Avez-vous des projets ou rêves non réalisés par manque de ressources ?"
+                                  : "Are there projects or dreams you haven't pursued due to lack of resources?"} <span className="text-red-400">*</span>
+                              </label>
+                              <textarea value={grantForm.dreams} onChange={setGF("dreams")} required rows={3} data-testid="textarea-grant-dreams"
+                                className="w-full border border-slate-200 bg-transparent focus:outline-none focus:border-[#1e3a5f] text-[13px] text-slate-800 p-2.5 resize-none transition-colors" />
+                            </div>
+                            {/* Historique */}
+                            <p className="text-[10px] text-[#1e3a5f] font-bold uppercase tracking-[0.2em] border-b border-slate-100 pb-2 pt-2">
+                              {isFr ? "Historique & ressources humaines" : "History & HR"}
+                            </p>
+                            <div>
+                              <label className="block text-[11px] text-slate-500 font-semibold uppercase tracking-[0.14em] mb-1.5">
+                                {isFr
+                                  ? "Avez-vous déjà fait des demandes de subventions ? Si oui, lesquelles ?"
+                                  : "Have you already applied for grants? If yes, which ones?"} <span className="text-red-400">*</span>
+                              </label>
+                              <textarea value={grantForm.pastGrants} onChange={setGF("pastGrants")} required rows={3} data-testid="textarea-grant-past"
+                                placeholder={isFr ? "Ex : PSOC pour le financement à la mission, ou Aucune" : "e.g. PSOC for mission funding, or None"}
+                                className="w-full border border-slate-200 bg-transparent focus:outline-none focus:border-[#1e3a5f] text-[13px] text-slate-800 placeholder:text-slate-300 p-2.5 resize-none transition-colors" />
+                            </div>
+                            <div>
+                              <label className="block text-[11px] text-slate-500 font-semibold uppercase tracking-[0.14em] mb-1.5">
+                                {isFr ? "Avez-vous des employés ? Si oui, combien ?" : "Do you have employees? If yes, how many?"} <span className="text-red-400">*</span>
+                              </label>
+                              <input value={grantForm.employees} onChange={setGF("employees")} required data-testid="input-grant-employees"
+                                placeholder={isFr ? "Ex : Oui, 5 employés à temps plein" : "e.g. Yes, 5 full-time employees"}
+                                className="w-full border-0 border-b-2 border-slate-200 bg-transparent focus:outline-none focus:border-[#1e3a5f] text-[14px] h-10 text-slate-800 placeholder:text-slate-300 transition-colors" />
+                            </div>
+                            {/* Finances / Yes-No */}
+                            <p className="text-[10px] text-[#1e3a5f] font-bold uppercase tracking-[0.2em] border-b border-slate-100 pb-2 pt-2">
+                              {isFr ? "Finances" : "Finances"}
+                            </p>
+                            {[
+                              {
+                                key: "planToHire" as const,
+                                label: isFr
+                                  ? "Planifiez-vous embaucher des ressources humaines d'ici la prochaine année ?"
+                                  : "Are you planning to hire human resources in the next year?",
+                                testId: "yn-hire",
+                              },
+                              {
+                                key: "openToInterns" as const,
+                                label: isFr
+                                  ? "Seriez-vous ouvert(e) à accueillir un(e) stagiaire subventionné(e) ?"
+                                  : "Would you be open to hosting a subsidized intern?",
+                                testId: "yn-interns",
+                              },
+                              {
+                                key: "desjardins" as const,
+                                label: isFr
+                                  ? "Êtes-vous membre de la Caisse Desjardins ?"
+                                  : "Are you a Caisse Desjardins member?",
+                                testId: "yn-desjardins",
+                              },
+                            ].map(({ key, label, testId }) => (
+                              <div key={key}>
+                                <label className="block text-[11px] text-slate-500 font-semibold uppercase tracking-[0.14em] mb-2">
+                                  {label} <span className="text-red-400">*</span>
+                                </label>
+                                <div className="flex gap-3">
+                                  {(isFr ? ["Oui", "Non"] : ["Yes", "No"]).map((opt) => {
+                                    const val = opt === "Oui" || opt === "Yes" ? "oui" : "non";
+                                    const active = grantForm[key] === val;
+                                    return (
+                                      <button key={opt} type="button"
+                                        data-testid={`${testId}-${val}`}
+                                        onClick={() => setYN(key)(active ? "" : val)}
+                                        className={`px-7 py-2 text-[11px] font-bold uppercase tracking-[0.15em] border transition-colors ${active ? "bg-[#1e3a5f] text-white border-[#1e3a5f]" : "bg-transparent text-[#1e3a5f] border-slate-200 hover:border-[#1e3a5f]/50"}`}>
+                                        {opt}
+                                      </button>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            ))}
+                          </form>
+                        </motion.div>
                       )}
-                      {result === "early" && (
-                        <div className="text-center">
-                          <div className="w-14 h-14 bg-amber-50 flex items-center justify-center mx-auto mb-4"><Lightbulb className="w-7 h-7 text-amber-500" /></div>
-                          <div className="inline-block bg-amber-100 text-amber-700 text-[11px] font-bold px-3 py-1 uppercase tracking-widest mb-3">{isFr ? "Phase de démarrage" : "Early Stage"}</div>
-                          <h3 className="text-xl font-bold text-foreground mb-2">{isFr ? "Conseils prioritaires requis" : "Priority Advice Needed"}</h3>
-                          <p className="text-slate-500 text-sm leading-relaxed mb-6">{isFr ? "Formalisez d'abord votre structure. Envoyez-nous vos coordonnées pour un accompagnement personnalisé." : "Formalize your structure first. Send us your details for personalized guidance."}</p>
-                          <Link href="/contact"><Button className="w-full bg-[#1e3a5f] hover:bg-[#1e3a5f]/90 text-white font-semibold rounded-none h-12 mb-3" size="lg" onClick={closeDiagnostic} data-testid="button-result-contact-early"><Send className="mr-2 w-4 h-4" />{isFr ? "Envoyer mes coordonnées" : "Send My Details"}</Button></Link>
-                        </div>
-                      )}
-                      {result === "review" && (
-                        <div className="text-center">
-                          <div className="w-14 h-14 bg-slate-100 flex items-center justify-center mx-auto mb-4"><Users className="w-7 h-7 text-slate-500" /></div>
-                          <div className="inline-block bg-slate-200 text-slate-700 text-[11px] font-bold px-3 py-1 uppercase tracking-widest mb-3">{isFr ? "Révision requise" : "Review Required"}</div>
-                          <h3 className="text-xl font-bold text-foreground mb-2">{isFr ? "Analyse individuelle nécessaire" : "Individual Review Needed"}</h3>
-                          <p className="text-slate-500 text-sm leading-relaxed mb-6">{isFr ? "Votre profil mérite une analyse approfondie. Envoyez-nous vos détails pour qu'un expert évalue votre dossier." : "Your profile merits deeper analysis. Send details for an expert review."}</p>
-                          <Link href="/contact"><Button className="w-full bg-[#1e3a5f] hover:bg-[#1e3a5f]/90 text-white font-semibold rounded-none h-12 mb-3" size="lg" onClick={closeDiagnostic} data-testid="button-result-contact-review"><Send className="mr-2 w-4 h-4" />{isFr ? "Envoyer mes détails" : "Send My Details"}</Button></Link>
-                        </div>
-                      )}
-                      <button className="w-full text-center text-sm text-slate-400 hover:text-slate-600 transition-colors" onClick={() => { setStep(0); setAnswers([]); }} data-testid="button-restart-diagnostic">
-                        {isFr ? "↺ Recommencer le diagnostic" : "↺ Restart diagnostic"}
+                    </AnimatePresence>
+                  </div>
+                  {!grantSubmitted && (
+                    <div className="px-7 py-4 border-t border-slate-100 flex items-center justify-between gap-4 flex-shrink-0">
+                      <button onClick={() => setShowQuestionnaire(false)} className="text-[11px] text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-colors">
+                        ← {isFr ? "Retour" : "Back"}
                       </button>
-                    </motion.div>
+                      <button form="grant-q-form" type="submit" disabled={grantLoading || !grantValid}
+                        data-testid="button-grant-submit"
+                        className="flex items-center gap-2 bg-[#1e3a5f] text-white px-6 py-2.5 text-[11px] font-bold uppercase tracking-[0.18em] hover:bg-[#264d7a] disabled:opacity-40 transition-colors">
+                        {grantLoading ? (isFr ? "Envoi…" : "Sending…") : (isFr ? "Envoyer à Audrey" : "Send to Audrey")}
+                        {!grantLoading && <Send className="w-3.5 h-3.5" />}
+                      </button>
+                    </div>
                   )}
-                </AnimatePresence>
-              </div>
+                </div>
+              ) : (
+                <>
+                  <div className="px-7 py-6">
+                    <AnimatePresence mode="wait">
+                      {!isResult ? (
+                        <motion.div key={`q-${step}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.18 }}>
+                          <p className="text-foreground font-semibold text-lg leading-snug mb-6">
+                            {isFr ? questions[step]?.fr : questions[step]?.en}
+                          </p>
+                          <div className="grid grid-cols-2 gap-3">
+                            <button className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-[#1e3a5f] text-[#1e3a5f] font-semibold hover:bg-[#1e3a5f] hover:text-white transition-all duration-200" onClick={() => handleAnswer(true)} data-testid={`button-yes-${step}`}>
+                              <CheckCircle className="w-4 h-4" />{isFr ? "Oui" : "Yes"}
+                            </button>
+                            <button className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-slate-200 text-slate-500 font-semibold hover:bg-slate-100 transition-all duration-200" onClick={() => handleAnswer(false)} data-testid={`button-no-${step}`}>
+                              <X className="w-4 h-4" />{isFr ? "Non" : "No"}
+                            </button>
+                          </div>
+                        </motion.div>
+                      ) : (
+                        <motion.div key="result" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.22 }}>
+                          {result === "high" && (
+                            <div className="text-center">
+                              <div className="w-14 h-14 bg-[#1e3a5f]/10 flex items-center justify-center mx-auto mb-4">
+                                <CheckCircle className="w-7 h-7 text-[#1e3a5f]" />
+                              </div>
+                              <div className="inline-block bg-[#1e3a5f] text-white text-[11px] font-bold px-3 py-1 uppercase tracking-widest mb-3">
+                                {isFr ? "Correspondance élevée" : "High Match"}
+                              </div>
+                              <h3 className="text-xl font-bold text-foreground mb-2">{isFr ? "Vous êtes admissible !" : "You're eligible!"}</h3>
+                              <p className="text-slate-500 text-sm leading-relaxed mb-5">
+                                {isFr ? "Votre profil correspond aux critères. Complétez le questionnaire pour qu'Audrey identifie vos subventions." : "Your profile meets the criteria. Complete the questionnaire so Audrey can identify your grants."}
+                              </p>
+                              <Button className="w-full bg-[#1e3a5f] hover:bg-[#1e3a5f]/90 text-white font-semibold rounded-none h-12 mb-3" size="lg" onClick={() => setShowQuestionnaire(true)} data-testid="button-result-questionnaire">
+                                <Send className="mr-2 w-4 h-4" />{isFr ? "Compléter le questionnaire" : "Complete the questionnaire"}
+                              </Button>
+                              <Link href="/book"><button className="w-full text-center text-sm text-slate-400 hover:text-slate-600 transition-colors" onClick={closeDiagnostic} data-testid="button-result-book">
+                                <Calendar className="inline w-3.5 h-3.5 mr-1" />{isFr ? "Ou réserver une consultation →" : "Or book a consultation →"}
+                              </button></Link>
+                            </div>
+                          )}
+                          {result === "early" && (
+                            <div className="text-center">
+                              <div className="w-14 h-14 bg-amber-50 flex items-center justify-center mx-auto mb-4"><Lightbulb className="w-7 h-7 text-amber-500" /></div>
+                              <div className="inline-block bg-amber-100 text-amber-700 text-[11px] font-bold px-3 py-1 uppercase tracking-widest mb-3">{isFr ? "Phase de démarrage" : "Early Stage"}</div>
+                              <h3 className="text-xl font-bold text-foreground mb-2">{isFr ? "Conseils prioritaires requis" : "Priority Advice Needed"}</h3>
+                              <p className="text-slate-500 text-sm leading-relaxed mb-5">{isFr ? "Formalisez d'abord votre structure. Complétez le questionnaire pour un accompagnement personnalisé." : "Formalize your structure first. Complete the questionnaire for personalized guidance."}</p>
+                              <Button className="w-full bg-[#1e3a5f] hover:bg-[#1e3a5f]/90 text-white font-semibold rounded-none h-12 mb-3" size="lg" onClick={() => setShowQuestionnaire(true)} data-testid="button-result-questionnaire-early">
+                                <Send className="mr-2 w-4 h-4" />{isFr ? "Compléter le questionnaire" : "Complete the questionnaire"}
+                              </Button>
+                            </div>
+                          )}
+                          {result === "review" && (
+                            <div className="text-center">
+                              <div className="w-14 h-14 bg-slate-100 flex items-center justify-center mx-auto mb-4"><Users className="w-7 h-7 text-slate-500" /></div>
+                              <div className="inline-block bg-slate-200 text-slate-700 text-[11px] font-bold px-3 py-1 uppercase tracking-widest mb-3">{isFr ? "Révision requise" : "Review Required"}</div>
+                              <h3 className="text-xl font-bold text-foreground mb-2">{isFr ? "Analyse individuelle nécessaire" : "Individual Review Needed"}</h3>
+                              <p className="text-slate-500 text-sm leading-relaxed mb-5">{isFr ? "Votre profil mérite une analyse approfondie. Complétez le questionnaire pour qu'Audrey évalue votre dossier." : "Your profile merits deeper analysis. Complete the questionnaire for an expert review."}</p>
+                              <Button className="w-full bg-[#1e3a5f] hover:bg-[#1e3a5f]/90 text-white font-semibold rounded-none h-12 mb-3" size="lg" onClick={() => setShowQuestionnaire(true)} data-testid="button-result-questionnaire-review">
+                                <Send className="mr-2 w-4 h-4" />{isFr ? "Compléter le questionnaire" : "Complete the questionnaire"}
+                              </Button>
+                            </div>
+                          )}
+                          <button className="w-full text-center text-sm text-slate-400 hover:text-slate-600 transition-colors mt-1" onClick={() => { setStep(0); setAnswers([]); }} data-testid="button-restart-diagnostic">
+                            {isFr ? "↺ Recommencer le diagnostic" : "↺ Restart diagnostic"}
+                          </button>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
 
-              <div className="px-7 pb-5 flex justify-end border-t border-slate-100 pt-4">
-                <button onClick={closeDiagnostic} className="text-sm text-slate-400 hover:text-slate-600 transition-colors flex items-center gap-1" data-testid="button-close-diagnostic-footer">
-                  <X className="w-3.5 h-3.5" />{isFr ? "Fermer" : "Close"}
-                </button>
-              </div>
+                  <div className="px-7 pb-5 flex justify-end border-t border-slate-100 pt-4">
+                    <button onClick={closeDiagnostic} className="text-sm text-slate-400 hover:text-slate-600 transition-colors flex items-center gap-1" data-testid="button-close-diagnostic-footer">
+                      <X className="w-3.5 h-3.5" />{isFr ? "Fermer" : "Close"}
+                    </button>
+                  </div>
+                </>
+              )}
             </motion.div>
           </motion.div>
         )}

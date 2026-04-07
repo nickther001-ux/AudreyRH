@@ -488,3 +488,36 @@ ${emailWrapperClose}`;
   else console.log('[Resend] Contact auto-reply email sent, id:', r2.data?.id);
   if (r1.error && r2.error) throw new Error(`Both contact emails failed: ${r1.error.message}`);
 }
+
+export type SimpleContactData = {
+  name: string;
+  email: string;
+  type: string;
+  message: string;
+};
+
+export async function sendSimpleContactEmail(data: SimpleContactData) {
+  const client = getClient();
+  const html = `${emailWrapperOpen(560)}
+${compactHeader('AudreyRH · Message reçu', 'Nouveau message depuis la page Contact')}
+        <tr>
+          <td style="padding:28px 36px 36px;">
+            ${fieldRow('De', `${data.name} &lt;${data.email}&gt;`)}
+            ${fieldRow('Sujet', data.type)}
+            ${fieldBox('Message', data.message)}
+            ${ctaButton(`mailto:${data.email}`, `Répondre à ${data.name}`)}
+          </td>
+        </tr>
+${emailFooter()}`;
+
+  console.log('[Resend] Sending simple contact email to Audrey from:', data.email);
+  const r = await client.emails.send({
+    from: FROM,
+    to: NOTIFY_TO,
+    replyTo: data.email,
+    subject: `Message de ${data.name} — AudreyRH`,
+    html,
+  });
+  if (r.error) throw new Error(`Simple contact email failed: ${r.error.message}`);
+  else console.log('[Resend] Simple contact email sent, id:', r.data?.id);
+}

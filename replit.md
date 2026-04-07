@@ -34,7 +34,7 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - `/terms` - Terms & Conditions page
 - `/grants` - Grants & Funding portal (4 categories: Artists, Entrepreneurs, SMEs, Corporate)
 - `/faq` - FAQ page (4 categories: Général, Consultation, Particuliers, Entreprises — accordion with 16 bilingual Q&As)
-- `/contact` - Contact & Grant Application form page
+- `/contact` - Simple contact form (name, email, subject, message) → sends to Audrey via /api/contact-simple
 
 ## User Preferences
 - Currency: USD ($50)

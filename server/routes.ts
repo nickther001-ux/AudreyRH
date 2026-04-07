@@ -212,6 +212,26 @@ export async function registerRoutes(
     }
   });
 
+  // Simple contact form — name, email, type, message
+  app.post('/api/contact-simple', async (req, res) => {
+    const { name, email, type, message } = req.body;
+    if (!name || !email || !type || !message) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: 'Invalid email address' });
+    }
+    try {
+      const { sendSimpleContactEmail } = await import('./resend');
+      await sendSimpleContactEmail({ name, email, type, message });
+      res.json({ success: true });
+    } catch (err: any) {
+      console.error('Simple contact form error:', err.message);
+      res.status(500).json({ message: 'Failed to send message' });
+    }
+  });
+
   // Admin login — validates against ADMIN_PASSWORD secret
   app.post('/api/admin/login', (req, res) => {
     const { password } = req.body ?? {};
