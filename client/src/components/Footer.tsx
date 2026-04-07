@@ -6,7 +6,7 @@ import { useLanguage } from "@/lib/i18n";
 export function Footer() {
   const { t } = useLanguage();
   return (
-    <footer className="bg-foreground text-white pt-20 pb-10" data-testid="footer">
+    <footer className="bg-[#1e3a5f] text-white pt-20 pb-10" data-testid="footer">
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
 
