@@ -204,19 +204,19 @@ export default function Business() {
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  {/* Dark overlay — light enough to see the photo */}
-                  <div className="absolute inset-0 bg-[#1e3a5f]/62 group-hover:bg-[#1e3a5f]/55 transition-colors duration-500" />
-                  {/* Content */}
-                  <div className="relative z-10 p-10">
-                    <div className="w-12 h-12 bg-white/10 flex items-center justify-center mb-6">
-                      <Icon className="w-6 h-6 text-white/70" />
+                  {/* Gradient — clear at top, very dark at bottom for text */}
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(5,10,25,0.3) 0%, rgba(5,10,25,0.75) 45%, rgba(5,10,25,0.97) 100%)" }} />
+                  {/* Content pinned to bottom */}
+                  <div className="relative z-10 p-10 flex flex-col justify-end h-full min-h-[380px]">
+                    <div className="w-10 h-10 bg-white/15 flex items-center justify-center mb-5">
+                      <Icon className="w-5 h-5 text-white" />
                     </div>
-                    <h3 className="font-bold text-white text-xl mb-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]">{t(`business.who.${type}.title` as any)}</h3>
-                    <p className="text-white/80 text-[14px] leading-relaxed mb-6 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)]">{t(`business.who.${type}.desc` as any)}</p>
-                    <ul className="space-y-2.5 border-t border-white/20 pt-5">
+                    <h3 className="font-bold text-white text-xl mb-3">{t(`business.who.${type}.title` as any)}</h3>
+                    <p className="text-white/85 text-[14px] leading-relaxed mb-5">{t(`business.who.${type}.desc` as any)}</p>
+                    <ul className="space-y-2.5 border-t border-white/20 pt-4">
                       {[1, 2, 3].map((i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-[13px] text-white/80 drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]">
-                          <span className="flex-shrink-0 w-1 h-1 rounded-full bg-[#93c5fd] mt-2" />
+                        <li key={i} className="flex items-start gap-2.5 text-[13px] text-white/80">
+                          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#93c5fd] mt-1.5" />
                           {t(`business.who.${type}.point${i}` as any)}
                         </li>
                       ))}
