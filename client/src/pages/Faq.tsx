@@ -17,7 +17,7 @@ const CATEGORIES: { key: Category; icon: string }[] = [
   { key: "business",    icon: "04" },
 ];
 
-const FAQ_COUNT = 6;
+const FAQ_COUNT = 10;
 
 export default function Faq() {
   const { t } = useLanguage();
