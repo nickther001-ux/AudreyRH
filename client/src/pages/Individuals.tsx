@@ -477,16 +477,16 @@ export default function Individuals() {
                         alt=""
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
-                      {/* Overlay — readable on mobile, image still visible on desktop */}
-                      <div className={`absolute inset-0 transition-colors duration-300 ${isOpen ? "bg-[#1e3a5f]/82" : "bg-[#1e3a5f]/68 group-hover:bg-[#1e3a5f]/72"}`} />
+                      {/* Overlay — dark enough for light-toned photos */}
+                      <div className={`absolute inset-0 transition-colors duration-300 ${isOpen ? "bg-[#1e3a5f]/88" : "bg-[#1e3a5f]/80 group-hover:bg-[#1e3a5f]/84"}`} />
                       {/* Content */}
                       <div className="relative z-10 flex items-center justify-between w-full py-8 gap-6">
                         <div className="flex items-start gap-6">
                           <span className="text-[11px] font-black text-white/40 mt-0.5 select-none w-6 flex-shrink-0">{idx + 1}</span>
                           <div>
-                            <p className="text-[10px] text-white/60 uppercase tracking-[0.2em] mb-1">{t(badgeKey as any)}</p>
-                            <h3 className="text-lg md:text-xl font-bold text-white leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">{t(titleKey as any)}</h3>
-                            {!isOpen && <p className="text-white/70 text-[13px] mt-1 leading-relaxed max-w-lg drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">{t(subtitleKey as any)}</p>}
+                            <p className="text-[10px] text-white/80 uppercase tracking-[0.2em] mb-1">{t(badgeKey as any)}</p>
+                            <h3 className="text-lg md:text-xl font-bold text-white leading-snug">{t(titleKey as any)}</h3>
+                            {!isOpen && <p className="text-white/80 text-[13px] mt-1 leading-relaxed max-w-lg">{t(subtitleKey as any)}</p>}
                           </div>
                         </div>
                         <span className="flex-shrink-0 mr-0">
