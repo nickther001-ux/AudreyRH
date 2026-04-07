@@ -8,6 +8,9 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 import { FadeUp, FadeIn, Stagger, StaggerItem } from "@/lib/animations";
 import audreyGuide from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
+import guideCvImg from "@assets/generated_images/guide_cv_resume.png";
+import guideChecklistImg from "@assets/generated_images/guide_checklist.png";
+import guideInterviewImg from "@assets/generated_images/guide_interview.png";
 
 type ServiceKey = "strategy" | "credentials" | "employability" | "integration" | null;
 
@@ -375,6 +378,7 @@ export default function Individuals() {
               {([
                 {
                   idx: 1,
+                  image: guideCvImg,
                   badgeKey: "individuals.guide.resume.badge",
                   titleKey: "individuals.guide.resume.title",
                   subtitleKey: "individuals.guide.resume.subtitle",
@@ -396,6 +400,7 @@ export default function Individuals() {
                 },
                 {
                   idx: 2,
+                  image: guideChecklistImg,
                   badgeKey: "individuals.guide.dos.badge",
                   titleKey: "individuals.guide.dos.title",
                   subtitleKey: "individuals.guide.dos.subtitle",
@@ -440,6 +445,7 @@ export default function Individuals() {
                 },
                 {
                   idx: 3,
+                  image: guideInterviewImg,
                   badgeKey: "individuals.guide.interview.badge",
                   titleKey: "individuals.guide.interview.title",
                   subtitleKey: "individuals.guide.interview.subtitle",
@@ -455,29 +461,41 @@ export default function Individuals() {
                     </div>
                   ),
                 },
-              ] as const).map(({ idx, badgeKey, titleKey, subtitleKey, content }) => {
+              ]).map(({ idx, badgeKey, titleKey, subtitleKey, content, image }) => {
                 const isOpen = openGuide === idx;
                 return (
-                  <div key={idx} className="border-b border-black/10" data-testid={`guide-accordion-${idx}`}>
+                  <div key={idx} className="border-b border-black/8" data-testid={`guide-accordion-${idx}`}>
                     <button
                       onClick={() => setOpenGuide(isOpen ? null : idx)}
-                      className="w-full flex items-center justify-between gap-6 py-8 text-left group"
+                      className="w-full relative overflow-hidden flex items-center justify-between gap-6 px-0 text-left group"
+                      style={{ minHeight: "120px" }}
                       data-testid={`guide-toggle-${idx}`}
                     >
-                      <div className="flex items-start gap-6">
-                        <span className="text-[11px] font-black text-black/20 mt-1 select-none w-6 flex-shrink-0">0{idx}</span>
-                        <div>
-                          <p className="text-[10px] text-black/40 uppercase tracking-[0.2em] mb-1">{t(badgeKey as any)}</p>
-                          <h3 className="text-lg md:text-xl font-bold text-black leading-snug">{t(titleKey as any)}</h3>
-                          {!isOpen && <p className="text-black/45 text-[13px] mt-1 leading-relaxed max-w-lg">{t(subtitleKey as any)}</p>}
+                      {/* Background photo */}
+                      <img
+                        src={image}
+                        alt=""
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      {/* Overlay — darker when open */}
+                      <div className={`absolute inset-0 transition-colors duration-300 ${isOpen ? "bg-[#1e3a5f]/88" : "bg-[#1e3a5f]/75 group-hover:bg-[#1e3a5f]/82"}`} />
+                      {/* Content */}
+                      <div className="relative z-10 flex items-center justify-between w-full py-8 gap-6">
+                        <div className="flex items-start gap-6">
+                          <span className="text-[11px] font-black text-white/30 mt-0.5 select-none w-6 flex-shrink-0">0{idx}</span>
+                          <div>
+                            <p className="text-[10px] text-white/50 uppercase tracking-[0.2em] mb-1">{t(badgeKey as any)}</p>
+                            <h3 className="text-lg md:text-xl font-bold text-white leading-snug">{t(titleKey as any)}</h3>
+                            {!isOpen && <p className="text-white/50 text-[13px] mt-1 leading-relaxed max-w-lg">{t(subtitleKey as any)}</p>}
+                          </div>
                         </div>
+                        <span className="flex-shrink-0 mr-0">
+                          {isOpen
+                            ? <Minus className="w-4 h-4 text-white/70" />
+                            : <Plus className="w-4 h-4 text-white/40 group-hover:text-white/70 transition-colors" />
+                          }
+                        </span>
                       </div>
-                      <span className="flex-shrink-0">
-                        {isOpen
-                          ? <Minus className="w-4 h-4 text-black" />
-                          : <Plus className="w-4 h-4 text-black/30 group-hover:text-black/60 transition-colors" />
-                        }
-                      </span>
                     </button>
                     <AnimatePresence>
                       {isOpen && (

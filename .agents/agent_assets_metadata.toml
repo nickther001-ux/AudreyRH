@@ -1,0 +1,20 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "Ck7dLxwBhvjcsbncgQVdn"
+uri = "file://attached_assets/generated_images/guide_cv_resume.png"
+type = "image"
+title = "cv resume desk flat lay"
+
+[[generated]]
+id = "rShVAsRu9RoRD74mwc825"
+uri = "file://attached_assets/generated_images/guide_checklist.png"
+type = "image"
+title = "professional woman checklist office"
+
+[[generated]]
+id = "-LaefYAUkNmZKG_mvMvZq"
+uri = "file://attached_assets/generated_images/guide_interview.png"
+type = "image"
+title = "job interview two professionals"
