@@ -454,7 +454,6 @@ export default function Individuals() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-black/8 mt-8">
                       {([1,2,3,4,5,6] as const).map((n) => (
                         <div key={n} className="bg-white p-7 hover:bg-black/3 transition-colors" data-testid={`guide-interview-${n}`}>
-                          <p className="text-[2.2rem] font-black text-black/8 leading-none mb-3 select-none">0{n}</p>
                           <h4 className="font-bold text-black text-[14px] mb-2">{t(`individuals.guide.interview.s${n}.title` as any)}</h4>
                           <p className="text-black/55 text-[13px] leading-relaxed">{t(`individuals.guide.interview.s${n}.desc` as any)}</p>
                         </div>
