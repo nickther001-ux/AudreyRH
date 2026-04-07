@@ -3,30 +3,18 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Shield, X, ChevronDown, ChevronUp } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 
-const STORAGE_KEY = "audreyrh_privacy_consent";
-
 export function PrivacyConsent() {
   const { language } = useLanguage();
   const [visible, setVisible] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (!stored) {
-      const t = setTimeout(() => setVisible(true), 800);
-      return () => clearTimeout(t);
-    }
+    const t = setTimeout(() => setVisible(true), 800);
+    return () => clearTimeout(t);
   }, []);
 
-  const accept = () => {
-    localStorage.setItem(STORAGE_KEY, "accepted");
-    setVisible(false);
-  };
-
-  const decline = () => {
-    localStorage.setItem(STORAGE_KEY, "declined");
-    setVisible(false);
-  };
+  const accept = () => setVisible(false);
+  const decline = () => setVisible(false);
 
   const fr = language === "fr";
 
