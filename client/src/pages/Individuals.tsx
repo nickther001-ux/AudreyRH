@@ -520,7 +520,7 @@ export default function Individuals() {
 
         {/* ── 4. PROCESS — dark, steps bg ── */}
         <section className="bg-foreground py-28 relative overflow-hidden" data-testid="section-process">
-          <img src={processStepsBg} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none select-none" />
+          <img src={processStepsBg} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-[0.04] pointer-events-none select-none" />
           <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
             <FadeUp className="mb-16">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{t("home.process.label")}</p>

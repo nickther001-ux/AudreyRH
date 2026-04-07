@@ -266,7 +266,7 @@ export default function Business() {
 
         {/* ── 5. PROCESS — steps bg ── */}
         <section className="py-28 relative overflow-hidden bg-muted/30" data-testid="section-business-process">
-          <img src={processStepsBg} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-15 pointer-events-none select-none" />
+          <img src={processStepsBg} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-[0.06] pointer-events-none select-none" />
           <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
             <FadeUp className="mb-16">
               <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{t("home.process.label")}</p>
