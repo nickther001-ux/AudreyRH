@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send, ArrowRight } from "lucide-react";
+import { Mail, MapPin, Clock, ArrowRight, Send } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { SuccessMessage } from "@/components/SuccessMessage";
@@ -54,201 +54,211 @@ export default function Contact() {
   ];
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-white text-foreground">
       <Navbar />
 
-      {/* Page Header */}
-      <section className="pt-32 pb-16 bg-gradient-to-br from-foreground to-foreground/90 text-background">
-        <div className="container mx-auto px-4 md:px-6 text-center">
-          <div className="inline-flex items-center gap-2 bg-accent/20 border border-accent/40 text-accent px-4 py-2 rounded-full text-sm font-medium mb-6">
-            <Mail className="w-4 h-4" />
-            {t("contact.badge")}
+      {/* ── HERO ── */}
+      <section className="bg-foreground pt-36 pb-24">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8">
+          <div className="max-w-2xl">
+            <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-5">{t("contact.badge")}</p>
+            <h1 className="text-5xl md:text-6xl font-black text-white leading-[1.05] mb-6">
+              {t("contact.title")}<span className="text-orange-400">.</span>
+            </h1>
+            <p className="text-white/50 text-[16px] leading-relaxed max-w-lg">
+              {t("contact.subtitle")}
+            </p>
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            {t("contact.title")}
-          </h1>
-          <p className="text-background/70 text-lg max-w-2xl mx-auto">
-            {t("contact.subtitle")}
-          </p>
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 md:px-6 max-w-6xl">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
+      {/* ── MAIN CONTENT ── */}
+      <section className="py-24 bg-white">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
 
-            {/* Contact Info Sidebar */}
-            <div className="lg:col-span-2 space-y-8">
+            {/* ── LEFT SIDEBAR ── */}
+            <div className="lg:col-span-2 space-y-12">
+
+              {/* Info items */}
               <div>
-                <h2 className="text-xl font-bold text-foreground mb-6">{t("contact.info.title")}</h2>
-                <div className="space-y-5">
-                  <div className="flex items-start gap-4" data-testid="contact-email-info">
-                    <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Mail className="w-5 h-5 text-primary" />
+                <p className="text-[11px] text-black/35 uppercase tracking-[0.2em] mb-8">{t("contact.info.title")}</p>
+                <div className="space-y-8">
+
+                  <div className="flex items-start gap-5" data-testid="contact-email-info">
+                    <div className="w-10 h-10 bg-foreground flex items-center justify-center flex-shrink-0">
+                      <Mail className="w-4 h-4 text-white" />
                     </div>
                     <div>
-                      <p className="font-medium text-foreground text-sm mb-1">{t("contact.info.email")}</p>
-                      <a href="mailto:info@audreyrh.com" className="text-primary hover:underline text-sm">
+                      <p className="text-[11px] text-black/40 uppercase tracking-[0.15em] mb-1">{t("contact.info.email")}</p>
+                      <a href="mailto:info@audreyrh.com" className="text-black font-semibold text-[15px] hover:text-[#1e3a5f] transition-colors">
                         info@audreyrh.com
                       </a>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4" data-testid="contact-location-info">
-                    <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-5 h-5 text-primary" />
+
+                  <div className="flex items-start gap-5" data-testid="contact-location-info">
+                    <div className="w-10 h-10 bg-foreground flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-4 h-4 text-white" />
                     </div>
                     <div>
-                      <p className="font-medium text-foreground text-sm mb-1">{t("contact.info.location")}</p>
-                      <p className="text-muted-foreground text-sm">Montréal, Québec, Canada</p>
+                      <p className="text-[11px] text-black/40 uppercase tracking-[0.15em] mb-1">{t("contact.info.location")}</p>
+                      <p className="text-black font-semibold text-[15px]">Montréal, Québec</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4" data-testid="contact-response-info">
-                    <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <Phone className="w-5 h-5 text-primary" />
+
+                  <div className="flex items-start gap-5" data-testid="contact-response-info">
+                    <div className="w-10 h-10 bg-foreground flex items-center justify-center flex-shrink-0">
+                      <Clock className="w-4 h-4 text-white" />
                     </div>
                     <div>
-                      <p className="font-medium text-foreground text-sm mb-1">{t("contact.info.response")}</p>
-                      <p className="text-muted-foreground text-sm">{t("contact.info.responseTime")}</p>
+                      <p className="text-[11px] text-black/40 uppercase tracking-[0.15em] mb-1">{t("contact.info.response")}</p>
+                      <p className="text-black font-semibold text-[15px]">{t("contact.info.responseTime")}</p>
                     </div>
                   </div>
+
                 </div>
               </div>
 
-              {/* Also book a consultation */}
-              <div className="bg-primary/5 border border-primary/20 rounded-2xl p-6">
-                <h3 className="font-semibold text-foreground mb-2">{t("contact.sidebar.consultTitle")}</h3>
-                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
+              {/* Book CTA block */}
+              <div className="bg-[#1e3a5f] p-8">
+                <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{t("contact.sidebar.consultTitle")}</p>
+                <p className="text-white/70 text-[14px] leading-relaxed mb-7">
                   {t("contact.sidebar.consultText")}
                 </p>
-                <a href="/book" data-testid="link-contact-book">
-                  <Button size="sm" className="bg-primary text-white w-full">
-                    {t("contact.sidebar.consultCta")}
-                    <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
+                <a href="/book" data-testid="link-contact-book" className="inline-flex items-center gap-3 text-white text-[13px] font-semibold uppercase tracking-[0.1em] group">
+                  {t("contact.sidebar.consultCta")}
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
+
             </div>
 
-            {/* Form / Success card — animated swap */}
+            {/* ── FORM ── */}
             <div className="lg:col-span-3">
-              <div className="bg-card border border-border rounded-2xl shadow-sm overflow-hidden min-h-[400px]">
-                <AnimatePresence mode="wait">
-                  {isSubmitted ? (
-                    <SuccessMessage key="success" onReset={handleReset} />
-                  ) : (
-                    <motion.div
-                      key="form"
-                      initial={{ opacity: 0, y: 16 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -16 }}
-                      transition={{ duration: 0.35, ease: "easeOut" }}
-                      className="p-8"
-                    >
-                      <h2 className="text-xl font-bold text-foreground mb-2">{t("contact.form.title")}</h2>
-                      <p className="text-muted-foreground text-sm mb-8">{t("contact.form.subtitle")}</p>
+              <AnimatePresence mode="wait">
+                {isSubmitted ? (
+                  <SuccessMessage key="success" onReset={handleReset} />
+                ) : (
+                  <motion.div
+                    key="form"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -16 }}
+                    transition={{ duration: 0.35, ease: "easeOut" }}
+                  >
+                    <p className="text-[11px] text-black/35 uppercase tracking-[0.2em] mb-4">{t("contact.form.title")}</p>
+                    <h2 className="text-2xl md:text-3xl font-bold text-black mb-2">{t("contact.form.subtitle")}</h2>
+                    <div className="w-10 h-px bg-orange-400 mb-10" />
 
-                      <form onSubmit={handleSubmit} className="space-y-6" data-testid="form-contact">
+                    <form onSubmit={handleSubmit} className="space-y-7" data-testid="form-contact">
 
-                        {/* Name */}
-                        <div>
-                          <label className="block text-sm font-medium text-foreground mb-2" htmlFor="contact-name">
-                            {t("contact.form.name")} <span className="text-destructive">*</span>
-                          </label>
-                          <Input
-                            id="contact-name"
-                            value={form.name}
-                            onChange={(e) => setForm({ ...form, name: e.target.value })}
-                            placeholder={t("contact.form.namePlaceholder")}
-                            required
-                            data-testid="input-contact-name"
-                          />
-                        </div>
+                      {/* Name */}
+                      <div>
+                        <label className="block text-[11px] text-black/50 uppercase tracking-[0.15em] mb-2" htmlFor="contact-name">
+                          {t("contact.form.name")} <span className="text-black/40">*</span>
+                        </label>
+                        <Input
+                          id="contact-name"
+                          value={form.name}
+                          onChange={(e) => setForm({ ...form, name: e.target.value })}
+                          placeholder={t("contact.form.namePlaceholder")}
+                          required
+                          data-testid="input-contact-name"
+                          className="rounded-none border-0 border-b border-black/15 bg-transparent focus-visible:ring-0 focus-visible:border-black px-0 text-black placeholder:text-black/30 text-[15px] h-11"
+                        />
+                      </div>
 
-                        {/* Email */}
-                        <div>
-                          <label className="block text-sm font-medium text-foreground mb-2" htmlFor="contact-email">
-                            {t("contact.form.email")} <span className="text-destructive">*</span>
-                          </label>
-                          <Input
-                            id="contact-email"
-                            type="email"
-                            value={form.email}
-                            onChange={(e) => setForm({ ...form, email: e.target.value })}
-                            placeholder={t("contact.form.emailPlaceholder")}
-                            required
-                            data-testid="input-contact-email"
-                          />
-                        </div>
+                      {/* Email */}
+                      <div>
+                        <label className="block text-[11px] text-black/50 uppercase tracking-[0.15em] mb-2" htmlFor="contact-email">
+                          {t("contact.form.email")} <span className="text-black/40">*</span>
+                        </label>
+                        <Input
+                          id="contact-email"
+                          type="email"
+                          value={form.email}
+                          onChange={(e) => setForm({ ...form, email: e.target.value })}
+                          placeholder={t("contact.form.emailPlaceholder")}
+                          required
+                          data-testid="input-contact-email"
+                          className="rounded-none border-0 border-b border-black/15 bg-transparent focus-visible:ring-0 focus-visible:border-black px-0 text-black placeholder:text-black/30 text-[15px] h-11"
+                        />
+                      </div>
 
-                        {/* Grant/Business Type */}
-                        <div>
-                          <label className="block text-sm font-medium text-foreground mb-2">
-                            {t("contact.form.grantType")} <span className="text-destructive">*</span>
-                          </label>
-                          <Select
-                            value={form.grantType}
-                            onValueChange={(val) => setForm({ ...form, grantType: val })}
-                            required
+                      {/* Grant/Business Type */}
+                      <div>
+                        <label className="block text-[11px] text-black/50 uppercase tracking-[0.15em] mb-2">
+                          {t("contact.form.grantType")} <span className="text-black/40">*</span>
+                        </label>
+                        <Select
+                          value={form.grantType}
+                          onValueChange={(val) => setForm({ ...form, grantType: val })}
+                          required
+                        >
+                          <SelectTrigger
+                            data-testid="select-grant-type"
+                            className="rounded-none border-0 border-b border-black/15 bg-transparent focus:ring-0 px-0 text-[15px] text-black h-11"
                           >
-                            <SelectTrigger data-testid="select-grant-type">
-                              <SelectValue placeholder={t("contact.form.grantTypePlaceholder")} />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {grantTypes.map((gt) => (
-                                <SelectItem key={gt.value} value={gt.value} data-testid={`option-grant-${gt.value}`}>
-                                  {t(gt.labelKey)}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
+                            <SelectValue placeholder={t("contact.form.grantTypePlaceholder")} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {grantTypes.map((gt) => (
+                              <SelectItem key={gt.value} value={gt.value} data-testid={`option-grant-${gt.value}`}>
+                                {t(gt.labelKey)}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
 
-                        {/* Project Description */}
-                        <div>
-                          <label className="block text-sm font-medium text-foreground mb-2" htmlFor="contact-project">
-                            {t("contact.form.project")} <span className="text-destructive">*</span>
-                          </label>
-                          <Textarea
-                            id="contact-project"
-                            value={form.projectDescription}
-                            onChange={(e) => setForm({ ...form, projectDescription: e.target.value })}
-                            placeholder={t("contact.form.projectPlaceholder")}
-                            rows={5}
-                            required
-                            data-testid="textarea-contact-project"
-                          />
-                          <p className="text-xs text-muted-foreground mt-1">{t("contact.form.projectHint")}</p>
-                        </div>
+                      {/* Project Description */}
+                      <div>
+                        <label className="block text-[11px] text-black/50 uppercase tracking-[0.15em] mb-2" htmlFor="contact-project">
+                          {t("contact.form.project")} <span className="text-black/40">*</span>
+                        </label>
+                        <Textarea
+                          id="contact-project"
+                          value={form.projectDescription}
+                          onChange={(e) => setForm({ ...form, projectDescription: e.target.value })}
+                          placeholder={t("contact.form.projectPlaceholder")}
+                          rows={5}
+                          required
+                          data-testid="textarea-contact-project"
+                          className="rounded-none border border-black/15 bg-transparent focus-visible:ring-0 focus-visible:border-black text-black placeholder:text-black/30 text-[15px] resize-none mt-1"
+                        />
+                        <p className="text-[12px] text-black/35 mt-2">{t("contact.form.projectHint")}</p>
+                      </div>
 
-                        {/* Submit */}
-                        <Button
+                      {/* Submit */}
+                      <div className="pt-2">
+                        <button
                           type="submit"
                           disabled={loading || !form.name || !form.email || !form.grantType || !form.projectDescription}
-                          className="w-full bg-primary text-white py-6 text-base font-semibold"
                           data-testid="button-contact-submit"
+                          className="w-full bg-[#1e3a5f] text-white py-4 text-[13px] font-semibold uppercase tracking-[0.15em] flex items-center justify-center gap-3 disabled:opacity-40 hover:bg-[#162c48] transition-colors"
                         >
                           {loading ? (
-                            <span className="flex items-center gap-2">
-                              <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+                            <>
+                              <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                               {t("contact.form.sending")}
-                            </span>
+                            </>
                           ) : (
-                            <span className="flex items-center gap-2">
+                            <>
                               <Send className="w-4 h-4" />
                               {t("contact.form.submit")}
-                            </span>
+                            </>
                           )}
-                        </Button>
-
-                        <p className="text-xs text-muted-foreground text-center">
+                        </button>
+                        <p className="text-[12px] text-black/35 text-center mt-4">
                           {t("contact.form.privacy")}
                         </p>
-                      </form>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+                      </div>
+
+                    </form>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
           </div>
