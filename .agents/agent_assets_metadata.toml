@@ -42,6 +42,12 @@ uri = "file://attached_assets/generated_images/process_steps_bg.png"
 type = "image"
 title = "generated_image"
 
+[[generated]]
+id = "7ZOun2P23T1nJthSSC1Mu"
+uri = "file://attached_assets/stock_images/black_mature_hijab_woman.png"
+type = "image"
+title = "mature black hijab woman"
+
 [[outputs]]
 id = "t9ncZGut59z-QeD3P2SPN"
 uri = "file://attached_assets/stock_images/talent_acquisition.jpg"
@@ -113,3 +119,33 @@ id = "LWmhfESh3puLEhiin-uyN"
 uri = "file://attached_assets/stock_images/muslim_woman_portrait_3.jpg"
 type = "image"
 title = "Muslim woman hijab smiling confident professional portrait Montreal Canada immigrant"
+
+[[outputs]]
+id = "gUhrUocOEO3hA1mrQ-EmR"
+uri = "file://attached_assets/stock_images/black_woman_hijab_1.jpg"
+type = "image"
+title = "mature beautiful Black African woman hijab elegant confident portrait"
+
+[[outputs]]
+id = "h_yQgIzvFsTetpdtkjOyM"
+uri = "file://attached_assets/stock_images/black_woman_hijab_2.jpg"
+type = "image"
+title = "mature beautiful Black African woman hijab elegant confident portrait"
+
+[[outputs]]
+id = "zW2J9ZYqwgZRNo3ctJqN2"
+uri = "file://attached_assets/stock_images/black_woman_hijab_3.jpg"
+type = "image"
+title = "mature beautiful Black African woman hijab elegant confident portrait"
+
+[[outputs]]
+id = "nm1rnSpMpTfDG_e_1ySFo"
+uri = "file://attached_assets/stock_images/black_woman_hijab_4.jpg"
+type = "image"
+title = "mature beautiful Black African woman hijab elegant confident portrait"
+
+[[outputs]]
+id = "726SPQq5l_eClz7JYIitS"
+uri = "file://attached_assets/stock_images/black_woman_hijab_5.jpg"
+type = "image"
+title = "mature beautiful Black African woman hijab elegant confident portrait"
