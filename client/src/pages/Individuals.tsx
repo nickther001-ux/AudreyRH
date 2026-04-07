@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 import { FadeUp, FadeIn, Stagger, StaggerItem } from "@/lib/animations";
 import audreyGuide from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
+import heroBgImg from "@assets/stock_images/talent_acquisition.jpg";
 import guideCvImg from "@assets/generated_images/guide_cv_resume.png";
 import guideChecklistImg from "@assets/generated_images/guide_checklist.png";
 import guideInterviewImg from "@assets/generated_images/guide_interview.png";
@@ -221,7 +222,7 @@ export default function Individuals() {
         <section className="bg-foreground min-h-screen flex flex-col justify-end pb-24 pt-40 overflow-hidden relative" data-testid="section-hero">
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-15"
-            style={{ backgroundImage: "url(https://images.unsplash.com/photo-1529390079861-591de354faf5?w=1400&q=80)" }}
+            style={{ backgroundImage: `url(${heroBgImg})` }}
           />
           <motion.div
             className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full"
