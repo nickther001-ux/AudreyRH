@@ -355,7 +355,9 @@ export default function Individuals() {
                     {t("individuals.guide.title" as any)}<span className="text-orange-400">.</span>
                   </h2>
                   <p className="text-black/60 text-[15px] leading-relaxed max-w-md">{t("individuals.guide.subtitle" as any)}</p>
-                  {/* Arrow label — visible on md+ only */}
+                  {/* Arrow label — desktop: points right; mobile: points down */}
+
+                  {/* Desktop (md+) — horizontal arrow pointing right toward photo */}
                   <div className="hidden md:flex items-end gap-3 mt-8 select-none">
                     <div className="text-right">
                       <p className="text-[#1e3a5f] font-bold text-[13px] leading-snug" style={{ fontFamily: "'Georgia', serif", fontStyle: "italic" }}>
@@ -367,22 +369,25 @@ export default function Individuals() {
                     </div>
                     {/* Curved SVG arrow pointing right toward the photo */}
                     <svg width="160" height="52" viewBox="0 0 160 52" fill="none" className="flex-shrink-0 text-[#1e3a5f]">
-                      <path
-                        d="M4 44 C 30 44, 60 8, 148 10"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        fill="none"
-                      />
-                      {/* Arrowhead */}
-                      <path
-                        d="M138 4 L150 10 L138 16"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        fill="none"
-                      />
+                      <path d="M4 44 C 30 44, 60 8, 148 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
+                      <path d="M138 4 L150 10 L138 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                    </svg>
+                  </div>
+
+                  {/* Mobile (< md) — caption + downward arrow pointing toward photo below */}
+                  <div className="flex md:hidden items-start gap-3 mt-6 select-none">
+                    <div>
+                      <p className="text-[#1e3a5f] font-bold text-[13px] leading-snug" style={{ fontFamily: "'Georgia', serif", fontStyle: "italic" }}>
+                        {language === "en" ? "She's the one you need!" : "C'est elle qu'il vous faut !"}
+                      </p>
+                      <p className="text-black/40 text-[11px] mt-0.5">
+                        {language === "en" ? "Expert. CRIA. Results." : "Experte. CRIA. Résultats."}
+                      </p>
+                    </div>
+                    {/* Curved SVG arrow pointing down-right toward the photo below */}
+                    <svg width="48" height="56" viewBox="0 0 48 56" fill="none" className="flex-shrink-0 text-[#1e3a5f] mt-1">
+                      <path d="M8 4 C 8 28, 36 28, 40 48" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
+                      <path d="M32 42 L40 50 L46 40" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
                     </svg>
                   </div>
                 </div>
