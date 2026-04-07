@@ -127,7 +127,7 @@ export default function Book() {
           <div className="max-w-md w-full mx-auto text-center space-y-6">
 
             {/* Success icon */}
-            <div className="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 text-white rounded-full flex items-center justify-center mx-auto shadow-xl shadow-green-500/30">
+            <div className="w-24 h-24 bg-gradient-to-br from-[#1e3a5f] to-[#0d1f3c] text-white rounded-full flex items-center justify-center mx-auto shadow-xl shadow-[#1e3a5f]/30">
               <CheckCircle2 size={48} />
             </div>
 
@@ -235,7 +235,7 @@ export default function Book() {
         
         <div className="relative container mx-auto px-4 md:px-6 pt-12 pb-8">
           <div className="max-w-3xl mx-auto text-center space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30 text-primary-foreground">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1e3a5f]/20 border border-[#1e3a5f]/30 text-white">
               <Sparkles className="w-4 h-4" />
               <span className="text-sm font-medium">{t("book.badge")}</span>
             </div>
@@ -257,17 +257,17 @@ export default function Book() {
             <div className="lg:col-span-4 space-y-6">
               <div className="lg:sticky lg:top-24">
                 {/* Session Summary Card */}
-                <Card className="overflow-hidden border-2 border-primary/20 shadow-xl">
-                  <div className="bg-gradient-to-br from-primary to-primary/80 p-6 text-primary-foreground">
+                <Card className="overflow-hidden border-2 border-[#1e3a5f]/20 shadow-xl">
+                  <div className="bg-gradient-to-br from-[#1e3a5f] to-[#0d1f3c] p-6 text-white">
                     <h3 className="font-bold text-xl mb-2">{t("book.details")}</h3>
                     <div className="text-4xl font-bold" data-testid="text-price">{t("book.rateValue")}</div>
-                    <p className="text-primary-foreground/80 text-sm mt-1">{t("book.perSession")}</p>
+                    <p className="text-white/80 text-sm mt-1">{t("book.perSession")}</p>
                   </div>
                   
                   <div className="p-6 space-y-5">
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                        <Clock className="w-5 h-5 text-primary" />
+                      <div className="w-10 h-10 rounded-full bg-[#1e3a5f]/10 flex items-center justify-center flex-shrink-0">
+                        <Clock className="w-5 h-5 text-[#1e3a5f]" />
                       </div>
                       <div>
                         <p className="font-semibold">{t("book.durationLabel")}</p>
@@ -276,8 +276,8 @@ export default function Book() {
                     </div>
                     
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                        <Video className="w-5 h-5 text-primary" />
+                      <div className="w-10 h-10 rounded-full bg-[#1e3a5f]/10 flex items-center justify-center flex-shrink-0">
+                        <Video className="w-5 h-5 text-[#1e3a5f]" />
                       </div>
                       <div>
                         <p className="font-semibold">{t("book.format")}</p>
@@ -286,8 +286,8 @@ export default function Book() {
                     </div>
 
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                        <Shield className="w-5 h-5 text-primary" />
+                      <div className="w-10 h-10 rounded-full bg-[#1e3a5f]/10 flex items-center justify-center flex-shrink-0">
+                        <Shield className="w-5 h-5 text-[#1e3a5f]" />
                       </div>
                       <div>
                         <p className="font-semibold">{t("book.securePayment")}</p>
@@ -300,20 +300,20 @@ export default function Book() {
                 {/* Preparation Checklist */}
                 <Card className="p-6 mt-6 bg-accent/30 border-accent">
                   <div className="flex items-center gap-3 mb-4">
-                    <FileText className="w-5 h-5 text-primary" />
+                    <FileText className="w-5 h-5 text-[#1e3a5f]" />
                     <h4 className="font-bold">{t("book.prepare")}</h4>
                   </div>
                   <ul className="space-y-3">
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-[#1e3a5f] mt-0.5 flex-shrink-0" />
                       <span className="text-sm text-muted-foreground">{t("book.prepareCV")}</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-[#1e3a5f] mt-0.5 flex-shrink-0" />
                       <span className="text-sm text-muted-foreground">{t("book.prepareEducation")}</span>
                     </li>
                     <li className="flex items-start gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-[#1e3a5f] mt-0.5 flex-shrink-0" />
                       <span className="text-sm text-muted-foreground">{t("book.prepareQuestions")}</span>
                     </li>
                   </ul>
@@ -330,7 +330,7 @@ export default function Book() {
                     {/* Section 1: Contact Info */}
                     <div>
                       <div className="flex items-center gap-3 mb-6">
-                        <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">1</div>
+                        <div className="w-8 h-8 rounded-full bg-[#1e3a5f] text-white flex items-center justify-center text-sm font-bold">1</div>
                         <h3 className="text-lg font-bold">{t("book.contactInfo")}</h3>
                       </div>
                       
@@ -409,7 +409,7 @@ export default function Book() {
                     {/* Section 2: Date Selection */}
                     <div>
                       <div className="flex items-center gap-3 mb-6">
-                        <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">2</div>
+                        <div className="w-8 h-8 rounded-full bg-[#1e3a5f] text-white flex items-center justify-center text-sm font-bold">2</div>
                         <h3 className="text-lg font-bold">{t("book.selectDateTime")}</h3>
                       </div>
 
@@ -425,7 +425,7 @@ export default function Book() {
                             <FormControl>
                               {slotsLoading ? (
                                 <div className="flex items-center justify-center p-12 bg-muted/30 rounded-lg">
-                                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                                  <Loader2 className="h-8 w-8 animate-spin text-[#1e3a5f]" />
                                 </div>
                               ) : Object.keys(groupedSlots).length === 0 ? (
                                 <div className="p-8 bg-muted/30 rounded-lg text-center">
@@ -442,7 +442,7 @@ export default function Book() {
                                     .map(([dateKey, dateSlots]) => (
                                       <div key={dateKey} className="p-4 rounded-lg bg-muted/30 border">
                                         <p className="text-sm font-semibold text-foreground capitalize mb-3 flex items-center gap-2">
-                                          <CalendarDays className="w-4 h-4 text-primary" />
+                                          <CalendarDays className="w-4 h-4 text-[#1e3a5f]" />
                                           {format(parseLocalDate(dateKey), "EEEE d MMMM yyyy", { locale: dateLocale })}
                                         </p>
                                         <div className="flex flex-wrap gap-2">
@@ -458,8 +458,8 @@ export default function Book() {
                                                 className={cn(
                                                   "transition-all font-medium",
                                                   selectedSlotId === slot.id 
-                                                    ? "ring-2 ring-primary ring-offset-2 shadow-lg" 
-                                                    : "hover:border-primary/50"
+                                                    ? "ring-2 ring-[#1e3a5f] ring-offset-2 shadow-lg" 
+                                                    : "hover:border-[#1e3a5f]/50"
                                                 )}
                                                 data-testid={`button-slot-${slot.id}`}
                                               >
@@ -482,7 +482,7 @@ export default function Book() {
                     {/* Section 3: Session Details */}
                     <div>
                       <div className="flex items-center gap-3 mb-6">
-                        <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">3</div>
+                        <div className="w-8 h-8 rounded-full bg-[#1e3a5f] text-white flex items-center justify-center text-sm font-bold">3</div>
                         <h3 className="text-lg font-bold">{t("book.sessionDetails")}</h3>
                       </div>
 
@@ -532,7 +532,7 @@ export default function Book() {
                                     />
                                     <Label
                                       htmlFor="zoom"
-                                      className="flex flex-col items-center justify-center rounded-xl border-2 border-muted bg-card p-6 hover:bg-accent/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 [&:has([data-state=checked])]:border-primary cursor-pointer transition-all"
+                                      className="flex flex-col items-center justify-center rounded-xl border-2 border-muted bg-card p-6 hover:bg-accent/50 peer-data-[state=checked]:border-[#1e3a5f] peer-data-[state=checked]:bg-[#1e3a5f]/5 [&:has([data-state=checked])]:border-[#1e3a5f] cursor-pointer transition-all"
                                       data-testid="radio-zoom"
                                     >
                                       <SiZoom className="mb-3 h-8 w-8 text-[#2D8CFF]" />
@@ -547,7 +547,7 @@ export default function Book() {
                                     />
                                     <Label
                                       htmlFor="google_meet"
-                                      className="flex flex-col items-center justify-center rounded-xl border-2 border-muted bg-card p-6 hover:bg-accent/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 [&:has([data-state=checked])]:border-primary cursor-pointer transition-all"
+                                      className="flex flex-col items-center justify-center rounded-xl border-2 border-muted bg-card p-6 hover:bg-accent/50 peer-data-[state=checked]:border-[#1e3a5f] peer-data-[state=checked]:bg-[#1e3a5f]/5 [&:has([data-state=checked])]:border-[#1e3a5f] cursor-pointer transition-all"
                                       data-testid="radio-google-meet"
                                     >
                                       <SiGooglemeet className="mb-3 h-8 w-8 text-[#00897B]" />
@@ -568,7 +568,7 @@ export default function Book() {
                       <Button 
                         type="submit" 
                         size="lg" 
-                        className="w-full h-16 text-lg font-bold shadow-xl shadow-primary/30 bg-gradient-to-r from-primary to-primary/90"
+                        className="w-full h-16 text-lg font-bold shadow-xl shadow-[#1e3a5f]/30 bg-gradient-to-r from-[#1e3a5f] to-[#0d1f3c]"
                         disabled={isPending}
                         data-testid="button-submit"
                       >
