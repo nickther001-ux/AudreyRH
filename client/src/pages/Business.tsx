@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 import { FadeUp, FadeIn, Stagger, StaggerItem } from "@/lib/animations";
 import whoSmeBg       from "@assets/Gemini_Generated_Image_8kmtv78kmtv78kmt_1775506001928.png";
-import whoStartupBg   from "@assets/Gemini_Generated_Image_nsmo44nsmo44nsmo_1775502902951.png";
-import whoCorporateBg from "@assets/Gemini_Generated_Image_ujepw0ujepw0ujep_1775505394811.png";
-import whoNonprofitBg from "@assets/Gemini_Generated_Image_oiinvioiinvioiin_1775503767318.png";
+import whoStartupBg   from "@assets/generated_images/who_startup.png";
+import whoCorporateBg from "@assets/generated_images/who_corporate.png";
+import whoNonprofitBg from "@assets/generated_images/who_nonprofit.png";
 
 const SERVICE_PHOTOS: Record<string, string> = {
   talent:     "https://images.unsplash.com/photo-1573164713988-8665fc963095?w=800&q=80",

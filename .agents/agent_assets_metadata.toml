@@ -18,3 +18,21 @@ id = "-LaefYAUkNmZKG_mvMvZq"
 uri = "file://attached_assets/generated_images/guide_interview.png"
 type = "image"
 title = "job interview two professionals"
+
+[[generated]]
+id = "lP5Q3POfOpVJfpsYSmZUw"
+uri = "file://attached_assets/generated_images/who_startup.png"
+type = "image"
+title = "who_startup"
+
+[[generated]]
+id = "GUkw-VeRX9CpS9e5mftXr"
+uri = "file://attached_assets/generated_images/who_corporate.png"
+type = "image"
+title = "who_corporate"
+
+[[generated]]
+id = "Yyjw9GlxTUf_4oTrcRilu"
+uri = "file://attached_assets/generated_images/who_nonprofit.png"
+type = "image"
+title = "who_nonprofit"
