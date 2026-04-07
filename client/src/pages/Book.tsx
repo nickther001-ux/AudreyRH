@@ -20,7 +20,7 @@ import { Label } from "@/components/ui/label";
 import { SiZoom, SiGooglemeet } from "react-icons/si";
 import { useLocation } from "wouter";
 import { useLanguage } from "@/lib/i18n";
-import montrealSkyline from "@assets/generated_images/montreal_skyline_at_dusk.png";
+import heroBg from "@assets/stock_images/hr_strategy.jpg";
 
 function parseLocalDate(dateInput: string | Date): Date {
   const str = typeof dateInput === 'string' ? dateInput : dateInput.toISOString();
@@ -227,11 +227,12 @@ export default function Book() {
 
       {/* Hero Banner */}
       <section className="relative pt-20 pb-16 overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center ken-burns-zoom"
-          style={{ backgroundImage: `url(${montrealSkyline})` }}
+        <img
+          src={heroBg}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/80 to-background" />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(13,31,60,0.82) 0%, rgba(13,31,60,0.72) 60%, rgba(13,31,60,0.88) 100%)" }} />
         
         <div className="relative container mx-auto px-4 md:px-6 pt-12 pb-8">
           <div className="max-w-3xl mx-auto text-center space-y-4">
