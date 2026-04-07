@@ -31,7 +31,7 @@ const translations = {
     "question.cta": "Découvrir comment je peux vous aider",
     
     "services.badge": "Services",
-    "services.title": "Comment puis-je vous accompagner",
+    "services.title": "Comment puis-je vous accompagner ?",
     "services.description": "Des services personnalisés pour maximiser vos chances de réussite professionnelle au Québec.",
     
     "about.expertLabel": "Pourquoi une experte ?",
@@ -800,7 +800,7 @@ const translations = {
     "question.cta": "Discover how I can help you",
     
     "services.badge": "Services",
-    "services.title": "How I can support you",
+    "services.title": "How can I support you?",
     "services.description": "Personalized services to maximize your chances of professional success in Quebec.",
     
     "about.expertLabel": "Why an expert?",
