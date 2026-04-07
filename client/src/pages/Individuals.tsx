@@ -529,12 +529,11 @@ export default function Individuals() {
             </FadeUp>
             <Stagger className="grid grid-cols-1 md:grid-cols-3 gap-px bg-white/10">
               {[
-                { num: "01", titleKey: "home.process.1.title", textKey: "home.process.1.text" },
-                { num: "02", titleKey: "home.process.2.title", textKey: "home.process.2.text" },
-                { num: "03", titleKey: "home.process.3.title", textKey: "home.process.3.text" },
+                { titleKey: "home.process.1.title", textKey: "home.process.1.text" },
+                { titleKey: "home.process.2.title", textKey: "home.process.2.text" },
+                { titleKey: "home.process.3.title", textKey: "home.process.3.text" },
               ].map((step) => (
-                <StaggerItem key={step.num} variant="fadeUp" className="bg-foreground p-10">
-                  <p className="text-[4rem] font-black text-white/10 leading-none mb-6">{step.num}</p>
+                <StaggerItem key={step.titleKey} variant="fadeUp" className="bg-foreground p-10">
                   <h3 className="font-bold text-white text-xl mb-3">{t(step.titleKey as any)}</h3>
                   <p className="text-white/50 text-[14px] leading-relaxed">{t(step.textKey as any)}</p>
                 </StaggerItem>
