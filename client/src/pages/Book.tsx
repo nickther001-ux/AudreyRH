@@ -334,11 +334,11 @@ export default function Book() {
         <Navbar />
         <main className="flex-grow flex items-center justify-center py-16 px-4">
           <div className="max-w-md w-full mx-auto text-center space-y-6">
-            <div className="w-24 h-24 bg-gradient-to-br from-amber-400 to-amber-600 text-white rounded-full flex items-center justify-center mx-auto shadow-xl shadow-amber-400/30">
+            <div className="w-24 h-24 bg-gradient-to-br from-[#1e3a5f] to-[#0d1f3c] text-white rounded-full flex items-center justify-center mx-auto shadow-xl shadow-[#1e3a5f]/30">
               <HourglassIcon size={42} />
             </div>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50 border border-amber-200">
-              <span className="text-sm font-semibold text-amber-700">{t("book.free.success.pending")}</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#1e3a5f]/10 border border-[#1e3a5f]/30">
+              <span className="text-sm font-semibold text-[#1e3a5f]">{t("book.free.success.pending")}</span>
             </div>
             <h1 className="text-3xl font-bold text-foreground" data-testid="text-free-success-title">
               {t("book.free.success.title")}
@@ -352,10 +352,10 @@ export default function Book() {
                 style={{ background: "#f8fafc", border: "1px solid #e2e8f0", maxWidth: "420px" }}
                 data-testid="text-free-success-email"
               >
-                <Inbox size={20} className="mt-0.5 shrink-0 text-amber-500" />
+                <Inbox size={20} className="mt-0.5 shrink-0 text-[#1e3a5f]" />
                 <p className="text-sm leading-relaxed text-foreground">
                   {t("book.success.emailNoticePrefix")}{" "}
-                  <span className="font-bold text-amber-600">{freeEmail}</span>
+                  <span className="font-bold text-[#1e3a5f]">{freeEmail}</span>
                 </p>
               </div>
             )}
@@ -496,21 +496,21 @@ export default function Book() {
                   className={cn(
                     "relative rounded-2xl border-2 p-5 text-left transition-all cursor-pointer",
                     mode === "free"
-                      ? "border-amber-400 bg-amber-50 shadow-md shadow-amber-200/60"
-                      : "border-border bg-card hover:border-amber-200 hover:bg-amber-50/30"
+                      ? "border-[#1e3a5f] bg-[#1e3a5f]/5 shadow-md shadow-[#1e3a5f]/20"
+                      : "border-border bg-card hover:border-[#1e3a5f]/30 hover:bg-[#1e3a5f]/5"
                   )}
                 >
                   {mode === "free" && (
-                    <span className="absolute top-3 right-3 w-5 h-5 rounded-full bg-amber-400 flex items-center justify-center">
+                    <span className="absolute top-3 right-3 w-5 h-5 rounded-full bg-[#1e3a5f] flex items-center justify-center">
                       <CheckCircle2 className="w-3 h-3 text-white" />
                     </span>
                   )}
-                  <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center mb-3">
-                    <HourglassIcon className="w-5 h-5 text-amber-600" />
+                  <div className="w-10 h-10 rounded-full bg-[#1e3a5f]/10 flex items-center justify-center mb-3">
+                    <HourglassIcon className="w-5 h-5 text-[#1e3a5f]" />
                   </div>
                   <p className="font-bold text-base text-foreground">{t("book.free.tab")}</p>
                   <p className="text-xs text-muted-foreground mt-0.5">{t("book.free.tabSub")}</p>
-                  <span className="inline-block mt-2 text-xs font-semibold text-amber-700 bg-amber-100 px-2 py-0.5 rounded-full">
+                  <span className="inline-block mt-2 text-xs font-semibold text-[#1e3a5f] bg-[#1e3a5f]/10 px-2 py-0.5 rounded-full">
                     {t("book.free.badge")}
                   </span>
                 </button>
@@ -550,8 +550,8 @@ export default function Book() {
               {/* Left sidebar */}
               <div className="lg:col-span-4">
                 <div className="lg:sticky lg:top-24 space-y-6">
-                  <Card className={cn("overflow-hidden border-2 shadow-xl", mode === "free" ? "border-amber-200" : "border-[#1e3a5f]/20")}>
-                    <div className={cn("p-6 text-white", mode === "free" ? "bg-gradient-to-br from-amber-500 to-amber-600" : "bg-gradient-to-br from-[#1e3a5f] to-[#0d1f3c]")}>
+                  <Card className={cn("overflow-hidden border-2 shadow-xl", mode === "free" ? "border-[#1e3a5f]/20" : "border-[#1e3a5f]/20")}>
+                    <div className={cn("p-6 text-white", mode === "free" ? "bg-gradient-to-br from-[#1e3a5f] to-[#0d1f3c]" : "bg-gradient-to-br from-[#1e3a5f] to-[#0d1f3c]")}>
                       <h3 className="font-bold text-xl mb-2">
                         {mode === "free" ? t("book.free.sideTitle") : t("book.paid.sideTitle")}
                       </h3>
@@ -564,8 +564,8 @@ export default function Book() {
                     </div>
                     <div className="p-6 space-y-5">
                       <div className="flex items-start gap-4">
-                        <div className={cn("w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0", mode === "free" ? "bg-amber-50" : "bg-[#1e3a5f]/10")}>
-                          <Clock className={cn("w-5 h-5", mode === "free" ? "text-amber-600" : "text-[#1e3a5f]")} />
+                        <div className={cn("w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0", mode === "free" ? "bg-[#1e3a5f]/5" : "bg-[#1e3a5f]/10")}>
+                          <Clock className={cn("w-5 h-5", mode === "free" ? "text-[#1e3a5f]" : "text-[#1e3a5f]")} />
                         </div>
                         <div>
                           <p className="font-semibold">{t("book.durationLabel")}</p>
@@ -575,8 +575,8 @@ export default function Book() {
                         </div>
                       </div>
                       <div className="flex items-start gap-4">
-                        <div className={cn("w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0", mode === "free" ? "bg-amber-50" : "bg-[#1e3a5f]/10")}>
-                          <Video className={cn("w-5 h-5", mode === "free" ? "text-amber-600" : "text-[#1e3a5f]")} />
+                        <div className={cn("w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0", mode === "free" ? "bg-[#1e3a5f]/5" : "bg-[#1e3a5f]/10")}>
+                          <Video className={cn("w-5 h-5", mode === "free" ? "text-[#1e3a5f]" : "text-[#1e3a5f]")} />
                         </div>
                         <div>
                           <p className="font-semibold">{t("book.format")}</p>
@@ -599,10 +599,10 @@ export default function Book() {
 
                   {/* Preparation checklist (paid) / Info note (free) */}
                   {mode === "free" ? (
-                    <Card className="p-5 border-amber-200 bg-amber-50">
+                    <Card className="p-5 border-[#1e3a5f]/20 bg-[#1e3a5f]/5">
                       <div className="flex items-start gap-3">
-                        <HourglassIcon className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" />
-                        <p className="text-sm text-amber-900 leading-relaxed">{t("book.free.note")}</p>
+                        <HourglassIcon className="w-5 h-5 text-[#1e3a5f] mt-0.5 flex-shrink-0" />
+                        <p className="text-sm text-[#1e3a5f] leading-relaxed">{t("book.free.note")}</p>
                       </div>
                     </Card>
                   ) : (
@@ -633,7 +633,7 @@ export default function Book() {
                       {/* Section 1: Contact */}
                       <div>
                         <div className="flex items-center gap-3 mb-6">
-                          <div className={cn("w-8 h-8 rounded-full text-white flex items-center justify-center text-sm font-bold", mode === "free" ? "bg-amber-500" : "bg-[#1e3a5f]")}>1</div>
+                          <div className={cn("w-8 h-8 rounded-full text-white flex items-center justify-center text-sm font-bold", mode === "free" ? "bg-[#1e3a5f]/50" : "bg-[#1e3a5f]")}>1</div>
                           <h3 className="text-lg font-bold">{t("book.contactInfo")}</h3>
                         </div>
                         <ContactFields form={form} t={t} />
@@ -642,7 +642,7 @@ export default function Book() {
                       {/* Section 2: Date / slots */}
                       <div>
                         <div className="flex items-center gap-3 mb-6">
-                          <div className={cn("w-8 h-8 rounded-full text-white flex items-center justify-center text-sm font-bold", mode === "free" ? "bg-amber-500" : "bg-[#1e3a5f]")}>2</div>
+                          <div className={cn("w-8 h-8 rounded-full text-white flex items-center justify-center text-sm font-bold", mode === "free" ? "bg-[#1e3a5f]/50" : "bg-[#1e3a5f]")}>2</div>
                           <h3 className="text-lg font-bold">
                             {mode === "free" ? t("book.free.selectTitle") : t("book.selectDateTime")}
                           </h3>
@@ -650,7 +650,7 @@ export default function Book() {
 
                         {mode === "free" && (
                           <p className="text-sm text-muted-foreground mb-4 flex items-start gap-2">
-                            <HourglassIcon className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
+                            <HourglassIcon className="w-4 h-4 text-[#1e3a5f] mt-0.5 flex-shrink-0" />
                             <span>{t("book.free.note")}</span>
                           </p>
                         )}
@@ -683,7 +683,7 @@ export default function Book() {
                       {/* Section 3: Session details */}
                       <div>
                         <div className="flex items-center gap-3 mb-6">
-                          <div className={cn("w-8 h-8 rounded-full text-white flex items-center justify-center text-sm font-bold", mode === "free" ? "bg-amber-500" : "bg-[#1e3a5f]")}>3</div>
+                          <div className={cn("w-8 h-8 rounded-full text-white flex items-center justify-center text-sm font-bold", mode === "free" ? "bg-[#1e3a5f]/50" : "bg-[#1e3a5f]")}>3</div>
                           <h3 className="text-lg font-bold">{t("book.sessionDetails")}</h3>
                         </div>
                         <div className="space-y-5">
@@ -713,7 +713,7 @@ export default function Book() {
                           <Button
                             type="submit"
                             size="lg"
-                            className="w-full h-16 text-lg font-bold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white shadow-xl shadow-amber-400/30"
+                            className="w-full h-16 text-lg font-bold bg-gradient-to-r from-[#1e3a5f] to-[#0d1f3c] hover:from-[#0d1f3c] hover:to-[#0d1f3c] text-white shadow-xl shadow-[#1e3a5f]/30"
                             disabled={isPending}
                             data-testid="button-submit-free"
                           >
