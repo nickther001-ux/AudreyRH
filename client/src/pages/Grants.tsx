@@ -415,6 +415,13 @@ export default function Grants() {
                                 <label className="block text-[11px] text-slate-500 font-semibold uppercase tracking-[0.14em] mb-2">
                                   {label} <span className="text-red-400">*</span>
                                 </label>
+                                {key === "desjardins" && (
+                                  <p className="text-[11px] text-[#1e3a5f]/60 leading-relaxed mb-2.5 italic">
+                                    {isFr
+                                      ? "La Caisse Desjardins offre parfois des subventions et programmes de financement réservés à ses membres. Être client Desjardins pourrait vous ouvrir des portes supplémentaires."
+                                      : "Caisse Desjardins sometimes offers grants and funding programs exclusively for its members. Being a Desjardins client may open additional funding opportunities for you."}
+                                  </p>
+                                )}
                                 <div className="flex gap-3">
                                   {(isFr ? ["Oui", "Non"] : ["Yes", "No"]).map((opt) => {
                                     const val = opt === "Oui" || opt === "Yes" ? "oui" : "non";
