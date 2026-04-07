@@ -366,18 +366,17 @@ export default function Individuals() {
                       </p>
                     </div>
                     {/* Curved SVG arrow pointing right toward the photo */}
-                    <svg width="80" height="52" viewBox="0 0 80 52" fill="none" className="flex-shrink-0 text-[#1e3a5f]">
+                    <svg width="160" height="52" viewBox="0 0 160 52" fill="none" className="flex-shrink-0 text-[#1e3a5f]">
                       <path
-                        d="M4 44 C 18 44, 30 8, 70 10"
+                        d="M4 44 C 30 44, 60 8, 148 10"
                         stroke="currentColor"
                         strokeWidth="2"
                         strokeLinecap="round"
                         fill="none"
-                        strokeDasharray="0"
                       />
                       {/* Arrowhead */}
                       <path
-                        d="M62 4 L72 10 L60 16"
+                        d="M138 4 L150 10 L138 16"
                         stroke="currentColor"
                         strokeWidth="2"
                         strokeLinecap="round"
