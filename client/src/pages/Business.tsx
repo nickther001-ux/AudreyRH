@@ -188,7 +188,7 @@ export default function Business() {
             <FadeUp className="mb-16">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{t("business.who.badge")}</p>
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-                <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight max-w-sm">
+                <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
                   {t("business.who.title")}
                 </h2>
                 <p className="text-white/50 text-[14px] leading-relaxed max-w-sm">{t("business.who.subtitle")}</p>
