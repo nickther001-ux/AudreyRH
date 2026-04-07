@@ -733,7 +733,7 @@ export default function Individuals() {
                 </ul>
               </StaggerItem>
               {/* With AudreyRH */}
-              <StaggerItem variant="fadeRight" className="bg-foreground p-10">
+              <StaggerItem variant="fadeRight" className="bg-[#1e3a5f] p-10">
                 <h3 className="text-[13px] font-semibold uppercase tracking-widest text-white/40 mb-8">{t("comparison.with.title")}</h3>
                 <ul className="space-y-5">
                   {[1, 2, 3, 4, 5].map((i) => (
