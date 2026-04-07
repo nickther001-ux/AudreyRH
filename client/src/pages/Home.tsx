@@ -3,7 +3,7 @@ import { ArrowRight, Users, Building2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n";
 import { Navbar } from "@/components/Navbar";
-import individualPhoto from "@assets/stock_images/black_mature_hijab_woman.png";
+import individualPhoto from "@assets/stock_images/sudanese_woman_real.png";
 
 const INDIVIDUAL_PHOTO = individualPhoto;
 const BUSINESS_PHOTO   = "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80";

@@ -48,6 +48,12 @@ uri = "file://attached_assets/stock_images/black_mature_hijab_woman.png"
 type = "image"
 title = "mature black hijab woman"
 
+[[generated]]
+id = "20uLC9UYyPbJ54kbdBmW9"
+uri = "file://attached_assets/stock_images/sudanese_woman_real.png"
+type = "image"
+title = "sudanese woman candid real portrait"
+
 [[outputs]]
 id = "t9ncZGut59z-QeD3P2SPN"
 uri = "file://attached_assets/stock_images/talent_acquisition.jpg"
