@@ -27,10 +27,10 @@ const services = [
 ];
 
 const WHO_CARDS = [
-  { type: "sme",       Icon: Factory,   num: "01", image: whoSmeBg },
-  { type: "startup",   Icon: Rocket,    num: "02", image: whoStartupBg },
-  { type: "corporate", Icon: Building2, num: "03", image: whoCorporateBg },
-  { type: "nonprofit", Icon: Heart,     num: "04", image: whoNonprofitBg },
+  { type: "sme",       Icon: Factory,   num: "1", image: whoSmeBg },
+  { type: "startup",   Icon: Rocket,    num: "2", image: whoStartupBg },
+  { type: "corporate", Icon: Building2, num: "3", image: whoCorporateBg },
+  { type: "nonprofit", Icon: Heart,     num: "4", image: whoNonprofitBg },
 ];
 
 const reasons = [
