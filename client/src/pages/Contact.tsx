@@ -333,6 +333,30 @@ export default function Contact() {
         </div>
       </section>
 
+      {/* ── Closing midnight blue strip ── */}
+      <section className="bg-[#1e3a5f] py-20 px-6">
+        <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+          <div>
+            <p className="text-[11px] text-white/35 uppercase tracking-[0.22em] mb-3">
+              {language === "en" ? "Ready to take the next step?" : "Prêt à passer à l'action ?"}
+            </p>
+            <h3 className="text-2xl md:text-3xl font-bold text-white leading-snug">
+              {language === "en"
+                ? "Book your free 15-minute discovery call"
+                : "Réservez votre appel découverte gratuit de 15 minutes"}
+            </h3>
+          </div>
+          <a
+            href="/book"
+            data-testid="link-contact-closing-cta"
+            className="flex-shrink-0 inline-flex items-center gap-3 bg-white text-[#1e3a5f] text-[12px] font-bold uppercase tracking-[0.18em] px-8 py-4 hover:bg-white/90 transition-colors group"
+          >
+            {t("contact.sidebar.consultCta")}
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </a>
+        </div>
+      </section>
+
       <Footer />
     </div>
   );
