@@ -13,6 +13,11 @@ import guideCvImg from "@assets/generated_images/guide_cv_resume.png";
 import guideChecklistImg from "@assets/generated_images/guide_checklist.png";
 import guideInterviewImg from "@assets/generated_images/guide_interview.png";
 import processStepsBg from "@assets/generated_images/process_steps_bg.png";
+import imgCredentials from "@assets/stock_images/credentials_diploma.png";
+import imgEmployability from "@assets/stock_images/employability_interview.png";
+import imgIntegration from "@assets/stock_images/integration_networking.png";
+import imgCoaching from "@assets/stock_images/coaching_session.png";
+import imgOrientation from "@assets/stock_images/orientation_professional.png";
 
 type ServiceKey = "strategy" | "credentials" | "employability" | "integration" | null;
 
@@ -27,36 +32,31 @@ const SERVICE_CARDS = [
   {
     key: "credentials" as const,
     icon: GraduationCap,
-    // South Asian woman studying / holding diploma
-    photo: "https://images.unsplash.com/photo-1529220502050-f15e570c634e?w=800&q=80",
+    photo: imgCredentials,
     dialog: true,
   },
   {
     key: "employability" as const,
     icon: Briefcase,
-    // Black woman in professional interview setting
-    photo: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=80",
+    photo: imgEmployability,
     dialog: true,
   },
   {
     key: "integration" as const,
     icon: Users,
-    // Diverse group networking / collaborating in office
-    photo: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800&q=80",
+    photo: imgIntegration,
     dialog: true,
   },
   {
     key: "coaching" as const,
     icon: Target,
-    // Latin / Hispanic man smiling confidently
-    photo: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=800&q=80",
+    photo: imgCoaching,
     dialog: false,
   },
   {
     key: "orientation" as const,
     icon: Award,
-    // Middle Eastern / Arab woman professional portrait
-    photo: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=800&q=80",
+    photo: imgOrientation,
     dialog: false,
   },
 ];

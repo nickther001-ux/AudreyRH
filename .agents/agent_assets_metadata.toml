@@ -54,6 +54,36 @@ uri = "file://attached_assets/stock_images/sudanese_woman_real.png"
 type = "image"
 title = "sudanese woman candid real portrait"
 
+[[generated]]
+id = "mM-4ym4gT3FPDjcn5rxEX"
+uri = "file://attached_assets/stock_images/credentials_diploma.png"
+type = "image"
+title = "credentials diploma woman"
+
+[[generated]]
+id = "XbaTpXTQpncbVzMLu7pSy"
+uri = "file://attached_assets/stock_images/employability_interview.png"
+type = "image"
+title = "employability interview scene"
+
+[[generated]]
+id = "9jFBI9U-wpUifR8lcLjQZ"
+uri = "file://attached_assets/stock_images/integration_networking.png"
+type = "image"
+title = "integration networking diverse"
+
+[[generated]]
+id = "yAcB6nWCvA0HWz7htk9qC"
+uri = "file://attached_assets/stock_images/coaching_session.png"
+type = "image"
+title = "coaching session man"
+
+[[generated]]
+id = "XTJHuchyiIMeYv8It6nG4"
+uri = "file://attached_assets/stock_images/orientation_professional.png"
+type = "image"
+title = "orientation professional woman"
+
 [[outputs]]
 id = "t9ncZGut59z-QeD3P2SPN"
 uri = "file://attached_assets/stock_images/talent_acquisition.jpg"
