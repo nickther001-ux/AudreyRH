@@ -359,3 +359,39 @@ id = "7ofzw4MUAcUU78p681Ldu"
 uri = "file://attached_assets/stock_images/latina_woman_portrait_2.jpg"
 type = "image"
 title = "Latin Hispanic woman professional smiling portrait"
+
+[[outputs]]
+id = "qa5LAklZwACNXKeblkkXu"
+uri = "file://attached_assets/stock_images/diverse_group_smiling_1.jpg"
+type = "image"
+title = "diverse group friends smiling portrait multicultural people outdoors"
+
+[[outputs]]
+id = "YKMU9nSGnr4xHZCnoMoEj"
+uri = "file://attached_assets/stock_images/diverse_group_smiling_2.jpg"
+type = "image"
+title = "diverse group friends smiling portrait multicultural people outdoors"
+
+[[outputs]]
+id = "_dqb35hxW3j4mpCgSKLHU"
+uri = "file://attached_assets/stock_images/diverse_group_smiling_3.jpg"
+type = "image"
+title = "diverse group friends smiling portrait multicultural people outdoors"
+
+[[outputs]]
+id = "jSH_syiaKSQmEtxlpKNwb"
+uri = "file://attached_assets/stock_images/multicultural_community_1.jpg"
+type = "image"
+title = "multicultural immigrant women men together happy community portrait"
+
+[[outputs]]
+id = "EKXsK2kbTHCCLxrjkHyfL"
+uri = "file://attached_assets/stock_images/multicultural_community_2.jpg"
+type = "image"
+title = "multicultural immigrant women men together happy community portrait"
+
+[[outputs]]
+id = "eR5WOs_m0eIgRYRTnjMDo"
+uri = "file://attached_assets/stock_images/multicultural_community_3.jpg"
+type = "image"
+title = "multicultural immigrant women men together happy community portrait"
