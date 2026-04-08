@@ -15,21 +15,21 @@ html {
   --elevate-2: rgba(0,0,0, .08);
 
   /* Core palette */
-  --background:       36 28% 95%;       /* warm beige */
+  --background:       36 45% 90%;       /* warm beige — richer */
   --foreground:       0 0% 7%;          /* near-black #111 — also the dark section bg */
-  --border:           36 15% 85%;
-  --input:            36 15% 85%;
+  --border:           36 25% 80%;
+  --input:            36 25% 80%;
   --ring:             148 65% 40%;
 
   /* Cards */
-  --card:             36 28% 95%;
+  --card:             36 45% 90%;
   --card-foreground:  0 0% 7%;
-  --card-border:      36 15% 85%;
+  --card-border:      36 25% 80%;
 
   /* Sidebar */
-  --sidebar:          36 25% 93%;
+  --sidebar:          36 40% 87%;
   --sidebar-foreground: 0 0% 7%;
-  --sidebar-border:   36 15% 85%;
+  --sidebar-border:   36 25% 80%;
   --sidebar-primary:  148 65% 40%;
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent:   0 0% 95%;
@@ -37,20 +37,20 @@ html {
   --sidebar-ring:     148 65% 40%;
 
   /* Popover */
-  --popover:          36 28% 95%;
+  --popover:          36 45% 90%;
   --popover-foreground: 0 0% 7%;
-  --popover-border:   36 15% 85%;
+  --popover-border:   36 25% 80%;
 
   /* Consulting green — primary CTA */
   --primary:          148 65% 40%;      /* forest green ~#239b56 */
   --primary-foreground: 0 0% 100%;
 
   /* Light gray (used as secondary section bg) */
-  --secondary:        36 20% 91%;
+  --secondary:        36 35% 86%;
   --secondary-foreground: 0 0% 7%;
 
   /* Subtle gray */
-  --muted:            36 20% 92%;
+  --muted:            36 35% 87%;
   --muted-foreground: 0 0% 46%;
 
   /* Orange brand accent — AudreyRH identity */
@@ -161,7 +161,7 @@ html {
 @layer components {
   /* Remap bg-white to warm beige across all components */
   .bg-white {
-    background-color: hsl(36 28% 95%);
+    background-color: hsl(36 45% 90%);
   }
 }
 
