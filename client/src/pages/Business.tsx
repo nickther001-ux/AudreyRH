@@ -253,12 +253,12 @@ export default function Business() {
               {reasons.map((r) => {
                 const Icon = r.icon;
                 return (
-                  <StaggerItem key={r.key} variant="fadeUp" className="bg-white p-10" data-testid={`card-business-why-${r.key}`}>
-                    <div className="w-12 h-12 bg-foreground flex items-center justify-center mb-6">
-                      <Icon className="w-6 h-6 text-white" />
+                  <StaggerItem key={r.key} variant="fadeUp" className="bg-white p-14" data-testid={`card-business-why-${r.key}`}>
+                    <div className="w-16 h-16 bg-foreground flex items-center justify-center mb-8">
+                      <Icon className="w-8 h-8 text-white" />
                     </div>
-                    <h3 className="font-bold text-foreground text-xl mb-3">{t(`business.why.${r.key}.title` as any)}</h3>
-                    <p className="text-muted-foreground text-[14px] leading-relaxed">{t(`business.why.${r.key}.text` as any)}</p>
+                    <h3 className="font-bold text-foreground text-2xl mb-4">{t(`business.why.${r.key}.title` as any)}</h3>
+                    <p className="text-muted-foreground text-base leading-relaxed">{t(`business.why.${r.key}.text` as any)}</p>
                   </StaggerItem>
                 );
               })}
