@@ -15,21 +15,21 @@ html {
   --elevate-2: rgba(0,0,0, .08);
 
   /* Core palette */
-  --background:       36 45% 90%;       /* warm beige — richer */
+  --background:       36 60% 85%;       /* warm beige — deep */
   --foreground:       0 0% 7%;          /* near-black #111 — also the dark section bg */
-  --border:           36 25% 80%;
-  --input:            36 25% 80%;
+  --border:           36 35% 74%;
+  --input:            36 35% 74%;
   --ring:             148 65% 40%;
 
   /* Cards */
-  --card:             36 45% 90%;
+  --card:             36 60% 85%;
   --card-foreground:  0 0% 7%;
-  --card-border:      36 25% 80%;
+  --card-border:      36 35% 74%;
 
   /* Sidebar */
-  --sidebar:          36 40% 87%;
+  --sidebar:          36 55% 82%;
   --sidebar-foreground: 0 0% 7%;
-  --sidebar-border:   36 25% 80%;
+  --sidebar-border:   36 35% 74%;
   --sidebar-primary:  148 65% 40%;
   --sidebar-primary-foreground: 0 0% 100%;
   --sidebar-accent:   0 0% 95%;
@@ -37,21 +37,21 @@ html {
   --sidebar-ring:     148 65% 40%;
 
   /* Popover */
-  --popover:          36 45% 90%;
+  --popover:          36 60% 85%;
   --popover-foreground: 0 0% 7%;
-  --popover-border:   36 25% 80%;
+  --popover-border:   36 35% 74%;
 
   /* Consulting green — primary CTA */
   --primary:          148 65% 40%;      /* forest green ~#239b56 */
   --primary-foreground: 0 0% 100%;
 
   /* Light gray (used as secondary section bg) */
-  --secondary:        36 35% 86%;
+  --secondary:        36 50% 81%;
   --secondary-foreground: 0 0% 7%;
 
   /* Subtle gray */
-  --muted:            36 35% 87%;
-  --muted-foreground: 0 0% 46%;
+  --muted:            36 50% 82%;
+  --muted-foreground: 0 0% 40%;
 
   /* Orange brand accent — AudreyRH identity */
   --accent:           24 95% 53%;
@@ -161,7 +161,7 @@ html {
 @layer components {
   /* Remap bg-white to warm beige across all components */
   .bg-white {
-    background-color: hsl(36 45% 90%);
+    background-color: hsl(36 60% 85%);
   }
 }
 
