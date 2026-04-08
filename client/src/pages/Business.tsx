@@ -166,7 +166,7 @@ export default function Business() {
               {services.map((svc) => {
                 const Icon = svc.icon;
                 return (
-                  <StaggerItem key={svc.key} variant="fadeUp" className="relative overflow-hidden group min-h-[420px] flex flex-col" data-testid={`card-business-service-${svc.key}`}>
+                  <StaggerItem key={svc.key} variant="fadeUp" className="relative overflow-hidden group min-h-[580px] flex flex-col" data-testid={`card-business-service-${svc.key}`}>
                     {/* Photo */}
                     <img
                       src={svc.photo}
@@ -227,7 +227,7 @@ export default function Business() {
                   {/* Gradient — clear at top, very dark at bottom for text */}
                   <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(5,10,25,0.3) 0%, rgba(5,10,25,0.75) 45%, rgba(5,10,25,0.97) 100%)" }} />
                   {/* Content pinned to bottom */}
-                  <div className="relative z-10 p-10 flex flex-col justify-end h-full min-h-[380px]">
+                  <div className="relative z-10 p-10 flex flex-col justify-end h-full min-h-[540px]">
                     <div className="w-10 h-10 bg-white/15 flex items-center justify-center mb-5">
                       <Icon className="w-5 h-5 text-white" />
                     </div>
