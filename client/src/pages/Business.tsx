@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
-import { motion } from "framer-motion";
-import { ArrowRight, Users, TrendingUp, Award, CheckCircle, Briefcase, Target, Building2, DollarSign, ShieldCheck, Rocket, Heart, Factory } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, Users, TrendingUp, Award, CheckCircle, Briefcase, Target, Building2, DollarSign, ShieldCheck, Rocket, Heart, Factory, X } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -41,6 +41,12 @@ const reasons = [
 export default function Business() {
   const { t, language } = useLanguage();
   const [wordIndex, setWordIndex] = useState(0);
+  const [showGrantsBubble, setShowGrantsBubble] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowGrantsBubble(true), 2000);
+    return () => clearTimeout(timer);
+  }, []);
   const rotatingWords = [
     t("business.hero.rotating.1" as any),
     t("business.hero.rotating.2" as any),
@@ -291,27 +297,7 @@ export default function Business() {
           </div>
         </section>
 
-        {/* ── 6. GRANTS CTA — white, highlighted ── */}
-        <section className="py-20 bg-white border-y border-border" data-testid="section-business-grants">
-          <FadeUp className="max-w-6xl mx-auto px-6 lg:px-8">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-10">
-              <div className="max-w-lg">
-                <div className="w-10 h-10 bg-accent/10 flex items-center justify-center mb-5">
-                  <DollarSign className="w-5 h-5 text-accent" />
-                </div>
-                <h3 className="text-2xl font-bold text-foreground mb-3">{t("business.grants.title")}</h3>
-                <p className="text-muted-foreground text-[14px] leading-relaxed">{t("business.grants.text")}</p>
-              </div>
-              <Link href="/grants" data-testid="link-business-grants">
-                <Button className="whitespace-nowrap px-8 h-12 bg-foreground text-white hover:bg-foreground/90 rounded-none text-[13px] font-semibold">
-                  {t("business.grants.cta")} <ArrowRight className="ml-2 w-4 h-4" />
-                </Button>
-              </Link>
-            </div>
-          </FadeUp>
-        </section>
-
-        {/* ── 7. FINAL CTA — midnight blue ── */}
+        {/* ── 6. FINAL CTA — light blue ── */}
         <section className="bg-[#dbeafe] py-28" data-testid="section-business-cta">
           <FadeUp className="max-w-6xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-12">
             <div className="max-w-xl">
@@ -336,6 +322,64 @@ export default function Business() {
 
       </main>
       <Footer />
+
+      {/* ── Floating grants bubble ── */}
+      <AnimatePresence>
+        {showGrantsBubble && (
+          <motion.div
+            key="grants-bubble"
+            initial={{ opacity: 0, scale: 0.6, y: 24 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.6, y: 24 }}
+            transition={{ type: "spring", stiffness: 340, damping: 24 }}
+            className="fixed bottom-8 right-8 z-50 w-72"
+            data-testid="grants-bubble"
+          >
+            <div className="relative bg-white rounded-2xl shadow-2xl overflow-visible border border-border">
+              {/* Header strip */}
+              <div className="bg-[#1e3a5f] rounded-t-2xl px-5 py-3 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-6 h-6 bg-white/15 rounded-full flex items-center justify-center">
+                    <DollarSign className="w-3.5 h-3.5 text-white" />
+                  </div>
+                  <span className="text-white text-[11px] font-semibold uppercase tracking-[0.15em]">
+                    {language === "fr" ? "Subventions" : "Grants"}
+                  </span>
+                </div>
+                <button
+                  onClick={() => setShowGrantsBubble(false)}
+                  className="text-white/50 hover:text-white transition-colors"
+                  data-testid="grants-bubble-close"
+                  aria-label="Fermer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Body */}
+              <div className="px-5 py-4">
+                <p className="font-bold text-foreground text-[14px] leading-snug mb-1">
+                  {t("business.grants.title" as any)}
+                </p>
+                <p className="text-muted-foreground text-[12px] leading-relaxed mb-4">
+                  {t("business.grants.text" as any)}
+                </p>
+                <Link href="/grants" data-testid="grants-bubble-cta">
+                  <Button
+                    size="sm"
+                    className="w-full rounded-xl bg-[#1e3a5f] hover:bg-[#1e3a5f]/90 text-white text-[12px] font-semibold h-9"
+                  >
+                    {t("business.grants.cta" as any)} <ArrowRight className="ml-1.5 w-3.5 h-3.5" />
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Bubble tail pointing down */}
+              <div className="absolute -bottom-2.5 right-8 w-5 h-5 bg-white rotate-45 border-r border-b border-border" />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
