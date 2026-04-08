@@ -323,3 +323,39 @@ id = "ul-4WlNliQGcATeUdOZE-"
 uri = "file://attached_assets/stock_images/multiethnic_team_3.jpg"
 type = "image"
 title = "multiethnic group coworkers teamwork diverse backgrounds workplace"
+
+[[outputs]]
+id = "x3glACTmeaxeWlBEAm4XU"
+uri = "file://attached_assets/stock_images/immigrant_woman_hijab_1.jpg"
+type = "image"
+title = "immigrant woman hijab confident portrait city"
+
+[[outputs]]
+id = "TGtlULe0Zuixz4JzBRMjg"
+uri = "file://attached_assets/stock_images/immigrant_woman_hijab_2.jpg"
+type = "image"
+title = "immigrant woman hijab confident portrait city"
+
+[[outputs]]
+id = "GyAkv6zvMHLH8KALX_pG3"
+uri = "file://attached_assets/stock_images/african_man_portrait_1.jpg"
+type = "image"
+title = "Black African man professional portrait smiling"
+
+[[outputs]]
+id = "T3n-803fPVNftSbDh_X5V"
+uri = "file://attached_assets/stock_images/african_man_portrait_2.jpg"
+type = "image"
+title = "Black African man professional portrait smiling"
+
+[[outputs]]
+id = "vnRp4Kx9d2J0UAmD6WIl5"
+uri = "file://attached_assets/stock_images/latina_woman_portrait_1.jpg"
+type = "image"
+title = "Latin Hispanic woman professional smiling portrait"
+
+[[outputs]]
+id = "7ofzw4MUAcUU78p681Ldu"
+uri = "file://attached_assets/stock_images/latina_woman_portrait_2.jpg"
+type = "image"
+title = "Latin Hispanic woman professional smiling portrait"
