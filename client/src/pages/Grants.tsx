@@ -34,7 +34,7 @@ const diagnosticQuestions: Record<string, Question[]> = {
 const categoryLabels: Record<string, { fr: string; en: string }> = {
   artists:      { fr: "Artistes & Créateurs", en: "Artists & Creators" },
   entrepreneurs:{ fr: "Entrepreneurs",        en: "Entrepreneurs" },
-  sme:          { fr: "PMEs",                 en: "SMEs" },
+  sme:          { fr: "PME",                  en: "SMEs" },
 };
 
 function getResult(category: string, answers: boolean[]): ResultType {
@@ -73,38 +73,38 @@ const FAQS = [
   {
     qFr: "Qui peut faire une demande de subvention ?",
     qEn: "Who can apply for a grant?",
-    aFr: "Les artistes, entrepreneurs, PMEs, OBNL et OBE établis au Québec peuvent faire une demande. Certains programmes s'adressent spécifiquement aux nouvelles arrivantes et nouveaux arrivants, aux minorités visibles ou aux femmes entrepreneures.",
+    aFr: "Les artistes, entrepreneurs, PME, OBNL et OBE établis au Québec peuvent faire une demande. Certains programmes s'adressent spécifiquement aux nouvelles arrivantes et nouveaux arrivants, aux minorités visibles ou aux femmes entrepreneures.",
     aEn: "Artists, entrepreneurs, SMEs, nonprofits (OBNL) and volunteer organizations (OBE) based in Quebec can apply. Some programs specifically target newcomers, visible minorities, or women entrepreneurs.",
   },
   {
     qFr: "Est-ce que je dois rembourser la subvention ?",
     qEn: "Do I have to repay the grant?",
-    aFr: "Non — les subventions sont des financements non remboursables. Contrairement à un prêt, vous n'avez pas à rembourser les montants obtenus, à condition de respecter les conditions du programme.",
-    aEn: "No — grants are non-repayable funding. Unlike a loan, you do not have to repay the amounts received, as long as you meet the program conditions.",
+    aFr: "Cela dépend de l'utilisation de la subvention. Si les conditions du programme ne sont pas respectées, il est possible que des montants doivent être remboursés. AudreyRH vous accompagne pour assurer la conformité tout au long du processus.",
+    aEn: "It depends on how the grant was used. If the program conditions are not respected, it may be possible that amounts have to be reimbursed. AudreyRH guides you to ensure compliance throughout the process.",
   },
   {
     qFr: "Combien de temps prend le processus de demande ?",
     qEn: "How long does the application process take?",
-    aFr: "En général, de 4 à 12 semaines selon le programme. AudreyRH prépare votre dossier en 2 à 3 semaines, puis les délais de traitement varient selon l'organisme financeur.",
-    aEn: "Generally 4 to 12 weeks depending on the program. AudreyRH prepares your file within 2 to 3 weeks; processing times then vary by funding body.",
+    aFr: "En général, de 3 à 4 semaines selon le programme. AudreyRH prépare votre dossier efficacement, puis les délais de traitement varient selon l'organisme financeur.",
+    aEn: "Generally 3 to 4 weeks depending on the program. AudreyRH prepares your file efficiently; processing times then vary by funding body.",
   },
   {
     qFr: "Quels documents sont nécessaires pour une demande ?",
     qEn: "What documents are required for an application?",
-    aFr: "Les exigences varient, mais on demande généralement : un plan d'affaires ou de projet, des états financiers récents, une preuve de statut légal et une description détaillée du projet. AudreyRH vous guide étape par étape.",
-    aEn: "Requirements vary, but typically include: a business or project plan, recent financial statements, proof of legal status, and a detailed project description. AudreyRH guides you step by step.",
+    aFr: "Ça va dépendre des demandes. Un guide vous sera envoyé pour bien vous préparer au processus et vous assurer d'avoir tous les éléments requis.",
+    aEn: "It will depend on the applications. A guide will be sent to you to help you prepare properly for the process and ensure you have all the required elements.",
   },
   {
     qFr: "Puis-je faire plusieurs demandes en même temps ?",
     qEn: "Can I apply for multiple grants at once?",
-    aFr: "Oui, c'est même recommandé. AudreyRH identifie tous les programmes auxquels vous êtes admissible et peut gérer plusieurs demandes simultanément pour maximiser votre financement total.",
-    aEn: "Yes, and it's actually recommended. AudreyRH identifies all programs you qualify for and can manage multiple simultaneous applications to maximize your total funding.",
+    aFr: "Selon les restrictions en vigueur. AudreyRH identifie tous les programmes auxquels vous êtes admissible et évalue la compatibilité entre les demandes pour optimiser votre stratégie de financement.",
+    aEn: "Subject to applicable restrictions. AudreyRH identifies all programs you qualify for and assesses compatibility between applications to optimize your funding strategy.",
   },
   {
     qFr: "Quel est le coût de l'accompagnement AudreyRH ?",
     qEn: "What is the cost of AudreyRH's support?",
-    aFr: "Une consultation initiale de 80 $ permet de faire le point sur votre situation et d'identifier vos opportunités. Les frais d'accompagnement pour la préparation de dossier sont discutés lors de cette consultation.",
-    aEn: "An initial $80 consultation allows us to assess your situation and identify your opportunities. Coaching fees for application preparation are discussed during this consultation.",
+    aFr: "Une consultation initiale de 85 $ permet de faire le point sur votre situation et d'identifier vos opportunités. Les frais d'accompagnement pour la préparation de dossier sont discutés lors de cette consultation.",
+    aEn: "An initial $85 consultation allows us to assess your situation and identify your opportunities. Coaching fees for application preparation are discussed during this consultation.",
   },
 ];
 

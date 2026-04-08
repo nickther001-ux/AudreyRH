@@ -19,10 +19,10 @@ import svcComplianceImg from "@assets/stock_images/compliance_labour.jpg";
 
 
 const services = [
-  { icon: Users,       key: "talent",     photo: svcTalentImg },
-  { icon: TrendingUp,  key: "strategy",   photo: svcStrategyImg },
-  { icon: DollarSign,  key: "grants",     photo: svcGrantsImg },
-  { icon: ShieldCheck, key: "compliance", photo: svcComplianceImg },
+  { icon: Users,       key: "talent",     photo: svcTalentImg,     points: 4 },
+  { icon: TrendingUp,  key: "strategy",   photo: svcStrategyImg,   points: 3 },
+  { icon: DollarSign,  key: "grants",     photo: svcGrantsImg,     points: 3 },
+  { icon: ShieldCheck, key: "compliance", photo: svcComplianceImg, points: 3 },
 ];
 
 const WHO_CARDS = [
@@ -181,7 +181,7 @@ export default function Business() {
                         {t(`business.service.${svc.key}.desc` as any)}
                       </p>
                       <ul className="space-y-2 border-t border-white/20 pt-4">
-                        {[1, 2, 3].map((i) => (
+                        {Array.from({ length: svc.points }, (_, idx) => idx + 1).map((i) => (
                           <li key={i} className="flex items-start gap-2 text-[13px] text-white/75">
                             <CheckCircle className="w-4 h-4 text-white/50 flex-shrink-0 mt-0.5" />
                             {t(`business.service.${svc.key}.point${i}` as any)}

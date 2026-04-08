@@ -592,9 +592,8 @@ export default function Individuals() {
               </div>
             </FadeUp>
 
-            <Stagger className="grid md:grid-cols-3 gap-px bg-border border border-border">
-              {/* Discovery */}
-              <StaggerItem variant="fadeUp" className="bg-white p-8 relative" data-testid="card-package-discovery">
+            <div className="flex justify-center">
+              <StaggerItem variant="fadeUp" className="bg-white p-10 relative border border-border w-full max-w-sm" data-testid="card-package-discovery">
                 <div className="mb-8">
                   <h3 className="text-xl font-bold text-foreground mb-1">{t("packages.discovery.name")}</h3>
                   <p className="text-[12px] text-muted-foreground uppercase tracking-wider">{t("packages.discovery.subtitle")}</p>
@@ -619,60 +618,7 @@ export default function Individuals() {
                   </Button>
                 </Link>
               </StaggerItem>
-
-              {/* Essential – Popular */}
-              <StaggerItem variant="fadeUp" className="bg-foreground p-8 relative" data-testid="card-package-essential">
-                <div className="absolute top-4 right-4">
-                  <span className="bg-[#1e3a5f] text-white text-[10px] font-bold px-3 py-1 uppercase tracking-wider">Populaire</span>
-                </div>
-                <div className="mb-8">
-                  <h3 className="text-xl font-bold text-white mb-1">{t("packages.essential.name")}</h3>
-                  <p className="text-[12px] text-white/40 uppercase tracking-wider">{t("packages.essential.subtitle")}</p>
-                </div>
-                <div className="mb-8">
-                  <div className="text-[3.5rem] font-black text-white leading-none">{t("packages.essential.price")}</div>
-                  <p className="text-[12px] text-white/50 mt-1">{t("packages.essential.consultation")}</p>
-                </div>
-                <ul className="space-y-3 mb-8">
-                  {[1, 2, 3].map((i) => (
-                    <li key={i} className="flex items-start gap-2.5">
-                      <CheckCircle className="w-4 h-4 text-[#93c5fd] flex-shrink-0 mt-0.5" />
-                      <span className="text-[13px] text-white/80">{t(`packages.essential.feature${i}` as any)}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/book">
-                  <Button className="w-full rounded-none bg-[#1e3a5f] hover:bg-[#1e3a5f]/90 text-white h-11 text-[13px]">
-                    {t("nav.book")} <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </Link>
-              </StaggerItem>
-
-              {/* Plan */}
-              <StaggerItem variant="fadeUp" className="bg-white p-8 relative" data-testid="card-package-plan">
-                <div className="mb-8">
-                  <h3 className="text-xl font-bold text-foreground mb-1">{t("packages.plan.name")}</h3>
-                  <p className="text-[12px] text-muted-foreground uppercase tracking-wider">{t("packages.plan.subtitle")}</p>
-                </div>
-                <div className="mb-8">
-                  <div className="text-[3.5rem] font-black text-foreground leading-none">{t("packages.plan.price")}</div>
-                  <p className="text-[12px] text-muted-foreground mt-1">{t("packages.plan.currency")}</p>
-                </div>
-                <ul className="space-y-3 mb-8">
-                  {[1, 2, 3].map((i) => (
-                    <li key={i} className="flex items-start gap-2.5">
-                      <CheckCircle className="w-4 h-4 text-[#1e3a5f] flex-shrink-0 mt-0.5" />
-                      <span className="text-[13px] text-foreground">{t(`packages.plan.feature${i}` as any)}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/book">
-                  <Button variant="outline" className="w-full rounded-none border-foreground/20 text-foreground h-11 text-[13px]">
-                    {t("nav.book")} <ArrowRight className="ml-2 w-4 h-4" />
-                  </Button>
-                </Link>
-              </StaggerItem>
-            </Stagger>
+            </div>
           </div>
         </section>
 
