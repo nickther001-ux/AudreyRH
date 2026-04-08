@@ -7,7 +7,6 @@ import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 import { FadeUp, FadeIn, Stagger, StaggerItem } from "@/lib/animations";
-import audreyGuide from "@assets/FB_IMG_1767723555659_(1)_1767841722642.jpg";
 import heroBgImg from "@assets/stock_images/talent_acquisition.jpg";
 import guideCvImg from "@assets/generated_images/guide_cv_resume.png";
 import guideChecklistImg from "@assets/generated_images/guide_checklist.png";
@@ -343,215 +342,140 @@ export default function Individuals() {
         </section>
 
         {/* ── 3. GUIDE — accordion on white ── */}
-        <section className="bg-white py-28" data-testid="section-guide">
-          <div className="max-w-6xl mx-auto px-6 lg:px-8">
-
-            {/* Header — two columns: text left, photo right */}
-            <FadeUp className="mb-16">
-              <div className="flex flex-col md:flex-row gap-12 md:gap-16 items-center relative">
-                {/* Text */}
-                <div className="flex-1 min-w-0">
-                  <p className="text-[11px] text-black/40 uppercase tracking-[0.2em] mb-4">{t("individuals.guide.badge" as any)}</p>
-                  <h2 className="text-4xl md:text-5xl font-bold text-black leading-tight mb-5">
-                    {t("individuals.guide.title" as any)}<span className="text-orange-400">.</span>
-                  </h2>
-                  <p className="text-black/60 text-[15px] leading-relaxed max-w-md">{t("individuals.guide.subtitle" as any)}</p>
-                  {/* Arrow label — desktop: points right; mobile: points down */}
-
-                  {/* Desktop (md+) — horizontal arrow pointing right toward photo */}
-                  <div className="hidden md:flex items-end gap-3 mt-8 select-none">
-                    <div className="text-right">
-                      <p className="text-[#1e3a5f] font-bold text-[13px] leading-snug" style={{ fontFamily: "'Georgia', serif", fontStyle: "italic" }}>
-                        {language === "en" ? "She's the one you need!" : "C'est elle qu'il vous faut !"}
-                      </p>
-                      <p className="text-black/40 text-[11px] mt-0.5">
-                        {language === "en" ? "Expert. CRIA. Results." : "Experte. CRIA. Résultats."}
-                      </p>
+        <section className="overflow-hidden" data-testid="section-guide">
+          {([
+            {
+              idx: 1,
+              image: guideCvImg,
+              badgeKey: "individuals.guide.resume.badge",
+              titleKey: "individuals.guide.resume.title",
+              subtitleKey: "individuals.guide.resume.subtitle",
+              content: (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-black/8">
+                  {([1,2,3,4,5,6,7,8,9] as const).map((n) => (
+                    <div key={n} className="bg-white p-7 hover:bg-[#f3ede3] transition-colors">
+                      <h4 className="font-bold text-black text-[14px] mb-2">{t(`individuals.guide.resume.s${n}.title` as any)}</h4>
+                      <p className="text-black/55 text-[13px] leading-relaxed">{t(`individuals.guide.resume.s${n}.desc` as any)}</p>
                     </div>
-                    {/* Curved SVG arrow pointing right toward the photo */}
-                    <svg width="160" height="52" viewBox="0 0 160 52" fill="none" className="flex-shrink-0 text-[#1e3a5f]">
-                      <path d="M4 44 C 30 44, 60 8, 148 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
-                      <path d="M138 4 L150 10 L138 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                    </svg>
-                  </div>
-
-                  {/* Mobile (< md) — caption + downward arrow pointing toward photo below */}
-                  <div className="flex md:hidden items-start gap-3 mt-6 select-none">
-                    <div>
-                      <p className="text-[#1e3a5f] font-bold text-[13px] leading-snug" style={{ fontFamily: "'Georgia', serif", fontStyle: "italic" }}>
-                        {language === "en" ? "She's the one you need!" : "C'est elle qu'il vous faut !"}
-                      </p>
-                      <p className="text-black/40 text-[11px] mt-0.5">
-                        {language === "en" ? "Expert. CRIA. Results." : "Experte. CRIA. Résultats."}
-                      </p>
-                    </div>
-                    {/* Curved SVG arrow pointing down-right toward the photo below */}
-                    <svg width="48" height="56" viewBox="0 0 48 56" fill="none" className="flex-shrink-0 text-[#1e3a5f] mt-1">
-                      <path d="M8 4 C 8 28, 36 28, 40 48" stroke="currentColor" strokeWidth="2" strokeLinecap="round" fill="none" />
-                      <path d="M32 42 L40 50 L46 40" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                    </svg>
+                  ))}
+                  <div className="bg-[#1e3a5f] p-7 flex flex-col justify-center md:col-span-3">
+                    <p className="text-[#93c5fd] text-[11px] uppercase tracking-[0.15em] mb-3 font-semibold">Conseil AudreyRH</p>
+                    <p className="text-white text-[15px] leading-relaxed italic">"{t("individuals.guide.resume.tip" as any)}"</p>
                   </div>
                 </div>
-                {/* Photo */}
-                <div className="w-full md:w-64 lg:w-72 flex-shrink-0">
-                  <div className="relative">
-                    <img
-                      src={audreyGuide}
-                      alt="Audrey Mondesir, CRIA"
-                      className="w-full h-72 md:h-80 object-cover object-top"
-                    />
-                    <div className="absolute bottom-0 left-0 right-0 bg-[#1e3a5f] px-4 py-3">
-                      <p className="text-white text-[13px] font-bold leading-tight">Audrey Mondesir</p>
-                      <p className="text-white/55 text-[11px] uppercase tracking-[0.1em]">CRIA · Conseillère agréée</p>
+              ),
+            },
+            {
+              idx: 2,
+              image: guideChecklistImg,
+              badgeKey: "individuals.guide.dos.badge",
+              titleKey: "individuals.guide.dos.title",
+              subtitleKey: "individuals.guide.dos.subtitle",
+              content: (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/8">
+                  <div className="bg-white p-8">
+                    <div className="flex items-center gap-3 mb-6 pb-4 border-b border-black/10">
+                      <span className="w-6 h-6 flex items-center justify-center border border-[#1e3a5f] flex-shrink-0">
+                        <svg className="w-3.5 h-3.5 text-[#1e3a5f]" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                      </span>
+                      <span className="font-bold text-black text-[13px] uppercase tracking-[0.15em]">{t("individuals.guide.dos.do.label" as any)}</span>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </FadeUp>
-
-            {/* Accordion items */}
-            <div className="border-t border-black/10">
-
-              {([
-                {
-                  idx: 1,
-                  image: guideCvImg,
-                  badgeKey: "individuals.guide.resume.badge",
-                  titleKey: "individuals.guide.resume.title",
-                  subtitleKey: "individuals.guide.resume.subtitle",
-                  content: (
-                    <div className="mt-0">
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-black/8">
-                        {([1,2,3,4,5,6,7,8,9] as const).map((n) => (
-                          <div key={n} className="bg-white p-7 hover:bg-slate-50 transition-colors">
-                            <h4 className="font-bold text-black text-[14px] mb-2">{t(`individuals.guide.resume.s${n}.title` as any)}</h4>
-                            <p className="text-black/55 text-[13px] leading-relaxed">{t(`individuals.guide.resume.s${n}.desc` as any)}</p>
-                          </div>
-                        ))}
-                        <div className="bg-[#1e3a5f] p-7 flex flex-col justify-center md:col-span-3">
-                          <p className="text-[#93c5fd] text-[11px] uppercase tracking-[0.15em] mb-3 font-semibold">Conseil AudreyRH</p>
-                          <p className="text-white text-[15px] leading-relaxed italic">"{t("individuals.guide.resume.tip" as any)}"</p>
-                        </div>
-                      </div>
-                    </div>
-                  ),
-                },
-                {
-                  idx: 2,
-                  image: guideChecklistImg,
-                  badgeKey: "individuals.guide.dos.badge",
-                  titleKey: "individuals.guide.dos.title",
-                  subtitleKey: "individuals.guide.dos.subtitle",
-                  content: (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/8 mt-0">
-                      {/* DO */}
-                      <div className="bg-white p-8">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-black/10">
-                          <span className="w-6 h-6 flex items-center justify-center border border-[#1e3a5f] flex-shrink-0">
-                            <svg className="w-3.5 h-3.5 text-[#1e3a5f]" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                          </span>
-                          <span className="font-bold text-black text-[13px] uppercase tracking-[0.15em]">{t("individuals.guide.dos.do.label" as any)}</span>
-                        </div>
-                        <ul className="space-y-3.5">
-                          {([1,2,3,4,5,6,7,8,9,10] as const).map((n) => (
-                            <li key={n} className="flex items-start gap-3 text-[13px] text-black/65 leading-relaxed" data-testid={`guide-do-${n}`}>
-                              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#1e3a5f] mt-1.5" />
-                              {t(`individuals.guide.dos.do.${n}` as any)}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                      {/* DON'T */}
-                      <div className="bg-white p-8">
-                        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-black/10">
-                          <span className="w-6 h-6 flex items-center justify-center border border-black/25 flex-shrink-0">
-                            <svg className="w-3.5 h-3.5 text-black/35" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                          </span>
-                          <span className="font-bold text-black/45 text-[13px] uppercase tracking-[0.15em]">{t("individuals.guide.dos.dont.label" as any)}</span>
-                        </div>
-                        <ul className="space-y-3.5">
-                          {([1,2,3,4,5,6,7,8,9,10] as const).map((n) => (
-                            <li key={n} className="flex items-start gap-3 text-[13px] text-black/40 leading-relaxed" data-testid={`guide-dont-${n}`}>
-                              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-black/20 mt-1.5" />
-                              {t(`individuals.guide.dos.dont.${n}` as any)}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  ),
-                },
-                {
-                  idx: 3,
-                  image: guideInterviewImg,
-                  badgeKey: "individuals.guide.interview.badge",
-                  titleKey: "individuals.guide.interview.title",
-                  subtitleKey: "individuals.guide.interview.subtitle",
-                  content: (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-black/8 mt-0">
-                      {([1,2,3,4,5,6,7,8,9] as const).map((n) => (
-                        <div key={n} className="bg-white p-7 hover:bg-slate-50 transition-colors" data-testid={`guide-interview-${n}`}>
-                          <h4 className="font-bold text-black text-[14px] mb-2">{t(`individuals.guide.interview.s${n}.title` as any)}</h4>
-                          <p className="text-black/55 text-[13px] leading-relaxed">{t(`individuals.guide.interview.s${n}.desc` as any)}</p>
-                        </div>
+                    <ul className="space-y-3.5">
+                      {([1,2,3,4,5,6,7,8,9,10] as const).map((n) => (
+                        <li key={n} className="flex items-start gap-3 text-[13px] text-black/65 leading-relaxed" data-testid={`guide-do-${n}`}>
+                          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#1e3a5f] mt-1.5" />
+                          {t(`individuals.guide.dos.do.${n}` as any)}
+                        </li>
                       ))}
-                    </div>
-                  ),
-                },
-              ]).map(({ idx, badgeKey, titleKey, subtitleKey, content, image }) => {
-                const isOpen = openGuide === idx;
-                return (
-                  <div key={idx} className="border-b border-black/8" data-testid={`guide-accordion-${idx}`}>
-                    <button
-                      onClick={() => setOpenGuide(isOpen ? null : idx)}
-                      className="w-full relative overflow-hidden flex items-center justify-between gap-6 px-0 text-left group"
-                      style={{ minHeight: "120px" }}
-                      data-testid={`guide-toggle-${idx}`}
-                    >
-                      {/* Background photo */}
-                      <img
-                        src={image}
-                        alt=""
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                      {/* Overlay — dark enough for light-toned photos */}
-                      <div className={`absolute inset-0 transition-colors duration-300 ${isOpen ? "bg-[#1e3a5f]/88" : "bg-[#1e3a5f]/80 group-hover:bg-[#1e3a5f]/84"}`} />
-                      {/* Content */}
-                      <div className="relative z-10 flex items-center justify-between w-full py-8 gap-6">
-                        <div className="flex items-start gap-4">
-                          <div>
-                            <p className="text-[10px] text-white/80 uppercase tracking-[0.2em] mb-1">{t(badgeKey as any)}</p>
-                            <h3 className="text-lg md:text-xl font-bold text-white leading-snug">{t(titleKey as any)}</h3>
-                            {!isOpen && <p className="text-white/80 text-[13px] mt-1 leading-relaxed max-w-lg">{t(subtitleKey as any)}</p>}
-                          </div>
-                        </div>
-                        <span className="flex-shrink-0 mr-0">
-                          {isOpen
-                            ? <Minus className="w-4 h-4 text-white/70" />
-                            : <Plus className="w-4 h-4 text-white/40 group-hover:text-white/70 transition-colors" />
-                          }
-                        </span>
-                      </div>
-                    </button>
-                    <AnimatePresence>
-                      {isOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.35, ease: "easeInOut" }}
-                          className="overflow-hidden"
-                        >
-                          <div className="pb-10">{content}</div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+                    </ul>
                   </div>
-                );
-              })}
+                  <div className="bg-white p-8">
+                    <div className="flex items-center gap-3 mb-6 pb-4 border-b border-black/10">
+                      <span className="w-6 h-6 flex items-center justify-center border border-black/25 flex-shrink-0">
+                        <svg className="w-3.5 h-3.5 text-black/35" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+                      </span>
+                      <span className="font-bold text-black/45 text-[13px] uppercase tracking-[0.15em]">{t("individuals.guide.dos.dont.label" as any)}</span>
+                    </div>
+                    <ul className="space-y-3.5">
+                      {([1,2,3,4,5,6,7,8,9,10] as const).map((n) => (
+                        <li key={n} className="flex items-start gap-3 text-[13px] text-black/40 leading-relaxed" data-testid={`guide-dont-${n}`}>
+                          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-black/20 mt-1.5" />
+                          {t(`individuals.guide.dos.dont.${n}` as any)}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              ),
+            },
+            {
+              idx: 3,
+              image: guideInterviewImg,
+              badgeKey: "individuals.guide.interview.badge",
+              titleKey: "individuals.guide.interview.title",
+              subtitleKey: "individuals.guide.interview.subtitle",
+              content: (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-black/8">
+                  {([1,2,3,4,5,6,7,8,9] as const).map((n) => (
+                    <div key={n} className="bg-white p-7 hover:bg-[#f3ede3] transition-colors" data-testid={`guide-interview-${n}`}>
+                      <h4 className="font-bold text-black text-[14px] mb-2">{t(`individuals.guide.interview.s${n}.title` as any)}</h4>
+                      <p className="text-black/55 text-[13px] leading-relaxed">{t(`individuals.guide.interview.s${n}.desc` as any)}</p>
+                    </div>
+                  ))}
+                </div>
+              ),
+            },
+          ]).map(({ idx, badgeKey, titleKey, subtitleKey, content, image }) => {
+            const isOpen = openGuide === idx;
+            return (
+              <div key={idx} className="border-b border-white/10" data-testid={`guide-accordion-${idx}`}>
+                {/* Accordion trigger — full-width photo bar */}
+                <button
+                  onClick={() => setOpenGuide(isOpen ? null : idx)}
+                  className="w-full relative overflow-hidden text-left group"
+                  style={{ minHeight: "200px" }}
+                  data-testid={`guide-toggle-${idx}`}
+                >
+                  <img
+                    src={image}
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className={`absolute inset-0 transition-colors duration-300 ${isOpen ? "bg-[#0d1f3c]/92" : "bg-[#0d1f3c]/78 group-hover:bg-[#0d1f3c]/86"}`} />
+                  <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-16 py-14 flex items-center justify-between gap-8">
+                    <div>
+                      <p className="text-[10px] text-white/55 uppercase tracking-[0.28em] mb-3 font-medium">{t(badgeKey as any)}</p>
+                      <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">{t(titleKey as any)}</h3>
+                      {!isOpen && (
+                        <p className="text-white/65 text-[15px] mt-3 leading-relaxed max-w-xl">{t(subtitleKey as any)}</p>
+                      )}
+                    </div>
+                    <span className="flex-shrink-0 w-10 h-10 border border-white/30 flex items-center justify-center group-hover:border-white/60 transition-colors">
+                      {isOpen
+                        ? <Minus className="w-4 h-4 text-white" />
+                        : <Plus className="w-4 h-4 text-white/60 group-hover:text-white transition-colors" />
+                      }
+                    </span>
+                  </div>
+                </button>
 
-            </div>
-          </div>
+                {/* Expanded content */}
+                <AnimatePresence>
+                  {isOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.35, ease: "easeInOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="max-w-6xl mx-auto px-6 lg:px-16 py-10">{content}</div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
         </section>
 
         {/* ── 4. PROCESS — dark ── */}
