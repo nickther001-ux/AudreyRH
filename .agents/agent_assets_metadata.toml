@@ -90,6 +90,12 @@ uri = "file://attached_assets/stock_images/diverse_immigrants_group.png"
 type = "image"
 title = "diverse immigrants group Montreal"
 
+[[generated]]
+id = "-WW6IfZ6DQPCaodigPC21"
+uri = "file://attached_assets/stock_images/diverse_group_10_people.png"
+type = "image"
+title = "diverse immigrant group 10 people"
+
 [[outputs]]
 id = "t9ncZGut59z-QeD3P2SPN"
 uri = "file://attached_assets/stock_images/talent_acquisition.jpg"
@@ -395,3 +401,39 @@ id = "eR5WOs_m0eIgRYRTnjMDo"
 uri = "file://attached_assets/stock_images/multicultural_community_3.jpg"
 type = "image"
 title = "multicultural immigrant women men together happy community portrait"
+
+[[outputs]]
+id = "DFE_U43o9I2tQfR9w_9W0"
+uri = "file://attached_assets/stock_images/large_diverse_group_1.jpg"
+type = "image"
+title = "large diverse group of people different ethnicities Black Asian Arab Indian Latino smiling together"
+
+[[outputs]]
+id = "YFBKseLssOc9ty18eggP1"
+uri = "file://attached_assets/stock_images/large_diverse_group_2.jpg"
+type = "image"
+title = "large diverse group of people different ethnicities Black Asian Arab Indian Latino smiling together"
+
+[[outputs]]
+id = "W7LzGFOC4onfeszLmEGJ2"
+uri = "file://attached_assets/stock_images/large_diverse_group_3.jpg"
+type = "image"
+title = "large diverse group of people different ethnicities Black Asian Arab Indian Latino smiling together"
+
+[[outputs]]
+id = "PYr9doINUA9FN1X8lOf3j"
+uri = "file://attached_assets/stock_images/multicultural_10_people_1.jpg"
+type = "image"
+title = "multicultural team 10 people different backgrounds workplace portrait group photo"
+
+[[outputs]]
+id = "SyctD1YEk9bJV17rki1Ba"
+uri = "file://attached_assets/stock_images/multicultural_10_people_2.jpg"
+type = "image"
+title = "multicultural team 10 people different backgrounds workplace portrait group photo"
+
+[[outputs]]
+id = "bdq5R67V-Q-IT_YmWqUxJ"
+uri = "file://attached_assets/stock_images/multicultural_10_people_3.jpg"
+type = "image"
+title = "multicultural team 10 people different backgrounds workplace portrait group photo"
