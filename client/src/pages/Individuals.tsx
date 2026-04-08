@@ -429,33 +429,41 @@ export default function Individuals() {
             const isOpen = openGuide === idx;
             return (
               <div key={idx} className="border-b border-white/10" data-testid={`guide-accordion-${idx}`}>
-                {/* Accordion trigger — full-width photo bar */}
+                {/* Accordion trigger — solid navy row, photo as right thumbnail */}
                 <button
                   onClick={() => setOpenGuide(isOpen ? null : idx)}
-                  className="w-full relative overflow-hidden text-left group"
-                  style={{ minHeight: "200px" }}
+                  className={`w-full text-left group transition-colors duration-300 ${isOpen ? "bg-[#0d1f3c]" : "bg-[#1e3a5f] hover:bg-[#0d1f3c]"}`}
                   data-testid={`guide-toggle-${idx}`}
                 >
-                  <img
-                    src={image}
-                    alt=""
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className={`absolute inset-0 transition-colors duration-300 ${isOpen ? "bg-[#0d1f3c]/92" : "bg-[#0d1f3c]/78 group-hover:bg-[#0d1f3c]/86"}`} />
-                  <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-16 py-14 flex items-center justify-between gap-8">
-                    <div>
-                      <p className="text-[10px] text-white/55 uppercase tracking-[0.28em] mb-3 font-medium">{t(badgeKey as any)}</p>
-                      <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight">{t(titleKey as any)}</h3>
-                      {!isOpen && (
-                        <p className="text-white/65 text-[15px] mt-3 leading-relaxed max-w-xl">{t(subtitleKey as any)}</p>
-                      )}
+                  <div className="max-w-6xl mx-auto flex items-stretch">
+                    {/* Left: number + text */}
+                    <div className="flex-1 flex items-center gap-8 px-6 lg:px-16 py-10">
+                      <span className="text-[3.5rem] font-black text-white/10 leading-none flex-shrink-0 select-none tabular-nums">
+                        {String(idx).padStart(2, "0")}
+                      </span>
+                      <div>
+                        <p className="text-[10px] text-[#93c5fd] uppercase tracking-[0.25em] mb-2 font-semibold">{t(badgeKey as any)}</p>
+                        <h3 className="text-xl md:text-2xl font-bold text-white leading-tight">{t(titleKey as any)}</h3>
+                        <p className="text-white/55 text-[14px] mt-2 leading-relaxed max-w-lg">{t(subtitleKey as any)}</p>
+                      </div>
                     </div>
-                    <span className="flex-shrink-0 w-10 h-10 border border-white/30 flex items-center justify-center group-hover:border-white/60 transition-colors">
-                      {isOpen
-                        ? <Minus className="w-4 h-4 text-white" />
-                        : <Plus className="w-4 h-4 text-white/60 group-hover:text-white transition-colors" />
-                      }
-                    </span>
+                    {/* Right: photo thumbnail + toggle icon */}
+                    <div className="flex items-center gap-0 flex-shrink-0">
+                      <div className="hidden md:block w-36 lg:w-48 h-full overflow-hidden">
+                        <img
+                          src={image}
+                          alt=""
+                          className="w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-300 group-hover:scale-105 transition-transform"
+                          style={{ minHeight: "120px" }}
+                        />
+                      </div>
+                      <div className="flex items-center justify-center w-16 h-full border-l border-white/10">
+                        {isOpen
+                          ? <Minus className="w-4 h-4 text-white/70" />
+                          : <Plus className="w-4 h-4 text-white/40 group-hover:text-white/70 transition-colors" />
+                        }
+                      </div>
+                    </div>
                   </div>
                 </button>
 
