@@ -84,6 +84,12 @@ uri = "file://attached_assets/stock_images/orientation_professional.png"
 type = "image"
 title = "orientation professional woman"
 
+[[generated]]
+id = "MzNWScXyc3ukOs4u8Gyn-"
+uri = "file://attached_assets/stock_images/diverse_immigrants_group.png"
+type = "image"
+title = "diverse immigrants group Montreal"
+
 [[outputs]]
 id = "t9ncZGut59z-QeD3P2SPN"
 uri = "file://attached_assets/stock_images/talent_acquisition.jpg"
