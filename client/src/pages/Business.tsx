@@ -312,21 +312,21 @@ export default function Business() {
         </section>
 
         {/* ── 7. FINAL CTA — midnight blue ── */}
-        <section className="bg-[#1e3a5f] py-28" data-testid="section-business-cta">
+        <section className="bg-[#dbeafe] py-28" data-testid="section-business-cta">
           <FadeUp className="max-w-6xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-12">
             <div className="max-w-xl">
-              <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-5">{t("business.cta.badge")}</p>
-              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">{t("business.cta.title")}</h2>
-              <p className="text-white/50 text-[14px] leading-relaxed mt-5 max-w-md">{t("business.cta.text")}</p>
+              <p className="text-[11px] text-[#1e3a5f]/50 uppercase tracking-[0.2em] mb-5">{t("business.cta.badge")}</p>
+              <h2 className="text-4xl md:text-5xl font-bold text-[#1e3a5f] leading-tight">{t("business.cta.title")}</h2>
+              <p className="text-[#1e3a5f]/70 text-[14px] leading-relaxed mt-5 max-w-md">{t("business.cta.text")}</p>
             </div>
             <div className="flex flex-col sm:flex-row gap-4 flex-shrink-0">
               <Link href="/contact" data-testid="link-business-cta-contact">
-                <Button size="lg" className="bg-white text-foreground hover:bg-white/90 rounded-none px-8 h-12 text-[13px] font-semibold">
+                <Button size="lg" className="bg-[#1e3a5f] text-white hover:bg-[#1e3a5f]/90 rounded-none px-8 h-12 text-[13px] font-semibold">
                   {t("business.cta.contact")} <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </Link>
               <Link href="/book" data-testid="link-business-cta-book">
-                <Button size="lg" variant="outline" className="rounded-none px-8 h-12 text-[13px] border-white/25 text-white hover:bg-white/10 bg-transparent">
+                <Button size="lg" variant="outline" className="rounded-none px-8 h-12 text-[13px] border-[#1e3a5f]/30 text-[#1e3a5f] hover:bg-[#1e3a5f]/10 bg-transparent">
                   {t("business.cta.book")}
                 </Button>
               </Link>
