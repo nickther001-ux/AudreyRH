@@ -463,7 +463,7 @@ const translations = {
     "faq.category.business": "Entreprises",
 
     "faq.general.q1": "Qu'est-ce qu'AudreyRH ?",
-    "faq.general.a1": "AudreyRH est un cabinet de conseil en ressources humaines fondé par Audrey Mondesir, CRIA, forte de plus de 16 ans d'expérience terrain. Nous aidons les nouveaux arrivants au Québec à naviguer le marché du travail canadien grâce à des stratégies concrètes et personnalisées. Nous accompagnons également les entreprises — PMEs, startups, grandes corporations et OBNL — dans leur stratégie RH, l'acquisition de talents qualifiés et l'accès aux subventions gouvernementales.",
+    "faq.general.a1": "AudreyRH est un cabinet de conseil en ressources humaines fondé par Audrey Mondesir, CRIA, forte de plus de 16 ans d'expérience terrain. Nous aidons les nouveaux arrivants au Québec à naviguer le marché du travail canadien grâce à des stratégies concrètes et personnalisées. Nous accompagnons également les entreprises — PME, startups, grandes corporations et OBNL — dans leur stratégie RH, l'acquisition de talents qualifiés et l'accès aux subventions gouvernementales.",
     "faq.general.q2": "Qu'est-ce qu'un CRIA ?",
     "faq.general.a2": "Le titre de Conseiller en Relations Industrielles Agréé (CRIA) est la plus haute désignation professionnelle en ressources humaines au Québec, délivrée par l'Ordre des conseillers en ressources humaines agréés (CRHA). Pour l'obtenir, il faut satisfaire à des exigences strictes de formation, d'expérience et d'éthique. Ce titre garantit une pratique rigoureuse, indépendante et conforme aux normes les plus élevées de la profession au Canada.",
     "faq.general.q3": "Dans quelle ville opérez-vous ?",
@@ -528,13 +528,13 @@ const translations = {
     "faq.business.q1": "Aidez-vous les startups à structurer leurs RH ?",
     "faq.business.a1": "Oui, nous accompagnons les startups dès leurs premiers mois d'existence. Nous les aidons à mettre en place leurs premiers processus RH essentiels : rédaction de contrats de travail conformes au droit québécois, élaboration de politiques internes, définition de la culture et des valeurs d'entreprise, structuration des rôles fondateurs et identification des programmes de financement spécifiques aux jeunes entreprises.",
     "faq.business.q2": "Quels types de subventions pouvez-vous aider à obtenir ?",
-    "faq.business.a2": "Nous accompagnons artistes, entrepreneurs, PMEs, grandes corporations et OBNL dans l'accès aux subventions fédérales et provinciales au Canada. Parmi les programmes couverts : subventions à l'embauche (Programme de subvention salariale, Canada au travail), crédits d'impôt pour la formation, financement de projets d'innovation, aides à l'exportation, et programmes spécifiques pour organismes à but non lucratif. Les programmes disponibles varient selon votre secteur et votre région.",
+    "faq.business.a2": "Nous accompagnons artistes, entrepreneurs, PME, grandes corporations et OBNL dans l'accès aux subventions fédérales et provinciales au Canada. Parmi les programmes couverts : subventions à l'embauche (Programme de subvention salariale, Canada au travail), crédits d'impôt pour la formation, financement de projets d'innovation, aides à l'exportation, et programmes spécifiques pour organismes à but non lucratif. Les programmes disponibles varient selon votre secteur et votre région.",
     "faq.business.q3": "Les subventions sont-elles remboursables ?",
     "faq.business.a3": "Cela dépend du programme. La grande majorité des subventions auxquelles nous vous donnons accès sont des aides non remboursables — sous forme de dons directs, de crédits d'impôt ou de remboursement de frais. Certains programmes, notamment ceux destinés à l'expansion ou à l'exportation, prennent la forme de prêts à taux préférentiel ou conditionnels. Nous vous informons systématiquement et clairement des conditions avant toute demande.",
     "faq.business.q4": "Combien de temps prend une demande de subvention ?",
     "faq.business.a4": "Les délais varient selon le programme et l'organisme subventionnaire. En règle générale : les subventions à l'embauche (ex. : Programme de subvention salariale) peuvent être approuvées en 2 à 4 semaines ; les demandes de financement de projets prennent 2 à 4 mois ; les crédits d'impôt sont traités lors de la production des déclarations annuelles. Nous vous guidons à chaque étape et gérons les suivis auprès des organismes pour minimiser les délais.",
     "faq.business.q5": "Offrez-vous un accompagnement RH continu pour les entreprises ?",
-    "faq.business.a5": "Oui. En plus de mandats ponctuels, nous proposons des ententes de service RH à la carte ou sous forme d'abonnement mensuel pour les entreprises souhaitant un soutien RH régulier sans maintenir un département interne. Cette formule est particulièrement adaptée aux PMEs, startups en croissance et OBNL qui ont besoin d'expertise RH professionnelle de façon flexible et économique.",
+    "faq.business.a5": "Oui. En plus de mandats ponctuels, nous proposons des ententes de service RH à la carte ou sous forme d'abonnement mensuel pour les entreprises souhaitant un soutien RH régulier sans maintenir un département interne. Cette formule est particulièrement adaptée aux PME, startups en croissance et OBNL qui ont besoin d'expertise RH professionnelle de façon flexible et économique.",
     "faq.business.q6": "Comment se déroule le processus d'accompagnement pour les subventions ?",
     "faq.business.a6": "Notre processus se déroule en quatre étapes claires : (1) Diagnostic d'admissibilité — nous évaluons votre profil et identifions les programmes auxquels vous êtes éligible ; (2) Sélection stratégique — nous ciblons les subventions les plus avantageuses selon vos objectifs ; (3) Préparation du dossier — nous rédigeons et compilons l'ensemble des documents requis ; (4) Suivi et réponse — nous assurons le suivi auprès des organismes jusqu'à l'obtention de la décision finale.",
     "faq.business.q7": "Pouvez-vous nous aider à recruter des travailleurs immigrants qualifiés ?",
@@ -633,7 +633,7 @@ const translations = {
     "business.hero.rotating.3": "aspirantes",
     "business.hero.rotating.4": "déterminées",
     "business.hero.title": "Solutions RH pour entreprises ambitieuses",
-    "business.hero.description": "AudreyRH accompagne les PMEs, startups et grandes entreprises dans leur stratégie RH, l'acquisition de talents qualifiés et l'accès aux subventions gouvernementales.",
+    "business.hero.description": "AudreyRH accompagne les PME, startups et grandes entreprises dans leur stratégie RH, l'acquisition de talents qualifiés et l'accès aux subventions gouvernementales.",
     "business.hero.cta": "Nous contacter",
     "business.hero.book": "Réserver une consultation",
 
@@ -713,7 +713,7 @@ const translations = {
 
     "grants.badge": "Subventions & Financement",
     "grants.hero.title": "Subventions & Programmes de Financement",
-    "grants.hero.description": "AudreyRH offre des subventions directes et identifie les financements disponibles pour soutenir les artistes, entrepreneurs, PMEs et entreprises issues de l'immigration vers les États-Unis.",
+    "grants.hero.description": "AudreyRH offre des subventions directes et identifie les financements disponibles pour soutenir les artistes, entrepreneurs, PME et entreprises issues de l'immigration vers les États-Unis.",
     "grants.hero.cta": "Soumettre une demande",
     "grants.hero.explore": "Voir les catégories",
 
@@ -748,8 +748,8 @@ const translations = {
     "grants.entrepreneurs.feature2": "Programmes SBA pour minorités",
     "grants.entrepreneurs.feature3": "Microfinancement et prêts à taux préférentiels",
 
-    "grants.sme.title": "Petits Commerces & PMEs",
-    "grants.sme.description": "Soutien financier pour les petits commerces et PMEs cherchant à croître, embaucher ou optimiser leurs opérations au Québec.",
+    "grants.sme.title": "Petits Commerces & PME",
+    "grants.sme.description": "Soutien financier pour les petits commerces et PME cherchant à croître, embaucher ou optimiser leurs opérations au Québec.",
     "grants.sme.feature1": "Grants de croissance et d'expansion",
     "grants.sme.feature2": "Financement pour embauche et formation",
     "grants.sme.feature3": "Subventions pour innovation et technologie",
