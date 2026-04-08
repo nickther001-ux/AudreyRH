@@ -42,7 +42,10 @@ export default function Home() {
             transition={{ duration: 1.4, ease: [0.25, 0.1, 0.25, 1] }}
             whileHover={{ scale: 1.04 }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20 group-hover:from-black/70 transition-all duration-500" />
+          {/* Base dark tint so bright images stay readable */}
+          <div className="absolute inset-0 bg-black/40" />
+          {/* Bottom-to-top gradient for text legibility */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-black/10 group-hover:from-black/90 transition-all duration-500" />
           <div className="hidden lg:block absolute top-0 right-0 w-px h-full bg-white/10 z-10" />
 
           <motion.div
