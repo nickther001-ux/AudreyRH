@@ -745,8 +745,8 @@ export default function Grants() {
           </div>
         </section>
 
-        {/* ── 5. FINAL CTA — midnight blue ── */}
-        <section className="bg-[#1e3a5f] py-28" data-testid="section-grants-cta">
+        {/* ── 5. FINAL CTA — midnight blue fading deeper ── */}
+        <section className="py-28" style={{ background: "linear-gradient(to bottom, #1e3a5f 0%, #122240 50%, #080f1e 100%)" }} data-testid="section-grants-cta">
           <FadeUp className="max-w-6xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-12">
             <div className="max-w-xl">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-5">{isFr ? "Passez à l'action" : "Take Action"}</p>
