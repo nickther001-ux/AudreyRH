@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { insertAppointmentSchema, type InsertAppointment, type AvailabilitySlot } from "@shared/schema";
+import { insertAppointmentSchema, type InsertAppointment, type AvailabilitySlot } from "@shared/validators";
 import { useCreateAppointment } from "@/hooks/use-appointments";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";

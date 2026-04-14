@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { insertAppointmentSchema, insertAvailabilitySlotSchema, appointments, availabilitySlots } from './schema';
+import { insertAppointmentSchema, insertAvailabilitySlotSchema, type Appointment, type AvailabilitySlot } from './validators';
 
 export const errorSchemas = {
   validation: z.object({
@@ -22,7 +22,7 @@ export const api = {
       input: insertAppointmentSchema,
       responses: {
         201: z.object({
-          appointment: z.custom<typeof appointments.$inferSelect>(),
+          appointment: z.custom<Appointment>(),
           checkoutUrl: z.string().nullable().optional(),
         }),
         400: errorSchemas.validation,
@@ -32,7 +32,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/appointments/:id',
       responses: {
-        200: z.custom<typeof appointments.$inferSelect>(),
+        200: z.custom<Appointment>(),
         404: errorSchemas.notFound,
       },
     },
@@ -43,7 +43,7 @@ export const api = {
       path: '/api/availability',
       input: insertAvailabilitySlotSchema,
       responses: {
-        201: z.custom<typeof availabilitySlots.$inferSelect>(),
+        201: z.custom<AvailabilitySlot>(),
         400: errorSchemas.validation,
       },
     },
@@ -51,7 +51,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/availability',
       responses: {
-        200: z.array(z.custom<typeof availabilitySlots.$inferSelect>()),
+        200: z.array(z.custom<AvailabilitySlot>()),
       },
     },
     delete: {

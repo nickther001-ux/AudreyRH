@@ -43,7 +43,7 @@ import {
   type AvailabilitySlot,
   type InsertAvailabilitySlot,
   type Appointment,
-} from "@shared/schema";
+} from "@shared/validators";
 import {
   CalendarIcon,
   Plus,
