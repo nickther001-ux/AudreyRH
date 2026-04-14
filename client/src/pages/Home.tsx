@@ -3,7 +3,7 @@ import { ArrowRight, Users, Building2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n";
 import { Navbar } from "@/components/Navbar";
-import groupPhoto from "@assets/stock_images/diverse_group_10_people.png";
+import particuliersPhoto from "@assets/stock_images/particuliers_hero_portrait.png";
 
 const BUSINESS_PHOTO = "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80";
 
@@ -33,19 +33,18 @@ export default function Home() {
           className="group relative flex-1 flex flex-col justify-end p-10 lg:p-16 overflow-hidden cursor-pointer min-h-[50vh] lg:min-h-0"
           data-testid="link-portal-individuals"
         >
-          {/* Group photo background */}
+          {/* Close-up portrait background — face fills upper portion */}
           <motion.div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${groupPhoto})` }}
-            initial={{ scale: 1.08 }}
+            className="absolute inset-0 bg-cover bg-top bg-no-repeat"
+            style={{ backgroundImage: `url(${particuliersPhoto})` }}
+            initial={{ scale: 1.06 }}
             animate={{ scale: 1 }}
             transition={{ duration: 1.4, ease: [0.25, 0.1, 0.25, 1] }}
-            whileHover={{ scale: 1.04 }}
+            whileHover={{ scale: 1.03 }}
           />
 
-          {/* Lighter overlay — show faces clearly, darken only bottom for text */}
-          <div className="absolute inset-0 bg-black/20" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/88 via-black/25 to-transparent group-hover:from-black/80 transition-all duration-500" />
+          {/* Very light top scrim so face stays visible, heavier gradient at bottom for text */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/10 group-hover:from-black/80 transition-all duration-500" />
 
           <div className="hidden lg:block absolute top-0 right-0 w-px h-full bg-white/10 z-10" />
 
