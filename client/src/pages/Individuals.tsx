@@ -597,12 +597,6 @@ export default function Individuals() {
                     <p className="text-[12px] text-muted-foreground mt-1">{t("packages.essential.for")} · {t("packages.essential.forDetail")}</p>
                   </div>
 
-                  <div className="mb-4 text-[11px] text-muted-foreground space-y-0.5">
-                    <p>{t("packages.essential.consultation")}</p>
-                    <p>{t("packages.essential.openingFee")}</p>
-                    <p className="font-semibold text-foreground">{t("packages.essential.total")}</p>
-                  </div>
-
                   <ul className="space-y-3 border-t border-border pt-4">
                     {[1, 2, 3].map((i) => (
                       <li key={i} className="flex items-start gap-2.5">
@@ -626,12 +620,6 @@ export default function Individuals() {
                     <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mb-1">{t("packages.plan.subtitle")}</p>
                     <h3 className="text-xl font-bold text-foreground">{t("packages.plan.name")}</h3>
                     <p className="text-[12px] text-muted-foreground mt-1">{t("packages.plan.for")} · {t("packages.plan.forDetail")}</p>
-                  </div>
-
-                  <div className="mb-4 text-[11px] text-muted-foreground space-y-0.5">
-                    <p>{t("packages.plan.consultation")}</p>
-                    <p>{t("packages.plan.openingFee")}</p>
-                    <p className="font-semibold text-foreground">{t("packages.plan.total")}</p>
                   </div>
 
                   <ul className="space-y-3 border-t border-border pt-4">
