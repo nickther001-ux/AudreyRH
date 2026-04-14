@@ -256,6 +256,72 @@ export async function registerRoutes(
     }
   });
 
+  // Admin — approve appointment
+  app.patch('/api/admin/appointments/:id/approve', async (req, res) => {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ message: 'Invalid ID' });
+    try {
+      const appointment = await storage.updateAppointmentStatus(id, 'confirmed');
+      try {
+        const { sendAppointmentApproved } = await import('./resend');
+        const dateStr = appointment.date
+          ? new Date(appointment.date).toLocaleDateString('fr-CA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+          : '';
+        await sendAppointmentApproved({
+          clientName: appointment.name, clientEmail: appointment.email,
+          date: dateStr, startTime: appointment.startTime ?? null, endTime: appointment.endTime ?? null,
+          platform: appointment.platform, reason: appointment.reason,
+        });
+      } catch (emailErr: any) { console.error('Approve email failed:', emailErr.message); }
+      res.json({ success: true, appointment });
+    } catch (err) {
+      console.error('Error approving appointment:', err);
+      res.status(500).json({ message: 'Failed to approve appointment' });
+    }
+  });
+
+  // Admin — reject appointment
+  app.patch('/api/admin/appointments/:id/reject', async (req, res) => {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ message: 'Invalid ID' });
+    try {
+      const appointment = await storage.updateAppointmentStatus(id, 'cancelled');
+      try {
+        const { sendAppointmentRejected } = await import('./resend');
+        await sendAppointmentRejected({
+          clientName: appointment.name, clientEmail: appointment.email,
+        });
+      } catch (emailErr: any) { console.error('Reject email failed:', emailErr.message); }
+      res.json({ success: true, appointment });
+    } catch (err) {
+      console.error('Error rejecting appointment:', err);
+      res.status(500).json({ message: 'Failed to reject appointment' });
+    }
+  });
+
+  // Admin — reschedule appointment
+  app.patch('/api/admin/appointments/:id/reschedule', async (req, res) => {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ message: 'Invalid ID' });
+    const { date, startTime, endTime } = req.body;
+    if (!date || !startTime || !endTime) return res.status(400).json({ message: 'date, startTime, endTime required' });
+    try {
+      const appointment = await storage.rescheduleAppointment(id, new Date(date), startTime, endTime);
+      try {
+        const { sendAppointmentRescheduled } = await import('./resend');
+        const dateStr = new Date(date).toLocaleDateString('fr-CA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        await sendAppointmentRescheduled({
+          clientName: appointment.name, clientEmail: appointment.email,
+          date: dateStr, startTime, endTime, platform: appointment.platform,
+        });
+      } catch (emailErr: any) { console.error('Reschedule email failed:', emailErr.message); }
+      res.json({ success: true, appointment });
+    } catch (err) {
+      console.error('Error rescheduling appointment:', err);
+      res.status(500).json({ message: 'Failed to reschedule appointment' });
+    }
+  });
+
   // Availability routes
   app.post(api.availability.create.path, async (req, res) => {
     try {

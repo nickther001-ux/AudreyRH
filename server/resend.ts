@@ -521,3 +521,151 @@ ${emailFooter()}`;
   if (r.error) throw new Error(`Simple contact email failed: ${r.error.message}`);
   else console.log('[Resend] Simple contact email sent, id:', r.data?.id);
 }
+
+// ─── Admin: Appointment Approved ─────────────────────────────────────────────
+
+export type AppointmentActionData = {
+  clientName: string;
+  clientEmail: string;
+  date?: string;
+  startTime?: string | null;
+  endTime?: string | null;
+  platform?: string;
+  reason?: string;
+};
+
+export async function sendAppointmentApproved(data: AppointmentActionData) {
+  const client = getClient();
+  const platformLabel = data.platform === 'google_meet' ? 'Google Meet' : 'Zoom';
+  const timeRange = data.startTime && data.endTime ? `${data.startTime} – ${data.endTime} (HE)` : '';
+
+  const html = `${emailWrapperOpen(600)}
+${logoHeader('✓&nbsp;&nbsp;Consultation confirmée')}
+        <tr>
+          <td style="padding:40px 48px;">
+            <p style="margin:0 0 6px;font-size:23px;font-weight:700;color:#ffffff;">Bonjour ${data.clientName},</p>
+            <p style="margin:0 0 28px;font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;">
+              Votre demande de consultation a été <strong style="color:#4ade80;">confirmée</strong> par Audrey Mondesir, CRIA.<br/>
+              <em style="color:rgba(255,255,255,0.35);">Your consultation request has been confirmed by Audrey Mondesir, CRIA.</em>
+            </p>
+            ${data.date ? `
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:12px;">
+              <tr><td style="padding:20px 24px;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  ${fieldRow('Date', data.date)}
+                  ${timeRange ? fieldRow('Heure / Time', timeRange) : ''}
+                  ${data.platform ? fieldRow('Plateforme', platformLabel) : ''}
+                  ${data.reason ? fieldRow('Sujet / Subject', data.reason, true) : ''}
+                </table>
+              </td></tr>
+            </table>` : ''}
+            <p style="margin:0 0 6px;font-size:13px;color:rgba(255,255,255,0.55);line-height:1.75;">
+              Le lien ${platformLabel} vous sera envoyé <strong style="color:#ffffff;">24 à 48 heures avant</strong> votre rendez-vous.
+              <br/><em style="color:rgba(255,255,255,0.35);">The ${platformLabel} link will be sent to you 24–48 hours before your appointment.</em>
+            </p>
+            <p style="margin:0 0 32px;font-size:13px;color:rgba(255,255,255,0.55);">
+              Questions ? <a href="mailto:info@audreyrh.com" style="color:#93c5fd;text-decoration:none;font-weight:600;">info@audreyrh.com</a>
+            </p>
+          </td>
+        </tr>
+${emailFooter()}
+${emailWrapperClose}`;
+
+  const r = await client.emails.send({
+    from: FROM, to: data.clientEmail,
+    subject: 'Consultation confirmée — AudreyRH',
+    html,
+  });
+  if (r.error) console.error('[Resend] Approve email error:', r.error.message);
+  else console.log('[Resend] Approve email sent, id:', r.data?.id);
+}
+
+// ─── Admin: Appointment Rejected ─────────────────────────────────────────────
+
+export async function sendAppointmentRejected(data: { clientName: string; clientEmail: string }) {
+  const client = getClient();
+
+  const html = `${emailWrapperOpen(600)}
+${logoHeader('Demande non retenue')}
+        <tr>
+          <td style="padding:40px 48px;">
+            <p style="margin:0 0 6px;font-size:23px;font-weight:700;color:#ffffff;">Bonjour ${data.clientName},</p>
+            <p style="margin:0 0 28px;font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;">
+              Malheureusement, nous ne sommes pas en mesure de confirmer votre demande de consultation pour le moment.<br/>
+              <em style="color:rgba(255,255,255,0.35);">Unfortunately, we are unable to confirm your consultation request at this time.</em>
+            </p>
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+              <tr><td style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:18px 22px;">
+                <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.75;">
+                  Vous pouvez soumettre une nouvelle demande ou nous contacter directement pour trouver un créneau qui vous convient.<br/>
+                  <em style="color:rgba(255,255,255,0.35);">You may submit a new request or contact us directly to find a time that works for you.</em>
+                </p>
+              </td></tr>
+            </table>
+            <p style="margin:0 0 8px;font-size:13px;color:rgba(255,255,255,0.55);">
+              Questions ? <a href="mailto:info@audreyrh.com" style="color:#93c5fd;text-decoration:none;font-weight:600;">info@audreyrh.com</a>
+            </p>
+            <table cellpadding="0" cellspacing="0" style="margin-top:20px;">
+              ${ctaButton('https://audreyrh.com/book', 'Nouvelle demande →')}
+            </table>
+          </td>
+        </tr>
+${emailFooter()}
+${emailWrapperClose}`;
+
+  const r = await client.emails.send({
+    from: FROM, to: data.clientEmail,
+    subject: 'Votre demande de consultation — AudreyRH',
+    html,
+  });
+  if (r.error) console.error('[Resend] Reject email error:', r.error.message);
+  else console.log('[Resend] Reject email sent, id:', r.data?.id);
+}
+
+// ─── Admin: Appointment Rescheduled ──────────────────────────────────────────
+
+export async function sendAppointmentRescheduled(data: {
+  clientName: string; clientEmail: string;
+  date: string; startTime: string; endTime: string; platform: string;
+}) {
+  const client = getClient();
+  const platformLabel = data.platform === 'google_meet' ? 'Google Meet' : 'Zoom';
+  const timeRange = `${data.startTime} – ${data.endTime} (HE)`;
+
+  const html = `${emailWrapperOpen(600)}
+${logoHeader('Consultation reprogrammée')}
+        <tr>
+          <td style="padding:40px 48px;">
+            <p style="margin:0 0 6px;font-size:23px;font-weight:700;color:#ffffff;">Bonjour ${data.clientName},</p>
+            <p style="margin:0 0 28px;font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;">
+              Votre consultation a été <strong style="color:#93c5fd;">reprogrammée</strong> à la date suivante.<br/>
+              <em style="color:rgba(255,255,255,0.35);">Your consultation has been rescheduled to the following date.</em>
+            </p>
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:12px;">
+              <tr><td style="padding:20px 24px;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  ${fieldRow('Nouvelle date / New Date', data.date)}
+                  ${fieldRow('Heure / Time', timeRange)}
+                  ${fieldRow('Plateforme', platformLabel, true)}
+                </table>
+              </td></tr>
+            </table>
+            <p style="margin:0 0 6px;font-size:13px;color:rgba(255,255,255,0.55);line-height:1.75;">
+              Le lien ${platformLabel} vous sera envoyé <strong style="color:#ffffff;">24 à 48 heures avant</strong> votre rendez-vous.
+            </p>
+            <p style="margin:0 0 32px;font-size:13px;color:rgba(255,255,255,0.55);">
+              Questions ? <a href="mailto:info@audreyrh.com" style="color:#93c5fd;text-decoration:none;font-weight:600;">info@audreyrh.com</a>
+            </p>
+          </td>
+        </tr>
+${emailFooter()}
+${emailWrapperClose}`;
+
+  const r = await client.emails.send({
+    from: FROM, to: data.clientEmail,
+    subject: 'Consultation reprogrammée — AudreyRH',
+    html,
+  });
+  if (r.error) console.error('[Resend] Reschedule email error:', r.error.message);
+  else console.log('[Resend] Reschedule email sent, id:', r.data?.id);
+}

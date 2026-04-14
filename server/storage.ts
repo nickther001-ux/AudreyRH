@@ -14,6 +14,8 @@ export interface IStorage {
   getAppointment(id: number): Promise<Appointment | undefined>;
   getAllAppointments(): Promise<Appointment[]>;
   updateAppointmentPayment(id: number, paymentIntentId: string): Promise<Appointment>;
+  updateAppointmentStatus(id: number, status: "confirmed" | "cancelled" | "completed" | "pending"): Promise<Appointment>;
+  rescheduleAppointment(id: number, date: Date, startTime: string, endTime: string): Promise<Appointment>;
   // Availability
   createAvailabilitySlot(slot: InsertAvailabilitySlot): Promise<AvailabilitySlot>;
   getAvailableSlots(): Promise<AvailabilitySlot[]>;
@@ -116,6 +118,24 @@ export class DatabaseStorage implements IStorage {
     await db
       .delete(availabilitySlots)
       .where(eq(availabilitySlots.id, id));
+  }
+
+  async updateAppointmentStatus(id: number, status: "confirmed" | "cancelled" | "completed" | "pending"): Promise<Appointment> {
+    const [appointment] = await db
+      .update(appointments)
+      .set({ status })
+      .where(eq(appointments.id, id))
+      .returning();
+    return appointment;
+  }
+
+  async rescheduleAppointment(id: number, date: Date, startTime: string, endTime: string): Promise<Appointment> {
+    const [appointment] = await db
+      .update(appointments)
+      .set({ date, startTime, endTime, status: "confirmed" })
+      .where(eq(appointments.id, id))
+      .returning();
+    return appointment;
   }
 
   async bookSlot(id: number): Promise<AvailabilitySlot | null> {
