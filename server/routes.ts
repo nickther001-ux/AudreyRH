@@ -256,6 +256,26 @@ export async function registerRoutes(
     }
   });
 
+  // Admin — list ALL availability slots (no time/date filtering)
+  app.get('/api/admin/availability', async (req, res) => {
+    try {
+      const { db } = await import('./db');
+      const { availabilitySlots } = await import('@shared/schema');
+      const { gte } = await import('drizzle-orm');
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const slots = await db
+        .select()
+        .from(availabilitySlots)
+        .where(gte(availabilitySlots.date, today))
+        .orderBy(availabilitySlots.date);
+      res.json(slots);
+    } catch (err) {
+      console.error('Error fetching admin availability slots:', err);
+      res.status(500).json({ message: 'Failed to fetch slots' });
+    }
+  });
+
   // Admin — approve appointment
   app.patch('/api/admin/appointments/:id/approve', async (req, res) => {
     const id = parseInt(req.params.id);

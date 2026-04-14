@@ -536,7 +536,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
     data: slots,
     isLoading: isSlotsLoading,
     isFetching: isSlotsFetching,
-  } = useQuery<AvailabilitySlot[]>({ queryKey: ["/api/availability"] });
+  } = useQuery<AvailabilitySlot[]>({ queryKey: ["/api/admin/availability"] });
 
   const {
     data: allAppointments,
@@ -559,6 +559,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
       return res.json();
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/availability"] });
       queryClient.invalidateQueries({ queryKey: ["/api/availability"] });
       setJustAdded(true);
       setTimeout(() => setJustAdded(false), 4000);
@@ -573,6 +574,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
   const { mutate: deleteSlot, isPending: isDeleting } = useMutation({
     mutationFn: (id: number) => apiRequest("DELETE", `/api/availability/${id}`),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/availability"] });
       queryClient.invalidateQueries({ queryKey: ["/api/availability"] });
       toast({ title: t("admin.slotDeleted"), description: t("admin.slotDeletedDesc") });
     },
@@ -658,18 +660,41 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
         <main className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
           {/* ── Stats strip ── */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
             {[
-              { label: "Total", value: safeAppointments.length, color: "text-white" },
+              { label: "Total réservations", value: safeAppointments.length, color: "text-white" },
               { label: "En attente", value: pendingCount, color: "text-amber-300" },
               { label: "Confirmés", value: confirmedCount, color: "text-emerald-400" },
               { label: "Créneaux dispo", value: safeSlots.length, color: "text-[#93c5fd]" },
             ].map((stat) => (
-              <div key={stat.label} className="rounded-xl border border-white/15 bg-[#0d1f3c]/60 backdrop-blur-md px-5 py-4">
-                <p className="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1">{stat.label}</p>
+              <div key={stat.label} className="rounded-xl border border-white/20 bg-[#0d1f3c]/75 backdrop-blur-md px-5 py-4">
+                <p className="text-xs font-semibold text-white/50 uppercase tracking-wider mb-1">{stat.label}</p>
                 <p className={`text-3xl font-extrabold ${stat.color}`}>{stat.value}</p>
               </div>
             ))}
+          </div>
+
+          {/* ── Appointments (FIRST — most important) ── */}
+          <div className="rounded-2xl border border-white/15 bg-[#0d1f3c]/75 backdrop-blur-md p-6 mb-8">
+            <h2 className="text-base font-bold text-white mb-5 flex items-center gap-2">
+              <Users className="h-4 w-4 text-[#93c5fd]" />
+              Réservations clients
+              {isApptsFetching && !isApptsLoading && (
+                <RefreshCw className="h-3.5 w-3.5 ml-auto animate-spin text-white/30" />
+              )}
+            </h2>
+
+            {isApptsLoading ? (
+              <AppointmentsSkeleton />
+            ) : sortedAppointments.length === 0 ? (
+              <p className="text-white/40 text-sm" data-testid="text-no-appointments">{t("admin.noAppointments")}</p>
+            ) : (
+              <div className={cn("space-y-3", isApptsFetching && "opacity-60 transition-opacity")}>
+                {sortedAppointments.map((appt) => (
+                  <AppointmentCard key={appt?.id} appt={appt} dateLocale={dateLocale} />
+                ))}
+              </div>
+            )}
           </div>
 
           {/* ── Two-column: slots form + current slots ── */}
@@ -847,12 +872,12 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
           {/* ── Calendly section ── */}
           {calendlyUrl && (
-            <div className="rounded-2xl border border-white/15 bg-[#0d1f3c]/65 backdrop-blur-md p-6 mb-8">
+            <div className="rounded-2xl border border-white/15 bg-[#0d1f3c]/65 backdrop-blur-md p-6">
               <h2 className="text-base font-bold text-white mb-2 flex items-center gap-2">
                 <CalendarClock className="h-4 w-4 text-[#93c5fd]" />
                 Calendly
               </h2>
-              <p className="text-xs text-white/35 mb-4">Votre lien de réservation Calendly</p>
+              <p className="text-xs text-white/40 mb-4">Votre lien de réservation Calendly</p>
               <a
                 href={calendlyUrl}
                 target="_blank"
@@ -865,29 +890,6 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
               </a>
             </div>
           )}
-
-          {/* ── Appointments ── */}
-          <div className="rounded-2xl border border-white/15 bg-[#0d1f3c]/65 backdrop-blur-md p-6">
-            <h2 className="text-base font-bold text-white mb-5 flex items-center gap-2">
-              <Users className="h-4 w-4 text-[#93c5fd]" />
-              {t("admin.appointments")}
-              {isApptsFetching && !isApptsLoading && (
-                <RefreshCw className="h-3.5 w-3.5 ml-auto animate-spin text-white/30" />
-              )}
-            </h2>
-
-            {isApptsLoading ? (
-              <AppointmentsSkeleton />
-            ) : sortedAppointments.length === 0 ? (
-              <p className="text-white/35 text-sm" data-testid="text-no-appointments">{t("admin.noAppointments")}</p>
-            ) : (
-              <div className={cn("space-y-3", isApptsFetching && "opacity-60 transition-opacity")}>
-                {sortedAppointments.map((appt) => (
-                  <AppointmentCard key={appt?.id} appt={appt} dateLocale={dateLocale} />
-                ))}
-              </div>
-            )}
-          </div>
         </main>
       </div>
     </div>
