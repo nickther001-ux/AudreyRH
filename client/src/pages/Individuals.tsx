@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Briefcase, GraduationCap, TrendingUp, Users, CheckCircle, Target, Award, X, Plus, Minus } from "lucide-react";
+import { ArrowRight, Briefcase, Clock, GraduationCap, TrendingUp, Users, CheckCircle, Target, Award, X, Plus, Minus } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -534,46 +534,62 @@ export default function Individuals() {
                   <p className="text-[10px] text-[#93c5fd] uppercase tracking-[0.22em] mb-2">{t("packages.discovery.subtitle")}</p>
                   <h3 className="text-2xl font-bold text-white mb-1">{t("packages.discovery.name")}</h3>
                   <p className="text-[12px] text-white/50">{t("packages.discovery.for")} — {t("packages.discovery.forDetail")}</p>
+                  <p className="text-[11px] text-[#93c5fd] mt-3 flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5" />
+                    {t("packages.discovery.duration")}
+                  </p>
                 </div>
 
                 {/* Price block — interactive */}
                 <Link href="/book" data-testid="link-package-discovery-price">
-                  <div className="group px-8 py-8 border-b border-border cursor-pointer hover:bg-[#1e3a5f]/5 transition-colors duration-200">
-                    <div className="flex items-end gap-3 mb-1">
-                      <span className="text-[4.5rem] font-black text-[#1e3a5f] leading-none group-hover:underline underline-offset-4 decoration-[#93c5fd] decoration-2 transition-all">
-                        {t("packages.discovery.price")}
-                      </span>
+                  <div className="group px-8 py-6 border-b border-border cursor-pointer hover:bg-[#1e3a5f]/5 transition-colors duration-200 flex items-end justify-between">
+                    <div>
+                      <div className="flex items-end gap-3 mb-1">
+                        <span className="text-[4.5rem] font-black text-[#1e3a5f] leading-none group-hover:underline underline-offset-4 decoration-[#93c5fd] decoration-2 transition-all">
+                          {t("packages.discovery.price")}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-muted-foreground uppercase tracking-wider">{t("packages.discovery.currency")}</p>
+                      <p className="text-[12px] text-[#1e3a5f]/70 mt-2 flex items-center gap-1.5">
+                        <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#93c5fd]" />
+                        {t("packages.discovery.noFees")}
+                      </p>
                     </div>
-                    <p className="text-[11px] text-muted-foreground uppercase tracking-wider">{t("packages.discovery.currency")}</p>
-                    <p className="text-[12px] text-[#1e3a5f]/70 mt-2 flex items-center gap-1.5">
-                      <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#93c5fd]" />
-                      {t("packages.discovery.noFees")}
-                    </p>
+                    <ArrowRight className="w-5 h-5 text-[#1e3a5f]/30 group-hover:text-[#1e3a5f] group-hover:translate-x-1 transition-all duration-200" />
                   </div>
                 </Link>
 
                 {/* Features */}
                 <div className="px-8 py-7 flex-1">
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-[0.18em] mb-4">{t("packages.discovery.includedLabel")}</p>
                   <ul className="space-y-4">
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="w-4 h-4 text-[#1e3a5f] flex-shrink-0 mt-0.5" />
-                      <div>
-                        <p className="text-[13px] font-semibold text-foreground">{t("packages.discovery.feature1")}</p>
-                        <p className="text-[12px] text-muted-foreground mt-0.5">{t("packages.discovery.feature1Detail")}</p>
-                      </div>
-                    </li>
-                    <li className="flex items-start gap-3">
-                      <CheckCircle className="w-4 h-4 text-[#1e3a5f] flex-shrink-0 mt-0.5" />
-                      <div>
-                        <p className="text-[13px] font-semibold text-foreground">{t("packages.discovery.feature2")}</p>
-                      </div>
-                    </li>
+                    {[
+                      { key: "feature1", hasDetail: true },
+                      { key: "feature2", hasDetail: true },
+                      { key: "feature3", hasDetail: true },
+                      { key: "feature4", hasDetail: true },
+                      { key: "feature5", hasDetail: true },
+                    ].map(({ key }) => (
+                      <li key={key} className="flex items-start gap-3">
+                        <CheckCircle className="w-4 h-4 text-[#1e3a5f] flex-shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-[13px] font-semibold text-foreground">{t(`packages.discovery.${key}` as any)}</p>
+                          <p className="text-[12px] text-muted-foreground mt-0.5">{t(`packages.discovery.${key}Detail` as any)}</p>
+                        </div>
+                      </li>
+                    ))}
                   </ul>
 
-                  {/* Deductibility note */}
-                  <div className="mt-8 p-4 bg-[#1e3a5f]/5 border-l-2 border-[#1e3a5f]">
-                    <p className="text-[12px] text-[#1e3a5f] font-medium leading-relaxed">{t("packages.discovery.note")}</p>
+                  {/* Outcome statement */}
+                  <div className="mt-6 p-4 bg-[#1e3a5f]/5 border-l-2 border-[#93c5fd]">
+                    <p className="text-[12px] text-[#1e3a5f] font-medium leading-relaxed italic">{t("packages.discovery.outcome")}</p>
                   </div>
+
+                  {/* Deductibility note */}
+                  <p className="mt-4 text-[11px] text-muted-foreground flex items-start gap-1.5">
+                    <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#93c5fd] flex-shrink-0 mt-1" />
+                    {t("packages.discovery.note")}
+                  </p>
                 </div>
 
                 {/* CTA */}
