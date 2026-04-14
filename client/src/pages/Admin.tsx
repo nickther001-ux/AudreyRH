@@ -45,6 +45,7 @@ import {
   ArrowLeft,
   Users,
   CheckCircle,
+  CheckCircle2,
   XCircle,
   AlertTriangle,
   RefreshCw,
@@ -275,6 +276,7 @@ function AdminDashboard() {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     addDays(new Date(), 1)
   );
+  const [justAdded, setJustAdded] = useState(false);
 
   const {
     data: slots,
@@ -308,7 +310,8 @@ function AdminDashboard() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/availability"] });
-      toast({ title: t("admin.slotAdded"), description: t("admin.slotAddedDesc") });
+      setJustAdded(true);
+      setTimeout(() => setJustAdded(false), 4000);
       const nextDate = selectedDate ?? addDays(startOfDay(new Date()), 1);
       form.reset({
         date: nextDate,
@@ -491,6 +494,13 @@ function AdminDashboard() {
                 >
                   {isCreating ? t("admin.adding") : t("admin.add")}
                 </Button>
+
+                {justAdded && (
+                  <div className="flex items-center gap-2 mt-3 px-4 py-3 rounded-md bg-green-50 border border-green-200 text-green-800 text-sm font-medium" data-testid="banner-slot-added">
+                    <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
+                    {t("admin.slotAdded")} — {t("admin.slotAddedDesc")}
+                  </div>
+                )}
               </form>
             </Form>
           </Card>
