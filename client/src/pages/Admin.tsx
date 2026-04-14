@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -69,7 +69,8 @@ import beachBg from "@assets/beach_1776191148475.avif";
 
 /* ─── helpers ─────────────────────────────────────────────────────────────── */
 
-function parseLocalDate(dateInput: string | Date): Date {
+function parseLocalDate(dateInput: string | Date | null | undefined): Date {
+  if (!dateInput) return new Date(NaN);
   const str = typeof dateInput === "string" ? dateInput : dateInput.toISOString();
   const match = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (match) {
@@ -461,7 +462,9 @@ function AppointmentCard({
 
             <div className="text-sm text-white/70">
               <span className="font-medium text-white/90">Date:</span>{" "}
-              {safeFormat(appt?.date, "EEEE d MMMM yyyy", { locale: dateLocale })}
+              {appt?.date
+                ? safeFormat(appt.date, "EEEE d MMMM yyyy", { locale: dateLocale })
+                : <span className="italic text-white/35">Non spécifiée</span>}
               {appt?.startTime && appt?.endTime && (
                 <span className="ml-2 text-white/50">· {appt.startTime} – {appt.endTime}</span>
               )}
@@ -585,6 +588,12 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
   const safeSlots: AvailabilitySlot[] = Array.isArray(slots) ? slots : [];
   const safeAppointments: Appointment[] = Array.isArray(allAppointments) ? allAppointments : [];
+
+  useEffect(() => {
+    if (allAppointments !== undefined) {
+      console.log("[Admin] raw appointments from API:", JSON.stringify(allAppointments, null, 2));
+    }
+  }, [allAppointments]);
 
   const groupedSlots = safeSlots.reduce<Record<string, AvailabilitySlot[]>>((acc, slot) => {
     if (!slot?.date) return acc;
