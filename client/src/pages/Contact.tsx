@@ -27,6 +27,7 @@ export default function Contact() {
   const isFr = language === "fr";
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [submissionError, setSubmissionError] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", type: "", message: "" });
   const [touched, setTouched] = useState(false);
 
@@ -40,6 +41,7 @@ export default function Contact() {
     setTouched(true);
     if (!isValid) return;
     setLoading(true);
+    setSubmissionError(false);
     try {
       const res = await fetch("/api/contact-simple", {
         method: "POST",
@@ -49,9 +51,7 @@ export default function Contact() {
       if (!res.ok) throw new Error("Send failed");
       setIsSubmitted(true);
     } catch {
-      alert(isFr
-        ? "Une erreur s'est produite. Veuillez réessayer."
-        : "An error occurred. Please try again.");
+      setSubmissionError(true);
     } finally {
       setLoading(false);
     }
@@ -297,6 +297,17 @@ export default function Contact() {
                       {touched && !isValid && (
                         <p className="text-red-500 text-[12px]">
                           {isFr ? "Veuillez remplir tous les champs." : "Please fill in all fields."}
+                        </p>
+                      )}
+
+                      {submissionError && (
+                        <p
+                          className="text-red-600 text-[13px] bg-red-50 border border-red-200 rounded px-4 py-3 leading-relaxed"
+                          data-testid="text-contact-submission-error"
+                        >
+                          {isFr
+                            ? "Une erreur s'est produite lors de l'envoi. Veuillez réessayer plus tard."
+                            : "An error occurred while sending. Please try again later."}
                         </p>
                       )}
 
