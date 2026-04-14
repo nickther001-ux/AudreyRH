@@ -436,7 +436,7 @@ function AppointmentCard({
   return (
     <>
       <div
-        className="p-5 rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all hover:bg-white/8"
+        className="p-5 rounded-xl border border-white/15 bg-[#0d1f3c]/55 backdrop-blur-sm transition-all hover:bg-[#0d1f3c]/70"
         data-testid={`appointment-${appt?.id}`}
       >
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
@@ -609,7 +609,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
       className="min-h-screen bg-cover bg-center bg-fixed relative"
       style={{ backgroundImage: `url(${beachBg})` }}
     >
-      <div className="absolute inset-0 bg-[#060f1e]/82 pointer-events-none" />
+      <div className="absolute inset-0 bg-[#060f1e]/50 pointer-events-none" />
 
       <div className="relative z-10">
         {/* ── Top bar ── */}
@@ -665,7 +665,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
               { label: "Confirmés", value: confirmedCount, color: "text-emerald-400" },
               { label: "Créneaux dispo", value: safeSlots.length, color: "text-[#93c5fd]" },
             ].map((stat) => (
-              <div key={stat.label} className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm px-5 py-4">
+              <div key={stat.label} className="rounded-xl border border-white/15 bg-[#0d1f3c]/60 backdrop-blur-md px-5 py-4">
                 <p className="text-xs font-semibold text-white/35 uppercase tracking-wider mb-1">{stat.label}</p>
                 <p className={`text-3xl font-extrabold ${stat.color}`}>{stat.value}</p>
               </div>
@@ -675,7 +675,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
           {/* ── Two-column: slots form + current slots ── */}
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             {/* Add slot form */}
-            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
+            <div className="rounded-2xl border border-white/15 bg-[#0d1f3c]/65 backdrop-blur-md p-6">
               <h2 className="text-base font-bold text-white mb-5 flex items-center gap-2">
                 <Plus className="h-4 w-4 text-[#93c5fd]" />
                 {t("admin.addSlot")}
@@ -793,7 +793,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
             </div>
 
             {/* Current slots */}
-            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
+            <div className="rounded-2xl border border-white/15 bg-[#0d1f3c]/65 backdrop-blur-md p-6">
               <h2 className="text-base font-bold text-white mb-5 flex items-center gap-2">
                 <Clock className="h-4 w-4 text-[#93c5fd]" />
                 {t("admin.currentSlots")}
@@ -847,7 +847,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
           {/* ── Calendly section ── */}
           {calendlyUrl && (
-            <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6 mb-8">
+            <div className="rounded-2xl border border-white/15 bg-[#0d1f3c]/65 backdrop-blur-md p-6 mb-8">
               <h2 className="text-base font-bold text-white mb-2 flex items-center gap-2">
                 <CalendarClock className="h-4 w-4 text-[#93c5fd]" />
                 Calendly
@@ -867,7 +867,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
           )}
 
           {/* ── Appointments ── */}
-          <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-6">
+          <div className="rounded-2xl border border-white/15 bg-[#0d1f3c]/65 backdrop-blur-md p-6">
             <h2 className="text-base font-bold text-white mb-5 flex items-center gap-2">
               <Users className="h-4 w-4 text-[#93c5fd]" />
               {t("admin.appointments")}
