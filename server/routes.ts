@@ -262,13 +262,13 @@ export async function registerRoutes(
     try {
       const { db } = await import('./db');
       const { availabilitySlots } = await import('@shared/schema');
-      const { gte } = await import('drizzle-orm');
+      const { gte, and, isNotNull } = await import('drizzle-orm');
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       const slots = await db
         .select()
         .from(availabilitySlots)
-        .where(gte(availabilitySlots.date, today))
+        .where(and(isNotNull(availabilitySlots.date), gte(availabilitySlots.date, today)))
         .orderBy(availabilitySlots.date);
       res.json(slots);
     } catch (err) {

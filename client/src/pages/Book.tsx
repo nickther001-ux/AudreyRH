@@ -55,7 +55,8 @@ function CalendlyEmbed({ t }: { t: (key: any) => string }) {
   );
 }
 
-function parseLocalDate(dateInput: string | Date): Date {
+function parseLocalDate(dateInput: string | Date | null | undefined): Date {
+  if (!dateInput) return new Date();
   const str = typeof dateInput === "string" ? dateInput : dateInput.toISOString();
   const match = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
   if (match) {
@@ -81,6 +82,7 @@ function SlotPicker({
   t: (key: string) => string;
 }) {
   const groupedSlots = availableSlots.reduce((acc, slot) => {
+    if (!slot.date) return acc;
     const dateKey = format(parseLocalDate(slot.date), "yyyy-MM-dd");
     if (!acc[dateKey]) acc[dateKey] = [];
     acc[dateKey].push(slot);

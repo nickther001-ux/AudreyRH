@@ -7,7 +7,7 @@ import {
   type InsertAvailabilitySlot,
   type AvailabilitySlot
 } from "@shared/schema";
-import { eq, gte, and } from "drizzle-orm";
+import { eq, gte, and, isNotNull } from "drizzle-orm";
 
 export interface IStorage {
   createAppointment(appointment: InsertAppointment): Promise<Appointment>;
@@ -78,6 +78,7 @@ export class DatabaseStorage implements IStorage {
       .select()
       .from(availabilitySlots)
       .where(and(
+        isNotNull(availabilitySlots.date),
         eq(availabilitySlots.isBooked, false),
         gte(availabilitySlots.date, today)
       ))

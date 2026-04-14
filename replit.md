@@ -53,6 +53,7 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - Footer: near-black background (via --foreground)
 
 ## Recent Changes
+- 2026-04-14: Fixed /book blank page in production — production DB had availability slots with `date: null`. Fixed `parseLocalDate()` to guard against null, added `if (!slot.date) return acc` in SlotPicker reduce, and added `isNotNull(availabilitySlots.date)` to both public and admin availability queries to exclude null-dated slots at DB level.
 - 2026-04-14: Fixed contact form 500 in production — `resend` added to server bundle allowlist (was incorrectly treated as external, failing silently in deployed env). Also fixed missing `emailWrapperClose` in `sendSimpleContactEmail`.
 - 2026-04-14: Admin major overhaul — beach AVIF background, midnight blue palette, stats strip, approve/reject/reschedule buttons with email notifications, reschedule dialog with controlled calendar popover, logout button, Calendly section
 - 2026-04-06: Grants.tsx full rewrite — Stratwell Consulting editorial dark layout: full-height hero with italic accent word in #93c5fd, 4-up animated stat strip, 2×2 photo-backed grant card grid with hover zoom, numbered dark process steps (01-04), horizontal scroll testimonial carousel with prev/next arrows, midnight-blue final CTA. Diagnostic modal preserved with updated styling.
