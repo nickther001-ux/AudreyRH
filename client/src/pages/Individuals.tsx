@@ -524,11 +524,11 @@ export default function Individuals() {
               </div>
             </FadeUp>
 
-            {/* Package grid: Discovery (featured, left) + Essential + Plan (stacked, right) */}
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-px bg-border border border-border">
+            {/* Package: Discovery only */}
+            <div className="border border-border">
 
-              {/* ── Discovery — featured, larger ── */}
-              <div className="lg:col-span-2 flex flex-col bg-background" data-testid="card-package-discovery">
+              {/* ── Discovery ── */}
+              <div className="flex flex-col bg-background" data-testid="card-package-discovery">
                 {/* Dark navy header */}
                 <div className="bg-[#1e3a5f] px-8 py-7">
                   <p className="text-[10px] text-[#93c5fd] uppercase tracking-[0.22em] mb-2">{t("packages.discovery.subtitle")}</p>
@@ -586,59 +586,6 @@ export default function Individuals() {
                 </div>
               </div>
 
-              {/* ── Essential + Plan — stacked right ── */}
-              <div className="lg:col-span-3 flex flex-col gap-px bg-border">
-
-                {/* Essential */}
-                <div className="bg-background p-8 flex-1" data-testid="card-package-essential">
-                  <div className="mb-6">
-                    <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mb-1">{t("packages.essential.subtitle")}</p>
-                    <h3 className="text-xl font-bold text-foreground">{t("packages.essential.name")}</h3>
-                    <p className="text-[12px] text-muted-foreground mt-1">{t("packages.essential.for")} · {t("packages.essential.forDetail")}</p>
-                  </div>
-
-                  <ul className="space-y-3 border-t border-border pt-4">
-                    {[1, 2, 3].map((i) => (
-                      <li key={i} className="flex items-start gap-2.5">
-                        <CheckCircle className="w-4 h-4 text-foreground/30 flex-shrink-0 mt-0.5" />
-                        <div>
-                          <p className="text-[13px] text-foreground">{t(`packages.essential.feature${i}` as any)}</p>
-                          <p className="text-[11px] text-muted-foreground">{t(`packages.essential.feature${i}Detail` as any)}</p>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link href="/contact" className="mt-6 inline-flex items-center gap-1.5 text-[12px] text-[#1e3a5f] font-semibold hover:underline underline-offset-2" data-testid="link-package-essential-cta">
-                    {t("packages.contact")} <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-
-                {/* Plan */}
-                <div className="bg-background p-8 flex-1" data-testid="card-package-plan">
-                  <div className="mb-6">
-                    <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mb-1">{t("packages.plan.subtitle")}</p>
-                    <h3 className="text-xl font-bold text-foreground">{t("packages.plan.name")}</h3>
-                    <p className="text-[12px] text-muted-foreground mt-1">{t("packages.plan.for")} · {t("packages.plan.forDetail")}</p>
-                  </div>
-
-                  <ul className="space-y-3 border-t border-border pt-4">
-                    {[1, 2, 3].map((i) => (
-                      <li key={i} className="flex items-start gap-2.5">
-                        <CheckCircle className="w-4 h-4 text-foreground/30 flex-shrink-0 mt-0.5" />
-                        <div>
-                          <p className="text-[13px] text-foreground">{t(`packages.plan.feature${i}` as any)}</p>
-                          <p className="text-[11px] text-muted-foreground">{t(`packages.plan.feature${i}Detail` as any)}</p>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link href="/contact" className="mt-6 inline-flex items-center gap-1.5 text-[12px] text-[#1e3a5f] font-semibold hover:underline underline-offset-2" data-testid="link-package-plan-cta">
-                    {t("packages.contact")} <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              </div>
             </div>
 
             {/* Footer note */}
