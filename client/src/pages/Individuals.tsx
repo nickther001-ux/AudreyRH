@@ -591,16 +591,10 @@ export default function Individuals() {
 
                 {/* Essential */}
                 <div className="bg-background p-8 flex-1" data-testid="card-package-essential">
-                  <div className="flex items-start justify-between mb-6">
-                    <div>
-                      <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mb-1">{t("packages.essential.subtitle")}</p>
-                      <h3 className="text-xl font-bold text-foreground">{t("packages.essential.name")}</h3>
-                      <p className="text-[12px] text-muted-foreground mt-1">{t("packages.essential.for")} · {t("packages.essential.forDetail")}</p>
-                    </div>
-                    <div className="text-right flex-shrink-0 ml-6">
-                      <div className="text-[2.4rem] font-black text-foreground leading-none">{t("packages.essential.price")}</div>
-                      <p className="text-[10px] text-muted-foreground uppercase tracking-wider mt-0.5">{t("packages.discovery.currency")}</p>
-                    </div>
+                  <div className="mb-6">
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mb-1">{t("packages.essential.subtitle")}</p>
+                    <h3 className="text-xl font-bold text-foreground">{t("packages.essential.name")}</h3>
+                    <p className="text-[12px] text-muted-foreground mt-1">{t("packages.essential.for")} · {t("packages.essential.forDetail")}</p>
                   </div>
 
                   <div className="mb-4 text-[11px] text-muted-foreground space-y-0.5">
@@ -628,16 +622,10 @@ export default function Individuals() {
 
                 {/* Plan */}
                 <div className="bg-background p-8 flex-1" data-testid="card-package-plan">
-                  <div className="flex items-start justify-between mb-6">
-                    <div>
-                      <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mb-1">{t("packages.plan.subtitle")}</p>
-                      <h3 className="text-xl font-bold text-foreground">{t("packages.plan.name")}</h3>
-                      <p className="text-[12px] text-muted-foreground mt-1">{t("packages.plan.for")} · {t("packages.plan.forDetail")}</p>
-                    </div>
-                    <div className="text-right flex-shrink-0 ml-6">
-                      <div className="text-[2.4rem] font-black text-foreground leading-none">{t("packages.plan.price")}</div>
-                      <p className="text-[10px] text-muted-foreground uppercase tracking-wider mt-0.5">{t("packages.discovery.currency")}</p>
-                    </div>
+                  <div className="mb-6">
+                    <p className="text-[10px] text-muted-foreground uppercase tracking-[0.2em] mb-1">{t("packages.plan.subtitle")}</p>
+                    <h3 className="text-xl font-bold text-foreground">{t("packages.plan.name")}</h3>
+                    <p className="text-[12px] text-muted-foreground mt-1">{t("packages.plan.for")} · {t("packages.plan.forDetail")}</p>
                   </div>
 
                   <div className="mb-4 text-[11px] text-muted-foreground space-y-0.5">
