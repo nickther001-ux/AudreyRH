@@ -33,18 +33,27 @@ export default function Home() {
           className="group relative flex-1 flex flex-col justify-end p-10 lg:p-16 overflow-hidden cursor-pointer min-h-[50vh] lg:min-h-0"
           data-testid="link-portal-individuals"
         >
-          {/* Close-up portrait background — face fills upper portion */}
+          {/* Close-up portrait — face centred in frame */}
           <motion.div
-            className="absolute inset-0 bg-cover bg-top bg-no-repeat"
-            style={{ backgroundImage: `url(${particuliersPhoto})` }}
+            className="absolute inset-0 bg-no-repeat"
+            style={{
+              backgroundImage: `url(${particuliersPhoto})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center 15%",
+            }}
             initial={{ scale: 1.06 }}
             animate={{ scale: 1 }}
             transition={{ duration: 1.4, ease: [0.25, 0.1, 0.25, 1] }}
             whileHover={{ scale: 1.03 }}
           />
 
-          {/* Very light top scrim so face stays visible, heavier gradient at bottom for text */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/10 group-hover:from-black/80 transition-all duration-500" />
+          {/* Gradient: fully transparent over the face, dark only at the bottom 45% for text */}
+          <div
+            className="absolute inset-0 transition-opacity duration-500"
+            style={{
+              background: "linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.05) 60%, rgba(0,0,0,0) 100%)",
+            }}
+          />
 
           <div className="hidden lg:block absolute top-0 right-0 w-px h-full bg-white/10 z-10" />
 
