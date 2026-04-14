@@ -6,6 +6,53 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ── Scroll reveal system ──────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* Base — hidden before observer fires */
+  [data-scroll] {
+    opacity: 0;
+    transform: translateY(36px);
+    will-change: opacity, transform;
+    transition:
+      opacity  0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--scroll-delay, 0ms);
+  }
+  [data-scroll="left"]  { transform: translateX(-44px); }
+  [data-scroll="right"] { transform: translateX(44px);  }
+  [data-scroll="scale"] { transform: scale(0.9) translateY(20px); }
+  [data-scroll="fade"]  { transform: none; }
+
+  /* Revealed */
+  [data-scroll].in-view {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Delay helpers */
+  [data-scroll-delay="100"] { --scroll-delay: 100ms; }
+  [data-scroll-delay="150"] { --scroll-delay: 150ms; }
+  [data-scroll-delay="200"] { --scroll-delay: 200ms; }
+  [data-scroll-delay="300"] { --scroll-delay: 300ms; }
+  [data-scroll-delay="400"] { --scroll-delay: 400ms; }
+  [data-scroll-delay="500"] { --scroll-delay: 500ms; }
+
+  /* Staggered auto-delay for sibling groups */
+  [data-scroll-group] > [data-scroll]:nth-child(1) { --scroll-delay:   0ms; }
+  [data-scroll-group] > [data-scroll]:nth-child(2) { --scroll-delay: 100ms; }
+  [data-scroll-group] > [data-scroll]:nth-child(3) { --scroll-delay: 200ms; }
+  [data-scroll-group] > [data-scroll]:nth-child(4) { --scroll-delay: 300ms; }
+  [data-scroll-group] > [data-scroll]:nth-child(5) { --scroll-delay: 400ms; }
+  [data-scroll-group] > [data-scroll]:nth-child(6) { --scroll-delay: 500ms; }
+}
+
+/* Already-visible (no JS or reduced motion) */
+@media (prefers-reduced-motion: reduce) {
+  [data-scroll] { opacity: 1 !important; transform: none !important; }
+}
+
 /* LIGHT MODE — consulting.framer.media inspired: forest green primary, near-black text, pure white */
 :root {
   --button-outline: rgba(0,0,0, .10);
