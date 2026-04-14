@@ -122,6 +122,8 @@ const translations = {
     "terms.contact.title": "11. Contact",
     "terms.contact.text": "Pour toute question concernant ces conditions générales, veuillez nous contacter à info@audreyRH.com.",
     
+    "book.calendly.label": "Réservation en ligne",
+    "book.calendly.title": "Choisissez votre créneau via Calendly",
     "book.title": "Réserver une consultation",
     "book.subtitle": "Choisissez un créneau disponible pour votre consultation personnalisée avec AudreyRH, CRIA.",
     "book.badge": "Consultation stratégique de carrière",
@@ -970,6 +972,8 @@ const translations = {
     "terms.contact.title": "11. Contact",
     "terms.contact.text": "For any questions regarding these terms and conditions, please contact us at info@audreyRH.com.",
     
+    "book.calendly.label": "Online booking",
+    "book.calendly.title": "Pick your time slot via Calendly",
     "book.title": "Book a consultation",
     "book.subtitle": "Choose an available slot for your personalized consultation with AudreyRH, CRIA.",
     "book.badge": "Career strategy consultation",

@@ -28,6 +28,33 @@ import heroBg from "@assets/stock_images/hr_strategy.jpg";
 
 type BookingMode = "free" | "paid";
 
+// ─── Calendly embed ───────────────────────────────────────────────────────────
+const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL as string | undefined;
+
+function CalendlyEmbed({ t }: { t: (key: any) => string }) {
+  if (!CALENDLY_URL) return null;
+  return (
+    <div className="mb-10 rounded-2xl border border-border overflow-hidden shadow-lg" data-testid="section-calendly">
+      <div className="bg-[#1e3a5f] px-6 py-4 flex items-center justify-between">
+        <div>
+          <p className="text-[10px] text-[#93c5fd] uppercase tracking-[0.2em] mb-0.5">{t("book.calendly.label")}</p>
+          <h3 className="text-white font-bold text-lg">{t("book.calendly.title")}</h3>
+        </div>
+        <CalendarDays className="w-6 h-6 text-[#93c5fd]" />
+      </div>
+      <iframe
+        src={`${CALENDLY_URL}?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=1e3a5f`}
+        width="100%"
+        height="660"
+        frameBorder="0"
+        title="Calendly booking"
+        data-testid="iframe-calendly"
+        className="block"
+      />
+    </div>
+  );
+}
+
 function parseLocalDate(dateInput: string | Date): Date {
   const str = typeof dateInput === "string" ? dateInput : dateInput.toISOString();
   const match = str.match(/^(\d{4})-(\d{2})-(\d{2})/);
@@ -481,6 +508,9 @@ export default function Book() {
       <main className="flex-grow pb-20 -mt-8">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-5xl mx-auto">
+
+            {/* ── Calendly embed ── */}
+            <CalendlyEmbed t={t} />
 
             {/* ── Mode Selector ── */}
             <div className="mb-8">
