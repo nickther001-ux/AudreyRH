@@ -751,7 +751,7 @@ export default function Individuals() {
         </section>
 
         {/* ── 7. FINAL CTA — dark ── */}
-        <section className="bg-foreground py-28" data-testid="section-cta">
+        <section className="bg-gradient-to-br from-[#1e3a5f] to-[#0d1f3c] py-28" data-testid="section-cta">
           <FadeUp className="max-w-6xl mx-auto px-6 lg:px-8 flex flex-col md:flex-row md:items-center md:justify-between gap-12">
             <div className="max-w-xl">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-5">{t("cta.label")}</p>

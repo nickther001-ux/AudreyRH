@@ -168,7 +168,7 @@ export default function Faq() {
         </section>
 
         {/* ── CTA ── */}
-        <section className="bg-foreground py-28" data-testid="section-faq-cta">
+        <section className="bg-gradient-to-br from-[#1e3a5f] to-[#0d1f3c] py-28" data-testid="section-faq-cta">
           <FadeUp className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
             <p className="text-[11px] text-white/35 uppercase tracking-[0.22em] mb-6">AudreyRH · CRIA</p>
             <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
