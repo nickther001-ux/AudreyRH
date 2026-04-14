@@ -227,8 +227,9 @@ export async function registerRoutes(
       await sendSimpleContactEmail({ name, email, type, message });
       res.json({ success: true });
     } catch (err: any) {
-      console.error('Simple contact form error:', err.message);
-      res.status(500).json({ message: 'Failed to send message' });
+      const detail = err?.message ?? String(err);
+      console.error('Simple contact form error:', detail);
+      res.status(500).json({ message: 'Failed to send message', detail });
     }
   });
 
@@ -384,6 +385,31 @@ export async function registerRoutes(
     }
   });
 
+
+  // Diagnostic — returns exact Resend error so we can debug production failures
+  // Protected by ADMIN_PASSWORD to prevent abuse
+  app.post('/api/debug/resend-test', async (req, res) => {
+    const { password } = req.body ?? {};
+    if (!password || password !== process.env.ADMIN_PASSWORD) {
+      return res.status(401).json({ message: 'Unauthorized' });
+    }
+    const key = process.env.RESEND_API_KEY;
+    if (!key) return res.status(500).json({ message: 'RESEND_API_KEY not set' });
+
+    try {
+      const { Resend } = await import('resend');
+      const client = new Resend(key);
+      const r = await client.emails.send({
+        from: 'AudreyRH <info@audreyrh.com>',
+        to: 'info@audreyrh.com',
+        subject: 'Diagnostic test',
+        html: '<p>Diagnostic test from server</p>',
+      });
+      res.json({ success: !r.error, data: r.data, error: r.error, keyPrefix: key.slice(0, 8) });
+    } catch (err: any) {
+      res.json({ success: false, threw: err.message, keyPrefix: key.slice(0, 8) });
+    }
+  });
 
   return httpServer;
 }

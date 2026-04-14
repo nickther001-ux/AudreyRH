@@ -508,7 +508,8 @@ ${compactHeader('AudreyRH · Message reçu', 'Nouveau message depuis la page Con
             ${ctaButton(`mailto:${data.email}`, `Répondre à ${data.name}`)}
           </td>
         </tr>
-${emailFooter()}`;
+${emailFooter()}
+${emailWrapperClose}`;
 
   console.log('[Resend] Sending simple contact email to Audrey from:', data.email);
   const r = await client.emails.send({

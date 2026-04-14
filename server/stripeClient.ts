@@ -29,12 +29,18 @@ async function getCredentialsFromConnector(): Promise<{ publishableKey: string; 
 
     const data = await response.json();
     const settings = data.items?.[0];
+    const secret: string | undefined = settings?.settings?.secret;
 
-    if (!settings?.settings?.secret) return null;
+    if (!secret) return null;
+
+    // Only use a connector key if it is a proper full secret key (sk_live_ / sk_test_).
+    // Restricted keys (rk_) returned by the connector lack the permissions needed for
+    // Checkout, webhooks, and StripeSync — reject them and fall through to env-var fallback.
+    if (!secret.startsWith('sk_')) return null;
 
     return {
       publishableKey: settings.settings.publishable ?? '',
-      secretKey: settings.settings.secret,
+      secretKey: secret,
     };
   } catch {
     return null;
@@ -42,16 +48,22 @@ async function getCredentialsFromConnector(): Promise<{ publishableKey: string; 
 }
 
 async function getCredentials(): Promise<{ publishableKey: string; secretKey: string }> {
-  const fromConnector = await getCredentialsFromConnector();
-  if (fromConnector) return fromConnector;
-
-  const secretKey = process.env.STRIPE_SECRET_KEY;
-  if (secretKey) {
+  // 1. Prefer an explicit env-var secret key — most reliable in all environments.
+  const envSecret = process.env.STRIPE_SECRET_KEY;
+  if (envSecret) {
     const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY ?? '';
-    return { secretKey, publishableKey };
+    console.log('[Stripe] Using STRIPE_SECRET_KEY env var');
+    return { secretKey: envSecret, publishableKey };
   }
 
-  throw new Error('No Stripe credentials found (connector or STRIPE_SECRET_KEY env var)');
+  // 2. Fall back to Replit connector (development only, proper sk_ keys).
+  const fromConnector = await getCredentialsFromConnector();
+  if (fromConnector) {
+    console.log('[Stripe] Using Replit connector credentials');
+    return fromConnector;
+  }
+
+  throw new Error('No Stripe credentials found (set STRIPE_SECRET_KEY env var)');
 }
 
 export async function getUncachableStripeClient() {
