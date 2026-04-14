@@ -302,21 +302,24 @@ function AdminDashboard() {
   });
 
   const { mutate: createSlot, isPending: isCreating } = useMutation({
-    mutationFn: (data: InsertAvailabilitySlot) =>
-      apiRequest("POST", "/api/availability", data),
+    mutationFn: async (data: InsertAvailabilitySlot) => {
+      const res = await apiRequest("POST", "/api/availability", data);
+      return res.json();
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/availability"] });
       toast({ title: t("admin.slotAdded"), description: t("admin.slotAddedDesc") });
+      const nextDate = selectedDate ?? addDays(startOfDay(new Date()), 1);
       form.reset({
-        date: selectedDate ?? addDays(startOfDay(new Date()), 1),
+        date: nextDate,
         startTime: "09:00",
         endTime: "10:00",
       });
     },
-    onError: () => {
+    onError: (err: Error) => {
       toast({
         title: t("admin.error"),
-        description: t("admin.errorAdd"),
+        description: err?.message || t("admin.errorAdd"),
         variant: "destructive",
       });
     },
@@ -420,7 +423,9 @@ function AdminDashboard() {
                               field.onChange(date);
                               setSelectedDate(date);
                             }}
-                            disabled={(date) => date < new Date()}
+                            disabled={(date) =>
+                              date < startOfDay(new Date())
+                            }
                             initialFocus
                           />
                         </PopoverContent>
@@ -437,7 +442,7 @@ function AdminDashboard() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>{t("admin.startTime")}</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
                             <SelectTrigger data-testid="select-start-time">
                               <SelectValue placeholder={t("admin.startPlaceholder")} />
@@ -460,7 +465,7 @@ function AdminDashboard() {
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>{t("admin.endTime")}</FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
                             <SelectTrigger data-testid="select-end-time">
                               <SelectValue placeholder={t("admin.endPlaceholder")} />
