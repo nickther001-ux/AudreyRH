@@ -415,6 +415,18 @@ export async function registerRoutes(
     }
   });
 
+  app.delete('/api/admin/appointments/:id', async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) return res.status(400).json({ message: "Invalid ID" });
+      await storage.deleteAppointment(id);
+      res.json({ success: true });
+    } catch (err: any) {
+      console.error('Error deleting appointment:', err);
+      res.status(500).json({ message: err?.message ?? 'Failed to delete appointment' });
+    }
+  });
+
   app.delete('/api/availability/:id', async (req, res) => {
     try {
       const id = parseInt(req.params.id);

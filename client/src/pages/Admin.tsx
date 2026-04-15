@@ -403,6 +403,22 @@ function AppointmentCard({
 }) {
   const { toast } = useToast();
   const [rescheduleOpen, setRescheduleOpen] = useState(false);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+
+  const { mutate: deleteAppt, isPending: isDeleting } = useMutation({
+    mutationFn: async () => {
+      const res = await apiRequest("DELETE", `/api/admin/appointments/${appt.id}`);
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/appointments"] });
+      toast({ title: "Supprimé", description: "La réservation a été supprimée définitivement." });
+      setDeleteConfirmOpen(false);
+    },
+    onError: () => {
+      toast({ title: "Erreur", description: "Impossible de supprimer.", variant: "destructive" });
+    },
+  });
 
   const { mutate: approve, isPending: isApproving } = useMutation({
     mutationFn: async () => {
@@ -478,42 +494,82 @@ function AppointmentCard({
             )}
           </div>
 
-          {isActive && (
-            <div className="flex flex-row md:flex-col gap-2 flex-shrink-0">
-              <Button
-                size="sm"
-                onClick={() => approve()}
-                disabled={isApproving || isRejecting || appt.status === "confirmed"}
-                className="bg-emerald-900/50 hover:bg-emerald-800/70 border border-emerald-600/30 text-emerald-300 text-xs gap-1.5"
-                data-testid={`button-approve-${appt.id}`}
-              >
-                {isApproving ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <ThumbsUp className="h-3.5 w-3.5" />}
-                Confirmer
-              </Button>
-              <Button
-                size="sm"
-                onClick={() => setRescheduleOpen(true)}
-                disabled={isApproving || isRejecting}
-                className="bg-[#1e3a5f]/70 hover:bg-[#2a4f7f]/80 border border-[#93c5fd]/20 text-[#93c5fd] text-xs gap-1.5"
-                data-testid={`button-reschedule-${appt.id}`}
-              >
-                <CalendarClock className="h-3.5 w-3.5" />
-                Reprog.
-              </Button>
-              <Button
-                size="sm"
-                onClick={() => reject()}
-                disabled={isApproving || isRejecting}
-                className="bg-red-900/30 hover:bg-red-900/50 border border-red-700/30 text-red-400 text-xs gap-1.5"
-                data-testid={`button-reject-${appt.id}`}
-              >
-                {isRejecting ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <ThumbsDown className="h-3.5 w-3.5" />}
-                Refuser
-              </Button>
-            </div>
-          )}
+          <div className="flex flex-row md:flex-col gap-2 flex-shrink-0">
+            {isActive && (
+              <>
+                <Button
+                  size="sm"
+                  onClick={() => approve()}
+                  disabled={isApproving || isRejecting || appt.status === "confirmed"}
+                  className="bg-emerald-900/50 hover:bg-emerald-800/70 border border-emerald-600/30 text-emerald-300 text-xs gap-1.5"
+                  data-testid={`button-approve-${appt.id}`}
+                >
+                  {isApproving ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <ThumbsUp className="h-3.5 w-3.5" />}
+                  Confirmer
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => setRescheduleOpen(true)}
+                  disabled={isApproving || isRejecting}
+                  className="bg-[#1e3a5f]/70 hover:bg-[#2a4f7f]/80 border border-[#93c5fd]/20 text-[#93c5fd] text-xs gap-1.5"
+                  data-testid={`button-reschedule-${appt.id}`}
+                >
+                  <CalendarClock className="h-3.5 w-3.5" />
+                  Reprog.
+                </Button>
+                <Button
+                  size="sm"
+                  onClick={() => reject()}
+                  disabled={isApproving || isRejecting}
+                  className="bg-red-900/30 hover:bg-red-900/50 border border-red-700/30 text-red-400 text-xs gap-1.5"
+                  data-testid={`button-reject-${appt.id}`}
+                >
+                  {isRejecting ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <ThumbsDown className="h-3.5 w-3.5" />}
+                  Refuser
+                </Button>
+              </>
+            )}
+            <Button
+              size="sm"
+              onClick={() => setDeleteConfirmOpen(true)}
+              disabled={isDeleting}
+              className="bg-zinc-900/60 hover:bg-red-950/60 border border-zinc-700/40 hover:border-red-700/40 text-zinc-400 hover:text-red-400 text-xs gap-1.5 transition-colors"
+              data-testid={`button-delete-${appt.id}`}
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+              Supprimer
+            </Button>
+          </div>
         </div>
       </div>
+
+      <Dialog open={deleteConfirmOpen} onOpenChange={(v) => !v && setDeleteConfirmOpen(false)}>
+        <DialogContent className="bg-[#0d1f3c] border border-white/10 text-white max-w-sm">
+          <DialogHeader>
+            <DialogTitle className="text-white text-lg flex items-center gap-2">
+              <Trash2 className="h-5 w-5 text-red-400" />
+              Supprimer la réservation
+            </DialogTitle>
+          </DialogHeader>
+          <p className="text-sm text-white/60 py-2">
+            Voulez-vous vraiment supprimer la réservation de <span className="text-white font-semibold">{appt.name}</span> ? Cette action est irréversible.
+          </p>
+          <DialogFooter className="gap-2">
+            <Button variant="ghost" onClick={() => setDeleteConfirmOpen(false)} className="text-white/60 hover:text-white hover:bg-white/5">
+              Annuler
+            </Button>
+            <Button
+              onClick={() => deleteAppt()}
+              disabled={isDeleting}
+              className="bg-red-900/60 hover:bg-red-800/80 border border-red-700/40 text-red-300 gap-1.5"
+              data-testid={`button-confirm-delete-${appt.id}`}
+            >
+              {isDeleting ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+              Supprimer définitivement
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <RescheduleDialog
         appt={appt}
