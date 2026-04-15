@@ -1,7 +1,6 @@
 import { google } from "googleapis";
 import fs from "fs";
 import path from "path";
-import { randomUUID } from "crypto";
 
 const KEY_PATH = path.join(process.cwd(), "server", "keys", "google-service-account.json");
 
@@ -27,8 +26,7 @@ export interface CreateMeetEventParams {
 function getAuthClient() {
   if (!fs.existsSync(KEY_PATH)) {
     throw new Error(
-      `Google service account key not found at ${KEY_PATH}. ` +
-      `Place your service account JSON file at server/keys/google-service-account.json`
+      `Google service account key not found at ${KEY_PATH}.`
     );
   }
 
@@ -37,13 +35,10 @@ function getAuthClient() {
   const calendarId = process.env.GOOGLE_CALENDAR_ID;
   if (!calendarId) {
     throw new Error(
-      "GOOGLE_CALENDAR_ID environment variable is not set. " +
-      "Set it to the Google email of the calendar shared with the service account."
+      "GOOGLE_CALENDAR_ID environment variable is not set."
     );
   }
 
-  // No subject — service account authenticates as itself and accesses the shared calendar
-  // by its calendarId. The calendar must have granted the service account write permissions.
   const auth = new google.auth.JWT({
     email: keyFile.client_email,
     key: keyFile.private_key,
@@ -59,9 +54,9 @@ export async function createGoogleMeetEvent(
   const { auth, calendarId } = getAuthClient();
   const calendar = google.calendar({ version: "v3", auth });
 
+  // Create the calendar event without conferenceData (works with personal Gmail)
   const event = await calendar.events.insert({
     calendarId,
-    conferenceDataVersion: 1,
     requestBody: {
       summary: params.summary,
       description: params.description,
@@ -73,32 +68,17 @@ export async function createGoogleMeetEvent(
         dateTime: params.endTime,
         timeZone: "America/Toronto",
       },
-      conferenceData: {
-        createRequest: {
-          requestId: randomUUID(),
-          conferenceSolutionKey: {
-            type: "hangoutsMeet",
-          },
-        },
-      },
+      // Use the GOOGLE_MEET_LINK env var if set (a pre-created standing Meet room).
+      // This is the reliable approach for personal Gmail accounts since the Calendar API
+      // conferenceData.createRequest only works with Google Workspace accounts.
+      location: process.env.GOOGLE_MEET_LINK ?? "Zoom / Google Meet (lien envoyé par courriel)",
     },
   });
 
   const eventData = event.data;
 
-  const meetLink =
-    eventData.conferenceData?.entryPoints?.find(
-      (ep) => ep.entryPointType === "video"
-    )?.uri ??
-    eventData.hangoutLink ??
-    "";
-
-  if (!meetLink) {
-    throw new Error(
-      "Google Meet link was not generated. Ensure the calendar owner has allowed " +
-      "Google Meet on their calendar and the service account has write access."
-    );
-  }
+  // Return the standing Meet link from env, or fall back to the calendar event URL
+  const meetLink = process.env.GOOGLE_MEET_LINK ?? eventData.htmlLink ?? "";
 
   return {
     meetLink,
