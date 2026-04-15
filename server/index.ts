@@ -75,7 +75,30 @@ async function initStripe() {
   }
 }
 
+async function fixAvailabilitySchema() {
+  try {
+    const { pool } = await import('./db');
+    // 1. Delete all null-dated slots (legacy data)
+    const del = await pool.query("DELETE FROM availability_slots WHERE date IS NULL");
+    if (del.rowCount && del.rowCount > 0) {
+      console.log(`[Startup] Removed ${del.rowCount} null-dated availability slot(s)`);
+    }
+    // 2. Enforce NOT NULL on the date column if it is still nullable
+    const colInfo = await pool.query(`
+      SELECT is_nullable FROM information_schema.columns
+      WHERE table_name = 'availability_slots' AND column_name = 'date'
+    `);
+    if (colInfo.rows[0]?.is_nullable === 'YES') {
+      await pool.query("ALTER TABLE availability_slots ALTER COLUMN date SET NOT NULL");
+      console.log("[Startup] Enforced NOT NULL on availability_slots.date");
+    }
+  } catch (err: any) {
+    console.error("[Startup] fixAvailabilitySchema error:", err.message);
+  }
+}
+
 (async () => {
+  await fixAvailabilitySchema();
   await initStripe();
 
   app.post(

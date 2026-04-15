@@ -65,13 +65,20 @@ export class DatabaseStorage implements IStorage {
   async createAvailabilitySlot(slot: InsertAvailabilitySlot): Promise<AvailabilitySlot> {
     // Normalize to noon UTC so the date is never shifted by timezone offsets
     const raw = new Date(slot.date);
+    if (isNaN(raw.getTime())) {
+      throw new Error(`Invalid date value received: ${slot.date}`);
+    }
     const normalizedDate = new Date(Date.UTC(
       raw.getUTCFullYear(), raw.getUTCMonth(), raw.getUTCDate(), 12, 0, 0, 0
     ));
+    console.log(`[Slots] Inserting date=${normalizedDate.toISOString()} start=${slot.startTime} end=${slot.endTime}`);
     const [created] = await db
       .insert(availabilitySlots)
-      .values({ ...slot, date: normalizedDate })
+      .values({ date: normalizedDate, startTime: slot.startTime, endTime: slot.endTime })
       .returning();
+    if (!created.date) {
+      throw new Error(`DB insert returned null date — slot id=${created.id}. Check DB column nullable constraint.`);
+    }
     return created;
   }
 

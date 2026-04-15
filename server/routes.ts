@@ -338,10 +338,19 @@ export async function registerRoutes(
   // Availability routes
   app.post(api.availability.create.path, async (req, res) => {
     try {
+      // Explicit date guard before Zod parsing
+      const rawDate = req.body?.date;
+      if (!rawDate) {
+        return res.status(400).json({ message: "Le champ 'date' est requis.", field: "date" });
+      }
+      const parsedDate = new Date(rawDate);
+      if (isNaN(parsedDate.getTime())) {
+        return res.status(400).json({ message: `Valeur de date invalide: ${rawDate}`, field: "date" });
+      }
       const input = api.availability.create.input.parse(req.body);
-      console.log(`[Slots] Creating slot — raw date from client: ${input.date?.toISOString?.() ?? input.date}, startTime: ${input.startTime}, endTime: ${input.endTime}`);
+      console.log(`[Slots] Creating — date=${input.date instanceof Date ? input.date.toISOString() : input.date} start=${input.startTime} end=${input.endTime}`);
       const slot = await storage.createAvailabilitySlot(input);
-      console.log(`[Slots] Slot created — id: ${slot.id}, normalized date: ${slot.date}`);
+      console.log(`[Slots] Created — id=${slot.id} date=${slot.date}`);
       res.status(201).json(slot);
     } catch (err) {
       if (err instanceof z.ZodError) {
@@ -351,7 +360,7 @@ export async function registerRoutes(
         });
       }
       const msg = err instanceof Error ? err.message : String(err);
-      console.error('[Slots] Error creating slot:', msg, err);
+      console.error('[Slots] Error creating slot:', msg);
       res.status(500).json({ message: `Impossible d'ajouter le créneau: ${msg}` });
     }
   });

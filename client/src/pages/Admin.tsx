@@ -558,11 +558,18 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
   const { mutate: createSlot, isPending: isCreating } = useMutation({
     mutationFn: async (data: InsertAvailabilitySlot) => {
+      const dateValue = data.date instanceof Date ? data.date : new Date(data.date as unknown as string);
+      if (!isValid(dateValue)) throw new Error("Date invalide — veuillez sélectionner une date.");
+      const payload = {
+        date: dateValue.toISOString(),
+        startTime: data.startTime,
+        endTime: data.endTime,
+      };
       const res = await fetch("/api/availability", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify(data),
+        body: JSON.stringify(payload),
       });
       const json = await res.json().catch(() => null);
       if (!res.ok) {
@@ -767,6 +774,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
                               mode="single"
                               selected={field.value}
                               onSelect={(date) => {
+                                if (!date) return;
                                 field.onChange(date);
                                 setSelectedDate(date);
                                 setDatePopoverOpen(false);
