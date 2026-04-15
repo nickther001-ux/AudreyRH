@@ -4,4 +4,4 @@ dist
 server/public
 vite.config.ts.*
 *.tar.gz
-server/keys/*.json
+server/keys/*.jsonattached_assets/*.json
