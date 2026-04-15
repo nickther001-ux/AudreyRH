@@ -1,4 +1,4 @@
-import { pgTable, text, serial, timestamp, boolean, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, serial, timestamp, boolean, integer, date } from "drizzle-orm/pg-core";
 
 export const appointments = pgTable("appointments", {
   id: serial("id").primaryKey(),
@@ -20,7 +20,7 @@ export const appointments = pgTable("appointments", {
 
 export const availabilitySlots = pgTable("availability_slots", {
   id: serial("id").primaryKey(),
-  date: timestamp("date").notNull(),
+  date: date("date").notNull(),
   startTime: text("start_time").notNull(),
   endTime: text("end_time").notNull(),
   isBooked: boolean("is_booked").default(false).notNull(),

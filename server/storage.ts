@@ -63,60 +63,58 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createAvailabilitySlot(slot: InsertAvailabilitySlot): Promise<AvailabilitySlot> {
-    // Normalize to noon UTC so the date is never shifted by timezone offsets
+    // slot.date is a Date (coerced by Zod). Extract yyyy-MM-dd string to avoid
+    // Drizzle's .toISOString() serializer which produces "T...Z" that PostgreSQL
+    // TIMESTAMP WITHOUT TIME ZONE silently nulls. DATE column accepts plain strings.
     const raw = new Date(slot.date);
     if (isNaN(raw.getTime())) {
       throw new Error(`Invalid date value received: ${slot.date}`);
     }
-    const normalizedDate = new Date(Date.UTC(
-      raw.getUTCFullYear(), raw.getUTCMonth(), raw.getUTCDate(), 12, 0, 0, 0
-    ));
-    console.log(`[Slots] Inserting date=${normalizedDate.toISOString()} start=${slot.startTime} end=${slot.endTime}`);
+    const y = raw.getUTCFullYear();
+    const m = String(raw.getUTCMonth() + 1).padStart(2, "0");
+    const d = String(raw.getUTCDate()).padStart(2, "0");
+    const dateString = `${y}-${m}-${d}`;
+    console.log(`[Slots] Inserting date="${dateString}" start=${slot.startTime} end=${slot.endTime}`);
     const [created] = await db
       .insert(availabilitySlots)
-      .values({ date: normalizedDate, startTime: slot.startTime, endTime: slot.endTime })
+      .values({ date: dateString, startTime: slot.startTime, endTime: slot.endTime })
       .returning();
     if (!created.date) {
-      throw new Error(`DB insert returned null date — slot id=${created.id}. Check DB column nullable constraint.`);
+      throw new Error(`DB insert returned null date — slot id=${created.id}.`);
     }
     return created;
   }
 
   async getAvailableSlots(): Promise<AvailabilitySlot[]> {
     const now = new Date();
-    // Use UTC midnight for timezone-safe comparison
-    const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
-    
-    // Get all unbooked slots from today onwards
+    // Format today as "yyyy-MM-dd" for comparison against the DATE column
+    const y = now.getUTCFullYear();
+    const m = String(now.getUTCMonth() + 1).padStart(2, "0");
+    const d = String(now.getUTCDate()).padStart(2, "0");
+    const todayString = `${y}-${m}-${d}`;
+
     const slots = await db
       .select()
       .from(availabilitySlots)
       .where(and(
         isNotNull(availabilitySlots.date),
         eq(availabilitySlots.isBooked, false),
-        gte(availabilitySlots.date, today)
+        gte(availabilitySlots.date, todayString)
       ))
       .orderBy(availabilitySlots.date);
-    
-    // Convert time string (HH:MM or H:MM) to minutes since midnight for comparison
+
+    // Convert HH:MM time string to minutes since midnight
     const timeToMinutes = (time: string): number => {
-      const [hours, minutes] = time.split(':').map(Number);
+      const [hours, minutes] = time.split(":").map(Number);
       return hours * 60 + minutes;
     };
-    
-    const currentMinutes = now.getHours() * 60 + now.getMinutes();
-    
+    const currentMinutes = now.getUTCHours() * 60 + now.getUTCMinutes();
+
     return slots.filter(slot => {
-      const slotDate = new Date(slot.date);
-      // Compare UTC date parts since slots are stored at noon UTC
-      const isSameDay = slotDate.getUTCFullYear() === now.getUTCFullYear() && 
-                        slotDate.getUTCMonth() === now.getUTCMonth() && 
-                        slotDate.getUTCDate() === now.getUTCDate();
-      
-      // If same day, only show slots that haven't started yet
+      // slot.date is "yyyy-MM-dd" — same-day check via string comparison
+      const isSameDay = slot.date === todayString;
       if (isSameDay) {
-        const slotStartMinutes = timeToMinutes(slot.startTime);
-        return slotStartMinutes > currentMinutes;
+        return timeToMinutes(slot.startTime) > currentMinutes;
       }
       return true;
     });
@@ -124,11 +122,14 @@ export class DatabaseStorage implements IStorage {
 
   async getAdminSlots(): Promise<AvailabilitySlot[]> {
     const now = new Date();
-    const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
+    const y = now.getUTCFullYear();
+    const m = String(now.getUTCMonth() + 1).padStart(2, "0");
+    const d = String(now.getUTCDate()).padStart(2, "0");
+    const todayString = `${y}-${m}-${d}`;
     return db
       .select()
       .from(availabilitySlots)
-      .where(and(isNotNull(availabilitySlots.date), gte(availabilitySlots.date, today)))
+      .where(and(isNotNull(availabilitySlots.date), gte(availabilitySlots.date, todayString)))
       .orderBy(availabilitySlots.date);
   }
 

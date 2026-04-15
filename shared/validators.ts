@@ -46,7 +46,7 @@ export type Appointment = {
 
 export type AvailabilitySlot = {
   id: number;
-  date: Date;
+  date: string;
   startTime: string;
   endTime: string;
   isBooked: boolean;
