@@ -28,9 +28,20 @@ export interface IStorage {
 
 export class DatabaseStorage implements IStorage {
   async createAppointment(insertAppointment: InsertAppointment): Promise<Appointment> {
+    // Convert the Date object to a plain "yyyy-MM-dd" string so Drizzle does not
+    // call .toISOString() (which produces "T...Z" that PostgreSQL DATE silently nulls).
+    const raw = new Date(insertAppointment.date as unknown as string | Date);
+    if (isNaN(raw.getTime())) {
+      throw new Error(`Invalid appointment date: ${insertAppointment.date}`);
+    }
+    const y = raw.getUTCFullYear();
+    const m = String(raw.getUTCMonth() + 1).padStart(2, "0");
+    const d = String(raw.getUTCDate()).padStart(2, "0");
+    const dateString = `${y}-${m}-${d}`;
+    console.log(`[Appointment] Inserting date="${dateString}" for ${insertAppointment.email}`);
     const [appointment] = await db
       .insert(appointments)
-      .values(insertAppointment)
+      .values({ ...insertAppointment, date: dateString as unknown as Date })
       .returning();
     return appointment;
   }
@@ -157,9 +168,14 @@ export class DatabaseStorage implements IStorage {
   }
 
   async rescheduleAppointment(id: number, date: Date, startTime: string, endTime: string): Promise<Appointment> {
+    const raw = new Date(date);
+    const y = raw.getUTCFullYear();
+    const mo = String(raw.getUTCMonth() + 1).padStart(2, "0");
+    const d = String(raw.getUTCDate()).padStart(2, "0");
+    const dateString = `${y}-${mo}-${d}`;
     const [appointment] = await db
       .update(appointments)
-      .set({ date, startTime, endTime, status: "confirmed" })
+      .set({ date: dateString as unknown as Date, startTime, endTime, status: "confirmed" })
       .where(eq(appointments.id, id))
       .returning();
     return appointment;

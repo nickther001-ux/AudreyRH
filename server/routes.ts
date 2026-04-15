@@ -82,15 +82,16 @@ export async function registerRoutes(
       }
 
       res.status(201).json({ appointment, checkoutUrl, type: 'paid_service' });
-    } catch (err) {
+    } catch (err: any) {
       if (err instanceof z.ZodError) {
         return res.status(400).json({
           message: err.errors[0].message,
           field: err.errors[0].path.join('.'),
         });
       }
-      console.error('Error creating appointment:', err);
-      res.status(500).json({ message: 'Failed to create appointment' });
+      console.error('[Appointment] Error creating appointment:', err);
+      const msg = err?.message ?? String(err);
+      res.status(500).json({ message: msg || 'Failed to create appointment' });
     }
   });
 

@@ -6,7 +6,7 @@ export const appointments = pgTable("appointments", {
   email: text("email").notNull(),
   phone: text("phone"),
   reason: text("reason").notNull(),
-  date: timestamp("date").notNull(),
+  date: date("date").notNull(),
   slotId: integer("slot_id"),
   startTime: text("start_time"),
   endTime: text("end_time"),

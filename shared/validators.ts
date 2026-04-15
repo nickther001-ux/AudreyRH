@@ -32,7 +32,7 @@ export type Appointment = {
   email: string;
   phone: string | null;
   reason: string;
-  date: Date;
+  date: string;
   slotId: number | null;
   startTime: string | null;
   endTime: string | null;
