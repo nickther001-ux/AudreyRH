@@ -263,13 +263,15 @@ export async function registerRoutes(
       const { db } = await import('./db');
       const { availabilitySlots } = await import('@shared/schema');
       const { gte, and, isNotNull } = await import('drizzle-orm');
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
+      // Use explicit UTC midnight so the comparison is timezone-safe regardless of server TZ
+      const now = new Date();
+      const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
       const slots = await db
         .select()
         .from(availabilitySlots)
         .where(and(isNotNull(availabilitySlots.date), gte(availabilitySlots.date, today)))
         .orderBy(availabilitySlots.date);
+      console.log(`[Slots] Admin fetch: ${slots.length} slot(s) from UTC ${today.toISOString()}`);
       res.json(slots);
     } catch (err) {
       console.error('Error fetching admin availability slots:', err);
@@ -347,7 +349,9 @@ export async function registerRoutes(
   app.post(api.availability.create.path, async (req, res) => {
     try {
       const input = api.availability.create.input.parse(req.body);
+      console.log(`[Slots] Creating slot — raw date from client: ${input.date?.toISOString?.() ?? input.date}, startTime: ${input.startTime}, endTime: ${input.endTime}`);
       const slot = await storage.createAvailabilitySlot(input);
+      console.log(`[Slots] Slot created — id: ${slot.id}, normalized date: ${slot.date}`);
       res.status(201).json(slot);
     } catch (err) {
       if (err instanceof z.ZodError) {
@@ -356,8 +360,9 @@ export async function registerRoutes(
           field: err.errors[0].path.join('.'),
         });
       }
-      console.error('Error creating availability slot:', err);
-      res.status(500).json({ message: 'Failed to create availability slot' });
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error('[Slots] Error creating slot:', msg, err);
+      res.status(500).json({ message: `Impossible d'ajouter le créneau: ${msg}` });
     }
   });
 

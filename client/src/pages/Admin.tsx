@@ -558,19 +558,38 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
   const { mutate: createSlot, isPending: isCreating } = useMutation({
     mutationFn: async (data: InsertAvailabilitySlot) => {
-      const res = await apiRequest("POST", "/api/availability", data);
-      return res.json();
+      const res = await fetch("/api/availability", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(data),
+      });
+      const json = await res.json().catch(() => null);
+      if (!res.ok) {
+        throw new Error(json?.message ?? `Erreur serveur (${res.status})`);
+      }
+      return json;
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/availability"] });
+    onSuccess: (newSlot) => {
+      queryClient.refetchQueries({ queryKey: ["/api/admin/availability"] });
       queryClient.invalidateQueries({ queryKey: ["/api/availability"] });
       setJustAdded(true);
-      setTimeout(() => setJustAdded(false), 4000);
+      setTimeout(() => setJustAdded(false), 5000);
       const nextDate = selectedDate ?? addDays(startOfDay(new Date()), 1);
       form.reset({ date: nextDate, startTime: "09:00", endTime: "10:00" });
+      toast({
+        title: "Créneau ajouté ✓",
+        description: newSlot?.startTime && newSlot?.endTime
+          ? `${newSlot.startTime} – ${newSlot.endTime} enregistré avec succès.`
+          : "Le créneau a été enregistré.",
+      });
     },
     onError: (err: Error) => {
-      toast({ title: t("admin.error"), description: err?.message || t("admin.errorAdd"), variant: "destructive" });
+      toast({
+        title: "Erreur — Créneau non ajouté",
+        description: err?.message || t("admin.errorAdd"),
+        variant: "destructive",
+      });
     },
   });
 

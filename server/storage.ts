@@ -62,16 +62,22 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createAvailabilitySlot(slot: InsertAvailabilitySlot): Promise<AvailabilitySlot> {
+    // Normalize to noon UTC so the date is never shifted by timezone offsets
+    const raw = new Date(slot.date);
+    const normalizedDate = new Date(Date.UTC(
+      raw.getUTCFullYear(), raw.getUTCMonth(), raw.getUTCDate(), 12, 0, 0, 0
+    ));
     const [created] = await db
       .insert(availabilitySlots)
-      .values(slot)
+      .values({ ...slot, date: normalizedDate })
       .returning();
     return created;
   }
 
   async getAvailableSlots(): Promise<AvailabilitySlot[]> {
     const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    // Use UTC midnight for timezone-safe comparison
+    const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
     
     // Get all unbooked slots from today onwards
     const slots = await db
@@ -94,9 +100,10 @@ export class DatabaseStorage implements IStorage {
     
     return slots.filter(slot => {
       const slotDate = new Date(slot.date);
-      const isSameDay = slotDate.getFullYear() === now.getFullYear() && 
-                        slotDate.getMonth() === now.getMonth() && 
-                        slotDate.getDate() === now.getDate();
+      // Compare UTC date parts since slots are stored at noon UTC
+      const isSameDay = slotDate.getUTCFullYear() === now.getUTCFullYear() && 
+                        slotDate.getUTCMonth() === now.getUTCMonth() && 
+                        slotDate.getUTCDate() === now.getUTCDate();
       
       // If same day, only show slots that haven't started yet
       if (isSameDay) {
