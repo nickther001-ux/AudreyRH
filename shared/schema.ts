@@ -11,7 +11,7 @@ export const appointments = pgTable("appointments", {
   startTime: text("start_time"),
   endTime: text("end_time"),
   platform: text("platform", { enum: ["zoom", "google_meet"] }).default("zoom").notNull(),
-  appointmentType: text("appointment_type", { enum: ["free_consultation", "paid_service"] }).default("paid_service").notNull(),
+  appointmentType: text("appointment_type", { enum: ["free_consultation", "paid_service", "business_consultation"] }).default("paid_service").notNull(),
   status: text("status", { enum: ["pending", "confirmed", "completed", "cancelled"] }).default("pending").notNull(),
   paymentStatus: text("payment_status", { enum: ["unpaid", "paid"] }).default("unpaid").notNull(),
   stripePaymentIntentId: text("stripe_payment_intent_id"),

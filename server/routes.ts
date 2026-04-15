@@ -13,6 +13,7 @@ export async function registerRoutes(
     try {
       const input = api.appointments.create.input.parse(req.body);
       const isFree = input.appointmentType === 'free_consultation';
+      const isBusiness = input.appointmentType === 'business_consultation';
 
       // For PAID bookings only: lock the slot atomically
       if (!isFree && input.slotId) {
@@ -50,7 +51,15 @@ export async function registerRoutes(
         return res.status(201).json({ appointment, checkoutUrl: null, type: 'free_consultation' });
       }
 
-      // ── PAID SERVICE — create Stripe checkout session ──
+      // ── PAID / BUSINESS — create Stripe checkout session ──
+      const unitAmount = isBusiness ? 25000 : 8500;
+      const productName = isBusiness
+        ? 'Consultation Entreprise — AudreyRH, CRIA'
+        : 'Consultation with Audrey Mondesir, CRIA';
+      const productDesc = isBusiness
+        ? `Stratégie RH & consultation d'affaires pour ${input.name}`
+        : `Career strategy consultation for ${input.name}`;
+
       let checkoutUrl: string | null = null;
       try {
         const { getUncachableStripeClient } = await import("./stripeClient");
@@ -62,10 +71,10 @@ export async function registerRoutes(
               price_data: {
                 currency: 'cad',
                 product_data: {
-                  name: 'Consultation with Audrey Mondesir, CRIA',
-                  description: `Career strategy consultation for ${input.name}`,
+                  name: productName,
+                  description: productDesc,
                 },
-                unit_amount: 8500,
+                unit_amount: unitAmount,
               },
               quantity: 1,
             },

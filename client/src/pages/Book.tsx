@@ -17,7 +17,7 @@ import { fr, enUS } from "date-fns/locale";
 import {
   CreditCard, Loader2, CheckCircle2, XCircle, Clock, Video,
   FileText, CalendarDays, Shield, User, Mail, Phone,
-  MessageSquare, Sparkles, Inbox, Send, HourglassIcon
+  MessageSquare, Sparkles, Inbox, Send, HourglassIcon, Briefcase
 } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
@@ -26,7 +26,7 @@ import { useLocation } from "wouter";
 import { useLanguage } from "@/lib/i18n";
 import heroBg from "@assets/stock_images/hr_strategy.jpg";
 
-type BookingMode = "free" | "paid";
+type BookingMode = "free" | "paid" | "business";
 
 // ─── Calendly embed ───────────────────────────────────────────────────────────
 const CALENDLY_URL = import.meta.env.VITE_CALENDLY_URL as string | undefined;
@@ -339,12 +339,12 @@ export default function Book() {
       phone: form.getValues("phone"),
       reason: form.getValues("reason"),
       platform: form.getValues("platform"),
-      appointmentType: newMode === "free" ? "free_consultation" : "paid_service",
+      appointmentType: newMode === "free" ? "free_consultation" : newMode === "business" ? "business_consultation" : "paid_service",
     });
   };
 
   const onSubmit = (data: InsertAppointment) => {
-    data.appointmentType = mode === "free" ? "free_consultation" : "paid_service";
+    data.appointmentType = mode === "free" ? "free_consultation" : mode === "business" ? "business_consultation" : "paid_service";
     if (selectedSlotId) {
       const slot = availableSlots.find((s) => s.id === selectedSlotId);
       if (slot) {
@@ -354,8 +354,8 @@ export default function Book() {
         data.date = parseLocalDate(slot.date);
       }
     }
-    // Paid consultations require a slot selection
-    if (mode === "paid" && !selectedSlotId) {
+    // Paid / Business consultations require a slot selection
+    if ((mode === "paid" || mode === "business") && !selectedSlotId) {
       form.setError("date", { message: t("book.selectSlotRequired") });
       return;
     }
@@ -525,7 +525,7 @@ export default function Book() {
               <p className="text-center text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-4">
                 {t("book.typeSelector.title")}
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
                 {/* Free tab */}
                 <button
                   type="button"
@@ -579,6 +579,33 @@ export default function Book() {
                     {t("book.rateValue")}
                   </span>
                 </button>
+
+                {/* Business tab */}
+                <button
+                  type="button"
+                  onClick={() => handleModeChange("business")}
+                  data-testid="tab-business-consultation"
+                  className={cn(
+                    "relative rounded-2xl border-2 p-5 text-left transition-all cursor-pointer",
+                    mode === "business"
+                      ? "border-[#1e3a5f] bg-[#1e3a5f]/5 shadow-md shadow-[#1e3a5f]/20"
+                      : "border-border bg-card hover:border-[#1e3a5f]/30 hover:bg-[#1e3a5f]/5"
+                  )}
+                >
+                  {mode === "business" && (
+                    <span className="absolute top-3 right-3 w-5 h-5 rounded-full bg-[#1e3a5f] flex items-center justify-center">
+                      <CheckCircle2 className="w-3 h-3 text-white" />
+                    </span>
+                  )}
+                  <div className="w-10 h-10 rounded-full bg-[#1e3a5f]/10 flex items-center justify-center mb-3">
+                    <Briefcase className="w-5 h-5 text-[#1e3a5f]" />
+                  </div>
+                  <p className="font-bold text-base text-foreground">{t("book.business.tab")}</p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{t("book.business.tabSub")}</p>
+                  <span className="inline-block mt-2 text-xs font-semibold text-[#1e3a5f] bg-[#1e3a5f]/10 px-2 py-0.5 rounded-full">
+                    {t("book.business.badge")}
+                  </span>
+                </button>
               </div>
             </div>
 
@@ -588,16 +615,19 @@ export default function Book() {
               {/* Left sidebar */}
               <div className="lg:col-span-4">
                 <div className="lg:sticky lg:top-24 space-y-6">
-                  <Card className={cn("overflow-hidden border-2 shadow-xl", mode === "free" ? "border-[#1e3a5f]/20" : "border-[#1e3a5f]/20")}>
-                    <div className={cn("p-6 text-white", mode === "free" ? "bg-gradient-to-br from-[#1e3a5f] to-[#0d1f3c]" : "bg-gradient-to-br from-[#1e3a5f] to-[#0d1f3c]")}>
+                  <Card className="overflow-hidden border-2 shadow-xl border-[#1e3a5f]/20">
+                    <div className="p-6 text-white bg-gradient-to-br from-[#1e3a5f] to-[#0d1f3c]">
                       <h3 className="font-bold text-xl mb-2">
-                        {mode === "free" ? t("book.free.sideTitle") : t("book.paid.sideTitle")}
+                        {mode === "free" ? t("book.free.sideTitle") : mode === "business" ? t("book.business.sideTitle") : t("book.paid.sideTitle")}
                       </h3>
                       <p className="text-white/80 text-sm">
-                        {mode === "free" ? t("book.free.sideDesc") : t("book.paid.sideDesc")}
+                        {mode === "free" ? t("book.free.sideDesc") : mode === "business" ? t("book.business.sideDesc") : t("book.paid.sideDesc")}
                       </p>
-                      {mode === "paid" && (
+                      {(mode === "paid") && (
                         <div className="mt-3 text-4xl font-bold" data-testid="text-price">{t("book.rateValue")}</div>
+                      )}
+                      {mode === "business" && (
+                        <div className="mt-3 text-4xl font-bold" data-testid="text-price-business">{t("book.business.badge")}</div>
                       )}
                     </div>
                     <div className="p-6 space-y-5">
@@ -608,7 +638,7 @@ export default function Book() {
                         <div>
                           <p className="font-semibold">{t("book.durationLabel")}</p>
                           <p className="text-sm text-muted-foreground">
-                            {mode === "free" ? t("book.free.duration") : t("book.durationValue")}
+                            {mode === "free" ? t("book.free.duration") : mode === "business" ? t("book.business.duration") : t("book.durationValue")}
                           </p>
                         </div>
                       </div>
@@ -621,7 +651,7 @@ export default function Book() {
                           <p className="text-sm text-muted-foreground">{t("book.formatValue")}</p>
                         </div>
                       </div>
-                      {mode === "paid" && (
+                      {(mode === "paid" || mode === "business") && (
                         <div className="flex items-start gap-4">
                           <div className="w-10 h-10 rounded-full bg-[#1e3a5f]/10 flex items-center justify-center flex-shrink-0">
                             <Shield className="w-5 h-5 text-[#1e3a5f]" />
@@ -635,13 +665,28 @@ export default function Book() {
                     </div>
                   </Card>
 
-                  {/* Preparation checklist (paid) / Info note (free) */}
+                  {/* Preparation checklist (paid/business) / Info note (free) */}
                   {mode === "free" ? (
                     <Card className="p-5 border-[#1e3a5f]/20 bg-[#1e3a5f]/5">
                       <div className="flex items-start gap-3">
                         <HourglassIcon className="w-5 h-5 text-[#1e3a5f] mt-0.5 flex-shrink-0" />
                         <p className="text-sm text-[#1e3a5f] leading-relaxed">{t("book.free.note")}</p>
                       </div>
+                    </Card>
+                  ) : mode === "business" ? (
+                    <Card className="p-6 bg-accent/30 border-accent">
+                      <div className="flex items-center gap-3 mb-4">
+                        <Briefcase className="w-5 h-5 text-[#1e3a5f]" />
+                        <h4 className="font-bold">{t("book.business.prepare")}</h4>
+                      </div>
+                      <ul className="space-y-3">
+                        {[t("book.business.prepareOrgChart"), t("book.business.prepareNeeds"), t("book.business.prepareGoals")].map((item, i) => (
+                          <li key={i} className="flex items-start gap-3">
+                            <CheckCircle2 className="w-4 h-4 text-[#1e3a5f] mt-0.5 flex-shrink-0" />
+                            <span className="text-sm text-muted-foreground">{item}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </Card>
                   ) : (
                     <Card className="p-6 bg-accent/30 border-accent">
@@ -784,7 +829,7 @@ export default function Book() {
                               ) : (
                                 <>
                                   <CreditCard className="mr-3 h-6 w-6" />
-                                  {t("book.pay")}
+                                  {mode === "business" ? t("book.business.pay") : t("book.pay")}
                                 </>
                               )}
                             </Button>

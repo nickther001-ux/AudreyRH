@@ -10,7 +10,7 @@ export const insertAppointmentSchema = z.object({
   startTime: z.string().optional(),
   endTime: z.string().optional(),
   platform: z.enum(["zoom", "google_meet"]).default("zoom"),
-  appointmentType: z.enum(["free_consultation", "paid_service"]).default("paid_service"),
+  appointmentType: z.enum(["free_consultation", "paid_service", "business_consultation"]).default("paid_service"),
 });
 
 export type InsertAppointment = z.infer<typeof insertAppointmentSchema>;
@@ -37,7 +37,7 @@ export type Appointment = {
   startTime: string | null;
   endTime: string | null;
   platform: "zoom" | "google_meet";
-  appointmentType: "free_consultation" | "paid_service";
+  appointmentType: "free_consultation" | "paid_service" | "business_consultation";
   status: "pending" | "confirmed" | "completed" | "cancelled";
   paymentStatus: "unpaid" | "paid";
   stripePaymentIntentId: string | null;
