@@ -279,6 +279,36 @@ export async function registerRoutes(
     }
   });
 
+  // Create Google Meet link and return it (standalone — does not mutate DB)
+  app.post('/api/appointments/approve', async (req, res) => {
+    try {
+      const schema = z.object({
+        name: z.string().min(1),
+        email: z.string().email(),
+        startTime: z.string().min(1),
+        endTime: z.string().min(1),
+        description: z.string().optional(),
+      });
+
+      const { name, email, startTime, endTime, description } = schema.parse(req.body);
+
+      const { createGoogleMeetEvent } = await import('./googleMeet');
+
+      const result = await createGoogleMeetEvent({
+        summary: `Consultation AudreyRH — ${name}`,
+        description: description ?? `Consultation stratégique de carrière avec ${name} (${email})`,
+        startTime,
+        endTime,
+        attendeeEmail: email,
+      });
+
+      res.json({ success: true, meetLink: result.meetLink, eventId: result.eventId, htmlLink: result.htmlLink });
+    } catch (err: any) {
+      console.error('Error creating Google Meet event:', err.message);
+      res.status(500).json({ success: false, message: err.message ?? 'Failed to create Google Meet event' });
+    }
+  });
+
   // Admin — approve appointment
   app.patch('/api/admin/appointments/:id/approve', async (req, res) => {
     const id = parseInt(req.params.id);
