@@ -1,11 +1,12 @@
 import { google } from "googleapis";
 import fs from "fs";
 import path from "path";
-import { randomUUID } from "crypto";
 
 const KEY_PATH = path.join(process.cwd(), "server", "keys", "google-service-account.json");
 
-const SCOPES = ["https://www.googleapis.com/auth/calendar.events"];
+const SCOPES = [
+  "https://www.googleapis.com/auth/meetings.space.created",
+];
 
 export interface GoogleMeetResult {
   meetLink: string;
@@ -44,55 +45,22 @@ export async function createGoogleMeetEvent(
   params: CreateMeetEventParams
 ): Promise<GoogleMeetResult> {
   const auth = getAuthClient();
-  const calendar = google.calendar({ version: "v3", auth });
+  const meet = google.meet({ version: "v2", auth });
 
-  const attendees = params.attendeeEmail
-    ? [{ email: params.attendeeEmail }]
-    : [];
+  const space = await meet.spaces.create({ requestBody: {} });
 
-  const event = await calendar.events.insert({
-    calendarId: "primary",
-    conferenceDataVersion: 1,
-    requestBody: {
-      summary: params.summary,
-      description: params.description,
-      start: {
-        dateTime: params.startTime,
-        timeZone: "America/Toronto",
-      },
-      end: {
-        dateTime: params.endTime,
-        timeZone: "America/Toronto",
-      },
-      attendees,
-      conferenceData: {
-        createRequest: {
-          requestId: randomUUID(),
-          conferenceSolutionKey: {
-            type: "hangoutsMeet",
-          },
-        },
-      },
-    },
-  });
-
-  const eventData = event.data;
-
-  const meetLink =
-    eventData.conferenceData?.entryPoints?.find(
-      (ep) => ep.entryPointType === "video"
-    )?.uri ?? eventData.hangoutLink ?? "";
+  const meetLink = space.data.meetingUri ?? "";
 
   if (!meetLink) {
     throw new Error(
-      "Google Meet link was not generated. Ensure the Google Calendar API has Meet integration enabled " +
-      "and the service account has calendar access."
+      "Google Meet link was not returned. Ensure the Meet API is enabled in Google Cloud Console " +
+      "and the service account has the meetings.space.created scope."
     );
   }
 
   return {
     meetLink,
-    eventId: eventData.id ?? "",
-    htmlLink: eventData.htmlLink ?? "",
+    eventId: space.data.name ?? "",
+    htmlLink: meetLink,
   };
 }
