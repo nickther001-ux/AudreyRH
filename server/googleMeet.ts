@@ -1,8 +1,4 @@
 import { google } from "googleapis";
-import fs from "fs";
-import path from "path";
-
-const KEY_FILE_PATH = path.join(process.cwd(), "server", "keys", "google-service-account.json");
 
 const SCOPES = [
   "https://www.googleapis.com/auth/calendar.events",
@@ -24,16 +20,11 @@ export interface CreateMeetEventParams {
 }
 
 function loadKeyFile(): { client_email: string; private_key: string } {
-  if (fs.existsSync(KEY_FILE_PATH)) {
-    return JSON.parse(fs.readFileSync(KEY_FILE_PATH, "utf-8"));
-  }
   const envJson = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
-  if (envJson) {
-    return JSON.parse(envJson);
+  if (!envJson) {
+    throw new Error("GOOGLE_SERVICE_ACCOUNT_JSON environment variable is not set.");
   }
-  throw new Error(
-    "No Google service account credentials found. Provide server/keys/google-service-account.json or set GOOGLE_SERVICE_ACCOUNT_JSON."
-  );
+  return JSON.parse(envJson);
 }
 
 function getAuthClient() {
