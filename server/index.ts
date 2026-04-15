@@ -97,8 +97,38 @@ async function fixAvailabilitySchema() {
   }
 }
 
+async function fixAppointmentsSchema() {
+  try {
+    const { pool } = await import('./db');
+    // Check the current type and nullability of appointments.date
+    const colInfo = await pool.query(`
+      SELECT data_type, is_nullable
+      FROM information_schema.columns
+      WHERE table_name = 'appointments' AND column_name = 'date'
+    `);
+    const col = colInfo.rows[0];
+    if (!col) return;
+
+    const isTimestamp = col.data_type === 'timestamp without time zone' || col.data_type === 'timestamp with time zone';
+    const isNotNull = col.is_nullable === 'NO';
+
+    if (isTimestamp) {
+      // Convert from timestamp to date type, allow nulls (free consultations have no date)
+      await pool.query("ALTER TABLE appointments ALTER COLUMN date TYPE date USING date::date");
+      console.log("[Startup] Converted appointments.date from timestamp to date");
+    }
+    if (isTimestamp || isNotNull) {
+      await pool.query("ALTER TABLE appointments ALTER COLUMN date DROP NOT NULL");
+      console.log("[Startup] Dropped NOT NULL constraint on appointments.date");
+    }
+  } catch (err: any) {
+    console.error("[Startup] fixAppointmentsSchema error:", err.message);
+  }
+}
+
 (async () => {
   await fixAvailabilitySchema();
+  await fixAppointmentsSchema();
   await initStripe();
 
   app.post(
