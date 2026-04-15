@@ -1,4 +1,4 @@
-import { db } from "./db";
+import { db, pool } from "./db";
 import {
   appointments,
   availabilitySlots,
@@ -28,10 +28,8 @@ export interface IStorage {
 
 export class DatabaseStorage implements IStorage {
   async createAppointment(insertAppointment: InsertAppointment): Promise<Appointment> {
-    // Date is optional (free consultations have no slot selected).
-    // When present, convert the Date object to a plain "yyyy-MM-dd" string to
-    // bypass Drizzle's .toISOString() serializer (produces "T...Z" that
-    // PostgreSQL DATE silently nulls).
+    // Use raw SQL to avoid any Drizzle ORM schema compilation issues
+    // that could cause wrong column names in the compiled production bundle.
     let dateString: string | null = null;
     if (insertAppointment.date) {
       const raw = new Date(insertAppointment.date as unknown as string | Date);
@@ -43,11 +41,31 @@ export class DatabaseStorage implements IStorage {
       }
     }
     console.log(`[Appointment] Inserting date="${dateString}" for ${insertAppointment.email}`);
-    const [appointment] = await db
-      .insert(appointments)
-      .values({ ...insertAppointment, date: dateString as unknown as Date })
-      .returning();
-    return appointment;
+    const { rows } = await pool.query<Appointment>(
+      `INSERT INTO appointments
+         (name, email, phone, reason, date, slot_id, start_time, end_time, platform, appointment_type)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+       RETURNING
+         id, name, email, phone, reason, date::text AS date,
+         slot_id AS "slotId", start_time AS "startTime", end_time AS "endTime",
+         platform, appointment_type AS "appointmentType",
+         status, payment_status AS "paymentStatus",
+         stripe_payment_intent_id AS "stripePaymentIntentId",
+         created_at AS "createdAt"`,
+      [
+        insertAppointment.name,
+        insertAppointment.email,
+        insertAppointment.phone ?? null,
+        insertAppointment.reason,
+        dateString,
+        insertAppointment.slotId ?? null,
+        insertAppointment.startTime ?? null,
+        insertAppointment.endTime ?? null,
+        insertAppointment.platform ?? "zoom",
+        insertAppointment.appointmentType ?? "paid_service",
+      ]
+    );
+    return rows[0];
   }
 
   async getAppointment(id: number): Promise<Appointment | undefined> {
@@ -177,12 +195,20 @@ export class DatabaseStorage implements IStorage {
     const mo = String(raw.getUTCMonth() + 1).padStart(2, "0");
     const d = String(raw.getUTCDate()).padStart(2, "0");
     const dateString = `${y}-${mo}-${d}`;
-    const [appointment] = await db
-      .update(appointments)
-      .set({ date: dateString as unknown as Date, startTime, endTime, status: "confirmed" })
-      .where(eq(appointments.id, id))
-      .returning();
-    return appointment;
+    const { rows } = await pool.query<Appointment>(
+      `UPDATE appointments
+       SET date = $1, start_time = $2, end_time = $3, status = 'confirmed'
+       WHERE id = $4
+       RETURNING
+         id, name, email, phone, reason, date::text AS date,
+         slot_id AS "slotId", start_time AS "startTime", end_time AS "endTime",
+         platform, appointment_type AS "appointmentType",
+         status, payment_status AS "paymentStatus",
+         stripe_payment_intent_id AS "stripePaymentIntentId",
+         created_at AS "createdAt"`,
+      [dateString, startTime, endTime, id]
+    );
+    return rows[0];
   }
 
   async bookSlot(id: number): Promise<AvailabilitySlot | null> {
