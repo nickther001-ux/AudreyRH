@@ -202,7 +202,7 @@ export class DatabaseStorage implements IStorage {
     const dateString = `${y}-${mo}-${d}`;
     const { rows } = await pool.query<Appointment>(
       `UPDATE appointments
-       SET date = $1, start_time = $2, end_time = $3, status = 'confirmed'
+       SET date = $1, start_time = $2, end_time = $3, status = 'confirmed', was_rescheduled = true
        WHERE id = $4
        RETURNING
          id, name, email, phone, reason, date::text AS date,
@@ -210,6 +210,7 @@ export class DatabaseStorage implements IStorage {
          platform, appointment_type AS "appointmentType",
          status, payment_status AS "paymentStatus",
          stripe_payment_intent_id AS "stripePaymentIntentId",
+         was_rescheduled AS "wasRescheduled",
          created_at AS "createdAt"`,
       [dateString, startTime, endTime, id]
     );

@@ -654,6 +654,8 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
   const pendingCount = safeAppointments.filter(a => a.status === "pending").length;
   const confirmedCount = safeAppointments.filter(a => a.status === "confirmed").length;
+  const cancelledCount = safeAppointments.filter(a => a.status === "cancelled").length;
+  const rescheduledCount = safeAppointments.filter(a => a.wasRescheduled).length;
 
   const onSubmit = async (data: InsertAvailabilitySlot) => {
     try {
@@ -764,11 +766,13 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
         <main className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
           {/* ── Stats strip ── */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3 mb-8">
             {[
               { label: "Total réservations", value: safeAppointments.length, color: "text-white" },
               { label: "En attente", value: pendingCount, color: "text-amber-300" },
               { label: "Confirmés", value: confirmedCount, color: "text-emerald-400" },
+              { label: "Annulations", value: cancelledCount, color: "text-red-400" },
+              { label: "Reprogrammés", value: rescheduledCount, color: "text-purple-400" },
               { label: "Créneaux dispo", value: Object.values(groupedSlots).flat().length, color: "text-[#93c5fd]" },
             ].map((stat) => (
               <div key={stat.label} className="rounded-xl border border-white/20 bg-[#0d1f3c]/75 backdrop-blur-md px-5 py-4">

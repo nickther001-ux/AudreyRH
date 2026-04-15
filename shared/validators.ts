@@ -41,6 +41,7 @@ export type Appointment = {
   status: "pending" | "confirmed" | "completed" | "cancelled";
   paymentStatus: "unpaid" | "paid";
   stripePaymentIntentId: string | null;
+  wasRescheduled: boolean;
   createdAt: Date;
 };
 
