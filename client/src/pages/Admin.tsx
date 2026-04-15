@@ -534,6 +534,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(addDays(new Date(), 1));
   const [justAdded, setJustAdded] = useState(false);
   const [datePopoverOpen, setDatePopoverOpen] = useState(false);
+  const [isCreating, setIsCreating] = useState(false);
 
   const {
     data: slots,
@@ -556,49 +557,6 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
     },
   });
 
-  const { mutate: createSlot, isPending: isCreating } = useMutation({
-    mutationFn: async (data: InsertAvailabilitySlot) => {
-      const dateValue = data.date instanceof Date ? data.date : new Date(data.date as unknown as string);
-      if (!isValid(dateValue)) throw new Error("Date invalide — veuillez sélectionner une date.");
-      const payload = {
-        date: dateValue.toISOString(),
-        startTime: data.startTime,
-        endTime: data.endTime,
-      };
-      const res = await fetch("/api/availability", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify(payload),
-      });
-      const json = await res.json().catch(() => null);
-      if (!res.ok) {
-        throw new Error(json?.message ?? `Erreur serveur (${res.status})`);
-      }
-      return json;
-    },
-    onSuccess: (newSlot) => {
-      queryClient.refetchQueries({ queryKey: ["/api/admin/availability"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/availability"] });
-      setJustAdded(true);
-      setTimeout(() => setJustAdded(false), 5000);
-      const nextDate = selectedDate ?? addDays(startOfDay(new Date()), 1);
-      form.reset({ date: nextDate, startTime: "09:00", endTime: "10:00" });
-      toast({
-        title: "Créneau ajouté ✓",
-        description: newSlot?.startTime && newSlot?.endTime
-          ? `${newSlot.startTime} – ${newSlot.endTime} enregistré avec succès.`
-          : "Le créneau a été enregistré.",
-      });
-    },
-    onError: (err: Error) => {
-      toast({
-        title: "Erreur — Créneau non ajouté",
-        description: err?.message || t("admin.errorAdd"),
-        variant: "destructive",
-      });
-    },
-  });
 
   const { mutate: deleteSlot, isPending: isDeleting } = useMutation({
     mutationFn: (id: number) => apiRequest("DELETE", `/api/availability/${id}`),
@@ -641,7 +599,58 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
   const pendingCount = safeAppointments.filter(a => a.status === "pending").length;
   const confirmedCount = safeAppointments.filter(a => a.status === "confirmed").length;
 
-  const onSubmit = (data: InsertAvailabilitySlot) => createSlot(data);
+  const onSubmit = async (data: InsertAvailabilitySlot) => {
+    try {
+      // ── 1. Validate & format the date as yyyy-MM-dd (never send localized strings) ──
+      const dateValue = data.date instanceof Date ? data.date : new Date(String(data.date));
+      if (!isValid(dateValue)) {
+        toast({ title: "Date invalide", description: "Veuillez sélectionner une date valide.", variant: "destructive" });
+        return;
+      }
+      const payload = {
+        date: format(dateValue, "yyyy-MM-dd"),
+        startTime: data.startTime,
+        endTime: data.endTime,
+      };
+      console.log("[AdminSlot] Submitting payload:", JSON.stringify(payload));
+
+      // ── 2. Call the API — strict error check ──
+      setIsCreating(true);
+      const res = await fetch("/api/availability", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(payload),
+      });
+      const json = await res.json().catch(() => null);
+      if (!res.ok) {
+        throw new Error(json?.message ?? `Erreur serveur (${res.status})`);
+      }
+
+      // ── 3. Success actions — only reached when server confirmed 201 ──
+      await queryClient.refetchQueries({ queryKey: ["/api/admin/availability"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/availability"] });
+      setJustAdded(true);
+      setTimeout(() => setJustAdded(false), 5000);
+      const nextDate = selectedDate ?? addDays(startOfDay(new Date()), 1);
+      form.reset({ date: nextDate, startTime: "09:00", endTime: "10:00" });
+      toast({
+        title: "Créneau ajouté ✓",
+        description: json?.startTime && json?.endTime
+          ? `${json.startTime} – ${json.endTime} enregistré avec succès.`
+          : "Le créneau a été enregistré.",
+      });
+    } catch (err: any) {
+      console.error("[AdminSlot] Error:", err?.message);
+      toast({
+        title: "Erreur — Créneau non ajouté",
+        description: err?.message || t("admin.errorAdd"),
+        variant: "destructive",
+      });
+    } finally {
+      setIsCreating(false);
+    }
+  };
 
   const calendlyUrl = import.meta.env.VITE_CALENDLY_URL as string | undefined;
 
