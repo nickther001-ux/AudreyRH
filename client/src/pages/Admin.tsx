@@ -614,6 +614,10 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
     }
   }, [allAppointments]);
 
+  useEffect(() => {
+    console.log("[Admin] slots from API:", safeSlots.length, "items", safeSlots.map(s => ({ id: s.id, date: s.date, start: s.startTime })));
+  }, [slots]);
+
   const groupedSlots = safeSlots.reduce<Record<string, AvailabilitySlot[]>>((acc, slot) => {
     if (!slot?.date) return acc;
     const dateKey = safeFormat(slot.date, "yyyy-MM-dd");
@@ -693,7 +697,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
               { label: "Total réservations", value: safeAppointments.length, color: "text-white" },
               { label: "En attente", value: pendingCount, color: "text-amber-300" },
               { label: "Confirmés", value: confirmedCount, color: "text-emerald-400" },
-              { label: "Créneaux dispo", value: safeSlots.length, color: "text-[#93c5fd]" },
+              { label: "Créneaux dispo", value: Object.values(groupedSlots).flat().length, color: "text-[#93c5fd]" },
             ].map((stat) => (
               <div key={stat.label} className="rounded-xl border border-white/20 bg-[#0d1f3c]/75 backdrop-blur-md px-5 py-4">
                 <p className="text-xs font-semibold text-white/50 uppercase tracking-wider mb-1">{stat.label}</p>

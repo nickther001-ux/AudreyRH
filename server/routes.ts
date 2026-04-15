@@ -257,21 +257,11 @@ export async function registerRoutes(
     }
   });
 
-  // Admin — list ALL availability slots (no time/date filtering)
+  // Admin — list upcoming availability slots (future-only, null-date-safe)
   app.get('/api/admin/availability', async (req, res) => {
     try {
-      const { db } = await import('./db');
-      const { availabilitySlots } = await import('@shared/schema');
-      const { gte, and, isNotNull } = await import('drizzle-orm');
-      // Use explicit UTC midnight so the comparison is timezone-safe regardless of server TZ
-      const now = new Date();
-      const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
-      const slots = await db
-        .select()
-        .from(availabilitySlots)
-        .where(and(isNotNull(availabilitySlots.date), gte(availabilitySlots.date, today)))
-        .orderBy(availabilitySlots.date);
-      console.log(`[Slots] Admin fetch: ${slots.length} slot(s) from UTC ${today.toISOString()}`);
+      const slots = await storage.getAdminSlots();
+      console.log(`[Slots] Admin fetch: ${slots.length} slot(s)`);
       res.json(slots);
     } catch (err) {
       console.error('Error fetching admin availability slots:', err);

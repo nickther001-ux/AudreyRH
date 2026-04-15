@@ -19,6 +19,7 @@ export interface IStorage {
   // Availability
   createAvailabilitySlot(slot: InsertAvailabilitySlot): Promise<AvailabilitySlot>;
   getAvailableSlots(): Promise<AvailabilitySlot[]>;
+  getAdminSlots(): Promise<AvailabilitySlot[]>;
   getAvailabilitySlot(id: number): Promise<AvailabilitySlot | undefined>;
   deleteAvailabilitySlot(id: number): Promise<void>;
   bookSlot(id: number): Promise<AvailabilitySlot | null>;
@@ -112,6 +113,16 @@ export class DatabaseStorage implements IStorage {
       }
       return true;
     });
+  }
+
+  async getAdminSlots(): Promise<AvailabilitySlot[]> {
+    const now = new Date();
+    const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 0, 0, 0, 0));
+    return db
+      .select()
+      .from(availabilitySlots)
+      .where(and(isNotNull(availabilitySlots.date), gte(availabilitySlots.date, today)))
+      .orderBy(availabilitySlots.date);
   }
 
   async getAvailabilitySlot(id: number): Promise<AvailabilitySlot | undefined> {
