@@ -53,6 +53,7 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - Footer: near-black background (via --foreground)
 
 ## Recent Changes
+- 2026-04-15: Redesigned contact notification email (sendSimpleContactEmail) — replaced dense dark navy template with clean light layout: light gray page wrapper (#f0f2f5), white card, forest green (#239b56) header, organized De/Sujet/Message cards with green left-border accent on message, green reply button. Also fixed Admin.tsx parseLocalDate to be null-safe and added debug useEffect console.log for raw appointment data.
 - 2026-04-14: Fixed /book blank page in production — production DB had availability slots with `date: null`. Fixed `parseLocalDate()` to guard against null, added `if (!slot.date) return acc` in SlotPicker reduce, and added `isNotNull(availabilitySlots.date)` to both public and admin availability queries to exclude null-dated slots at DB level.
 - 2026-04-14: Fixed contact form 500 in production — `resend` added to server bundle allowlist (was incorrectly treated as external, failing silently in deployed env). Also fixed missing `emailWrapperClose` in `sendSimpleContactEmail`.
 - 2026-04-14: Admin major overhaul — beach AVIF background, midnight blue palette, stats strip, approve/reject/reschedule buttons with email notifications, reschedule dialog with controlled calendar popover, logout button, Calendly section

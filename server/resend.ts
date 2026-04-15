@@ -498,18 +498,88 @@ export type SimpleContactData = {
 
 export async function sendSimpleContactEmail(data: SimpleContactData) {
   const client = getClient();
-  const html = `${emailWrapperOpen(560)}
-${compactHeader('AudreyRH · Message reçu', 'Nouveau message depuis la page Contact')}
+  const html = `<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+</head>
+<body style="margin:0;padding:0;background:#f0f2f5;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f0f2f5;padding:40px 0;">
+    <tr><td align="center">
+      <table width="560" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,0.08);">
+
+        <!-- Header -->
         <tr>
-          <td style="padding:28px 36px 36px;">
-            ${fieldRow('De', `${data.name} &lt;${data.email}&gt;`)}
-            ${fieldRow('Sujet', data.type)}
-            ${fieldBox('Message', data.message)}
-            ${ctaButton(`mailto:${data.email}`, `Répondre à ${data.name}`)}
+          <td style="background:#239b56;padding:24px 32px;">
+            <p style="margin:0;font-size:11px;font-weight:700;color:rgba(255,255,255,0.75);letter-spacing:2px;text-transform:uppercase;">AudreyRH · Message reçu</p>
+            <p style="margin:6px 0 0;font-size:20px;font-weight:700;color:#ffffff;line-height:1.3;">Nouveau message depuis la page Contact</p>
           </td>
         </tr>
-${emailFooter()}
-${emailWrapperClose}`;
+
+        <!-- Body -->
+        <tr>
+          <td style="padding:32px;">
+
+            <!-- De -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+              <tr>
+                <td style="background:#f8faf8;border:1px solid #e2e8e2;border-radius:8px;padding:14px 18px;">
+                  <p style="margin:0 0 3px;font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:1px;">De</p>
+                  <p style="margin:0;font-size:15px;font-weight:600;color:#111827;">${data.name} &lt;<a href="mailto:${data.email}" style="color:#239b56;text-decoration:none;">${data.email}</a>&gt;</p>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Sujet -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:16px;">
+              <tr>
+                <td style="background:#f8faf8;border:1px solid #e2e8e2;border-radius:8px;padding:14px 18px;">
+                  <p style="margin:0 0 3px;font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:1px;">Sujet</p>
+                  <p style="margin:0;font-size:15px;font-weight:600;color:#111827;">${data.type}</p>
+                </td>
+              </tr>
+            </table>
+
+            <!-- Message -->
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+              <tr>
+                <td style="background:#f8faf8;border:1px solid #e2e8e2;border-left:4px solid #239b56;border-radius:8px;padding:16px 18px;">
+                  <p style="margin:0 0 6px;font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:1px;">Message</p>
+                  <p style="margin:0;font-size:15px;color:#1f2937;line-height:1.65;white-space:pre-wrap;">${data.message}</p>
+                </td>
+              </tr>
+            </table>
+
+            <!-- CTA -->
+            <table cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="background:#239b56;border-radius:8px;">
+                  <a href="mailto:${data.email}" style="display:inline-block;padding:13px 28px;font-size:14px;font-weight:700;color:#ffffff;text-decoration:none;letter-spacing:0.2px;">Répondre à ${data.name}</a>
+                </td>
+              </tr>
+            </table>
+
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background:#f8faf8;border-top:1px solid #e5e7eb;padding:20px 32px;text-align:center;">
+            <p style="margin:0 0 4px;font-size:12px;font-weight:700;color:#374151;">AudreyRH</p>
+            <p style="margin:0;font-size:11px;color:#9ca3af;">
+              Montréal, Québec &nbsp;·&nbsp;
+              <a href="mailto:info@audreyrh.com" style="color:#9ca3af;text-decoration:none;">info@audreyrh.com</a> &nbsp;·&nbsp;
+              <a href="https://audreyrh.com" style="color:#239b56;text-decoration:none;">audreyrh.com</a>
+            </p>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`;
 
   console.log('[Resend] Sending simple contact email to Audrey from:', data.email);
   const r = await client.emails.send({
