@@ -28,16 +28,20 @@ export interface IStorage {
 
 export class DatabaseStorage implements IStorage {
   async createAppointment(insertAppointment: InsertAppointment): Promise<Appointment> {
-    // Convert the Date object to a plain "yyyy-MM-dd" string so Drizzle does not
-    // call .toISOString() (which produces "T...Z" that PostgreSQL DATE silently nulls).
-    const raw = new Date(insertAppointment.date as unknown as string | Date);
-    if (isNaN(raw.getTime())) {
-      throw new Error(`Invalid appointment date: ${insertAppointment.date}`);
+    // Date is optional (free consultations have no slot selected).
+    // When present, convert the Date object to a plain "yyyy-MM-dd" string to
+    // bypass Drizzle's .toISOString() serializer (produces "T...Z" that
+    // PostgreSQL DATE silently nulls).
+    let dateString: string | null = null;
+    if (insertAppointment.date) {
+      const raw = new Date(insertAppointment.date as unknown as string | Date);
+      if (!isNaN(raw.getTime())) {
+        const y = raw.getUTCFullYear();
+        const m = String(raw.getUTCMonth() + 1).padStart(2, "0");
+        const d = String(raw.getUTCDate()).padStart(2, "0");
+        dateString = `${y}-${m}-${d}`;
+      }
     }
-    const y = raw.getUTCFullYear();
-    const m = String(raw.getUTCMonth() + 1).padStart(2, "0");
-    const d = String(raw.getUTCDate()).padStart(2, "0");
-    const dateString = `${y}-${m}-${d}`;
     console.log(`[Appointment] Inserting date="${dateString}" for ${insertAppointment.email}`);
     const [appointment] = await db
       .insert(appointments)

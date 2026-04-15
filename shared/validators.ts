@@ -5,7 +5,7 @@ export const insertAppointmentSchema = z.object({
   email: z.string().email("Invalid email address"),
   phone: z.string().optional(),
   reason: z.string().min(1, "Reason is required"),
-  date: z.coerce.date(),
+  date: z.coerce.date().optional(),
   slotId: z.number().optional(),
   startTime: z.string().optional(),
   endTime: z.string().optional(),
@@ -32,7 +32,7 @@ export type Appointment = {
   email: string;
   phone: string | null;
   reason: string;
-  date: string;
+  date: string | null;
   slotId: number | null;
   startTime: string | null;
   endTime: string | null;

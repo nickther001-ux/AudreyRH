@@ -351,7 +351,13 @@ export default function Book() {
         data.slotId = slot.id;
         data.startTime = slot.startTime;
         data.endTime = slot.endTime;
+        data.date = parseLocalDate(slot.date);
       }
+    }
+    // Paid consultations require a slot selection
+    if (mode === "paid" && !selectedSlotId) {
+      form.setError("date", { message: t("book.selectSlotRequired") });
+      return;
     }
     mutate(data);
   };

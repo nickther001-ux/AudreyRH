@@ -21,11 +21,8 @@ export function useCreateAppointment(options: UseCreateAppointmentOptions = {}) 
       });
 
       if (!res.ok) {
-        if (res.status === 400) {
-          const error = await res.json();
-          throw new Error(error.message || "Validation failed");
-        }
-        throw new Error("Failed to create appointment");
+        const errBody = await res.json().catch(() => null);
+        throw new Error(errBody?.message || `Erreur ${res.status} — veuillez réessayer.`);
       }
 
       const result = await res.json();
