@@ -1,8 +1,4 @@
 import { google } from "googleapis";
-import fs from "fs";
-import path from "path";
-
-const KEY_PATH = path.join(process.cwd(), "server", "keys", "google-service-account.json");
 
 const SCOPES = [
   "https://www.googleapis.com/auth/calendar.events",
@@ -24,19 +20,16 @@ export interface CreateMeetEventParams {
 }
 
 function getAuthClient() {
-  if (!fs.existsSync(KEY_PATH)) {
-    throw new Error(
-      `Google service account key not found at ${KEY_PATH}.`
-    );
+  const keyJson = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
+  if (!keyJson) {
+    throw new Error("GOOGLE_SERVICE_ACCOUNT_JSON environment variable is not set.");
   }
 
-  const keyFile = JSON.parse(fs.readFileSync(KEY_PATH, "utf-8"));
+  const keyFile = JSON.parse(keyJson);
 
   const calendarId = process.env.GOOGLE_CALENDAR_ID;
   if (!calendarId) {
-    throw new Error(
-      "GOOGLE_CALENDAR_ID environment variable is not set."
-    );
+    throw new Error("GOOGLE_CALENDAR_ID environment variable is not set.");
   }
 
   const auth = new google.auth.JWT({
@@ -54,7 +47,6 @@ export async function createGoogleMeetEvent(
   const { auth, calendarId } = getAuthClient();
   const calendar = google.calendar({ version: "v3", auth });
 
-  // Create the calendar event without conferenceData (works with personal Gmail)
   const event = await calendar.events.insert({
     calendarId,
     requestBody: {
@@ -68,16 +60,11 @@ export async function createGoogleMeetEvent(
         dateTime: params.endTime,
         timeZone: "America/Toronto",
       },
-      // Use the GOOGLE_MEET_LINK env var if set (a pre-created standing Meet room).
-      // This is the reliable approach for personal Gmail accounts since the Calendar API
-      // conferenceData.createRequest only works with Google Workspace accounts.
       location: process.env.GOOGLE_MEET_LINK ?? "Zoom / Google Meet (lien envoyé par courriel)",
     },
   });
 
   const eventData = event.data;
-
-  // Return the standing Meet link from env, or fall back to the calendar event URL
   const meetLink = process.env.GOOGLE_MEET_LINK ?? eventData.htmlLink ?? "";
 
   return {
