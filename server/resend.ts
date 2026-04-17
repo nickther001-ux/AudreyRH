@@ -349,17 +349,15 @@ ${emailWrapperClose}`;
 export async function sendLeadNotification(data: { email: string; summary: string; segment?: string | null }) {
   const client = getClient();
 
-  const segmentLabel = data.segment === 'Business'
-    ? '🏢 Entreprise'
-    : data.segment === 'Individual'
-    ? '👤 Particulier'
-    : '❓ Non identifié';
-
-  const segmentColor = data.segment === 'Business'
-    ? '#93c5fd'
-    : data.segment === 'Individual'
-    ? '#4ade80'
-    : 'rgba(255,255,255,0.4)';
+  const segmentMap: Record<string, { label: string; color: string }> = {
+    Business:        { label: '🏢 Entreprise',        color: '#93c5fd' },
+    Individual:      { label: '👤 Particulier',       color: '#4ade80' },
+    'Hybrid-Artist': { label: '🎨 Hybride — Artiste', color: '#f59e0b' },
+    'Hybrid-Founder':{ label: '🚀 Hybride — Fondateur', color: '#a78bfa' },
+  };
+  const seg = data.segment ? segmentMap[data.segment] : null;
+  const segmentLabel = seg?.label ?? '❓ Non identifié';
+  const segmentColor = seg?.color ?? 'rgba(255,255,255,0.4)';
 
   const html = `${emailWrapperOpen(520)}
 ${compactHeader('AudreyRH · Chat IA — Amara', 'Nouveau lead capturé via le chat')}

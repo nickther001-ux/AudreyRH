@@ -28,7 +28,7 @@ export function AIChatWidget() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [leadSaved, setLeadSaved] = useState(false);
-  const [segment, setSegment] = useState<"Individual" | "Business" | null>(null);
+  const [segment, setSegment] = useState<"Individual" | "Business" | "Hybrid-Artist" | "Hybrid-Founder" | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -49,29 +49,50 @@ export function AIChatWidget() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
-  function detectSegment(msgs: Message[]): "Individual" | "Business" | null {
+  function detectSegment(msgs: Message[]): "Individual" | "Business" | "Hybrid-Artist" | "Hybrid-Founder" | null {
     const fullText = msgs.map((m) => m.content).join(" ").toLowerCase();
+
+    const artistSignals = [
+      "artiste", "artist", "créateur", "creator", "musicien", "musician",
+      "auteur", "author", "photographe", "photographer", "peintre", "painter",
+      "designer indépendant", "freelance designer", "galerie", "gallery",
+      "œuvre", "oeuvre", "diffusion", "résidence", "calq", "conseil des arts",
+      "arts council", "droit d'auteur", "copyright", "cachet",
+    ];
+    const founderSignals = [
+      "startup", "fondateur", "founder", "entrepreneur", "je lance",
+      "on lance", "lancer mon", "lancer une", "mon projet d'entreprise",
+      "ma startup", "my startup", "my business", "scalabilité", "scalable",
+      "première embauche", "first hire", "solopreneur", "solo entrepreneur",
+      "travailleur autonome", "self-employed", "incorporated", "incorporé",
+    ];
     const businessSignals = [
-      "entreprise", "pme", "organisation", "organisme", "employé", "employés",
-      "recrutement", "recruter", "audit rh", "audit", "subvention entreprise",
-      "ressources humaines", "rh corporatif", "conformité", "talent",
-      "company", "business", "employees", "hr ", "human resources",
-      "corporate", "hiring", "recruit", "workforce", "staff",
-      "stratégie corporative", "corporate strategy",
+      "pme", "employés", "nos employés", "mes employés", "audit rh",
+      "audit", "conformité", "ressources humaines", "rh corporatif",
+      "recrutement structuré", "département rh", "hr department",
+      "employees", "workforce", "staff", "corporate", "organisation",
+      "organisme", "subvention entreprise", "enterprise", "company with",
     ];
     const individualSignals = [
-      "cv", "curriculum", "resume", "emploi", "job", "carrière", "career",
-      "diplôme", "diploma", "degree", "immigration", "immigrant", "arrivant",
-      "nouvel arrivant", "newcomer", "linkedin", "entretien", "interview",
-      "cherche un emploi", "looking for a job", "recherche d'emploi",
-      "job search", "travail", "work permit", "permis de travail",
+      "cv", "curriculum", "resume", "emploi", "carrière", "career",
+      "diplôme", "diploma", "degree", "immigration", "immigrant",
+      "arrivant", "nouvel arrivant", "newcomer", "linkedin", "entretien",
+      "interview", "recherche d'emploi", "job search", "travail",
+      "permis de travail", "work permit", "mon emploi", "my job",
+      "cherche un emploi", "looking for a job", "find a job",
     ];
 
-    const bizScore = businessSignals.filter((w) => fullText.includes(w)).length;
-    const indScore = individualSignals.filter((w) => fullText.includes(w)).length;
+    const scores = {
+      "Hybrid-Artist":  artistSignals.filter((w) => fullText.includes(w)).length,
+      "Hybrid-Founder": founderSignals.filter((w) => fullText.includes(w)).length,
+      "Business":       businessSignals.filter((w) => fullText.includes(w)).length,
+      "Individual":     individualSignals.filter((w) => fullText.includes(w)).length,
+    } as const;
 
-    if (bizScore === 0 && indScore === 0) return null;
-    return bizScore >= indScore ? "Business" : "Individual";
+    const best = (Object.keys(scores) as Array<keyof typeof scores>)
+      .reduce((a, b) => scores[a] >= scores[b] ? a : b);
+
+    return scores[best] === 0 ? null : best;
   }
 
   async function captureLead(email: string, currentMessages: Message[]) {
