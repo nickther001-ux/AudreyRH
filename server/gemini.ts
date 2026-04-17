@@ -46,9 +46,7 @@ export type ChatMessage = {
   content: string;
 };
 
-export async function generateChatResponse(
-  messages: ChatMessage[]
-): Promise<string> {
+async function attempt(messages: ChatMessage[]): Promise<string> {
   const client = getClient();
 
   const history = messages.slice(0, -1).map((m) => ({
@@ -73,4 +71,30 @@ export async function generateChatResponse(
   });
 
   return response.text ?? "";
+}
+
+export async function generateChatResponse(
+  messages: ChatMessage[],
+  retries = 3,
+  delayMs = 1500
+): Promise<string> {
+  for (let i = 0; i < retries; i++) {
+    try {
+      return await attempt(messages);
+    } catch (err: any) {
+      const isTransient =
+        err?.status === 503 ||
+        err?.message?.includes("503") ||
+        err?.message?.includes("UNAVAILABLE") ||
+        err?.message?.includes("high demand");
+      if (isTransient && i < retries - 1) {
+        console.warn(`[Gemini] Transient error (attempt ${i + 1}/${retries}), retrying in ${delayMs}ms…`);
+        await new Promise((r) => setTimeout(r, delayMs));
+        delayMs *= 2; // exponential back-off
+        continue;
+      }
+      throw err;
+    }
+  }
+  throw new Error("Gemini unavailable after retries");
 }

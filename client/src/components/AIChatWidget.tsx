@@ -87,20 +87,31 @@ export function AIChatWidget() {
         body: JSON.stringify({ messages: newMessages }),
       });
       const data = await res.json();
+
+      if (!res.ok) {
+        const isBusy = res.status === 503 || (data.message ?? "").includes("503") || (data.message ?? "").includes("UNAVAILABLE");
+        throw new Error(isBusy ? "busy" : "error");
+      }
+
       const reply = data.reply || (language === "fr" ? "Désolée, une erreur s'est produite." : "Sorry, an error occurred.");
       setMessages([...newMessages, { role: "model", content: reply }]);
 
       // Check if reply contains an email too
       const replyEmail = reply.match(EMAIL_REGEX);
       if (replyEmail) captureLead(replyEmail[0]);
-    } catch {
+    } catch (err: any) {
+      const isBusy = err?.message === "busy";
       setMessages([
         ...newMessages,
         {
           role: "model",
-          content: language === "fr"
-            ? "Désolée, je ne suis pas disponible en ce moment. Écrivez-nous à info@audreyrh.com"
-            : "Sorry, I'm unavailable right now. Email us at info@audreyrh.com",
+          content: isBusy
+            ? (language === "fr"
+                ? "Je suis très sollicitée en ce moment ! Réessayez dans quelques secondes, ou écrivez-nous à info@audreyrh.com 😊"
+                : "I'm very busy right now! Try again in a few seconds, or email us at info@audreyrh.com 😊")
+            : (language === "fr"
+                ? "Désolée, une erreur s'est produite. Écrivez-nous à info@audreyrh.com"
+                : "Sorry, an error occurred. Email us at info@audreyrh.com"),
         },
       ]);
     } finally {
