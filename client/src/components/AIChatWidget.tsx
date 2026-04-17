@@ -8,8 +8,8 @@ type Message = {
 };
 
 const WELCOME = {
-  fr: "Bonjour ! 👋 Je suis l'assistante virtuelle d'AudreyRH. Comment puis-je vous aider dans votre parcours professionnel aujourd'hui ?",
-  en: "Hello! 👋 I'm AudreyRH's virtual assistant. How can I help you with your career journey today?",
+  fr: "Bonjour ! 👋 Je suis Amara, l'assistante virtuelle d'AudreyRH. Comment puis-je vous aider dans votre parcours professionnel aujourd'hui ?",
+  en: "Hello! 👋 I'm Amara, AudreyRH's virtual assistant. How can I help you with your career journey today?",
 };
 
 const PLACEHOLDER = {
@@ -165,9 +165,9 @@ export function AIChatWidget() {
             <Bot className="w-5 h-5 text-[#93c5fd]" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-white font-bold text-sm leading-tight">AudreyRH</p>
+            <p className="text-white font-bold text-sm leading-tight">Amara</p>
             <p className="text-[#93c5fd] text-xs leading-tight">
-              {language === "fr" ? "Assistante virtuelle · En ligne" : "Virtual assistant · Online"}
+              {language === "fr" ? "Assistante AudreyRH · En ligne" : "AudreyRH assistant · Online"}
             </p>
           </div>
           <button
