@@ -28,6 +28,7 @@ export function AIChatWidget() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [leadSaved, setLeadSaved] = useState(false);
+  const [segment, setSegment] = useState<"Individual" | "Business" | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -48,16 +49,43 @@ export function AIChatWidget() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
 
-  async function captureLead(email: string) {
+  function detectSegment(msgs: Message[]): "Individual" | "Business" | null {
+    const fullText = msgs.map((m) => m.content).join(" ").toLowerCase();
+    const businessSignals = [
+      "entreprise", "pme", "organisation", "organisme", "employé", "employés",
+      "recrutement", "recruter", "audit rh", "audit", "subvention entreprise",
+      "ressources humaines", "rh corporatif", "conformité", "talent",
+      "company", "business", "employees", "hr ", "human resources",
+      "corporate", "hiring", "recruit", "workforce", "staff",
+      "stratégie corporative", "corporate strategy",
+    ];
+    const individualSignals = [
+      "cv", "curriculum", "resume", "emploi", "job", "carrière", "career",
+      "diplôme", "diploma", "degree", "immigration", "immigrant", "arrivant",
+      "nouvel arrivant", "newcomer", "linkedin", "entretien", "interview",
+      "cherche un emploi", "looking for a job", "recherche d'emploi",
+      "job search", "travail", "work permit", "permis de travail",
+    ];
+
+    const bizScore = businessSignals.filter((w) => fullText.includes(w)).length;
+    const indScore = individualSignals.filter((w) => fullText.includes(w)).length;
+
+    if (bizScore === 0 && indScore === 0) return null;
+    return bizScore >= indScore ? "Business" : "Individual";
+  }
+
+  async function captureLead(email: string, currentMessages: Message[]) {
     if (leadSaved) return;
-    const summary = messages
+    const detectedSegment = detectSegment(currentMessages);
+    if (detectedSegment) setSegment(detectedSegment);
+    const summary = currentMessages
       .map((m) => `${m.role === "user" ? "Visiteur" : "Assistante"}: ${m.content}`)
       .join("\n");
     try {
       await fetch("/api/chat/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, summary }),
+        body: JSON.stringify({ email, summary, segment: detectedSegment }),
       });
       setLeadSaved(true);
     } catch {
@@ -74,10 +102,10 @@ export function AIChatWidget() {
     setMessages(newMessages);
     setLoading(true);
 
-    // Capture lead if email detected
+    // Capture lead if email detected in user message
     const emailMatch = text.match(EMAIL_REGEX);
     if (emailMatch) {
-      captureLead(emailMatch[0]);
+      captureLead(emailMatch[0], newMessages);
     }
 
     try {
@@ -94,11 +122,12 @@ export function AIChatWidget() {
       }
 
       const reply = data.reply || (language === "fr" ? "Désolée, une erreur s'est produite." : "Sorry, an error occurred.");
-      setMessages([...newMessages, { role: "model", content: reply }]);
+      const finalMessages: Message[] = [...newMessages, { role: "model", content: reply }];
+      setMessages(finalMessages);
 
-      // Check if reply contains an email too
+      // Check if reply contains an email too (rare, but handle it)
       const replyEmail = reply.match(EMAIL_REGEX);
-      if (replyEmail) captureLead(replyEmail[0]);
+      if (replyEmail) captureLead(replyEmail[0], finalMessages);
     } catch (err: any) {
       const isBusy = err?.message === "busy";
       setMessages([

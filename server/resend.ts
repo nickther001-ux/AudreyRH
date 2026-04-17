@@ -346,12 +346,30 @@ ${emailWrapperClose}`;
 
 // ─── AI Chat Lead Notification ───────────────────────────────────────────────
 
-export async function sendLeadNotification(data: { email: string; summary: string }) {
+export async function sendLeadNotification(data: { email: string; summary: string; segment?: string | null }) {
   const client = getClient();
+
+  const segmentLabel = data.segment === 'Business'
+    ? '🏢 Entreprise'
+    : data.segment === 'Individual'
+    ? '👤 Particulier'
+    : '❓ Non identifié';
+
+  const segmentColor = data.segment === 'Business'
+    ? '#93c5fd'
+    : data.segment === 'Individual'
+    ? '#4ade80'
+    : 'rgba(255,255,255,0.4)';
+
   const html = `${emailWrapperOpen(520)}
-${compactHeader('AudreyRH · Chat IA', 'Nouveau lead capturé via le chat')}
+${compactHeader('AudreyRH · Chat IA — Amara', 'Nouveau lead capturé via le chat')}
         <tr>
           <td style="padding:24px 32px 32px;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:14px;">
+              <tr><td style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);border-radius:8px;padding:10px 18px;display:flex;align-items:center;gap:8px;">
+                <p style="margin:0;font-size:13px;font-weight:700;color:${segmentColor};">${segmentLabel}</p>
+              </td></tr>
+            </table>
             ${fieldBox('Email du prospect', `<a href="mailto:${data.email}" style="color:#93c5fd;text-decoration:none;">${data.email}</a>`)}
             ${data.summary ? `<table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
               <tr><td style="background:rgba(255,255,255,0.05);border:1px solid rgba(147,197,253,0.2);border-left:3px solid #93c5fd;border-radius:0 10px 10px 0;padding:14px 18px;">
@@ -359,7 +377,7 @@ ${compactHeader('AudreyRH · Chat IA', 'Nouveau lead capturé via le chat')}
                 <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.75;">${data.summary.replace(/\n/g, '<br/>')}</p>
               </td></tr>
             </table>` : ''}
-            <p style="margin:16px 0 20px;font-size:12px;color:rgba(255,255,255,0.45);">Ce prospect a partagé son email via le chat IA sur audreyrh.com.</p>
+            <p style="margin:16px 0 20px;font-size:12px;color:rgba(255,255,255,0.45);">Ce prospect a partagé son email via Amara (chat IA) sur audreyrh.com.</p>
             ${ctaButton(`mailto:${data.email}`, `Contacter ${data.email} →`)}
           </td>
         </tr>
