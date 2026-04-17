@@ -278,22 +278,30 @@ export function AIChatWidget() {
 
         {/* Quick suggestion chips */}
         {messages.length <= 2 && (
-          <div className="px-4 pb-2 flex gap-2 overflow-x-auto shrink-0" style={{ scrollbarWidth: "none" }}>
+          <div className="px-4 pb-3 flex flex-wrap gap-2 shrink-0">
             {(language === "fr"
-              ? ["Reconnaître mon diplôme", "Tarifs & services", "Prendre RDV"]
-              : ["Recognize my degree", "Pricing & services", "Book a consultation"]
+              ? [
+                  { label: "Mon diplôme 🎓",   text: "Comment faire reconnaître mon diplôme au Québec ?" },
+                  { label: "Tarifs 💼",         text: "Quels sont vos tarifs et services ?" },
+                  { label: "Prendre RDV 📅",    text: "Je voudrais prendre un rendez-vous" },
+                ]
+              : [
+                  { label: "My diploma 🎓",     text: "How do I get my degree recognized in Quebec?" },
+                  { label: "Pricing 💼",         text: "What are your rates and services?" },
+                  { label: "Book a call 📅",     text: "I would like to book an appointment" },
+                ]
             ).map((chip) => (
               <button
-                key={chip}
-                data-testid={`chat-chip-${chip}`}
+                key={chip.label}
+                data-testid={`chat-chip-${chip.label}`}
                 onClick={() => {
-                  setInput(chip);
+                  setInput(chip.text);
                   setTimeout(() => inputRef.current?.focus(), 50);
                 }}
-                className="shrink-0 px-3 py-1.5 rounded-full text-xs font-medium text-white/80 hover:text-white transition-colors whitespace-nowrap"
+                className="px-3 py-1.5 rounded-full text-xs font-medium text-white/80 hover:text-white transition-colors whitespace-nowrap"
                 style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)" }}
               >
-                {chip}
+                {chip.label}
               </button>
             ))}
           </div>
