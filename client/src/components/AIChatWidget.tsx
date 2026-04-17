@@ -185,8 +185,8 @@ export function AIChatWidget() {
         aria-label="Ouvrir le chat"
         className="fixed z-50 bottom-6 right-6 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 focus:outline-none"
         style={{
-          background: "linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%)",
-          boxShadow: "0 4px 24px rgba(30,58,95,0.45)",
+          background: "#0d1f3c",
+          boxShadow: "0 4px 24px rgba(13,31,60,0.6)",
         }}
       >
         {open ? (
@@ -246,7 +246,7 @@ export function AIChatWidget() {
                 }`}
                 style={{
                   background: m.role === "user"
-                    ? "linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%)"
+                    ? "#0d1f3c"
                     : "rgba(255,255,255,0.07)",
                   border: m.role === "model" ? "1px solid rgba(255,255,255,0.08)" : "none",
                 }}
@@ -329,7 +329,7 @@ export function AIChatWidget() {
             disabled={!input.trim() || loading}
             className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all disabled:opacity-30 hover:scale-110 focus:outline-none"
             style={{
-              background: "linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%)",
+              background: "#0d1f3c",
             }}
           >
             <Send className="w-3.5 h-3.5 text-white" />
