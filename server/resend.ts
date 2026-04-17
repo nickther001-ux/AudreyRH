@@ -344,6 +344,39 @@ ${emailWrapperClose}`;
   if (r1.error && r2.error) throw new Error(`Both free consultation emails failed`);
 }
 
+// ─── AI Chat Lead Notification ───────────────────────────────────────────────
+
+export async function sendLeadNotification(data: { email: string; summary: string }) {
+  const client = getClient();
+  const html = `${emailWrapperOpen(520)}
+${compactHeader('AudreyRH · Chat IA', 'Nouveau lead capturé via le chat')}
+        <tr>
+          <td style="padding:24px 32px 32px;">
+            ${fieldBox('Email du prospect', `<a href="mailto:${data.email}" style="color:#93c5fd;text-decoration:none;">${data.email}</a>`)}
+            ${data.summary ? `<table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+              <tr><td style="background:rgba(255,255,255,0.05);border:1px solid rgba(147,197,253,0.2);border-left:3px solid #93c5fd;border-radius:0 10px 10px 0;padding:14px 18px;">
+                <p style="margin:0 0 6px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;">Résumé de la conversation</p>
+                <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.75;">${data.summary.replace(/\n/g, '<br/>')}</p>
+              </td></tr>
+            </table>` : ''}
+            <p style="margin:16px 0 20px;font-size:12px;color:rgba(255,255,255,0.45);">Ce prospect a partagé son email via le chat IA sur audreyrh.com.</p>
+            ${ctaButton(`mailto:${data.email}`, `Contacter ${data.email} →`)}
+          </td>
+        </tr>
+${emailFooter()}
+${emailWrapperClose}`;
+
+  const r = await client.emails.send({
+    from: FROM,
+    to: NOTIFY_TO,
+    replyTo: data.email,
+    subject: `💬 Nouveau lead chat : ${data.email}`,
+    html,
+  });
+  if (r.error) console.error('[Resend] Lead notification error:', JSON.stringify(r.error));
+  else console.log('[Resend] Lead notification sent, id:', r.data?.id);
+}
+
 // ─── Contact / grant questionnaire ──────────────────────────────────────────
 
 export type ContactEmailData = {

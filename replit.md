@@ -52,6 +52,16 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - Navbar: transparent over hero, white with green brand on scroll
 - Footer: near-black background (via --foreground)
 
+## AI Chat Widget
+- Floating chat bubble (bottom-right, navy/blue gradient) powered by Gemini 2.5 Flash
+- `server/gemini.ts` — Gemini client with Audrey's system prompt; bilingual (FR/EN auto-detect)
+- `POST /api/chat` — accepts `messages[]`, returns Gemini reply
+- `POST /api/chat/lead` — saves email + chat summary to `leads` table; triggers Resend notification to Audrey
+- `leads` table created via startup migration in `server/index.ts` (raw SQL, `CREATE TABLE IF NOT EXISTS`)
+- `client/src/components/AIChatWidget.tsx` — floating widget with message bubbles, quick-chip suggestions, auto-lead capture when user types their email
+- Widget registered globally in `App.tsx` (above `<PrivacyConsent />`)
+- `GEMINI_API_KEY` secret required (already set)
+
 ## Recent Changes
 - 2026-04-15: Added "Consultation Entreprise" third booking mode at $250 CAD — `business_consultation` appointmentType in schema/validators; Stripe checkout creates a 25000-cent CAD session; Book.tsx has 3-column tab grid with Briefcase icon, 60-90 min duration, business preparation checklist, and "Payer 250$ CAD" button; full FR/EN translations added.
 - 2026-04-15: Replaced Drizzle ORM INSERT/UPDATE for appointments with raw parameterized SQL — root cause of "column name does not exist" in production was Drizzle's compiled bundle using stale/wrong column names; raw SQL bypasses this entirely and guarantees correct column names.

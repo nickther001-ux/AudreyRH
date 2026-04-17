@@ -126,9 +126,27 @@ async function fixAppointmentsSchema() {
   }
 }
 
+async function ensureLeadsTable() {
+  try {
+    const { pool } = await import('./db');
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS leads (
+        id SERIAL PRIMARY KEY,
+        email TEXT NOT NULL,
+        summary TEXT,
+        created_at TIMESTAMP DEFAULT NOW() NOT NULL
+      )
+    `);
+    console.log("[Startup] leads table ready");
+  } catch (err: any) {
+    console.error("[Startup] ensureLeadsTable error:", err.message);
+  }
+}
+
 (async () => {
   await fixAvailabilitySchema();
   await fixAppointmentsSchema();
+  await ensureLeadsTable();
   await initStripe();
 
   app.post(

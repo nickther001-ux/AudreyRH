@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/lib/i18n";
 import { PrivacyConsent } from "@/components/PrivacyConsent";
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { AIChatWidget } from "@/components/AIChatWidget";
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
   constructor(props: { children: ReactNode }) {
@@ -143,6 +144,7 @@ function App() {
             <ScrollProgress />
             <Toaster />
             <Router />
+            <AIChatWidget />
             <PrivacyConsent />
           </ErrorBoundary>
         </TooltipProvider>

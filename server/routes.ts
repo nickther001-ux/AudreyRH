@@ -442,6 +442,47 @@ export async function registerRoutes(
   });
 
 
+  // ── AI Chat ──────────────────────────────────────────────────────────────────
+
+  app.post('/api/chat', async (req, res) => {
+    try {
+      const { messages } = req.body;
+      if (!Array.isArray(messages) || messages.length === 0) {
+        return res.status(400).json({ message: 'messages array required' });
+      }
+      const { generateChatResponse } = await import('./gemini');
+      const reply = await generateChatResponse(messages);
+      res.json({ reply });
+    } catch (err: any) {
+      console.error('[Chat] Error:', err.message);
+      res.status(500).json({ message: err.message || 'Chat error' });
+    }
+  });
+
+  app.post('/api/chat/lead', async (req, res) => {
+    try {
+      const { email, summary } = req.body;
+      if (!email || typeof email !== 'string') {
+        return res.status(400).json({ message: 'email required' });
+      }
+      const { pool } = await import('./db');
+      await pool.query(
+        'INSERT INTO leads (email, summary) VALUES ($1, $2)',
+        [email.trim().toLowerCase(), summary ?? null]
+      );
+      try {
+        const { sendLeadNotification } = await import('./resend');
+        await sendLeadNotification({ email: email.trim(), summary: summary ?? '' });
+      } catch (emailErr: any) {
+        console.error('[Chat Lead] Email error (non-fatal):', emailErr.message);
+      }
+      res.json({ success: true });
+    } catch (err: any) {
+      console.error('[Chat Lead] Error:', err.message);
+      res.status(500).json({ message: err.message || 'Lead capture error' });
+    }
+  });
+
   // Diagnostic — returns exact Resend error so we can debug production failures
   // Protected by ADMIN_PASSWORD to prevent abuse
   app.post('/api/debug/resend-test', async (req, res) => {
