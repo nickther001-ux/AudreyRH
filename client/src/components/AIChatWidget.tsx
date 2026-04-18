@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
-import { MessageCircle, X, Send, Loader2, Bot } from "lucide-react";
+import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 
 type Message = {
@@ -50,7 +50,7 @@ function renderMarkdown(text: string): React.ReactNode[] {
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline font-medium text-[#93c5fd] hover:text-white transition-colors"
+            className="underline font-semibold text-[#1e3a5f] hover:text-[#239b56] transition-colors"
           >
             {label}
           </a>
@@ -261,10 +261,7 @@ export function AIChatWidget() {
         onClick={() => setOpen((v) => !v)}
         aria-label="Ouvrir le chat"
         className="fixed z-50 bottom-6 right-6 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-110 focus:outline-none"
-        style={{
-          background: "#0d1f3c",
-          boxShadow: "0 4px 24px rgba(13,31,60,0.6)",
-        }}
+        style={{ background: "#0d1f3c", boxShadow: "0 4px 24px rgba(13,31,60,0.6)" }}
       >
         {open ? (
           <X className="w-6 h-6 text-white" />
@@ -283,20 +280,36 @@ export function AIChatWidget() {
         }`}
         style={{ background: "#0d1f3c" }}
       >
-        {/* Header */}
+        {/* ── Header ── */}
         <div
           className="flex items-center gap-3 px-4 py-3 shrink-0"
           style={{ background: "#1e3a5f", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
         >
-          <div className="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style={{ background: "rgba(255,255,255,0.12)" }}>
-            <Bot className="w-5 h-5 text-[#93c5fd]" />
+          {/* Avatar with image + "Au" fallback */}
+          <div className="relative w-10 h-10 rounded-full shrink-0 overflow-hidden">
+            <img
+              src="/audrey-avatar.jpg"
+              alt="Amara"
+              className="w-full h-full object-cover"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+            />
+            <div
+              className="absolute inset-0 flex items-center justify-center text-white text-sm font-bold rounded-full"
+              style={{ background: "#e97316" }}
+              aria-hidden="true"
+            >
+              Au
+            </div>
           </div>
+
           <div className="flex-1 min-w-0">
             <p className="text-white font-bold text-sm leading-tight">Amara</p>
-            <p className="text-[#93c5fd] text-xs leading-tight">
+            <p className="text-[#93c5fd] text-xs leading-tight flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block animate-pulse shrink-0" />
               {language === "fr" ? "Assistante AudreyRH · En ligne" : "AudreyRH assistant · Online"}
             </p>
           </div>
+
           <button
             data-testid="chat-widget-close"
             onClick={() => setOpen(false)}
@@ -306,51 +319,78 @@ export function AIChatWidget() {
           </button>
         </div>
 
-        {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 min-h-0" style={{ scrollbarWidth: "thin" }}>
+        {/* ── Messages ── */}
+        <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3 min-h-0" style={{ scrollbarWidth: "thin", background: "#f8fafc" }}>
           {messages.map((m, i) => (
             <div key={i} className={`flex gap-2 ${m.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
+              {/* AI avatar thumbnail beside each AI message */}
               {m.role === "model" && (
-                <div className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center mt-0.5" style={{ background: "#1e3a5f" }}>
-                  <Bot className="w-4 h-4 text-[#93c5fd]" />
+                <div className="relative w-7 h-7 rounded-full shrink-0 overflow-hidden mt-0.5">
+                  <img
+                    src="/audrey-avatar.jpg"
+                    alt=""
+                    className="w-full h-full object-cover"
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                  />
+                  <div
+                    className="absolute inset-0 flex items-center justify-center text-white text-[9px] font-bold rounded-full"
+                    style={{ background: "#e97316" }}
+                    aria-hidden="true"
+                  >
+                    Au
+                  </div>
                 </div>
               )}
+
               <div
                 className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed ${
                   m.role === "user"
                     ? "text-white rounded-tr-sm"
-                    : "text-white/90 rounded-tl-sm"
+                    : "text-slate-800 rounded-tl-sm shadow-sm"
                 }`}
-                style={{
-                  background: m.role === "user"
-                    ? "#0d1f3c"
-                    : "rgba(255,255,255,0.07)",
-                  border: m.role === "model" ? "1px solid rgba(255,255,255,0.08)" : "none",
-                }}
+                style={
+                  m.role === "user"
+                    ? { background: "#e97316" }
+                    : { background: "#ffffff", border: "1px solid #e2e8f0" }
+                }
               >
                 {renderMarkdown(m.content)}
               </div>
             </div>
           ))}
+
+          {/* Loading dots */}
           {loading && (
             <div className="flex gap-2">
-              <div className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center" style={{ background: "#1e3a5f" }}>
-                <Bot className="w-4 h-4 text-[#93c5fd]" />
+              <div className="relative w-7 h-7 rounded-full shrink-0 overflow-hidden">
+                <img
+                  src="/audrey-avatar.jpg"
+                  alt=""
+                  className="w-full h-full object-cover"
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                />
+                <div
+                  className="absolute inset-0 flex items-center justify-center text-white text-[9px] font-bold rounded-full"
+                  style={{ background: "#e97316" }}
+                  aria-hidden="true"
+                >
+                  Au
+                </div>
               </div>
-              <div
-                className="px-4 py-3 rounded-2xl rounded-tl-sm"
-                style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.08)" }}
-              >
-                <Loader2 className="w-4 h-4 text-[#93c5fd] animate-spin" />
+              <div className="px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
+                <Loader2 className="w-4 h-4 text-[#1e3a5f] animate-spin" />
               </div>
             </div>
           )}
           <div ref={bottomRef} />
         </div>
 
-        {/* Quick suggestion chips */}
+        {/* ── Quick suggestion chips ── */}
         {messages.length <= 2 && (
-          <div className="px-4 pb-3 flex flex-wrap gap-2 shrink-0">
+          <div
+            className="flex gap-2 shrink-0 overflow-x-auto px-4 py-3"
+            style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch", borderTop: "1px solid rgba(255,255,255,0.06)" }}
+          >
             {(language === "fr"
               ? [
                   { label: "Mon diplôme 🎓",   text: "Comment faire reconnaître mon diplôme au Québec ?" },
@@ -362,7 +402,7 @@ export function AIChatWidget() {
                   { label: "Pricing 💼",         text: "What are your rates and services?" },
                   { label: "Book a call 📅",     text: "I would like to book an appointment" },
                 ]
-            ).map((chip) => (
+            ).map((chip, idx, arr) => (
               <button
                 key={chip.label}
                 data-testid={`chat-chip-${chip.label}`}
@@ -370,8 +410,12 @@ export function AIChatWidget() {
                   setInput(chip.text);
                   setTimeout(() => inputRef.current?.focus(), 50);
                 }}
-                className="px-3 py-1.5 rounded-full text-xs font-medium text-white/80 hover:text-white transition-colors whitespace-nowrap"
-                style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)" }}
+                className="shrink-0 px-3 py-1.5 rounded-full text-xs font-medium text-white/80 hover:text-white transition-colors whitespace-nowrap"
+                style={{
+                  background: "rgba(255,255,255,0.08)",
+                  border: "1px solid rgba(255,255,255,0.15)",
+                  marginRight: idx === arr.length - 1 ? "8px" : undefined,
+                }}
               >
                 {chip.label}
               </button>
@@ -379,7 +423,7 @@ export function AIChatWidget() {
           </div>
         )}
 
-        {/* Input */}
+        {/* ── Input bar ── */}
         <div
           className="flex items-center gap-2 px-3 py-3 shrink-0"
           style={{ borderTop: "1px solid rgba(255,255,255,0.08)", background: "#0d1f3c" }}
@@ -400,9 +444,7 @@ export function AIChatWidget() {
             onClick={sendMessage}
             disabled={!input.trim() || loading}
             className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all disabled:opacity-30 hover:scale-110 focus:outline-none"
-            style={{
-              background: "#0d1f3c",
-            }}
+            style={{ background: "#e97316" }}
           >
             <Send className="w-3.5 h-3.5 text-white" />
           </button>
