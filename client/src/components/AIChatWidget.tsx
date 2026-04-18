@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+const amaraAvatar = "/amara-avatar.png";
 
 type Message = {
   role: "user" | "model";
@@ -288,7 +289,7 @@ export function AIChatWidget() {
           {/* Avatar with image + "Au" fallback */}
           <div className="relative w-10 h-10 rounded-full shrink-0 overflow-hidden">
             <img
-              src="/audrey-avatar.jpg"
+              src={amaraAvatar}
               alt="Amara"
               className="w-full h-full object-cover"
               onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
@@ -327,7 +328,7 @@ export function AIChatWidget() {
               {m.role === "model" && (
                 <div className="relative w-7 h-7 rounded-full shrink-0 overflow-hidden mt-0.5">
                   <img
-                    src="/audrey-avatar.jpg"
+                    src={amaraAvatar}
                     alt=""
                     className="w-full h-full object-cover"
                     onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
@@ -364,7 +365,7 @@ export function AIChatWidget() {
             <div className="flex gap-2">
               <div className="relative w-7 h-7 rounded-full shrink-0 overflow-hidden">
                 <img
-                  src="/audrey-avatar.jpg"
+                  src={amaraAvatar}
                   alt=""
                   className="w-full h-full object-cover"
                   onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
