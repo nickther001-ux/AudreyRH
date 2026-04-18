@@ -19,6 +19,41 @@ const PLACEHOLDER = {
 
 const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 
+function renderMarkdown(text: string): React.ReactNode[] {
+  return text.split("\n").flatMap((line, lineIdx, lines) => {
+    const parts: React.ReactNode[] = [];
+    const combinedRegex = /(\[([^\]]+)\]\((https?:\/\/[^\)]+)\)|\*\*([^*]+)\*\*)/g;
+    let last = 0;
+    let match: RegExpExecArray | null;
+    while ((match = combinedRegex.exec(line)) !== null) {
+      if (match.index > last) {
+        parts.push(line.slice(last, match.index));
+      }
+      if (match[0].startsWith("[")) {
+        const label = match[2];
+        const url = match[3];
+        parts.push(
+          <a
+            key={`link-${lineIdx}-${match.index}`}
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline font-medium text-[#93c5fd] hover:text-white transition-colors"
+          >
+            {label}
+          </a>
+        );
+      } else {
+        parts.push(<strong key={`bold-${lineIdx}-${match.index}`}>{match[4]}</strong>);
+      }
+      last = match.index + match[0].length;
+    }
+    if (last < line.length) parts.push(line.slice(last));
+    if (lineIdx < lines.length - 1) parts.push(<br key={`br-${lineIdx}`} />);
+    return parts;
+  });
+}
+
 export function AIChatWidget() {
   const { language } = useLanguage();
   const [open, setOpen] = useState(false);
@@ -251,12 +286,7 @@ export function AIChatWidget() {
                   border: m.role === "model" ? "1px solid rgba(255,255,255,0.08)" : "none",
                 }}
               >
-                {m.content.split("\n").map((line, j) => (
-                  <span key={j}>
-                    {line}
-                    {j < m.content.split("\n").length - 1 && <br />}
-                  </span>
-                ))}
+                {renderMarkdown(m.content)}
               </div>
             </div>
           ))}
