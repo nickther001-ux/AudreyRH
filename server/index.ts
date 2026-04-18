@@ -138,10 +138,8 @@ async function ensureLeadsTable() {
         created_at TIMESTAMP DEFAULT NOW() NOT NULL
       )
     `);
-    // Add segment column to existing tables that were created before this migration
-    await pool.query(`
-      ALTER TABLE leads ADD COLUMN IF NOT EXISTS segment TEXT
-    `);
+    await pool.query(`ALTER TABLE leads ADD COLUMN IF NOT EXISTS segment TEXT`);
+    await pool.query(`ALTER TABLE leads ADD COLUMN IF NOT EXISTS primary_goal TEXT`);
     console.log("[Startup] leads table ready");
   } catch (err: any) {
     console.error("[Startup] ensureLeadsTable error:", err.message);

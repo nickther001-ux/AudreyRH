@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useLocation } from "wouter";
 import { MessageCircle, X, Send, Loader2, Bot } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 
@@ -7,10 +8,21 @@ type Message = {
   content: string;
 };
 
-const WELCOME = {
-  fr: "Bonjour ! 👋 Je suis Amara, l'assistante virtuelle d'AudreyRH. Comment puis-je vous aider dans votre parcours professionnel aujourd'hui ?",
-  en: "Hello! 👋 I'm Amara, AudreyRH's virtual assistant. How can I help you with your career journey today?",
-};
+function getWelcome(path: string, lang: "fr" | "en"): string {
+  if (path.startsWith("/entreprises") || path.startsWith("/business")) {
+    return lang === "fr"
+      ? "Bonjour ! 👋 Cherchez-vous à optimiser vos RH ou obtenir une subvention pour votre organisation ?"
+      : "Hello! 👋 Are you looking to optimize your HR or secure a grant for your organization?";
+  }
+  if (path.startsWith("/individuals") || path.startsWith("/particuliers")) {
+    return lang === "fr"
+      ? "Bonjour ! 👋 Prêt(e) à propulser votre carrière au Canada ? Je suis là pour vous guider."
+      : "Hello! 👋 Ready to launch your career in Canada? I'm here to guide you.";
+  }
+  return lang === "fr"
+    ? "Bonjour ! 👋 Je suis Amara, l'assistante virtuelle d'AudreyRH. Comment puis-je vous aider dans votre parcours professionnel aujourd'hui ?"
+    : "Hello! 👋 I'm Amara, AudreyRH's virtual assistant. How can I help you with your career journey today?";
+}
 
 const PLACEHOLDER = {
   fr: "Posez votre question…",
@@ -56,9 +68,10 @@ function renderMarkdown(text: string): React.ReactNode[] {
 
 export function AIChatWidget() {
   const { language } = useLanguage();
+  const [location] = useLocation();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: "model", content: WELCOME[language] },
+    { role: "model", content: getWelcome(location, language) },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -67,12 +80,12 @@ export function AIChatWidget() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Reset welcome message when language changes (only if conversation not started)
+  // Reset welcome message when language or page changes (only if conversation not started)
   useEffect(() => {
     if (messages.length === 1) {
-      setMessages([{ role: "model", content: WELCOME[language] }]);
+      setMessages([{ role: "model", content: getWelcome(location, language) }]);
     }
-  }, [language]);
+  }, [language, location]);
 
   useEffect(() => {
     if (open) {
@@ -130,10 +143,39 @@ export function AIChatWidget() {
     return scores[best] === 0 ? null : best;
   }
 
+  function detectGoal(msgs: Message[], seg: typeof segment): string | null {
+    const text = msgs.map((m) => m.content).join(" ").toLowerCase();
+    if (seg === "Individual" || seg === null) {
+      if (text.match(/dipl[oô]me|diploma|degree|reconnaissance/)) return "Reconnaissance de diplôme";
+      if (text.match(/\bcv\b|resume|curriculum/)) return "Optimisation du CV";
+      if (text.match(/linkedin/)) return "Profil LinkedIn";
+      if (text.match(/entretien|interview/)) return "Préparation entretien";
+      if (text.match(/emploi|job search|cherche.*(travail|emploi)|find.*job/)) return "Recherche d'emploi";
+    }
+    if (seg === "Business") {
+      if (text.match(/audit/)) return "Audit RH";
+      if (text.match(/subvention|grant/)) return "Subventions entreprise";
+      if (text.match(/recrutement|recruitment|embauche/)) return "Recrutement";
+      if (text.match(/conformit[eé]|compliance/)) return "Conformité légale";
+      if (text.match(/politique|policy/)) return "Politiques RH";
+    }
+    if (seg === "Hybrid-Artist") {
+      if (text.match(/calq|conseil des arts|arts council/)) return "Subventions artistiques (CALQ)";
+      return "Positionnement carrière créative";
+    }
+    if (seg === "Hybrid-Founder") {
+      if (text.match(/premi[eè]re embauche|first hire/)) return "Première embauche";
+      if (text.match(/contrat|contract/)) return "Contrats de travail";
+      return "Fondations RH pour startup";
+    }
+    return null;
+  }
+
   async function captureLead(email: string, currentMessages: Message[]) {
     if (leadSaved) return;
     const detectedSegment = detectSegment(currentMessages);
     if (detectedSegment) setSegment(detectedSegment);
+    const detectedGoal = detectGoal(currentMessages, detectedSegment);
     const summary = currentMessages
       .map((m) => `${m.role === "user" ? "Visiteur" : "Assistante"}: ${m.content}`)
       .join("\n");
@@ -141,7 +183,7 @@ export function AIChatWidget() {
       await fetch("/api/chat/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, summary, segment: detectedSegment }),
+        body: JSON.stringify({ email, summary, segment: detectedSegment, primary_goal: detectedGoal }),
       });
       setLeadSaved(true);
     } catch {

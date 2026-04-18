@@ -461,18 +461,18 @@ export async function registerRoutes(
 
   app.post('/api/chat/lead', async (req, res) => {
     try {
-      const { email, summary, segment } = req.body;
+      const { email, summary, segment, primary_goal } = req.body;
       if (!email || typeof email !== 'string') {
         return res.status(400).json({ message: 'email required' });
       }
       const { pool } = await import('./db');
       await pool.query(
-        'INSERT INTO leads (email, summary, segment) VALUES ($1, $2, $3)',
-        [email.trim().toLowerCase(), summary ?? null, segment ?? null]
+        'INSERT INTO leads (email, summary, segment, primary_goal) VALUES ($1, $2, $3, $4)',
+        [email.trim().toLowerCase(), summary ?? null, segment ?? null, primary_goal ?? null]
       );
       try {
         const { sendLeadNotification } = await import('./resend');
-        await sendLeadNotification({ email: email.trim(), summary: summary ?? '', segment: segment ?? null });
+        await sendLeadNotification({ email: email.trim(), summary: summary ?? '', segment: segment ?? null, primary_goal: primary_goal ?? null });
       } catch (emailErr: any) {
         console.error('[Chat Lead] Email error (non-fatal):', emailErr.message);
       }

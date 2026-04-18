@@ -346,37 +346,47 @@ ${emailWrapperClose}`;
 
 // ─── AI Chat Lead Notification ───────────────────────────────────────────────
 
-export async function sendLeadNotification(data: { email: string; summary: string; segment?: string | null }) {
+export async function sendLeadNotification(data: { email: string; summary: string; segment?: string | null; primary_goal?: string | null }) {
   const client = getClient();
 
   const segmentMap: Record<string, { label: string; color: string }> = {
-    Business:        { label: '🏢 Entreprise',        color: '#93c5fd' },
-    Individual:      { label: '👤 Particulier',       color: '#4ade80' },
-    'Hybrid-Artist': { label: '🎨 Hybride — Artiste', color: '#f59e0b' },
+    Business:        { label: '🏢 Entreprise',           color: '#93c5fd' },
+    Individual:      { label: '👤 Particulier',          color: '#4ade80' },
+    'Hybrid-Artist': { label: '🎨 Hybride — Artiste',   color: '#f59e0b' },
     'Hybrid-Founder':{ label: '🚀 Hybride — Fondateur', color: '#a78bfa' },
   };
   const seg = data.segment ? segmentMap[data.segment] : null;
   const segmentLabel = seg?.label ?? '❓ Non identifié';
   const segmentColor = seg?.color ?? 'rgba(255,255,255,0.4)';
+  const goalLabel = data.primary_goal ?? '—';
+
+  // Build a clean 2-sentence summary from the raw transcript
+  const userLines = (data.summary || '')
+    .split('\n')
+    .filter(l => l.startsWith('Visiteur:'))
+    .map(l => l.replace('Visiteur:', '').trim())
+    .filter(Boolean);
+  const briefSummary = userLines.slice(0, 2).join(' ') || data.summary?.slice(0, 300) || '';
 
   const html = `${emailWrapperOpen(520)}
 ${compactHeader('AudreyRH · Chat IA — Amara', 'Nouveau lead capturé via le chat')}
         <tr>
           <td style="padding:24px 32px 32px;">
             <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:14px;">
-              <tr><td style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);border-radius:8px;padding:10px 18px;display:flex;align-items:center;gap:8px;">
+              <tr><td style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);border-radius:8px;padding:10px 18px;">
                 <p style="margin:0;font-size:13px;font-weight:700;color:${segmentColor};">${segmentLabel}</p>
               </td></tr>
             </table>
             ${fieldBox('Email du prospect', `<a href="mailto:${data.email}" style="color:#93c5fd;text-decoration:none;">${data.email}</a>`)}
-            ${data.summary ? `<table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+            ${fieldBox('Objectif principal', goalLabel)}
+            ${briefSummary ? `<table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
               <tr><td style="background:rgba(255,255,255,0.05);border:1px solid rgba(147,197,253,0.2);border-left:3px solid #93c5fd;border-radius:0 10px 10px 0;padding:14px 18px;">
-                <p style="margin:0 0 6px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;">Résumé de la conversation</p>
-                <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.75;">${data.summary.replace(/\n/g, '<br/>')}</p>
+                <p style="margin:0 0 6px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;">Ce que le prospect a dit</p>
+                <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.75;">${briefSummary.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</p>
               </td></tr>
             </table>` : ''}
             <p style="margin:16px 0 20px;font-size:12px;color:rgba(255,255,255,0.45);">Ce prospect a partagé son email via Amara (chat IA) sur audreyrh.com.</p>
-            ${ctaButton(`mailto:${data.email}`, `Contacter ${data.email} →`)}
+            ${ctaButton(`mailto:${data.email}`, `Répondre à ${data.email} →`)}
           </td>
         </tr>
 ${emailFooter()}
@@ -386,7 +396,7 @@ ${emailWrapperClose}`;
     from: FROM,
     to: NOTIFY_TO,
     replyTo: data.email,
-    subject: `💬 Nouveau lead chat : ${data.email}`,
+    subject: `💬 Nouveau lead — ${segmentLabel} · ${data.email}`,
     html,
   });
   if (r.error) console.error('[Resend] Lead notification error:', JSON.stringify(r.error));
