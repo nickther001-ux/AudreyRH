@@ -137,15 +137,20 @@ export type ChatMessage = {
 async function attempt(messages: ChatMessage[]): Promise<string> {
   const client = getClient();
 
-  const history = messages.slice(0, -1).map((m) => ({
+  // Build history from all messages except the last one.
+  // The Gemini chat API requires history to start with a "user" turn —
+  // so we drop any leading model messages (e.g. the proactive welcome greeting).
+  const allPrior = messages.slice(0, -1).map((m) => ({
     role: m.role,
     parts: [{ text: m.content }],
   }));
+  const firstUserIdx = allPrior.findIndex((m) => m.role === "user");
+  const history = firstUserIdx >= 0 ? allPrior.slice(firstUserIdx) : [];
 
   const lastMessage = messages[messages.length - 1];
 
   const chat = client.chats.create({
-    model: "gemini-2.5-flash",
+    model: "gemini-2.0-flash",
     config: {
       systemInstruction: SYSTEM_PROMPT,
       temperature: 0.7,
