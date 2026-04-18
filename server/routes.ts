@@ -455,6 +455,16 @@ export async function registerRoutes(
       res.json({ reply });
     } catch (err: any) {
       console.error('[Chat] Error:', err.message);
+      const isQuota =
+        err?.message?.includes('429') ||
+        err?.message?.includes('RESOURCE_EXHAUSTED') ||
+        err?.message?.includes('quota');
+      const isBusy =
+        err?.message?.includes('503') ||
+        err?.message?.includes('UNAVAILABLE') ||
+        err?.message?.includes('high demand');
+      if (isQuota) return res.status(429).json({ message: 'quota_exceeded' });
+      if (isBusy) return res.status(503).json({ message: 'busy' });
       res.status(500).json({ message: err.message || 'Chat error' });
     }
   });

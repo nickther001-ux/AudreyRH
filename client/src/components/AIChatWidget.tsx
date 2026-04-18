@@ -216,8 +216,10 @@ export function AIChatWidget() {
       const data = await res.json();
 
       if (!res.ok) {
-        const isBusy = res.status === 503 || (data.message ?? "").includes("503") || (data.message ?? "").includes("UNAVAILABLE");
-        throw new Error(isBusy ? "busy" : "error");
+        const msg = data.message ?? "";
+        const isQuota = res.status === 429 || msg.includes("quota");
+        const isBusy = res.status === 503 || msg.includes("503") || msg.includes("UNAVAILABLE");
+        throw new Error(isQuota ? "quota" : isBusy ? "busy" : "error");
       }
 
       const reply = data.reply || (language === "fr" ? "Désolée, une erreur s'est produite." : "Sorry, an error occurred.");
@@ -228,20 +230,22 @@ export function AIChatWidget() {
       const replyEmail = reply.match(EMAIL_REGEX);
       if (replyEmail) captureLead(replyEmail[0], finalMessages);
     } catch (err: any) {
-      const isBusy = err?.message === "busy";
-      setMessages([
-        ...newMessages,
-        {
-          role: "model",
-          content: isBusy
-            ? (language === "fr"
-                ? "Je suis très sollicitée en ce moment ! Réessayez dans quelques secondes, ou écrivez-nous à info@audreyrh.com 😊"
-                : "I'm very busy right now! Try again in a few seconds, or email us at info@audreyrh.com 😊")
-            : (language === "fr"
-                ? "Désolée, une erreur s'est produite. Écrivez-nous à info@audreyrh.com"
-                : "Sorry, an error occurred. Email us at info@audreyrh.com"),
-        },
-      ]);
+      const errType = err?.message;
+      let content: string;
+      if (errType === "busy") {
+        content = language === "fr"
+          ? "Je suis très sollicitée en ce moment ! Réessayez dans quelques secondes, ou écrivez-nous à info@audreyrh.com 😊"
+          : "I'm very busy right now! Try again in a few seconds, or email us at info@audreyrh.com 😊";
+      } else if (errType === "quota") {
+        content = language === "fr"
+          ? "Le service de chat est temporairement indisponible. Pour nous contacter directement, écrivez à [info@audreyrh.com](mailto:info@audreyrh.com) ou [prenez rendez-vous](/book). 😊"
+          : "The chat service is temporarily unavailable. To reach us directly, email [info@audreyrh.com](mailto:info@audreyrh.com) or [book a consultation](/book). 😊";
+      } else {
+        content = language === "fr"
+          ? "Désolée, une erreur s'est produite. Écrivez-nous à [info@audreyrh.com](mailto:info@audreyrh.com)"
+          : "Sorry, an error occurred. Email us at [info@audreyrh.com](mailto:info@audreyrh.com)";
+      }
+      setMessages([...newMessages, { role: "model", content }]);
     } finally {
       setLoading(false);
     }
