@@ -34,8 +34,8 @@ const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 
 function renderMarkdown(text: string, isAI = true): React.ReactNode[] {
   const linkClass = isAI
-    ? "underline font-semibold text-[#93c5fd] hover:text-white transition-colors"
-    : "underline font-semibold text-[#1e3a5f] hover:text-[#239b56] transition-colors";
+    ? "underline font-semibold text-[#1e3a5f] hover:text-[#239b56] transition-colors"
+    : "underline font-semibold text-[#93c5fd] hover:text-white transition-colors";
   const linkRegex = /(\[([^\]]+)\]\(([^)]+)\)|\*\*([^*]+)\*\*)/g;
   return text.split("\n").flatMap((line, lineIdx, lines) => {
     const parts: React.ReactNode[] = [];
@@ -351,13 +351,13 @@ export function AIChatWidget() {
               <div
                 className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed ${
                   m.role === "user"
-                    ? "text-[#1e3a5f] rounded-tr-sm"
-                    : "text-white rounded-tl-sm shadow-sm"
+                    ? "text-white rounded-tr-sm"
+                    : "text-[#1e3a5f] rounded-tl-sm shadow-sm"
                 }`}
                 style={
                   m.role === "user"
-                    ? { background: "#e8f0fb", border: "1px solid #c3d4f0" }
-                    : { background: "#1e3a5f" }
+                    ? { background: "#1e3a5f" }
+                    : { background: "#ffffff", border: "1px solid #e2e8f0" }
                 }
               >
                 {renderMarkdown(m.content, m.role === "model")}
