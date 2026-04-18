@@ -288,19 +288,19 @@ export function AIChatWidget() {
         >
           {/* Avatar with image + "Au" fallback */}
           <div className="relative w-10 h-10 rounded-full shrink-0 overflow-hidden">
-            <img
-              src={amaraAvatar}
-              alt="Amara"
-              className="w-full h-full object-cover"
-              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-            />
             <div
-              className="absolute inset-0 flex items-center justify-center text-white text-sm font-bold rounded-full"
+              className="absolute inset-0 flex items-center justify-center text-white text-sm font-bold"
               style={{ background: "#e97316" }}
               aria-hidden="true"
             >
               Au
             </div>
+            <img
+              src={amaraAvatar}
+              alt="Amara"
+              className="absolute inset-0 w-full h-full object-cover z-10"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+            />
           </div>
 
           <div className="flex-1 min-w-0">
@@ -327,19 +327,19 @@ export function AIChatWidget() {
               {/* AI avatar thumbnail beside each AI message */}
               {m.role === "model" && (
                 <div className="relative w-7 h-7 rounded-full shrink-0 overflow-hidden mt-0.5">
-                  <img
-                    src={amaraAvatar}
-                    alt=""
-                    className="w-full h-full object-cover"
-                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-                  />
                   <div
-                    className="absolute inset-0 flex items-center justify-center text-white text-[9px] font-bold rounded-full"
+                    className="absolute inset-0 flex items-center justify-center text-white text-[9px] font-bold"
                     style={{ background: "#e97316" }}
                     aria-hidden="true"
                   >
                     Au
                   </div>
+                  <img
+                    src={amaraAvatar}
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover z-10"
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                  />
                 </div>
               )}
 
@@ -364,19 +364,19 @@ export function AIChatWidget() {
           {loading && (
             <div className="flex gap-2">
               <div className="relative w-7 h-7 rounded-full shrink-0 overflow-hidden">
-                <img
-                  src={amaraAvatar}
-                  alt=""
-                  className="w-full h-full object-cover"
-                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
-                />
                 <div
-                  className="absolute inset-0 flex items-center justify-center text-white text-[9px] font-bold rounded-full"
+                  className="absolute inset-0 flex items-center justify-center text-white text-[9px] font-bold"
                   style={{ background: "#e97316" }}
                   aria-hidden="true"
                 >
                   Au
                 </div>
+                <img
+                  src={amaraAvatar}
+                  alt=""
+                  className="absolute inset-0 w-full h-full object-cover z-10"
+                  onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = "none"; }}
+                />
               </div>
               <div className="px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm" style={{ background: "#ffffff", border: "1px solid #e2e8f0" }}>
                 <Loader2 className="w-4 h-4 text-[#1e3a5f] animate-spin" />
