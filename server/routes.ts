@@ -346,6 +346,7 @@ export async function registerRoutes(
         const { sendAppointmentRejected } = await import('./resend');
         await sendAppointmentRejected({
           clientName: appointment.name, clientEmail: appointment.email,
+          language: (appointment.language as "fr" | "en") || "fr",
         });
       } catch (emailErr: any) { console.error('Reject email failed:', emailErr.message); }
       res.json({ success: true, appointment });
@@ -365,10 +366,13 @@ export async function registerRoutes(
       const appointment = await storage.rescheduleAppointment(id, new Date(date), startTime, endTime);
       try {
         const { sendAppointmentRescheduled } = await import('./resend');
-        const dateStr = new Date(date).toLocaleDateString('fr-CA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        const apptLang = (appointment.language as "fr" | "en") || "fr";
+        const dateLocale = apptLang === 'en' ? 'en-CA' : 'fr-CA';
+        const dateStr = new Date(date).toLocaleDateString(dateLocale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
         await sendAppointmentRescheduled({
           clientName: appointment.name, clientEmail: appointment.email,
           date: dateStr, startTime, endTime, platform: appointment.platform,
+          language: apptLang,
         });
       } catch (emailErr: any) { console.error('Reschedule email failed:', emailErr.message); }
       res.json({ success: true, appointment });

@@ -540,7 +540,7 @@ function AppointmentCard({
                   data-testid={`button-reschedule-${appt.id}`}
                 >
                   <CalendarClock className="h-3.5 w-3.5" />
-                  Reprog.
+                  Reprogrammer
                 </Button>
                 <Button
                   size="sm"

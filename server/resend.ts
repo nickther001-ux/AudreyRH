@@ -713,42 +713,53 @@ ${emailWrapperClose}`;
 
 // ─── Admin: Appointment Rejected ─────────────────────────────────────────────
 
-export async function sendAppointmentRejected(data: { clientName: string; clientEmail: string }) {
+export async function sendAppointmentRejected(data: {
+  clientName: string;
+  clientEmail: string;
+  language?: "fr" | "en";
+}) {
   const client = getClient();
+  const isFr = (data.language ?? "fr") === "fr";
+
+  const T = {
+    subject: isFr
+      ? 'Votre demande de consultation — AudreyRH'
+      : 'Your Consultation Request — AudreyRH',
+    header: isFr ? 'Demande non retenue' : 'Request Not Retained',
+    greeting: isFr ? `Bonjour ${data.clientName},` : `Hello ${data.clientName},`,
+    body: isFr
+      ? `Malheureusement, nous ne sommes pas en mesure de confirmer votre demande de consultation pour le moment.`
+      : `Unfortunately, we are unable to confirm your consultation request at this time.`,
+    note: isFr
+      ? `Vous pouvez soumettre une nouvelle demande ou nous contacter directement pour trouver un créneau qui vous convient.`
+      : `You may submit a new request or contact us directly to find a time that works for you.`,
+    questions: isFr ? 'Questions ?' : 'Questions?',
+    cta: isFr ? 'Nouvelle demande →' : 'Submit a new request →',
+  };
 
   const html = `${emailWrapperOpen(600)}
-${logoHeader('Demande non retenue')}
+${logoHeader(T.header)}
         <tr>
           <td style="padding:40px 48px;">
-            <p style="margin:0 0 6px;font-size:23px;font-weight:700;color:#ffffff;">Bonjour ${data.clientName},</p>
-            <p style="margin:0 0 28px;font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;">
-              Malheureusement, nous ne sommes pas en mesure de confirmer votre demande de consultation pour le moment.<br/>
-              <em style="color:rgba(255,255,255,0.35);">Unfortunately, we are unable to confirm your consultation request at this time.</em>
-            </p>
-            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+            <p style="margin:0 0 20px;font-size:22px;font-weight:700;color:#ffffff;">${T.greeting}</p>
+            <p style="margin:0 0 24px;font-size:14px;color:rgba(255,255,255,0.65);line-height:1.8;">${T.body}</p>
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
               <tr><td style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:18px 22px;">
-                <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.75;">
-                  Vous pouvez soumettre une nouvelle demande ou nous contacter directement pour trouver un créneau qui vous convient.<br/>
-                  <em style="color:rgba(255,255,255,0.35);">You may submit a new request or contact us directly to find a time that works for you.</em>
-                </p>
+                <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.75;">${T.note}</p>
               </td></tr>
             </table>
             <p style="margin:0 0 8px;font-size:13px;color:rgba(255,255,255,0.55);">
-              Questions ? <a href="mailto:info@audreyrh.com" style="color:#93c5fd;text-decoration:none;font-weight:600;">info@audreyrh.com</a>
+              ${T.questions} <a href="mailto:info@audreyrh.com" style="color:#93c5fd;text-decoration:none;font-weight:600;">info@audreyrh.com</a>
             </p>
             <table cellpadding="0" cellspacing="0" style="margin-top:20px;">
-              ${ctaButton('https://audreyrh.com/book', 'Nouvelle demande →')}
+              ${ctaButton('https://audreyrh.com/book', T.cta)}
             </table>
           </td>
         </tr>
 ${emailFooter()}
 ${emailWrapperClose}`;
 
-  const r = await client.emails.send({
-    from: FROM, to: data.clientEmail,
-    subject: 'Votre demande de consultation — AudreyRH',
-    html,
-  });
+  const r = await client.emails.send({ from: FROM, to: data.clientEmail, subject: T.subject, html });
   if (r.error) console.error('[Resend] Reject email error:', r.error.message);
   else console.log('[Resend] Reject email sent, id:', r.data?.id);
 }
@@ -756,47 +767,62 @@ ${emailWrapperClose}`;
 // ─── Admin: Appointment Rescheduled ──────────────────────────────────────────
 
 export async function sendAppointmentRescheduled(data: {
-  clientName: string; clientEmail: string;
-  date: string; startTime: string; endTime: string; platform: string;
+  clientName: string;
+  clientEmail: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  platform: string;
+  language?: "fr" | "en";
 }) {
   const client = getClient();
+  const isFr = (data.language ?? "fr") === "fr";
   const platformLabel = data.platform === 'google_meet' ? 'Google Meet' : 'Zoom';
   const timeRange = `${data.startTime} – ${data.endTime} (HE)`;
 
+  const T = {
+    subject: isFr
+      ? 'Consultation reprogrammée — AudreyRH'
+      : 'Your Consultation Has Been Rescheduled — AudreyRH',
+    header: isFr ? 'Consultation reprogrammée' : 'Consultation Rescheduled',
+    greeting: isFr ? `Bonjour ${data.clientName},` : `Hello ${data.clientName},`,
+    body: isFr
+      ? `Votre consultation a été <strong style="color:#93c5fd;">reprogrammée</strong> à la date suivante.`
+      : `Your consultation has been <strong style="color:#93c5fd;">rescheduled</strong> to the following date.`,
+    dateLabel: isFr ? 'Nouvelle date' : 'New Date',
+    timeLabel: isFr ? 'Heure (HE)' : 'Time (ET)',
+    platformLabel2: isFr ? 'Plateforme' : 'Platform',
+    linkNote: isFr
+      ? `Le lien ${platformLabel} vous sera envoyé <strong style="color:#ffffff;">24 à 48 heures avant</strong> votre rendez-vous.`
+      : `Your ${platformLabel} link will be sent to you <strong style="color:#ffffff;">24 to 48 hours before</strong> your appointment.`,
+    questions: isFr ? 'Questions ?' : 'Questions?',
+  };
+
   const html = `${emailWrapperOpen(600)}
-${logoHeader('Consultation reprogrammée')}
+${logoHeader(T.header)}
         <tr>
           <td style="padding:40px 48px;">
-            <p style="margin:0 0 6px;font-size:23px;font-weight:700;color:#ffffff;">Bonjour ${data.clientName},</p>
-            <p style="margin:0 0 28px;font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;">
-              Votre consultation a été <strong style="color:#93c5fd;">reprogrammée</strong> à la date suivante.<br/>
-              <em style="color:rgba(255,255,255,0.35);">Your consultation has been rescheduled to the following date.</em>
-            </p>
+            <p style="margin:0 0 20px;font-size:22px;font-weight:700;color:#ffffff;">${T.greeting}</p>
+            <p style="margin:0 0 28px;font-size:14px;color:rgba(255,255,255,0.65);line-height:1.8;">${T.body}</p>
             <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:12px;">
               <tr><td style="padding:20px 24px;">
                 <table width="100%" cellpadding="0" cellspacing="0">
-                  ${fieldRow('Nouvelle date / New Date', data.date)}
-                  ${fieldRow('Heure / Time', timeRange)}
-                  ${fieldRow('Plateforme', platformLabel, true)}
+                  ${fieldRow(T.dateLabel, data.date)}
+                  ${fieldRow(T.timeLabel, timeRange)}
+                  ${fieldRow(T.platformLabel2, platformLabel, true)}
                 </table>
               </td></tr>
             </table>
-            <p style="margin:0 0 6px;font-size:13px;color:rgba(255,255,255,0.55);line-height:1.75;">
-              Le lien ${platformLabel} vous sera envoyé <strong style="color:#ffffff;">24 à 48 heures avant</strong> votre rendez-vous.
-            </p>
-            <p style="margin:0 0 32px;font-size:13px;color:rgba(255,255,255,0.55);">
-              Questions ? <a href="mailto:info@audreyrh.com" style="color:#93c5fd;text-decoration:none;font-weight:600;">info@audreyrh.com</a>
+            <p style="margin:0 0 6px;font-size:13px;color:rgba(255,255,255,0.55);line-height:1.75;">${T.linkNote}</p>
+            <p style="margin:28px 0 0;font-size:13px;color:rgba(255,255,255,0.55);">
+              ${T.questions} <a href="mailto:info@audreyrh.com" style="color:#93c5fd;text-decoration:none;font-weight:600;">info@audreyrh.com</a>
             </p>
           </td>
         </tr>
 ${emailFooter()}
 ${emailWrapperClose}`;
 
-  const r = await client.emails.send({
-    from: FROM, to: data.clientEmail,
-    subject: 'Consultation reprogrammée — AudreyRH',
-    html,
-  });
+  const r = await client.emails.send({ from: FROM, to: data.clientEmail, subject: T.subject, html });
   if (r.error) console.error('[Resend] Reschedule email error:', r.error.message);
   else console.log('[Resend] Reschedule email sent, id:', r.data?.id);
 }
