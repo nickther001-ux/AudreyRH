@@ -3,8 +3,10 @@ import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
 import { runMigrations } from 'stripe-replit-sync';
-import { getStripeSync } from "./stripeClient";
+import { getStripeSync, getUncachableStripeClient } from "./stripeClient";
 import { WebhookHandlers } from "./webhookHandlers";
+import { storage } from "./storage";
+import { processBooking } from "./booking";
 
 const app = express();
 const httpServer = createServer(app);
@@ -126,6 +128,16 @@ async function fixAppointmentsSchema() {
   }
 }
 
+async function ensureMeetLinkColumn() {
+  try {
+    const { pool } = await import('./db');
+    await pool.query(`ALTER TABLE appointments ADD COLUMN IF NOT EXISTS meet_link TEXT`);
+    console.log('[Startup] appointments.meet_link column ready');
+  } catch (err: any) {
+    console.error('[Startup] ensureMeetLinkColumn error:', err.message);
+  }
+}
+
 async function ensureLeadsTable() {
   try {
     const { pool } = await import('./db');
@@ -149,6 +161,7 @@ async function ensureLeadsTable() {
 (async () => {
   await fixAvailabilitySchema();
   await fixAppointmentsSchema();
+  await ensureMeetLinkColumn();
   await ensureLeadsTable();
   await initStripe();
 
@@ -171,6 +184,44 @@ async function ensureLeadsTable() {
         }
 
         await WebhookHandlers.processWebhook(req.body as Buffer, sig);
+
+        // Also handle checkout.session.completed to trigger our booking pipeline
+        try {
+          const stripe = await getUncachableStripeClient();
+          const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+          let event: any;
+          if (webhookSecret) {
+            event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+          } else {
+            event = JSON.parse(req.body.toString());
+          }
+
+          if (event.type === 'checkout.session.completed') {
+            const session = event.data.object;
+            const appointmentId = parseInt(session.metadata?.appointmentId, 10);
+            if (!isNaN(appointmentId)) {
+              const appointment = await storage.getAppointment(appointmentId);
+              if (appointment && appointment.paymentStatus !== 'paid') {
+                console.log(`[Webhook] Processing paid booking for appointment #${appointmentId}`);
+                await processBooking(appointment.name, appointment.email, {
+                  appointmentId: appointment.id,
+                  date: appointment.date ?? null,
+                  startTime: appointment.startTime ?? null,
+                  endTime: appointment.endTime ?? null,
+                  platform: appointment.platform,
+                  reason: appointment.reason,
+                  amount: (session.amount_total / 100).toFixed(2),
+                  stripeId: session.payment_intent ?? session.id,
+                });
+                await storage.updateAppointmentPayment(appointmentId, session.payment_intent ?? session.id);
+              } else {
+                console.log(`[Webhook] Appointment #${appointmentId} already paid or not found — skipping`);
+              }
+            }
+          }
+        } catch (customErr: any) {
+          console.error('[Webhook] Custom booking handler error (non-fatal):', customErr.message);
+        }
 
         res.status(200).json({ received: true });
       } catch (error: any) {

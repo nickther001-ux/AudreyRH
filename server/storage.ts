@@ -15,6 +15,7 @@ export interface IStorage {
   getAllAppointments(): Promise<Appointment[]>;
   updateAppointmentPayment(id: number, paymentIntentId: string): Promise<Appointment>;
   updateAppointmentStatus(id: number, status: "confirmed" | "cancelled" | "completed" | "pending"): Promise<Appointment>;
+  setMeetLink(id: number, meetLink: string): Promise<void>;
   rescheduleAppointment(id: number, date: Date, startTime: string, endTime: string): Promise<Appointment>;
   deleteAppointment(id: number): Promise<void>;
   // Availability
@@ -52,6 +53,8 @@ export class DatabaseStorage implements IStorage {
          platform, appointment_type AS "appointmentType",
          status, payment_status AS "paymentStatus",
          stripe_payment_intent_id AS "stripePaymentIntentId",
+         meet_link AS "meetLink",
+         was_rescheduled AS "wasRescheduled",
          created_at AS "createdAt"`,
       [
         insertAppointment.name,
@@ -194,6 +197,13 @@ export class DatabaseStorage implements IStorage {
     return appointment;
   }
 
+  async setMeetLink(id: number, meetLink: string): Promise<void> {
+    await pool.query(
+      'UPDATE appointments SET meet_link = $1, status = $2 WHERE id = $3',
+      [meetLink, 'confirmed', id]
+    );
+  }
+
   async rescheduleAppointment(id: number, date: Date, startTime: string, endTime: string): Promise<Appointment> {
     const raw = new Date(date);
     const y = raw.getUTCFullYear();
@@ -210,6 +220,7 @@ export class DatabaseStorage implements IStorage {
          platform, appointment_type AS "appointmentType",
          status, payment_status AS "paymentStatus",
          stripe_payment_intent_id AS "stripePaymentIntentId",
+         meet_link AS "meetLink",
          was_rescheduled AS "wasRescheduled",
          created_at AS "createdAt"`,
       [dateString, startTime, endTime, id]

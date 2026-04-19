@@ -62,6 +62,16 @@ A professional bilingual (French/English) consultation website for Audrey Mondes
 - Widget registered globally in `App.tsx` (above `<PrivacyConsent />`)
 - `GEMINI_API_KEY` secret required (already set)
 
+## Booking Pipeline (End-to-End)
+- `server/googleMeet.ts` — refactored: supports `GOOGLE_CLIENT_EMAIL`+`GOOGLE_PRIVATE_KEY` OR `GOOGLE_SERVICE_ACCOUNT_JSON`; no attendees (avoids domain delegation error); uses `conferenceDataVersion: 1` + `createRequest` for unique Meet links per booking; falls back to `GOOGLE_MEET_LINK` env var if Calendar API fails.
+- `server/booking.ts` — `processBooking(clientName, clientEmail, details)` orchestrator: creates Google Calendar event → extracts Meet link → saves to DB via `storage.setMeetLink()` → sends `sendMeetConfirmation()` email. All errors non-fatal (fallback to static link).
+- `server/resend.ts` — `sendMeetConfirmation()`: branded email with green Meet link button sent to client; internal notification to Audrey with booking details.
+- `server/storage.ts` — `setMeetLink(id, link)`: raw SQL UPDATE sets `meet_link` + `status='confirmed'`.
+- `server/index.ts` — Stripe webhook now also calls `processBooking()` on `checkout.session.completed` events; startup migration adds `meet_link` column.
+- `server/routes.ts` — `PATCH /api/admin/appointments/:id/approve` now calls `processBooking()` instead of `sendAppointmentApproved`.
+- `client/src/pages/Admin.tsx` — Approve button shows Meet link in success toast; appointment cards display Meet link in green panel.
+- `GOOGLE_CALENDAR_ID` env var required for Google Calendar integration.
+
 ## Recent Changes
 - 2026-04-15: Added "Consultation Entreprise" third booking mode at $250 CAD — `business_consultation` appointmentType in schema/validators; Stripe checkout creates a 25000-cent CAD session; Book.tsx has 3-column tab grid with Briefcase icon, 60-90 min duration, business preparation checklist, and "Payer 250$ CAD" button; full FR/EN translations added.
 - 2026-04-15: Replaced Drizzle ORM INSERT/UPDATE for appointments with raw parameterized SQL — root cause of "column name does not exist" in production was Drizzle's compiled bundle using stale/wrong column names; raw SQL bypasses this entirely and guarantees correct column names.

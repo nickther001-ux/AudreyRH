@@ -1,4 +1,5 @@
 import { google } from "googleapis";
+import { randomUUID } from "crypto";
 
 const SCOPES = [
   "https://www.googleapis.com/auth/calendar.events",
@@ -14,17 +15,8 @@ export interface GoogleMeetResult {
 export interface CreateMeetEventParams {
   summary: string;
   description: string;
-  startTime: string;
-  endTime: string;
-  attendeeEmail?: string;
-}
-
-function loadKeyFile(): { client_email: string; private_key: string } {
-  const envJson = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
-  if (!envJson) {
-    throw new Error("GOOGLE_SERVICE_ACCOUNT_JSON environment variable is not set.");
-  }
-  return JSON.parse(envJson);
+  startDateTime: string;
+  endDateTime: string;
 }
 
 function getAuthClient() {
@@ -33,11 +25,25 @@ function getAuthClient() {
     throw new Error("GOOGLE_CALENDAR_ID environment variable is not set.");
   }
 
-  const keyFile = loadKeyFile();
+  let clientEmail: string;
+  let privateKey: string;
+
+  if (process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY) {
+    clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+    privateKey = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n");
+  } else if (process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
+    const parsed = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
+    clientEmail = parsed.client_email;
+    privateKey = parsed.private_key;
+  } else {
+    throw new Error(
+      "Google auth not configured. Set GOOGLE_CLIENT_EMAIL + GOOGLE_PRIVATE_KEY, or GOOGLE_SERVICE_ACCOUNT_JSON."
+    );
+  }
 
   const auth = new google.auth.JWT({
-    email: keyFile.client_email,
-    key: keyFile.private_key,
+    email: clientEmail,
+    key: privateKey,
     scopes: SCOPES,
   });
 
@@ -50,25 +56,43 @@ export async function createGoogleMeetEvent(
   const { auth, calendarId } = getAuthClient();
   const calendar = google.calendar({ version: "v3", auth });
 
+  const requestId = randomUUID();
+
   const event = await calendar.events.insert({
     calendarId,
+    conferenceDataVersion: 1,
     requestBody: {
       summary: params.summary,
       description: params.description,
       start: {
-        dateTime: params.startTime,
+        dateTime: params.startDateTime,
         timeZone: "America/Toronto",
       },
       end: {
-        dateTime: params.endTime,
+        dateTime: params.endDateTime,
         timeZone: "America/Toronto",
       },
-      location: process.env.GOOGLE_MEET_LINK ?? "Zoom / Google Meet (lien envoyé par courriel)",
+      conferenceData: {
+        createRequest: {
+          requestId,
+          conferenceSolutionKey: { type: "hangoutsMeet" },
+        },
+      },
     },
   });
 
   const eventData = event.data;
-  const meetLink = process.env.GOOGLE_MEET_LINK ?? eventData.htmlLink ?? "";
+
+  const entryPoints = eventData.conferenceData?.entryPoints ?? [];
+  const videoEntry = entryPoints.find((e) => e.entryPointType === "video");
+  const meetLink =
+    videoEntry?.uri ??
+    eventData.hangoutLink ??
+    eventData.htmlLink ??
+    process.env.GOOGLE_MEET_LINK ??
+    "";
+
+  console.log(`[GoogleMeet] Event created: ${eventData.id}, Meet link: ${meetLink}`);
 
   return {
     meetLink,

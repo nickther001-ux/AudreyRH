@@ -423,14 +423,24 @@ function AppointmentCard({
   const { mutate: approve, isPending: isApproving } = useMutation({
     mutationFn: async () => {
       const res = await apiRequest("PATCH", `/api/admin/appointments/${appt.id}/approve`, {});
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.message ?? 'Erreur serveur');
+      }
       return res.json();
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/appointments"] });
-      toast({ title: "Confirmé", description: "Email de confirmation envoyé au client." });
+      const link = data?.meetLink;
+      toast({
+        title: "Consultation confirmée",
+        description: link
+          ? `Lien Meet envoyé au client : ${link}`
+          : "Email de confirmation envoyé au client.",
+      });
     },
-    onError: () => {
-      toast({ title: "Erreur", description: "Impossible de confirmer.", variant: "destructive" });
+    onError: (err: any) => {
+      toast({ title: "Erreur", description: err.message ?? "Impossible de confirmer.", variant: "destructive" });
     },
   });
 
@@ -490,6 +500,21 @@ function AppointmentCard({
               <div className="mt-1 p-3 rounded-lg bg-white/5 border border-white/8">
                 <p className="text-xs font-semibold text-white/40 uppercase tracking-wider mb-1">Sujet</p>
                 <p className="text-sm text-white/65">{appt.reason}</p>
+              </div>
+            )}
+
+            {appt?.meetLink && (
+              <div className="mt-1 p-3 rounded-lg bg-emerald-950/40 border border-emerald-700/30">
+                <p className="text-xs font-semibold text-emerald-400/70 uppercase tracking-wider mb-1">Lien Google Meet</p>
+                <a
+                  href={appt.meetLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-emerald-300 hover:text-emerald-200 break-all underline underline-offset-2"
+                  data-testid={`link-meet-${appt.id}`}
+                >
+                  {appt.meetLink}
+                </a>
               </div>
             )}
           </div>

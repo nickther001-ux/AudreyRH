@@ -314,22 +314,24 @@ export async function registerRoutes(
     const id = parseInt(req.params.id);
     if (isNaN(id)) return res.status(400).json({ message: 'Invalid ID' });
     try {
-      const appointment = await storage.updateAppointmentStatus(id, 'confirmed');
-      try {
-        const { sendAppointmentApproved } = await import('./resend');
-        const dateStr = appointment.date
-          ? new Date(appointment.date).toLocaleDateString('fr-CA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-          : '';
-        await sendAppointmentApproved({
-          clientName: appointment.name, clientEmail: appointment.email,
-          date: dateStr, startTime: appointment.startTime ?? null, endTime: appointment.endTime ?? null,
-          platform: appointment.platform, reason: appointment.reason,
-        });
-      } catch (emailErr: any) { console.error('Approve email failed:', emailErr.message); }
-      res.json({ success: true, appointment });
-    } catch (err) {
+      const appointment = await storage.getAppointment(id);
+      if (!appointment) return res.status(404).json({ message: 'Appointment not found' });
+
+      const { processBooking } = await import('./booking');
+      const { meetLink } = await processBooking(appointment.name, appointment.email, {
+        appointmentId: appointment.id,
+        date: appointment.date ?? null,
+        startTime: appointment.startTime ?? null,
+        endTime: appointment.endTime ?? null,
+        platform: appointment.platform,
+        reason: appointment.reason,
+      });
+
+      const updated = await storage.getAppointment(id);
+      res.json({ success: true, appointment: updated, meetLink });
+    } catch (err: any) {
       console.error('Error approving appointment:', err);
-      res.status(500).json({ message: 'Failed to approve appointment' });
+      res.status(500).json({ message: 'Failed to approve appointment', detail: err.message });
     }
   });
 

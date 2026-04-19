@@ -799,3 +799,139 @@ ${emailWrapperClose}`;
   if (r.error) console.error('[Resend] Reschedule email error:', r.error.message);
   else console.log('[Resend] Reschedule email sent, id:', r.data?.id);
 }
+
+// ─── Booking Confirmation with Google Meet Link ───────────────────────────────
+
+export type MeetConfirmationData = {
+  clientName: string;
+  clientEmail: string;
+  meetLink: string;
+  date: string;
+  startTime?: string | null;
+  endTime?: string | null;
+  platform: string;
+  reason: string;
+  amount?: string;
+  stripeId?: string;
+};
+
+export async function sendMeetConfirmation(data: MeetConfirmationData) {
+  const client = getClient();
+  const platformLabel = data.platform === 'google_meet' ? 'Google Meet' : 'Zoom';
+  const timeRange = data.startTime && data.endTime ? `${data.startTime} – ${data.endTime} (HE)` : '';
+  const hasMeetLink = data.meetLink && data.meetLink.startsWith('http');
+  const amountDisplay = data.amount ?? null;
+
+  const meetSection = hasMeetLink ? `
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+              <tr>
+                <td style="background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.3);border-radius:12px;padding:22px 24px;text-align:center;">
+                  <p style="margin:0 0 6px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.5px;">Lien de votre réunion / Your meeting link</p>
+                  <a href="${data.meetLink}"
+                     style="display:inline-block;margin:10px 0;padding:13px 30px;background:#4ade80;color:#0a1628;font-weight:800;font-size:15px;text-decoration:none;border-radius:8px;letter-spacing:0.3px;">
+                    Rejoindre la réunion →
+                  </a>
+                  <p style="margin:10px 0 0;font-size:11px;color:rgba(255,255,255,0.35);word-break:break-all;">${data.meetLink}</p>
+                </td>
+              </tr>
+            </table>` : `
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+              <tr>
+                <td style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:18px 22px;">
+                  <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.75;">
+                    Le lien ${platformLabel} vous sera envoyé par email avant votre rendez-vous.<br/>
+                    <em style="color:rgba(255,255,255,0.35);">The ${platformLabel} link will be sent before your appointment.</em>
+                  </p>
+                </td>
+              </tr>
+            </table>`;
+
+  const clientHtml = `${emailWrapperOpen(600)}
+${logoHeader('✓&nbsp;&nbsp;Consultation confirmée — Lien inclus')}
+        <tr>
+          <td style="padding:40px 48px;">
+            <p style="margin:0 0 6px;font-size:23px;font-weight:700;color:#ffffff;">Bonjour ${data.clientName},</p>
+            <p style="margin:0 0 28px;font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;">
+              Votre consultation avec <strong style="color:#ffffff;">Audrey Mondesir, CRIA</strong> est confirmée.
+              ${hasMeetLink ? 'Votre lien Google Meet est prêt ci-dessous.' : ''}<br/>
+              <em style="color:rgba(255,255,255,0.35);">Your consultation with Audrey Mondesir, CRIA is confirmed.</em>
+            </p>
+
+            ${meetSection}
+
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:12px;">
+              <tr><td style="padding:20px 24px;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                  ${data.date ? fieldRow('Date', data.date) : ''}
+                  ${timeRange ? fieldRow('Heure / Time', timeRange) : ''}
+                  ${fieldRow('Plateforme', platformLabel)}
+                  ${data.reason ? fieldRow('Sujet / Subject', data.reason, true) : ''}
+                </table>
+              </td></tr>
+            </table>
+
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+              <tr><td style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:18px 22px;">
+                <p style="margin:0 0 8px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);">Préparation / Preparation</p>
+                ${[
+                  'Ayez vos documents pertinents prêts (CV, permis, diplômes).',
+                  'Notez vos 3 priorités principales pour la consultation.',
+                  'Assurez-vous d\'avoir une connexion internet stable.'
+                ].map(item => `
+                <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:8px;">
+                  <tr>
+                    <td width="24" valign="top">${checkBullet}</td>
+                    <td><p style="margin:0;font-size:13px;color:rgba(255,255,255,0.65);line-height:1.6;">${item}</p></td>
+                  </tr>
+                </table>`).join('')}
+              </td></tr>
+            </table>
+
+            <p style="margin:0 0 6px;font-size:13px;color:rgba(255,255,255,0.55);">
+              Questions ? <a href="mailto:info@audreyrh.com" style="color:#93c5fd;text-decoration:none;font-weight:600;">info@audreyrh.com</a>
+            </p>
+          </td>
+        </tr>
+${emailFooter()}
+${emailWrapperClose}`;
+
+  const notifyHtml = `${emailWrapperOpen(500)}
+${compactHeader('AudreyRH · Consultation confirmée', 'Meet link envoyé au client')}
+        <tr>
+          <td style="padding:28px 32px 32px;">
+            <div style="margin-bottom:14px;">
+              <p style="margin:0 0 4px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;">Client</p>
+              <p style="margin:0;font-size:15px;color:#ffffff;">
+                ${data.clientName}
+                <a href="mailto:${data.clientEmail}" style="font-size:13px;color:#93c5fd;text-decoration:none;margin-left:6px;">${data.clientEmail}</a>
+              </p>
+            </div>
+            ${amountDisplay ? `<div style="margin-bottom:14px;">
+              <p style="margin:0 0 4px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;">Montant</p>
+              <p style="margin:0;font-size:22px;font-weight:800;color:#4ade80;">$${amountDisplay} CAD</p>
+            </div>` : ''}
+            ${data.date ? `<div style="margin-bottom:14px;">
+              <p style="margin:0 0 4px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;">Date${timeRange ? ' & Heure' : ''}</p>
+              <p style="margin:0;font-size:14px;font-weight:600;color:#ffffff;">${data.date}${timeRange ? ' · ' + timeRange : ''}</p>
+            </div>` : ''}
+            ${hasMeetLink ? `<div style="margin-bottom:14px;">
+              <p style="margin:0 0 4px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;">Meet Link (envoyé au client)</p>
+              <a href="${data.meetLink}" style="font-size:13px;color:#4ade80;text-decoration:none;">${data.meetLink}</a>
+            </div>` : ''}
+            <hr style="border:0;border-top:1px solid rgba(255,255,255,0.08);margin:0 0 22px;"/>
+            ${ctaButton('https://audreyrh.com/admin', 'Voir dans le tableau de bord →')}
+          </td>
+        </tr>
+${emailFooter()}
+${emailWrapperClose}`;
+
+  console.log('[Resend] Sending meet confirmation emails to:', data.clientEmail);
+  const [r1, r2] = await Promise.all([
+    client.emails.send({ from: FROM, to: data.clientEmail, subject: 'Votre consultation est confirmée — Lien Google Meet inclus | AudreyRH', html: clientHtml }),
+    client.emails.send({ from: FROM, to: NOTIFY_TO, replyTo: data.clientEmail, subject: `✓ Consultation confirmée : ${data.clientName}${amountDisplay ? ' — $' + amountDisplay + ' CAD' : ''}`, html: notifyHtml }),
+  ]);
+  if (r1.error) console.error('[Resend] Meet confirm client email error:', r1.error.message);
+  else console.log('[Resend] Meet confirm client email sent, id:', r1.data?.id);
+  if (r2.error) console.error('[Resend] Meet confirm notify email error:', r2.error.message);
+  else console.log('[Resend] Meet confirm notify email sent, id:', r2.data?.id);
+}
