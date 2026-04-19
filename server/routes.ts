@@ -256,36 +256,6 @@ export async function registerRoutes(
     res.json({ success: true });
   });
 
-  // One-time prod seed — inserts Yahudah & Sarah if not already present
-  app.post('/api/admin/seed-launch', async (req, res) => {
-    const { password } = req.body ?? {};
-    if (!password || password !== process.env.ADMIN_PASSWORD) {
-      return res.status(401).json({ message: 'Unauthorized' });
-    }
-    try {
-      const { pool } = await import('./db');
-      const check = await pool.query(
-        `SELECT id FROM appointments WHERE email IN ('Chiefop@carpoolxpress.com','sbrutus@cabinetbrutus.com')`
-      );
-      if (check.rowCount && check.rowCount > 0) {
-        return res.json({ message: 'Records already exist', count: check.rowCount });
-      }
-      await pool.query(`
-        INSERT INTO appointments
-          (name, email, phone, date, start_time, end_time, platform, reason, status, payment_status, appointment_type, language, created_at)
-        VALUES
-          ('Yahudah Man kamaha','Chiefop@carpoolxpress.com','6479376317','2026-04-21','08:45','09:00','google_meet',
-           'Demande de consultation — rétablie manuellement après erreur de base de données.','pending','unpaid','free_consultation','fr',NOW()),
-          ('Sarah Brutus','sbrutus@cabinetbrutus.com','+15145321540','2026-04-20','08:45','09:00','zoom',
-           'Demande de consultation — rétablie manuellement après erreur de base de données.','pending','unpaid','business_consultation','fr',NOW())
-      `);
-      res.json({ message: 'Inserted 2 records successfully' });
-    } catch (err: any) {
-      console.error('Seed error:', err);
-      res.status(500).json({ message: err.message });
-    }
-  });
-
   // Admin routes - get all appointments
   app.get('/api/admin/appointments', async (req, res) => {
     try {
