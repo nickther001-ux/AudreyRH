@@ -1,9 +1,15 @@
 import { google } from "googleapis";
 import { randomUUID } from "crypto";
 
-const SCOPES = [
+// Calendar scope for creating events
+const CALENDAR_SCOPES = [
   "https://www.googleapis.com/auth/calendar.events",
   "https://www.googleapis.com/auth/calendar",
+];
+
+// Google Meet API scope for creating meeting spaces (no DWD required)
+const MEET_SCOPES = [
+  "https://www.googleapis.com/auth/meetings.space.created",
 ];
 
 export interface GoogleMeetResult {
@@ -19,84 +25,114 @@ export interface CreateMeetEventParams {
   endDateTime: string;
 }
 
-function getAuthClient() {
-  const calendarId = process.env.GOOGLE_CALENDAR_ID;
-  if (!calendarId) {
-    throw new Error("GOOGLE_CALENDAR_ID environment variable is not set.");
-  }
-
-  let clientEmail: string;
-  let privateKey: string;
-
+function parseServiceAccountCreds(): { clientEmail: string; privateKey: string } {
   if (process.env.GOOGLE_CLIENT_EMAIL && process.env.GOOGLE_PRIVATE_KEY) {
-    clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-    privateKey = process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n");
-  } else if (process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
-    const parsed = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
-    clientEmail = parsed.client_email;
-    privateKey = parsed.private_key;
-  } else {
-    throw new Error(
-      "Google auth not configured. Set GOOGLE_CLIENT_EMAIL + GOOGLE_PRIVATE_KEY, or GOOGLE_SERVICE_ACCOUNT_JSON."
-    );
+    return {
+      clientEmail: process.env.GOOGLE_CLIENT_EMAIL,
+      privateKey: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+    };
   }
+  if (process.env.GOOGLE_SERVICE_ACCOUNT_JSON) {
+    const parsed = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON);
+    return { clientEmail: parsed.client_email, privateKey: parsed.private_key };
+  }
+  throw new Error(
+    "Google auth not configured. Set GOOGLE_CLIENT_EMAIL + GOOGLE_PRIVATE_KEY, or GOOGLE_SERVICE_ACCOUNT_JSON."
+  );
+}
+
+/**
+ * Create a unique Google Meet link using the Google Meet REST API v2.
+ * This does NOT require domain-wide delegation — works with any service account.
+ */
+async function createMeetSpace(): Promise<string> {
+  const { clientEmail, privateKey } = parseServiceAccountCreds();
 
   const auth = new google.auth.JWT({
     email: clientEmail,
     key: privateKey,
-    scopes: SCOPES,
+    scopes: MEET_SCOPES,
   });
 
-  return { auth, calendarId };
+  const token = await auth.authorize();
+  const accessToken = token.access_token;
+  if (!accessToken) throw new Error("Failed to get access token for Meet API");
+
+  const res = await fetch("https://meet.googleapis.com/v2/spaces", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({}),
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Google Meet API error ${res.status}: ${body}`);
+  }
+
+  const data = await res.json() as { meetingUri?: string; meetingCode?: string; name?: string };
+  const meetLink = data.meetingUri ?? "";
+  console.log(`[GoogleMeet] Meet space created: ${meetLink}`);
+  return meetLink;
+}
+
+/**
+ * Create a Google Calendar event (without Meet conferencing).
+ * Returns the calendar event htmlLink and eventId.
+ */
+async function createCalendarEvent(params: CreateMeetEventParams): Promise<{ eventId: string; htmlLink: string }> {
+  const calendarId = process.env.GOOGLE_CALENDAR_ID;
+  if (!calendarId) throw new Error("GOOGLE_CALENDAR_ID is not set.");
+
+  const { clientEmail, privateKey } = parseServiceAccountCreds();
+
+  const auth = new google.auth.JWT({
+    email: clientEmail,
+    key: privateKey,
+    scopes: CALENDAR_SCOPES,
+  });
+
+  const calendar = google.calendar({ version: "v3", auth });
+
+  const event = await calendar.events.insert({
+    calendarId,
+    requestBody: {
+      summary: params.summary,
+      description: params.description,
+      start: { dateTime: params.startDateTime, timeZone: "America/Toronto" },
+      end: { dateTime: params.endDateTime, timeZone: "America/Toronto" },
+    },
+  });
+
+  console.log(`[GoogleMeet] Calendar event created: ${event.data.id}`);
+  return { eventId: event.data.id ?? "", htmlLink: event.data.htmlLink ?? "" };
 }
 
 export async function createGoogleMeetEvent(
   params: CreateMeetEventParams
 ): Promise<GoogleMeetResult> {
-  const { auth, calendarId } = getAuthClient();
-  const calendar = google.calendar({ version: "v3", auth });
+  // 1. Create a unique Google Meet space
+  let meetLink = "";
+  try {
+    meetLink = await createMeetSpace();
+  } catch (meetErr: any) {
+    console.warn(`[GoogleMeet] Meet API failed, falling back to static link. Reason: ${meetErr.message}`);
+    meetLink = process.env.GOOGLE_MEET_LINK ?? "";
+  }
 
-  const requestId = randomUUID();
+  // 2. Create the calendar event (best-effort, non-blocking)
+  let eventId = "";
+  let htmlLink = "";
+  try {
+    const calResult = await createCalendarEvent(params);
+    eventId = calResult.eventId;
+    htmlLink = calResult.htmlLink;
+  } catch (calErr: any) {
+    console.warn(`[GoogleMeet] Calendar event creation failed (non-fatal): ${calErr.message}`);
+  }
 
-  const event = await calendar.events.insert({
-    calendarId,
-    conferenceDataVersion: 1,
-    requestBody: {
-      summary: params.summary,
-      description: params.description,
-      start: {
-        dateTime: params.startDateTime,
-        timeZone: "America/Toronto",
-      },
-      end: {
-        dateTime: params.endDateTime,
-        timeZone: "America/Toronto",
-      },
-      conferenceData: {
-        createRequest: {
-          requestId,
-          conferenceSolutionKey: { type: "hangoutsMeet" },
-        },
-      },
-    },
-  });
-
-  const eventData = event.data;
-
-  const entryPoints = eventData.conferenceData?.entryPoints ?? [];
-  const videoEntry = entryPoints.find((e) => e.entryPointType === "video");
-  const meetLink =
-    videoEntry?.uri ??
-    eventData.hangoutLink ??
-    eventData.htmlLink ??
-    process.env.GOOGLE_MEET_LINK ??
-    "";
-
-  console.log(`[GoogleMeet] Event created: ${eventData.id}, Meet link: ${meetLink}`);
-
-  return {
-    meetLink,
-    eventId: eventData.id ?? "",
-    htmlLink: eventData.htmlLink ?? "",
-  };
+  console.log(`[GoogleMeet] Resolved Meet link: ${meetLink}`);
+  return { meetLink, eventId, htmlLink };
 }
