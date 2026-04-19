@@ -359,6 +359,7 @@ export default function Book() {
       form.setError("date", { message: t("book.selectSlotRequired") });
       return;
     }
+    data.language = language as "fr" | "en";
     mutate(data);
   };
 

@@ -82,7 +82,7 @@ export async function registerRoutes(
           mode: 'payment',
           success_url: `${req.protocol}://${req.get('host')}/book?success=true&appointmentId=${appointment.id}&email=${encodeURIComponent(appointment.email)}&session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${req.protocol}://${req.get('host')}/book?canceled=true`,
-          metadata: { appointmentId: appointment.id.toString() },
+          metadata: { appointmentId: appointment.id.toString(), language: (input.language ?? "fr") },
           customer_email: input.email,
         });
         checkoutUrl = session.url;
@@ -325,6 +325,7 @@ export async function registerRoutes(
         endTime: appointment.endTime ?? null,
         platform: appointment.platform,
         reason: appointment.reason,
+        language: (appointment.language as "fr" | "en") || "fr",
       });
 
       const updated = await storage.getAppointment(id);

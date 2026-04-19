@@ -11,6 +11,7 @@ export interface BookingDetails {
   reason: string;
   amount?: string;
   stripeId?: string;
+  language?: "fr" | "en";
 }
 
 function buildDateTime(dateStr: string, timeStr: string): string {
@@ -59,6 +60,7 @@ export async function processBooking(
       reason: details.reason,
       amount: details.amount,
       stripeId: details.stripeId,
+      language: details.language ?? "fr",
     });
   } catch (emailErr: any) {
     console.error(`[Booking] Resend email error (non-fatal): ${emailErr.message}`);

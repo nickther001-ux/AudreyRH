@@ -132,7 +132,8 @@ async function ensureMeetLinkColumn() {
   try {
     const { pool } = await import('./db');
     await pool.query(`ALTER TABLE appointments ADD COLUMN IF NOT EXISTS meet_link TEXT`);
-    console.log('[Startup] appointments.meet_link column ready');
+    await pool.query(`ALTER TABLE appointments ADD COLUMN IF NOT EXISTS language TEXT`);
+    console.log('[Startup] appointments.meet_link + language columns ready');
   } catch (err: any) {
     console.error('[Startup] ensureMeetLinkColumn error:', err.message);
   }
@@ -203,6 +204,7 @@ async function ensureLeadsTable() {
               const appointment = await storage.getAppointment(appointmentId);
               if (appointment && appointment.paymentStatus !== 'paid') {
                 console.log(`[Webhook] Processing paid booking for appointment #${appointmentId}`);
+                const lang = (session.metadata?.language as "fr" | "en") || appointment.language || "fr";
                 await processBooking(appointment.name, appointment.email, {
                   appointmentId: appointment.id,
                   date: appointment.date ?? null,
@@ -212,6 +214,7 @@ async function ensureLeadsTable() {
                   reason: appointment.reason,
                   amount: (session.amount_total / 100).toFixed(2),
                   stripeId: session.payment_intent ?? session.id,
+                  language: lang,
                 });
                 await storage.updateAppointmentPayment(appointmentId, session.payment_intent ?? session.id);
               } else {

@@ -16,6 +16,7 @@ export const appointments = pgTable("appointments", {
   paymentStatus: text("payment_status", { enum: ["unpaid", "paid"] }).default("unpaid").notNull(),
   stripePaymentIntentId: text("stripe_payment_intent_id"),
   meetLink: text("meet_link"),
+  language: text("language"),
   wasRescheduled: boolean("was_rescheduled").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });

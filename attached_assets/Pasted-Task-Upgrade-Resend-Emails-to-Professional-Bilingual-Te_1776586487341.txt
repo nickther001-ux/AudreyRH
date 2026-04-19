@@ -1,0 +1,43 @@
+Task: Upgrade Resend Emails to Professional, Bilingual Templates
+
+1. Language Parameter Passing:
+
+Update the frontend booking forms to capture the user's current active language state ('en' or 'fr').
+
+For Free Consultations: Pass this language flag in the API payload that is eventually used by the Admin approval route.
+
+For Paid Consultations: Attach this language flag to the Stripe Checkout Session metadata during creation so it survives the webhook roundtrip and can be extracted in /api/webhook/stripe.
+
+2. Update the processBooking Function:
+
+Modify processBooking(clientName, clientEmail, bookingDetails, language) to accept the new language parameter.
+
+Ensure the Date/Time format injected into the email is localized (e.g., using Intl.DateTimeFormat for 'en-US' or 'fr-FR').
+
+3. The Professional Bilingual Templates:
+
+Create two distinct HTML templates for the Resend API call based on the language flag.
+
+English Template ('en'):
+
+Subject: "Your Consultation with AudreyRH is Confirmed"
+
+Body text: "Thank you for reaching out to AudreyRH. Your appointment is set for [Formatted Date/Time]. Thank you for your reservation. Here is the link to join the meeting:"
+
+[Insert Green Button with Meet Link]
+
+Bottom text: "Please make sure to gather all information and questions needed during the session. If you cannot make it, you can simply reply to this email to cancel or reschedule."
+
+French Template ('fr'):
+
+Subject: "Votre consultation avec AudreyRH est confirmée"
+
+Body text: "Merci d'avoir contacté AudreyRH. Votre rendez-vous est fixé au [Formatted Date/Time]. Merci pour votre réservation. Voici le lien pour rejoindre la réunion :"
+
+[Insert Green Button with Meet Link]
+
+Bottom text: "Veuillez vous assurer de rassembler toutes les informations et questions nécessaires avant la session. Si vous ne pouvez pas vous présenter, vous pouvez simplement répondre à cet e-mail pour annuler ou reprogrammer."
+
+4. Implementation:
+
+Apply these templates to the Resend logic so the correct language fires automatically based on the user's origin page.

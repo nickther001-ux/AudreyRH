@@ -45,8 +45,8 @@ export class DatabaseStorage implements IStorage {
     console.log(`[Appointment] Inserting date="${dateString}" for ${insertAppointment.email}`);
     const { rows } = await pool.query<Appointment>(
       `INSERT INTO appointments
-         (name, email, phone, reason, date, slot_id, start_time, end_time, platform, appointment_type)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+         (name, email, phone, reason, date, slot_id, start_time, end_time, platform, appointment_type, language)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
        RETURNING
          id, name, email, phone, reason, date::text AS date,
          slot_id AS "slotId", start_time AS "startTime", end_time AS "endTime",
@@ -54,6 +54,7 @@ export class DatabaseStorage implements IStorage {
          status, payment_status AS "paymentStatus",
          stripe_payment_intent_id AS "stripePaymentIntentId",
          meet_link AS "meetLink",
+         language,
          was_rescheduled AS "wasRescheduled",
          created_at AS "createdAt"`,
       [
@@ -67,6 +68,7 @@ export class DatabaseStorage implements IStorage {
         insertAppointment.endTime ?? null,
         insertAppointment.platform ?? "zoom",
         insertAppointment.appointmentType ?? "paid_service",
+        insertAppointment.language ?? "fr",
       ]
     );
     return rows[0];
@@ -221,6 +223,7 @@ export class DatabaseStorage implements IStorage {
          status, payment_status AS "paymentStatus",
          stripe_payment_intent_id AS "stripePaymentIntentId",
          meet_link AS "meetLink",
+         language,
          was_rescheduled AS "wasRescheduled",
          created_at AS "createdAt"`,
       [dateString, startTime, endTime, id]
