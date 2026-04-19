@@ -7,6 +7,7 @@ import { getStripeSync, getUncachableStripeClient } from "./stripeClient";
 import { WebhookHandlers } from "./webhookHandlers";
 import { storage } from "./storage";
 import { processBooking } from "./booking";
+import { runMigrationsOnStartup } from "./migrations";
 
 const app = express();
 const httpServer = createServer(app);
@@ -77,93 +78,9 @@ async function initStripe() {
   }
 }
 
-async function fixAvailabilitySchema() {
-  try {
-    const { pool } = await import('./db');
-    // 1. Delete all null-dated slots (legacy data)
-    const del = await pool.query("DELETE FROM availability_slots WHERE date IS NULL");
-    if (del.rowCount && del.rowCount > 0) {
-      console.log(`[Startup] Removed ${del.rowCount} null-dated availability slot(s)`);
-    }
-    // 2. Enforce NOT NULL on the date column if it is still nullable
-    const colInfo = await pool.query(`
-      SELECT is_nullable FROM information_schema.columns
-      WHERE table_name = 'availability_slots' AND column_name = 'date'
-    `);
-    if (colInfo.rows[0]?.is_nullable === 'YES') {
-      await pool.query("ALTER TABLE availability_slots ALTER COLUMN date SET NOT NULL");
-      console.log("[Startup] Enforced NOT NULL on availability_slots.date");
-    }
-  } catch (err: any) {
-    console.error("[Startup] fixAvailabilitySchema error:", err.message);
-  }
-}
-
-async function fixAppointmentsSchema() {
-  try {
-    const { pool } = await import('./db');
-    // Check the current type and nullability of appointments.date
-    const colInfo = await pool.query(`
-      SELECT data_type, is_nullable
-      FROM information_schema.columns
-      WHERE table_name = 'appointments' AND column_name = 'date'
-    `);
-    const col = colInfo.rows[0];
-    if (!col) return;
-
-    const isTimestamp = col.data_type === 'timestamp without time zone' || col.data_type === 'timestamp with time zone';
-    const isNotNull = col.is_nullable === 'NO';
-
-    if (isTimestamp) {
-      // Convert from timestamp to date type, allow nulls (free consultations have no date)
-      await pool.query("ALTER TABLE appointments ALTER COLUMN date TYPE date USING date::date");
-      console.log("[Startup] Converted appointments.date from timestamp to date");
-    }
-    if (isTimestamp || isNotNull) {
-      await pool.query("ALTER TABLE appointments ALTER COLUMN date DROP NOT NULL");
-      console.log("[Startup] Dropped NOT NULL constraint on appointments.date");
-    }
-  } catch (err: any) {
-    console.error("[Startup] fixAppointmentsSchema error:", err.message);
-  }
-}
-
-async function ensureMeetLinkColumn() {
-  try {
-    const { pool } = await import('./db');
-    await pool.query(`ALTER TABLE appointments ADD COLUMN IF NOT EXISTS meet_link TEXT`);
-    await pool.query(`ALTER TABLE appointments ADD COLUMN IF NOT EXISTS language TEXT`);
-    console.log('[Startup] appointments.meet_link + language columns ready');
-  } catch (err: any) {
-    console.error('[Startup] ensureMeetLinkColumn error:', err.message);
-  }
-}
-
-async function ensureLeadsTable() {
-  try {
-    const { pool } = await import('./db');
-    await pool.query(`
-      CREATE TABLE IF NOT EXISTS leads (
-        id SERIAL PRIMARY KEY,
-        email TEXT NOT NULL,
-        summary TEXT,
-        segment TEXT,
-        created_at TIMESTAMP DEFAULT NOW() NOT NULL
-      )
-    `);
-    await pool.query(`ALTER TABLE leads ADD COLUMN IF NOT EXISTS segment TEXT`);
-    await pool.query(`ALTER TABLE leads ADD COLUMN IF NOT EXISTS primary_goal TEXT`);
-    console.log("[Startup] leads table ready");
-  } catch (err: any) {
-    console.error("[Startup] ensureLeadsTable error:", err.message);
-  }
-}
 
 (async () => {
-  await fixAvailabilitySchema();
-  await fixAppointmentsSchema();
-  await ensureMeetLinkColumn();
-  await ensureLeadsTable();
+  await runMigrationsOnStartup();
   await initStripe();
 
   app.post(
