@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import ics from 'ics';
 
 const FROM = 'AudreyRH <info@audreyrh.com>';
 const NOTIFY_TO = 'info@audreyrh.com';
@@ -830,6 +831,45 @@ function formatLocalDate(dateStr: string, lang: "fr" | "en"): string {
   }
 }
 
+function buildIcsAttachment(
+  dateStr: string,
+  startTime: string,
+  endTime: string,
+  meetLink: string,
+  lang: "fr" | "en"
+): string | null {
+  try {
+    const [y, m, d] = dateStr.split('-').map(Number);
+    const [startH, startM] = startTime.split(':').map(Number);
+    const [endH, endM] = endTime.split(':').map(Number);
+
+    const description = lang === 'fr'
+      ? `Consultation stratégique de carrière avec Audrey Mondesir\\, CRIA.\\nLien de réunion : ${meetLink}`
+      : `Career strategy consultation with Audrey Mondesir\\, CRIA.\\nMeeting link: ${meetLink}`;
+
+    const { error, value } = ics.createEvent({
+      title: 'Consultation AudreyRH',
+      start: [y, m, d, startH, startM],
+      end: [y, m, d, endH, endM],
+      location: meetLink,
+      description,
+      url: meetLink,
+      status: 'CONFIRMED',
+      organizer: { name: 'AudreyRH', email: 'info@audreyrh.com' },
+      productId: 'audreyrh/ics',
+    });
+
+    if (error || !value) {
+      console.error('[ICS] Failed to generate .ics:', error);
+      return null;
+    }
+    return value;
+  } catch (err: any) {
+    console.error('[ICS] Exception building .ics:', err.message);
+    return null;
+  }
+}
+
 export async function sendMeetConfirmation(data: MeetConfirmationData) {
   const client = getClient();
   const lang = data.language ?? "fr";
@@ -940,9 +980,29 @@ ${compactHeader('AudreyRH · Consultation confirmée', 'Meet link envoyé au cli
 ${emailFooter()}
 ${emailWrapperClose}`;
 
+  // Build .ics calendar invite if we have enough date/time data
+  let icsAttachment: { filename: string; content: string; content_type: string } | undefined;
+  if (data.date && data.startTime && data.endTime && hasMeetLink) {
+    const icsContent = buildIcsAttachment(data.date, data.startTime, data.endTime, data.meetLink, lang);
+    if (icsContent) {
+      icsAttachment = {
+        filename: 'invite.ics',
+        content: Buffer.from(icsContent).toString('base64'),
+        content_type: 'text/calendar; charset=utf-8; method=REQUEST',
+      };
+      console.log('[ICS] Calendar invite generated, attaching to confirmation email');
+    }
+  }
+
   console.log(`[Resend] Sending meet confirmation emails (${lang}) to:`, data.clientEmail);
   const [r1, r2] = await Promise.all([
-    client.emails.send({ from: FROM, to: data.clientEmail, subject: T.subject, html: clientHtml }),
+    client.emails.send({
+      from: FROM,
+      to: data.clientEmail,
+      subject: T.subject,
+      html: clientHtml,
+      ...(icsAttachment ? { attachments: [icsAttachment] } : {}),
+    }),
     client.emails.send({ from: FROM, to: NOTIFY_TO, replyTo: data.clientEmail, subject: `✓ Consultation confirmée : ${data.clientName}${amountDisplay ? ' — $' + amountDisplay + ' CAD' : ''} [${lang.toUpperCase()}]`, html: notifyHtml }),
   ]);
   if (r1.error) console.error('[Resend] Meet confirm client email error:', r1.error.message);
