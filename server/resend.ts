@@ -841,61 +841,46 @@ export async function sendMeetConfirmation(data: MeetConfirmationData) {
   const amountDisplay = data.amount ?? null;
   const formattedDate = data.date ? formatLocalDate(data.date, lang) : '';
 
+  const dateDisplay = [formattedDate, timeRange].filter(Boolean).join(' · ');
+
   const T = {
+    subject: isFr
+      ? `Votre consultation avec AudreyRH est confirmée`
+      : `Your Consultation with AudreyRH is Confirmed`,
+    headerTitle: isFr ? '✓ Consultation confirmée' : '✓ Consultation Confirmed',
     greeting: isFr ? `Bonjour ${data.clientName},` : `Hello ${data.clientName},`,
-    confirmed: isFr
-      ? `Votre consultation avec <strong style="color:#ffffff;">Audrey Mondesir, CRIA</strong> est confirmée.`
-      : `Your consultation with <strong style="color:#ffffff;">Audrey Mondesir, CRIA</strong> is confirmed.`,
-    meetReady: isFr
-      ? 'Votre lien de réunion est prêt ci-dessous.'
-      : 'Your meeting link is ready below.',
-    meetLabel: isFr ? 'Lien de votre réunion' : 'Your meeting link',
-    joinBtn: isFr ? 'Rejoindre la réunion →' : 'Join the meeting →',
-    linkSoonPlatform: isFr
-      ? `Le lien ${platformLabel} vous sera envoyé avant votre rendez-vous.`
-      : `Your ${platformLabel} link will be sent before your appointment.`,
-    dateLabel: isFr ? 'Date' : 'Date',
-    timeLabel: isFr ? 'Heure (HE)' : 'Time (ET)',
-    platformLabel2: isFr ? 'Plateforme' : 'Platform',
-    subjectLabel: isFr ? 'Sujet' : 'Subject',
-    prepLabel: isFr ? 'Préparation recommandée' : 'Recommended preparation',
-    prepItems: isFr
-      ? [
-          'Ayez vos documents pertinents prêts (CV, permis de travail, diplômes).',
-          'Notez vos 3 priorités principales pour la consultation.',
-          "Assurez-vous d'avoir une connexion internet stable.",
-        ]
-      : [
-          'Have your relevant documents ready (CV, work permit, diplomas).',
-          'Write down your 3 main priorities for the consultation.',
-          'Ensure you have a stable internet connection.',
-        ],
-    questions: isFr ? 'Questions ?' : 'Questions?',
-    subjectLine: isFr
-      ? `Votre consultation est confirmée — Lien ${platformLabel} inclus | AudreyRH`
-      : `Your consultation is confirmed — ${platformLabel} link included | AudreyRH`,
-    headerTitle: isFr ? '✓ Consultation confirmée — Lien inclus' : '✓ Consultation confirmed — Link included',
+    intro: isFr
+      ? `Merci d'avoir contacté AudreyRH. Votre rendez-vous est fixé au <strong style="color:#ffffff;">${dateDisplay || 'une date à confirmer'}</strong>.`
+      : `Thank you for reaching out to AudreyRH. Your appointment is set for <strong style="color:#ffffff;">${dateDisplay || 'a date to be confirmed'}</strong>.`,
+    meetIntro: isFr
+      ? 'Voici le lien pour rejoindre la réunion :'
+      : 'Here is your meeting link:',
+    joinBtn: isFr ? 'Rejoindre la réunion →' : 'Join the Meeting →',
+    linkSoon: isFr
+      ? `Le lien ${platformLabel} vous sera envoyé par email avant votre rendez-vous.`
+      : `Your ${platformLabel} link will be sent to you before your appointment.`,
+    closing: isFr
+      ? `Veuillez préparer vos questions avant la session. Pour annuler ou déplacer, répondez simplement à cet e-mail.`
+      : `Please gather any questions or info needed for the session. To cancel or reschedule, simply reply to this email.`,
   };
 
   const meetSection = hasMeetLink ? `
-            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+            <p style="margin:0 0 16px;font-size:14px;color:rgba(255,255,255,0.65);line-height:1.7;">${T.meetIntro}</p>
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
               <tr>
-                <td style="background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.3);border-radius:12px;padding:22px 24px;text-align:center;">
-                  <p style="margin:0 0 6px;font-size:11px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.5px;">${T.meetLabel}</p>
+                <td style="background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.3);border-radius:12px;padding:24px;text-align:center;">
                   <a href="${data.meetLink}"
-                     style="display:inline-block;margin:10px 0;padding:13px 30px;background:#4ade80;color:#0a1628;font-weight:800;font-size:15px;text-decoration:none;border-radius:8px;letter-spacing:0.3px;">
+                     style="display:inline-block;padding:14px 36px;background:#4ade80;color:#0a1628;font-weight:800;font-size:16px;text-decoration:none;border-radius:8px;letter-spacing:0.2px;">
                     ${T.joinBtn}
                   </a>
-                  <p style="margin:10px 0 0;font-size:11px;color:rgba(255,255,255,0.35);word-break:break-all;">${data.meetLink}</p>
+                  <p style="margin:12px 0 0;font-size:11px;color:rgba(255,255,255,0.3);word-break:break-all;">${data.meetLink}</p>
                 </td>
               </tr>
             </table>` : `
-            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
               <tr>
                 <td style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:18px 22px;">
-                  <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.75;">
-                    ${T.linkSoonPlatform}
-                  </p>
+                  <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.75;">${T.linkSoon}</p>
                 </td>
               </tr>
             </table>`;
@@ -904,40 +889,17 @@ export async function sendMeetConfirmation(data: MeetConfirmationData) {
 ${logoHeader(T.headerTitle)}
         <tr>
           <td style="padding:40px 48px;">
-            <p style="margin:0 0 6px;font-size:23px;font-weight:700;color:#ffffff;">${T.greeting}</p>
-            <p style="margin:0 0 28px;font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;">
-              ${T.confirmed}
-              ${hasMeetLink ? `<br/><span style="color:rgba(255,255,255,0.45);">${T.meetReady}</span>` : ''}
-            </p>
+            <p style="margin:0 0 20px;font-size:22px;font-weight:700;color:#ffffff;">${T.greeting}</p>
+            <p style="margin:0 0 28px;font-size:14px;color:rgba(255,255,255,0.65);line-height:1.8;">${T.intro}</p>
 
             ${meetSection}
 
-            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:12px;">
-              <tr><td style="padding:20px 24px;">
-                <table width="100%" cellpadding="0" cellspacing="0">
-                  ${formattedDate ? fieldRow(T.dateLabel, formattedDate) : ''}
-                  ${timeRange ? fieldRow(T.timeLabel, timeRange) : ''}
-                  ${fieldRow(T.platformLabel2, platformLabel)}
-                  ${data.reason ? fieldRow(T.subjectLabel, data.reason, true) : ''}
-                </table>
-              </td></tr>
-            </table>
+            <p style="margin:0 0 28px;font-size:14px;color:rgba(255,255,255,0.55);line-height:1.8;">${T.closing}</p>
 
-            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
-              <tr><td style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:18px 22px;">
-                <p style="margin:0 0 12px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:1px;">${T.prepLabel}</p>
-                ${T.prepItems.map(item => `
-                <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:8px;">
-                  <tr>
-                    <td width="24" valign="top">${checkBullet}</td>
-                    <td><p style="margin:0;font-size:13px;color:rgba(255,255,255,0.65);line-height:1.6;">${item}</p></td>
-                  </tr>
-                </table>`).join('')}
-              </td></tr>
-            </table>
-
-            <p style="margin:0 0 6px;font-size:13px;color:rgba(255,255,255,0.55);">
-              ${T.questions} <a href="mailto:info@audreyrh.com" style="color:#93c5fd;text-decoration:none;font-weight:600;">info@audreyrh.com</a>
+            <hr style="border:0;border-top:1px solid rgba(255,255,255,0.08);margin:0 0 24px;"/>
+            <p style="margin:0;font-size:12px;color:rgba(255,255,255,0.35);line-height:1.7;">
+              AudreyRH · Audrey Mondesir, CRIA · Montréal<br/>
+              <a href="mailto:info@audreyrh.com" style="color:#93c5fd;text-decoration:none;">info@audreyrh.com</a>
             </p>
           </td>
         </tr>
@@ -980,7 +942,7 @@ ${emailWrapperClose}`;
 
   console.log(`[Resend] Sending meet confirmation emails (${lang}) to:`, data.clientEmail);
   const [r1, r2] = await Promise.all([
-    client.emails.send({ from: FROM, to: data.clientEmail, subject: T.subjectLine, html: clientHtml }),
+    client.emails.send({ from: FROM, to: data.clientEmail, subject: T.subject, html: clientHtml }),
     client.emails.send({ from: FROM, to: NOTIFY_TO, replyTo: data.clientEmail, subject: `✓ Consultation confirmée : ${data.clientName}${amountDisplay ? ' — $' + amountDisplay + ' CAD' : ''} [${lang.toUpperCase()}]`, html: notifyHtml }),
   ]);
   if (r1.error) console.error('[Resend] Meet confirm client email error:', r1.error.message);
