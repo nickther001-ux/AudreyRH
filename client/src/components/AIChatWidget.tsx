@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
+import { processChatInput } from "@/lib/amaraBot";
 const amaraAvatar = "/amara-avatar.png";
 
 type Message = {
@@ -193,7 +194,7 @@ export function AIChatWidget() {
     }
   }
 
-  async function sendMessage() {
+  function sendMessage() {
     const text = input.trim();
     if (!text || loading) return;
     setInput("");
@@ -208,48 +209,13 @@ export function AIChatWidget() {
       captureLead(emailMatch[0], newMessages);
     }
 
-    try {
-      const res = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: newMessages }),
-      });
-      const data = await res.json();
-
-      if (!res.ok) {
-        const msg = data.message ?? "";
-        const isQuota = res.status === 429 || msg.includes("quota");
-        const isBusy = res.status === 503 || msg.includes("503") || msg.includes("UNAVAILABLE");
-        throw new Error(isQuota ? "quota" : isBusy ? "busy" : "error");
-      }
-
-      const reply = data.reply || (language === "fr" ? "Désolée, une erreur s'est produite." : "Sorry, an error occurred.");
+    // Local rule engine — no API call needed
+    setTimeout(() => {
+      const reply = processChatInput(text);
       const finalMessages: Message[] = [...newMessages, { role: "model", content: reply }];
       setMessages(finalMessages);
-
-      // Check if reply contains an email too (rare, but handle it)
-      const replyEmail = reply.match(EMAIL_REGEX);
-      if (replyEmail) captureLead(replyEmail[0], finalMessages);
-    } catch (err: any) {
-      const errType = err?.message;
-      let content: string;
-      if (errType === "busy") {
-        content = language === "fr"
-          ? "Je suis très sollicitée en ce moment ! Réessayez dans quelques secondes, ou écrivez-nous à info@audreyrh.com 😊"
-          : "I'm very busy right now! Try again in a few seconds, or email us at info@audreyrh.com 😊";
-      } else if (errType === "quota") {
-        content = language === "fr"
-          ? "Le service de chat est temporairement indisponible. Pour nous contacter directement, écrivez à [info@audreyrh.com](mailto:info@audreyrh.com) ou [prenez rendez-vous](/book). 😊"
-          : "The chat service is temporarily unavailable. To reach us directly, email [info@audreyrh.com](mailto:info@audreyrh.com) or [book a consultation](/book). 😊";
-      } else {
-        content = language === "fr"
-          ? "Désolée, une erreur s'est produite. Écrivez-nous à [info@audreyrh.com](mailto:info@audreyrh.com)"
-          : "Sorry, an error occurred. Email us at [info@audreyrh.com](mailto:info@audreyrh.com)";
-      }
-      setMessages([...newMessages, { role: "model", content }]);
-    } finally {
       setLoading(false);
-    }
+    }, 500);
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
