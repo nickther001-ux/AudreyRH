@@ -211,7 +211,7 @@ export function AIChatWidget() {
 
     // Local rule engine — no API call needed
     setTimeout(() => {
-      const reply = processChatInput(text);
+      const reply = processChatInput(text, language);
       const finalMessages: Message[] = [...newMessages, { role: "model", content: reply }];
       setMessages(finalMessages);
       setLoading(false);

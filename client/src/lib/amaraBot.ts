@@ -1,52 +1,144 @@
-export const botRules: { pattern: RegExp; response: string }[] = [
+type BilingualResponse = { fr: string; en: string };
+
+export const botRules: { pattern: RegExp; response: BilingualResponse }[] = [
+  // 1. HIGH PRIORITY: Core Business (Pricing, Booking, Location)
   {
     pattern: /\b(price|cost|combien|prix|tarif|combien ça coûte)\b/i,
-    response: "Parce que chaque mandat est unique, nous n'avons pas de tarif fixe. Audrey offre une consultation gratuite de 15 min pour évaluer vos besoins et vous donner un devis exact : [audreyrh.com/book](https://audreyrh.com/book)",
+    response: {
+      fr: "Parce que chaque mandat est unique, nous n'avons pas de tarif fixe. Audrey offre une consultation gratuite de 15 min pour évaluer vos besoins et donner un devis exact : [audreyrh.com/book](https://audreyrh.com/book)",
+      en: "Because every mandate is unique, we do not have flat rates. Audrey offers a free 15-minute consultation to assess your needs and provide an exact quote: [audreyrh.com/book](https://audreyrh.com/book)",
+    },
   },
   {
     pattern: /\b(meeting|rendez-vous|book|calendrier|disponibilité|rdv)\b/i,
-    response: "Je peux vous aider avec ça ! Voici le calendrier en direct d'Audrey pour choisir le moment qui vous convient : [audreyrh.com/book](https://audreyrh.com/book)",
+    response: {
+      fr: "Je peux vous aider avec ça ! Voici le calendrier en direct d'Audrey pour choisir le moment qui vous convient : [audreyrh.com/book](https://audreyrh.com/book)",
+      en: "I can help with that! Here is Audrey's live calendar to pick a time that works for you: [audreyrh.com/book](https://audreyrh.com/book)",
+    },
   },
   {
     pattern: /\b(location|où|adresse|bureau|montreal|montréal)\b/i,
-    response: "Nous sommes fiers d'être basés à Montréal ! Cependant, pour faciliter les choses, toutes les consultations initiales se font virtuellement (Google Meet / Zoom).",
+    response: {
+      fr: "Nous sommes fiers d'être basés à Montréal ! Cependant, toutes nos consultations initiales se font virtuellement (Google Meet / Zoom).",
+      en: "We are proudly based in Montreal! However, all our initial consultations are held virtually (Google Meet / Zoom).",
+    },
   },
   {
     pattern: /\b(contact|email|téléphone|parler|appeler)\b/i,
-    response: "Le moyen le plus rapide de parler directement à Audrey est de réserver 15 minutes sur son calendrier ici : [audreyrh.com/book](https://audreyrh.com/book)",
+    response: {
+      fr: "Le moyen le plus rapide de parler directement à Audrey est de réserver 15 minutes sur son calendrier ici : [audreyrh.com/book](https://audreyrh.com/book)",
+      en: "The fastest way to speak directly with Audrey is to book 15 minutes on her calendar here: [audreyrh.com/book](https://audreyrh.com/book)",
+    },
+  },
+
+  // 2. FAQ TOPICS
+  {
+    pattern: /\b(cria|ordre|titre|agréé|certifié)\b/i,
+    response: {
+      fr: "Un CRIA (Conseiller en ressources humaines agréé) est un professionnel reconnu garantissant une expertise de haut niveau en RH. Audrey détient fièrement ce titre !",
+      en: "A CRIA (Chartered Professional in Human Resources) is a certified professional guaranteeing high-level HR expertise. Audrey proudly holds this designation!",
+    },
+  },
+  {
+    pattern: /\b(expérience étrangère|diplôme|équivalence|évaluation|international|sans expérience canadienne)\b/i,
+    response: {
+      fr: "Votre expérience étrangère a de la valeur ! Audrey vous guide sur l'évaluation des diplômes et adapte votre profil pour le marché québécois. Discutons-en : [audreyrh.com/book](https://audreyrh.com/book)",
+      en: "Your foreign experience is valuable! Audrey guides you on diploma evaluations and adapts your profile for the Quebec market. Let's discuss it: [audreyrh.com/book](https://audreyrh.com/book)",
+    },
+  },
+  {
+    pattern: /\b(cv|lettre de motivation|entrevue|simulation|entretien|réseau)\b/i,
+    response: {
+      fr: "Absolument. Nous offrons la révision de CV (format canadien), l'optimisation des lettres de présentation et des simulations d'entrevue. Réservez une session : [audreyrh.com/book](https://audreyrh.com/book)",
+      en: "Absolutely. We offer CV revision (Canadian format), cover letter optimization, and mock interviews. Book a session: [audreyrh.com/book](https://audreyrh.com/book)",
+    },
+  },
+  {
+    pattern: /\b(français|langue|parler parfaitement|bilingue)\b/i,
+    response: {
+      fr: "Le français est un atout majeur au Québec, mais des opportunités existent sans le maîtriser parfaitement. Audrey peut vous aider à bâtir une stratégie adaptée.",
+      en: "French is a major asset in Quebec, but opportunities exist without perfect mastery. Audrey can help you build an adapted strategy.",
+    },
+  },
+  {
+    pattern: /\b(forfait|long terme|continu|suivi|plusieurs séances)\b/i,
+    response: {
+      fr: "Oui ! En plus de la consultation initiale, nous proposons des forfaits d'accompagnement personnalisés de 3 à 12 semaines.",
+      en: "Yes! In addition to the initial consultation, we offer personalized coaching packages from 3 to 12 weeks.",
+    },
+  },
+  {
+    pattern: /\b(annuler|reporter|plateforme|zoom|meet|connecter|préparer)\b/i,
+    response: {
+      fr: "Toutes les consultations se font sur Google Meet ou Zoom. Vous pouvez annuler, reporter, et trouver le lien de connexion directement dans votre courriel de confirmation.",
+      en: "All consultations are held on Google Meet or Zoom. You can cancel, reschedule, and find the connection link directly in your confirmation email.",
+    },
+  },
+  {
+    pattern: /\b(remboursable|temps.*subvention|délai.*subvention|processus.*subvention)\b/i,
+    response: {
+      fr: "Les délais et le remboursement varient selon la subvention. Audrey analyse votre dossier et gère tout le processus. Prenons 15 min pour évaluer cela : [audreyrh.com/book](https://audreyrh.com/book)",
+      en: "Timelines and repayment vary by grant. Audrey analyzes your file and manages the whole process. Let's take 15 mins to evaluate this: [audreyrh.com/book](https://audreyrh.com/book)",
+    },
   },
   {
     pattern: /\b(visa|immigration|résidence|pr|citoyenneté)\b/i,
-    response: "Audrey se spécialise dans l'employabilité et le marché du travail pour les nouveaux arrivants, mais nous ne traitons pas les visas d'immigration. Discutons de votre carrière : [audreyrh.com/book](https://audreyrh.com/book)",
+    response: {
+      fr: "Audrey se spécialise dans l'employabilité pour les nouveaux arrivants, mais nous ne traitons pas les visas d'immigration. Discutons de votre carrière : [audreyrh.com/book](https://audreyrh.com/book)",
+      en: "Audrey specializes in employability for newcomers, but we do not process immigration visas. Let's discuss your career: [audreyrh.com/book](https://audreyrh.com/book)",
+    },
   },
+
+  // 3. MID PRIORITY: B2B vs B2C Sorting
   {
     pattern: /\b(entreprise|startup|incorporation|business|compagnie|pme)\b/i,
-    response: "Excellent. Audrey aide les entreprises à optimiser leurs RH et à obtenir du financement. Cherchez-vous de l'aide pour les **Subventions** ou les **Ressources Humaines** ?",
+    response: {
+      fr: "Excellent. Audrey aide les entreprises à optimiser leurs RH et à obtenir du financement. Cherchez-vous de l'aide pour les **Subventions** ou les **Ressources Humaines** ?",
+      en: "Excellent. Audrey helps businesses optimize HR and secure funding. Are you looking for help with **Grants** or **Human Resources**?",
+    },
   },
   {
-    pattern: /\b(individu|emploi|job|cv|immigrant|carrière|entrevue)\b/i,
-    response: "Audrey se spécialise dans la stratégie d'employabilité au Québec. La façon la plus rapide de commencer est une consultation pour évaluer votre situation : [audreyrh.com/book](https://audreyrh.com/book)",
+    pattern: /\b(individu|emploi|job|immigrant|carrière)\b/i,
+    response: {
+      fr: "Audrey se spécialise dans la stratégie d'employabilité au Québec. La façon la plus rapide de commencer est une consultation : [audreyrh.com/book](https://audreyrh.com/book)",
+      en: "Audrey specializes in employability strategy in Quebec. The fastest way to start is a consultation: [audreyrh.com/book](https://audreyrh.com/book)",
+    },
   },
+
+  // 4. LOW PRIORITY: Sub-topics (Grants & HR general)
   {
     pattern: /\b(subvention|funding|financement|bourse|argent)\b/i,
-    response: "Des millions en subventions québécoises ne sont pas réclamés chaque année. Je peux planifier un audit gratuit de 15 min avec Audrey pour voir ce que vous pouvez réclamer : [audreyrh.com/book](https://audreyrh.com/book)",
+    response: {
+      fr: "Des millions en subventions ne sont pas réclamés chaque année. Je peux planifier un audit gratuit de 15 min avec Audrey : [audreyrh.com/book](https://audreyrh.com/book)",
+      en: "Millions in grants go unclaimed every year. I can schedule a free 15-minute audit with Audrey: [audreyrh.com/book](https://audreyrh.com/book)",
+    },
   },
   {
     pattern: /\b(contrat|employé|rh|embauche|ressources humaines|manuel)\b/i,
-    response: "Nous gérons tout, des contrats d'embauche à la conformité. Chaque équipe étant différente, faisons un appel de découverte rapide pour cibler vos besoins : [audreyrh.com/book](https://audreyrh.com/book)",
+    response: {
+      fr: "Nous gérons tout, des contrats d'embauche à la conformité. Faisons un appel de découverte rapide pour cibler vos besoins : [audreyrh.com/book](https://audreyrh.com/book)",
+      en: "We handle everything from employment contracts to compliance. Let's do a quick discovery call to target your needs: [audreyrh.com/book](https://audreyrh.com/book)",
+    },
   },
+
+  // 5. LOWEST PRIORITY: Greetings
   {
     pattern: /\b(hello|bonjour|hi|aide|start|salut|hey)\b/i,
-    response: "Bonjour ! Je suis Amara, l'assistante virtuelle d'Audrey. Pour bien vous diriger, cherchez-vous de l'aide pour une **Entreprise** (RH, Subventions) ou en tant qu'**Individu** (Carrière) ?",
+    response: {
+      fr: "Bonjour ! Je suis Amara, l'assistante virtuelle d'Audrey. Pour bien vous diriger, cherchez-vous de l'aide pour une **Entreprise** (RH, Subventions) ou en tant qu'**Individu** (Carrière) ?",
+      en: "Hello! I'm Amara, Audrey's virtual assistant. To guide you, are you looking for help for a **Business** (HR, Grants) or as an **Individual** (Career)?",
+    },
   },
 ];
 
-export const fallbackResponse =
-  "Je veux m'assurer que vous obtenez la meilleure réponse. Le plus simple est d'en discuter directement avec Audrey lors d'un appel gratuit de 15 minutes : [audreyrh.com/book](https://audreyrh.com/book)";
+export const fallbackResponse: BilingualResponse = {
+  fr: "Je veux m'assurer que vous obtenez la meilleure réponse. Le plus simple est d'en discuter directement avec Audrey lors d'un appel gratuit de 15 minutes : [audreyrh.com/book](https://audreyrh.com/book)",
+  en: "I want to make sure you get the best answer. The simplest way is to discuss it directly with Audrey during a free 15-minute call: [audreyrh.com/book](https://audreyrh.com/book)",
+};
 
-export function processChatInput(userInput: string): string {
+export function processChatInput(userInput: string, lang: "fr" | "en" = "fr"): string {
   for (const rule of botRules) {
-    if (rule.pattern.test(userInput)) return rule.response;
+    if (rule.pattern.test(userInput)) return rule.response[lang];
   }
-  return fallbackResponse;
+  return fallbackResponse[lang];
 }
