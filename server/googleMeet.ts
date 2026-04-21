@@ -23,6 +23,7 @@ export interface CreateMeetEventParams {
   description: string;
   startDateTime: string;
   endDateTime: string;
+  platform?: string;
 }
 
 function parseServiceAccountCreds(): { clientEmail: string; privateKey: string } {
@@ -95,14 +96,31 @@ async function createCalendarEvent(params: CreateMeetEventParams): Promise<{ eve
 
   const calendar = google.calendar({ version: "v3", auth });
 
+  const ZOOM_LINK = 'https://us05web.zoom.us/j/3617510198?pwd=5Yto7YKwJpfF1TxIecDzSTJbiwaCZu.1';
+
+  const requestBody: Record<string, any> = {
+    summary: params.summary,
+    description: params.description,
+    start: { dateTime: params.startDateTime, timeZone: "America/Toronto" },
+    end: { dateTime: params.endDateTime, timeZone: "America/Toronto" },
+  };
+
+  if (params.platform?.toLowerCase() === 'zoom') {
+    requestBody.location = ZOOM_LINK;
+    requestBody.description =
+      `Audrey RH is inviting you to a scheduled Zoom meeting.\n\n` +
+      `Topic: Audrey RH's Personal Meeting Room\n` +
+      `Join Zoom Meeting\n${ZOOM_LINK}\n\n` +
+      `Meeting ID: 361 751 0198\n` +
+      `Passcode: nTa2sG\n\n` +
+      (params.description || '');
+    delete requestBody.conferenceData;
+    console.log('[GoogleMeet] Platform is Zoom — Google Meet bypassed, Zoom link injected.');
+  }
+
   const event = await calendar.events.insert({
     calendarId,
-    requestBody: {
-      summary: params.summary,
-      description: params.description,
-      start: { dateTime: params.startDateTime, timeZone: "America/Toronto" },
-      end: { dateTime: params.endDateTime, timeZone: "America/Toronto" },
-    },
+    requestBody,
   });
 
   console.log(`[GoogleMeet] Calendar event created: ${event.data.id}`);
@@ -112,13 +130,21 @@ async function createCalendarEvent(params: CreateMeetEventParams): Promise<{ eve
 export async function createGoogleMeetEvent(
   params: CreateMeetEventParams
 ): Promise<GoogleMeetResult> {
-  // 1. Create a unique Google Meet space
+  const ZOOM_LINK = 'https://us05web.zoom.us/j/3617510198?pwd=5Yto7YKwJpfF1TxIecDzSTJbiwaCZu.1';
+  const isZoom = params.platform?.toLowerCase() === 'zoom';
+
+  // 1. Resolve meeting link — skip Google Meet entirely for Zoom bookings
   let meetLink = "";
-  try {
-    meetLink = await createMeetSpace();
-  } catch (meetErr: any) {
-    console.warn(`[GoogleMeet] Meet API failed, falling back to static link. Reason: ${meetErr.message}`);
-    meetLink = process.env.GOOGLE_MEET_LINK ?? "";
+  if (isZoom) {
+    meetLink = ZOOM_LINK;
+    console.log('[GoogleMeet] Platform is Zoom — skipping Google Meet space creation.');
+  } else {
+    try {
+      meetLink = await createMeetSpace();
+    } catch (meetErr: any) {
+      console.warn(`[GoogleMeet] Meet API failed, falling back to static link. Reason: ${meetErr.message}`);
+      meetLink = process.env.GOOGLE_MEET_LINK ?? "";
+    }
   }
 
   // 2. Create the calendar event (best-effort, non-blocking)
@@ -132,6 +158,6 @@ export async function createGoogleMeetEvent(
     console.warn(`[GoogleMeet] Calendar event creation failed (non-fatal): ${calErr.message}`);
   }
 
-  console.log(`[GoogleMeet] Resolved Meet link: ${meetLink}`);
+  console.log(`[GoogleMeet] Resolved meeting link: ${meetLink}`);
   return { meetLink, eventId, htmlLink };
 }

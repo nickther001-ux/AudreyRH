@@ -35,6 +35,7 @@ export async function processBooking(
         description: `Consultation stratégique avec ${clientName} (${clientEmail})\nSujet : ${details.reason}`,
         startDateTime,
         endDateTime,
+        platform: details.platform,
       });
 
       meetLink = result.meetLink;
