@@ -83,8 +83,7 @@ async function createMeetSpace(): Promise<string> {
  * Returns the calendar event htmlLink and eventId.
  */
 async function createCalendarEvent(params: CreateMeetEventParams): Promise<{ eventId: string; htmlLink: string }> {
-  const calendarId = process.env.GOOGLE_CALENDAR_ID;
-  if (!calendarId) throw new Error("GOOGLE_CALENDAR_ID is not set.");
+  const calendarId = 'audreycria31@gmail.com';
 
   const { clientEmail, privateKey } = parseServiceAccountCreds();
 
