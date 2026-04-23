@@ -505,16 +505,30 @@ function AppointmentCard({
 
             {appt?.meetLink && (
               <div className="mt-1 p-3 rounded-lg bg-emerald-950/40 border border-emerald-700/30">
-                <p className="text-xs font-semibold text-emerald-400/70 uppercase tracking-wider mb-1">Lien Google Meet</p>
-                <a
-                  href={appt.meetLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-emerald-300 hover:text-emerald-200 break-all underline underline-offset-2"
-                  data-testid={`link-meet-${appt.id}`}
-                >
-                  {appt.meetLink}
-                </a>
+                <p className="text-xs font-semibold text-emerald-400/70 uppercase tracking-wider mb-2">
+                  {appt.platform === "zoom" ? "Lien Zoom" : "Lien Google Meet"}
+                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                  <a
+                    href={appt.meetLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid={`button-join-meeting-${appt.id}`}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-700/50 hover:bg-emerald-700/80 border border-emerald-600/40 text-emerald-200 text-xs font-semibold transition-colors"
+                  >
+                    <ExternalLink className="h-3 w-3" />
+                    Rejoindre la réunion
+                  </a>
+                  <span
+                    className="text-xs text-emerald-400/60 break-all"
+                    data-testid={`link-meet-${appt.id}`}
+                  >
+                    {appt.meetLink}
+                  </span>
+                </div>
+                {appt.platform === "zoom" && (
+                  <p className="mt-2 text-xs text-emerald-400/50">Meeting ID: 361 751 0198 · Passcode: nTa2sG</p>
+                )}
               </div>
             )}
           </div>

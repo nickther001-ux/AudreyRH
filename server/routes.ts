@@ -40,6 +40,10 @@ export async function registerRoutes(
             ? ZOOM_LINK
             : (process.env.GOOGLE_MEET_LINK ?? '');
 
+          if (meetLink) {
+            await storage.setMeetLink(appointment.id, meetLink);
+          }
+
           await sendFreeConsultationRequest({
             clientName: appointment.name,
             clientEmail: appointment.email,
