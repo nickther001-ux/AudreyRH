@@ -34,6 +34,12 @@ export async function registerRoutes(
                 weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
               })
             : '';
+
+          const ZOOM_LINK = 'https://us05web.zoom.us/j/3617510198?pwd=5Yto7YKwJpfF1TxIecDzSTJbiwaCZu.1';
+          const meetLink = appointment.platform !== 'google_meet'
+            ? ZOOM_LINK
+            : (process.env.GOOGLE_MEET_LINK ?? '');
+
           await sendFreeConsultationRequest({
             clientName: appointment.name,
             clientEmail: appointment.email,
@@ -44,6 +50,7 @@ export async function registerRoutes(
               : '',
             platform: appointment.platform,
             reason: appointment.reason,
+            meetLink,
           });
         } catch (emailErr: any) {
           console.error('Free consultation email failed (non-fatal):', emailErr.message);

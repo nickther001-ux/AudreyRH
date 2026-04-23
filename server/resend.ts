@@ -258,12 +258,43 @@ export type FreeConsultationData = {
   preferredTime: string;
   platform: string;
   reason: string;
+  meetLink?: string;
 };
 
 export async function sendFreeConsultationRequest(data: FreeConsultationData) {
   const client = getClient();
   const platformLabel = data.platform === 'google_meet' ? 'Google Meet' : 'Zoom';
   const timeDisplay = data.preferredTime || '—';
+  const isZoom = data.platform !== 'google_meet';
+  const hasMeetLink = !!(data.meetLink && data.meetLink.startsWith('http'));
+
+  // Meeting link section shown in client email
+  const meetSection = hasMeetLink ? (isZoom ? `
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+              <tr>
+                <td style="background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.3);border-radius:12px;padding:24px;text-align:center;">
+                  <p style="margin:0 0 12px;font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);">Rejoindre via Zoom / Join via Zoom</p>
+                  <a href="${data.meetLink}"
+                     style="display:inline-block;padding:14px 36px;background:#4ade80;color:#0a1628;font-weight:800;font-size:15px;text-decoration:none;border-radius:8px;letter-spacing:0.2px;">
+                    Rejoindre la réunion Zoom →
+                  </a>
+                  <p style="margin:12px 0 0;font-size:11px;color:rgba(255,255,255,0.3);word-break:break-all;">${data.meetLink}</p>
+                  <p style="margin:12px 0 0;font-size:12px;color:rgba(255,255,255,0.5);">Meeting ID: 361 751 0198 &nbsp;·&nbsp; Passcode: nTa2sG</p>
+                </td>
+              </tr>
+            </table>` : `
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+              <tr>
+                <td style="background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.3);border-radius:12px;padding:24px;text-align:center;">
+                  <p style="margin:0 0 12px;font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);">Rejoindre via Google Meet / Join via Google Meet</p>
+                  <a href="${data.meetLink}"
+                     style="display:inline-block;padding:14px 36px;background:#4ade80;color:#0a1628;font-weight:800;font-size:15px;text-decoration:none;border-radius:8px;letter-spacing:0.2px;">
+                    Rejoindre la réunion →
+                  </a>
+                  <p style="margin:12px 0 0;font-size:11px;color:rgba(255,255,255,0.3);word-break:break-all;">${data.meetLink}</p>
+                </td>
+              </tr>
+            </table>`) : '';
 
   // 1 — Internal notification to Audrey
   const notifyHtml = `${emailWrapperOpen(520)}
@@ -282,6 +313,7 @@ ${compactHeader('AudreyRH · Demande de consultation', 'Nouvelle demande — À 
             ${fieldBox('Client', `${data.clientName} &nbsp;<a href="mailto:${data.clientEmail}" style="color:#93c5fd;text-decoration:none;font-weight:600;">${data.clientEmail}</a>${data.phone ? ' &nbsp;· ' + data.phone : ''}`)}
             ${fieldBox('Date souhaitée', `${data.preferredDate} · ${timeDisplay}`)}
             ${fieldBox('Plateforme', platformLabel)}
+            ${hasMeetLink ? fieldBox('Lien de réunion envoyé au client', `<a href="${data.meetLink}" style="color:#4ade80;text-decoration:none;">${data.meetLink}</a>${isZoom ? '<br/><span style="font-size:11px;color:rgba(255,255,255,0.4);">Meeting ID: 361 751 0198 · Passcode: nTa2sG</span>' : ''}`) : ''}
             <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
               <tr><td style="background:rgba(255,255,255,0.05);border:1px solid rgba(147,197,253,0.2);border-left:3px solid #93c5fd;border-radius:0 10px 10px 0;padding:14px 18px;">
                 <p style="margin:0 0 6px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;">Message</p>
@@ -294,7 +326,7 @@ ${compactHeader('AudreyRH · Demande de consultation', 'Nouvelle demande — À 
 ${emailFooter()}
 ${emailWrapperClose}`;
 
-  // 2 — Client acknowledgement (pending)
+  // 2 — Client acknowledgement
   const clientHtml = `${emailWrapperOpen(600)}
 ${logoHeader('Demande reçue — Confirmation sous 48h')}
         <tr>
@@ -317,12 +349,16 @@ ${logoHeader('Demande reçue — Confirmation sous 48h')}
               </td></tr>
             </table>
 
+            ${meetSection}
+
             <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
               <tr><td style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:18px 22px;">
                 <p style="margin:0 0 8px;font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);">Note importante</p>
                 <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);line-height:1.75;">
-                  Cette demande n'est pas encore confirmée. Vous recevrez un email de confirmation d'Audrey avec le lien de connexion.<br/>
-                  <em style="color:rgba(255,255,255,0.35);">This request is not yet confirmed. You will receive a confirmation email from Audrey with the meeting link.</em>
+                  ${hasMeetLink
+                    ? 'Le lien ci-dessus est valide dès confirmation de la date avec Audrey. Pour toute question, répondez à cet email.<br/><em style="color:rgba(255,255,255,0.35);">The link above is valid once the date is confirmed with Audrey. For any question, reply to this email.</em>'
+                    : 'Cette demande n\'est pas encore confirmée. Vous recevrez un email de confirmation d\'Audrey avec le lien de connexion.<br/><em style="color:rgba(255,255,255,0.35);">This request is not yet confirmed. You will receive a confirmation email from Audrey with the meeting link.</em>'
+                  }
                 </p>
               </td></tr>
             </table>
