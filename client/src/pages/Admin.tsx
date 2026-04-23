@@ -61,6 +61,7 @@ import {
   CalendarClock,
   ExternalLink,
   LogOut,
+  Mail,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -458,6 +459,23 @@ function AppointmentCard({
     },
   });
 
+  const { mutate: resendLink, isPending: isResending } = useMutation({
+    mutationFn: async () => {
+      const res = await apiRequest("POST", `/api/admin/resend-link/${appt.id}`, {});
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.message ?? "Erreur serveur");
+      }
+      return res.json();
+    },
+    onSuccess: () => {
+      toast({ title: "Lien renvoyé ✓", description: `Email envoyé à ${appt.email}` });
+    },
+    onError: (err: Error) => {
+      toast({ title: "Erreur", description: err.message, variant: "destructive" });
+    },
+  });
+
   const isActive = appt.status !== "cancelled" && appt.status !== "completed";
 
   return (
@@ -508,7 +526,7 @@ function AppointmentCard({
                 <p className="text-xs font-semibold text-emerald-400/70 uppercase tracking-wider mb-2">
                   {appt.platform === "zoom" ? "Lien Zoom" : "Lien Google Meet"}
                 </p>
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <a
                     href={appt.meetLink}
                     target="_blank"
@@ -519,8 +537,21 @@ function AppointmentCard({
                     <ExternalLink className="h-3 w-3" />
                     Rejoindre la réunion
                   </a>
+                  <button
+                    onClick={() => resendLink()}
+                    disabled={isResending}
+                    data-testid={`button-resend-link-${appt.id}`}
+                    title={`Renvoyer le lien par email à ${appt.email}`}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1e3a5f]/70 hover:bg-[#2a4f7f]/80 border border-[#93c5fd]/20 text-[#93c5fd] text-xs font-semibold transition-colors disabled:opacity-50"
+                  >
+                    {isResending
+                      ? <RefreshCw className="h-3 w-3 animate-spin" />
+                      : <Mail className="h-3 w-3" />
+                    }
+                    Renvoyer le lien
+                  </button>
                   <span
-                    className="text-xs text-emerald-400/60 break-all"
+                    className="text-xs text-emerald-400/50 break-all hidden sm:inline"
                     data-testid={`link-meet-${appt.id}`}
                   >
                     {appt.meetLink}

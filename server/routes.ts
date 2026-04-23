@@ -434,6 +434,34 @@ export async function registerRoutes(
     }
   });
 
+  // Admin — manually resend meeting link to client
+  app.post('/api/admin/resend-link/:id', async (req, res) => {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ message: 'Invalid ID' });
+    try {
+      const appointment = await storage.getAppointment(id);
+      if (!appointment) return res.status(404).json({ message: 'Appointment not found' });
+      if (!appointment.meetLink) return res.status(400).json({ message: 'No meeting link stored for this appointment' });
+
+      const { sendMeetLinkReminder } = await import('./resend');
+      await sendMeetLinkReminder({
+        clientName: appointment.name,
+        clientEmail: appointment.email,
+        meetLink: appointment.meetLink,
+        platform: appointment.platform,
+        date: appointment.date ?? null,
+        startTime: appointment.startTime ?? null,
+        endTime: appointment.endTime ?? null,
+        language: (appointment.language as "fr" | "en") || "fr",
+      });
+
+      res.json({ success: true, message: `Lien renvoyé à ${appointment.email}` });
+    } catch (err: any) {
+      console.error('[ResendLink] Error:', err.message);
+      res.status(500).json({ message: err.message ?? 'Failed to resend link' });
+    }
+  });
+
   // One-time backfill: set meet_link for any appointments that are missing it
   app.post('/api/admin/backfill-meet-links', async (req, res) => {
     try {

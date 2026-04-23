@@ -1040,3 +1040,85 @@ ${emailWrapperClose}`;
   if (r2.error) console.error('[Resend] Meet confirm notify email error:', r2.error.message);
   else console.log('[Resend] Meet confirm notify email sent, id:', r2.data?.id);
 }
+
+// ─── Manual Resend Link ───────────────────────────────────────────────────────
+
+export type ResendLinkData = {
+  clientName: string;
+  clientEmail: string;
+  meetLink: string;
+  platform: string;
+  date?: string | null;
+  startTime?: string | null;
+  endTime?: string | null;
+  language?: "fr" | "en";
+};
+
+export async function sendMeetLinkReminder(data: ResendLinkData) {
+  const client = getClient();
+  const lang = data.language ?? "fr";
+  const isFr = lang === "fr";
+  const isZoom = data.platform !== "google_meet";
+  const platformLabel = isZoom ? "Zoom" : "Google Meet";
+  const timeRange = data.startTime && data.endTime ? `${data.startTime} – ${data.endTime} (HE)` : "";
+  const formattedDate = data.date ? formatLocalDate(data.date, lang) : "";
+  const dateDisplay = [formattedDate, timeRange].filter(Boolean).join(" · ");
+
+  const subject = isFr
+    ? `Rappel — Votre lien de consultation AudreyRH`
+    : `Reminder — Your AudreyRH Consultation Link`;
+
+  const clientHtml = `${emailWrapperOpen(600)}
+${logoHeader(isFr ? "Rappel — Votre lien de consultation" : "Reminder — Your Consultation Link")}
+        <tr>
+          <td style="padding:40px 48px;">
+            <p style="margin:0 0 20px;font-size:22px;font-weight:700;color:#ffffff;">
+              ${isFr ? `Bonjour ${data.clientName},` : `Hello ${data.clientName},`}
+            </p>
+            <p style="margin:0 0 28px;font-size:14px;color:rgba(255,255,255,0.65);line-height:1.8;">
+              ${isFr
+                ? `Voici un rappel de votre lien ${platformLabel} pour votre consultation avec <strong style="color:#ffffff;">Audrey Mondesir, CRIA</strong>${dateDisplay ? ` prévue le <strong style="color:#ffffff;">${dateDisplay}</strong>` : ""}.`
+                : `Here is a reminder of your ${platformLabel} link for your consultation with <strong style="color:#ffffff;">Audrey Mondesir, CRIA</strong>${dateDisplay ? ` scheduled for <strong style="color:#ffffff;">${dateDisplay}</strong>` : ""}.`
+              }
+            </p>
+
+            <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
+              <tr>
+                <td style="background:rgba(74,222,128,0.08);border:1px solid rgba(74,222,128,0.3);border-radius:12px;padding:28px;text-align:center;">
+                  <p style="margin:0 0 14px;font-size:13px;font-weight:700;color:rgba(255,255,255,0.8);">
+                    ${isFr ? `Rejoindre via ${platformLabel}` : `Join via ${platformLabel}`}
+                  </p>
+                  <a href="${data.meetLink}"
+                     style="display:inline-block;padding:14px 40px;background:#4ade80;color:#0a1628;font-weight:800;font-size:16px;text-decoration:none;border-radius:8px;letter-spacing:0.2px;">
+                    ${isFr ? "Rejoindre la réunion →" : "Join the Meeting →"}
+                  </a>
+                  <p style="margin:14px 0 0;font-size:11px;color:rgba(255,255,255,0.3);word-break:break-all;">${data.meetLink}</p>
+                  ${isZoom ? `<p style="margin:10px 0 0;font-size:12px;color:rgba(255,255,255,0.45);">Meeting ID: 361 751 0198 &nbsp;·&nbsp; Passcode: nTa2sG</p>` : ""}
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin:0 0 6px;font-size:13px;color:rgba(255,255,255,0.45);line-height:1.7;">
+              ${isFr
+                ? `Des questions ? Répondez simplement à cet email ou écrivez à <a href="mailto:info@audreyrh.com" style="color:#93c5fd;text-decoration:none;">info@audreyrh.com</a>`
+                : `Questions? Simply reply to this email or write to <a href="mailto:info@audreyrh.com" style="color:#93c5fd;text-decoration:none;">info@audreyrh.com</a>`
+              }
+            </p>
+          </td>
+        </tr>
+${emailFooter()}
+${emailWrapperClose}`;
+
+  console.log(`[Resend] Sending meet link reminder to:`, data.clientEmail);
+  const r = await client.emails.send({
+    from: FROM,
+    to: data.clientEmail,
+    subject,
+    html: clientHtml,
+  });
+  if (r.error) {
+    console.error("[Resend] Resend link email error:", r.error.message);
+    throw new Error(r.error.message);
+  }
+  console.log("[Resend] Resend link email sent, id:", r.data?.id);
+}
