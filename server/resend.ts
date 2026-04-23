@@ -1,7 +1,8 @@
 import { Resend } from 'resend';
 import ics from 'ics';
 
-const FROM = 'AudreyRH <info@audreyrh.com>';
+const FROM = '"AudreyRH" <info@audreyrh.com>';
+const REPLY_TO = 'info@audreyrh.com';
 const NOTIFY_TO = 'info@audreyrh.com';
 
 // ─── Brand palette ───────────────────────────────────────────────────────────
@@ -20,6 +21,43 @@ function getClient(): Resend {
   const key = process.env.RESEND_API_KEY;
   if (!key) throw new Error('RESEND_API_KEY is not set');
   return new Resend(key);
+}
+
+function htmlToText(html: string): string {
+  return html
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '')
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/?(p|div|tr|li|h[1-6]|table|thead|tbody|tfoot|section|article|header|footer)[^>]*>/gi, '\n')
+    .replace(/<a[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi, (_: string, href: string, text: string) => {
+      const t = text.replace(/<[^>]+>/g, '').trim();
+      return t ? `${t} (${href})` : href;
+    })
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&[a-z]+;/gi, ' ')
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\n[ \t]+/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+type EmailPayload = Parameters<Resend['emails']['send']>[0];
+
+async function sendEmail(resendClient: Resend, payload: EmailPayload) {
+  const enriched: EmailPayload = {
+    replyTo: REPLY_TO,
+    ...payload,
+    from: FROM,
+    text: (payload as any).text ?? ((payload as any).html ? htmlToText((payload as any).html) : undefined),
+  };
+  return resendClient.emails.send(enriched);
 }
 
 // ─── Shared helpers ──────────────────────────────────────────────────────────
@@ -238,8 +276,8 @@ ${emailWrapperClose}`;
 
   console.log('[Resend] Sending booking emails to:', data.clientEmail);
   const [r1, r2] = await Promise.all([
-    client.emails.send({ from: FROM, to: data.clientEmail, subject: 'Confirmation de votre consultation — AudreyRH', html: clientHtml }),
-    client.emails.send({ from: FROM, to: NOTIFY_TO, replyTo: data.clientEmail, subject: `Nouveau paiement : ${data.clientName} — $${amountDisplay} CAD`, html: notifyHtml }),
+    sendEmail(client, { from: FROM, to: data.clientEmail, subject: 'Confirmation de votre consultation — AudreyRH', html: clientHtml }),
+    sendEmail(client, { from: FROM, to: NOTIFY_TO, replyTo: data.clientEmail, subject: `Nouveau paiement : ${data.clientName} — $${amountDisplay} CAD`, html: notifyHtml }),
   ]);
   if (r1.error) console.error('[Resend] Booking client email error:', JSON.stringify(r1.error));
   else console.log('[Resend] Booking client email sent, id:', r1.data?.id);
@@ -341,8 +379,8 @@ ${emailWrapperClose}`;
 
   console.log('[Resend] Sending free consultation request emails for:', data.clientEmail);
   const [r1, r2] = await Promise.all([
-    client.emails.send({ from: FROM, to: data.clientEmail, subject: 'Demande de consultation reçue — AudreyRH', html: clientHtml }),
-    client.emails.send({ from: FROM, to: NOTIFY_TO, replyTo: data.clientEmail, subject: `Nouvelle demande de consultation : ${data.clientName} — ${data.preferredDate}`, html: notifyHtml }),
+    sendEmail(client, { from: FROM, to: data.clientEmail, subject: 'Demande de consultation reçue — AudreyRH', html: clientHtml }),
+    sendEmail(client, { from: FROM, to: NOTIFY_TO, replyTo: data.clientEmail, subject: `Nouvelle demande de consultation : ${data.clientName} — ${data.preferredDate}`, html: notifyHtml }),
   ]);
   if (r1.error) console.error('[Resend] Free consult client email error:', JSON.stringify(r1.error));
   if (r2.error) console.error('[Resend] Free consult notify email error:', JSON.stringify(r2.error));
@@ -397,7 +435,7 @@ ${compactHeader('AudreyRH · Chat IA — Amara', 'Nouveau lead capturé via le c
 ${emailFooter()}
 ${emailWrapperClose}`;
 
-  const r = await client.emails.send({
+  const r = await sendEmail(client, {
     from: FROM,
     to: NOTIFY_TO,
     replyTo: data.email,
@@ -543,8 +581,8 @@ ${emailWrapperClose}`;
 
   console.log('[Resend] Sending grant questionnaire emails — notify + reply to:', data.email);
   const [r1, r2] = await Promise.all([
-    client.emails.send({ from: FROM, to: NOTIFY_TO, replyTo: data.email, subject: `Questionnaire subventions : ${data.name} — ${data.companyName}`, html: notifyHtml }),
-    client.emails.send({ from: FROM, to: data.email, subject: `Questionnaire reçu / Questionnaire received — AudreyRH`, html: replyHtml }),
+    sendEmail(client, { from: FROM, to: NOTIFY_TO, replyTo: data.email, subject: `Questionnaire subventions : ${data.name} — ${data.companyName}`, html: notifyHtml }),
+    sendEmail(client, { from: FROM, to: data.email, subject: `Questionnaire reçu / Questionnaire received — AudreyRH`, html: replyHtml }),
   ]);
   if (r1.error) console.error('[Resend] Contact notify email error:', JSON.stringify(r1.error));
   else console.log('[Resend] Contact notify email sent, id:', r1.data?.id);
@@ -646,7 +684,7 @@ export async function sendSimpleContactEmail(data: SimpleContactData) {
 </html>`;
 
   console.log('[Resend] Sending simple contact email to Audrey from:', data.email);
-  const r = await client.emails.send({
+  const r = await sendEmail(client, {
     from: FROM,
     to: NOTIFY_TO,
     replyTo: data.email,
@@ -706,7 +744,7 @@ ${logoHeader('✓&nbsp;&nbsp;Consultation confirmée')}
 ${emailFooter()}
 ${emailWrapperClose}`;
 
-  const r = await client.emails.send({
+  const r = await sendEmail(client, {
     from: FROM, to: data.clientEmail,
     subject: 'Consultation confirmée — AudreyRH',
     html,
@@ -763,7 +801,7 @@ ${logoHeader(T.header)}
 ${emailFooter()}
 ${emailWrapperClose}`;
 
-  const r = await client.emails.send({ from: FROM, to: data.clientEmail, subject: T.subject, html });
+  const r = await sendEmail(client, { from: FROM, to: data.clientEmail, subject: T.subject, html });
   if (r.error) console.error('[Resend] Reject email error:', r.error.message);
   else console.log('[Resend] Reject email sent, id:', r.data?.id);
 }
@@ -826,7 +864,7 @@ ${logoHeader(T.header)}
 ${emailFooter()}
 ${emailWrapperClose}`;
 
-  const r = await client.emails.send({ from: FROM, to: data.clientEmail, subject: T.subject, html });
+  const r = await sendEmail(client, { from: FROM, to: data.clientEmail, subject: T.subject, html });
   if (r.error) console.error('[Resend] Reschedule email error:', r.error.message);
   else console.log('[Resend] Reschedule email sent, id:', r.data?.id);
 }
@@ -1026,14 +1064,14 @@ ${emailWrapperClose}`;
 
   console.log(`[Resend] Sending meet confirmation emails (${lang}) to:`, data.clientEmail);
   const [r1, r2] = await Promise.all([
-    client.emails.send({
+    sendEmail(client, {
       from: FROM,
       to: data.clientEmail,
       subject: T.subject,
       html: clientHtml,
       ...(icsAttachment ? { attachments: [icsAttachment] } : {}),
     }),
-    client.emails.send({ from: FROM, to: NOTIFY_TO, replyTo: data.clientEmail, subject: `✓ Consultation confirmée : ${data.clientName}${amountDisplay ? ' — $' + amountDisplay + ' CAD' : ''} [${lang.toUpperCase()}]`, html: notifyHtml }),
+    sendEmail(client, { from: FROM, to: NOTIFY_TO, replyTo: data.clientEmail, subject: `✓ Consultation confirmée : ${data.clientName}${amountDisplay ? ' — $' + amountDisplay + ' CAD' : ''} [${lang.toUpperCase()}]`, html: notifyHtml }),
   ]);
   if (r1.error) console.error('[Resend] Meet confirm client email error:', r1.error.message);
   else console.log('[Resend] Meet confirm client email sent, id:', r1.data?.id);
@@ -1110,7 +1148,7 @@ ${emailFooter()}
 ${emailWrapperClose}`;
 
   console.log(`[Resend] Sending meet link reminder to:`, data.clientEmail);
-  const r = await client.emails.send({
+  const r = await sendEmail(client, {
     from: FROM,
     to: data.clientEmail,
     subject,

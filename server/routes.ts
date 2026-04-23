@@ -584,10 +584,12 @@ export async function registerRoutes(
       const { Resend } = await import('resend');
       const client = new Resend(key);
       const r = await client.emails.send({
-        from: 'AudreyRH <info@audreyrh.com>',
+        from: '"AudreyRH" <info@audreyrh.com>',
         to: 'info@audreyrh.com',
+        replyTo: 'info@audreyrh.com',
         subject: 'Diagnostic test',
         html: '<p>Diagnostic test from server</p>',
+        text: 'Diagnostic test from server',
       });
       res.json({ success: !r.error, data: r.data, error: r.error, keyPrefix: key.slice(0, 8) });
     } catch (err: any) {
