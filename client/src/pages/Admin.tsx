@@ -665,6 +665,27 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
     },
   });
 
+  const { mutate: backfillLinks, isPending: isBackfilling } = useMutation({
+    mutationFn: async () => {
+      const res = await apiRequest("POST", "/api/admin/backfill-meet-links", {});
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body.message ?? "Backfill failed");
+      }
+      return res.json() as Promise<{ updated: number; message: string }>;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/appointments"] });
+      toast({
+        title: data.updated > 0 ? `${data.updated} lien(s) mis à jour` : "Déjà à jour",
+        description: data.message,
+      });
+    },
+    onError: (err: Error) => {
+      toast({ title: "Erreur", description: err.message, variant: "destructive" });
+    },
+  });
+
   const safeSlots: AvailabilitySlot[] = Array.isArray(slots) ? slots : [];
   const safeAppointments: Appointment[] = Array.isArray(allAppointments) ? allAppointments : [];
 
@@ -823,13 +844,28 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
           {/* ── Appointments (FIRST — most important) ── */}
           <div className="rounded-2xl border border-white/15 bg-[#0d1f3c]/75 backdrop-blur-md p-6 mb-8">
-            <h2 className="text-base font-bold text-white mb-5 flex items-center gap-2">
-              <Users className="h-4 w-4 text-[#93c5fd]" />
-              Réservations clients
-              {isApptsFetching && !isApptsLoading && (
-                <RefreshCw className="h-3.5 w-3.5 ml-auto animate-spin text-white/30" />
-              )}
-            </h2>
+            <div className="flex items-center justify-between mb-5 gap-3 flex-wrap">
+              <h2 className="text-base font-bold text-white flex items-center gap-2">
+                <Users className="h-4 w-4 text-[#93c5fd]" />
+                Réservations clients
+                {isApptsFetching && !isApptsLoading && (
+                  <RefreshCw className="h-3.5 w-3.5 ml-1 animate-spin text-white/30" />
+                )}
+              </h2>
+              <button
+                onClick={() => backfillLinks()}
+                disabled={isBackfilling}
+                data-testid="button-backfill-links"
+                title="Ajouter automatiquement les liens manquants (Zoom/Meet) pour toutes les réservations sans lien"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1e3a5f]/70 hover:bg-[#2a4f7f]/80 border border-[#93c5fd]/20 text-[#93c5fd] text-xs font-semibold transition-colors disabled:opacity-50"
+              >
+                {isBackfilling
+                  ? <RefreshCw className="h-3 w-3 animate-spin" />
+                  : <ExternalLink className="h-3 w-3" />
+                }
+                Corriger liens manquants
+              </button>
+            </div>
 
             {isApptsLoading ? (
               <AppointmentsSkeleton />

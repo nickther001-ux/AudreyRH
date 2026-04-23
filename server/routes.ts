@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import type { Server } from "http";
 import { storage } from "./storage";
+import { pool } from "./db";
 import { api } from "@shared/routes";
 import { z } from "zod";
 
@@ -430,6 +431,36 @@ export async function registerRoutes(
     } catch (err) {
       console.error('Error fetching availability slots:', err);
       res.status(500).json({ message: 'Failed to fetch availability slots' });
+    }
+  });
+
+  // One-time backfill: set meet_link for any appointments that are missing it
+  app.post('/api/admin/backfill-meet-links', async (req, res) => {
+    try {
+      const ZOOM_LINK = 'https://us05web.zoom.us/j/3617510198?pwd=5Yto7YKwJpfF1TxIecDzSTJbiwaCZu.1';
+      const GMEET_LINK = process.env.GOOGLE_MEET_LINK ?? '';
+
+      const { rows } = await pool.query<{ id: number; platform: string }>(
+        `SELECT id, platform FROM appointments WHERE (meet_link IS NULL OR meet_link = '')`
+      );
+
+      if (rows.length === 0) {
+        return res.json({ updated: 0, message: 'All appointments already have a meeting link.' });
+      }
+
+      let updated = 0;
+      for (const row of rows) {
+        const link = row.platform !== 'google_meet' ? ZOOM_LINK : GMEET_LINK;
+        if (link) {
+          await pool.query('UPDATE appointments SET meet_link = $1 WHERE id = $2', [link, row.id]);
+          updated++;
+        }
+      }
+
+      res.json({ updated, message: `Backfilled ${updated} appointment(s).` });
+    } catch (err: any) {
+      console.error('[Backfill] Error:', err.message);
+      res.status(500).json({ message: err.message ?? 'Backfill failed' });
     }
   });
 
