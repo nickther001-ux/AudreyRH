@@ -602,7 +602,7 @@ export default function Grants() {
               <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{isFr ? "Programmes disponibles" : "Available Programs"}</p>
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                 <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-sm" data-testid="text-grants-categories-title">
-                  {isFr ? <>Notre <em className="not-italic text-primary">expertise</em></> : <>Our <em className="not-italic text-primary">expertise</ em></>}
+                  {isFr ? <>Notre expertise</> : <>Our expertise</>}
                 </h2>
                 <p className="text-[14px] text-muted-foreground leading-relaxed max-w-sm">
                   {isFr ? "Des opportunités ciblées pour chaque type d'entrepreneur, créateur et organisation au Canada." : "Targeted opportunities for every type of entrepreneur, creator and organization in Canada."}
