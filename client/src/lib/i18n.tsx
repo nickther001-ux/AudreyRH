@@ -768,7 +768,7 @@ const translations = {
     "grants.artists.feature2": "Financement de portfolio et exposition",
     "grants.artists.feature3": "Résidences artistiques et bourses culturelles",
 
-    "grants.entrepreneurs.title": "Entrepreneurs & Fondateurs",
+    "grants.entrepreneurs.title": "Entrepreneurs",
     "grants.entrepreneurs.description": "Financements pour startups et entrepreneurs solo en phase de lancement ou de développement initial au Canada.",
     "grants.entrepreneurs.feature1": "Subventions de démarrage pour entrepreneurs",
     "grants.entrepreneurs.feature2": "Programmes SBA pour minorités",
@@ -1632,7 +1632,7 @@ const translations = {
     "grants.artists.feature2": "Portfolio development and exhibition funding",
     "grants.artists.feature3": "Artist residencies and cultural fellowships",
 
-    "grants.entrepreneurs.title": "Entrepreneurs & Founders",
+    "grants.entrepreneurs.title": "Entrepreneurs",
     "grants.entrepreneurs.description": "Funding for startups and solo founders in the launch or early development phase in Canada.",
     "grants.entrepreneurs.feature1": "Startup grants for entrepreneurs",
     "grants.entrepreneurs.feature2": "Programs for minorities and underrepresented founders",
