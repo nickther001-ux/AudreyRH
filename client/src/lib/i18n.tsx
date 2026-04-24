@@ -774,7 +774,7 @@ const translations = {
     "grants.entrepreneurs.feature2": "Programmes SBA pour minorités",
     "grants.entrepreneurs.feature3": "Microfinancement et prêts à taux préférentiels",
 
-    "grants.sme.title": "Petits Commerces & Moyennes Entreprises",
+    "grants.sme.title": "Petites et Moyennes Entreprises",
     "grants.sme.description": "Soutien financier pour les petits commerces et moyennes entreprises cherchant à croître, embaucher ou optimiser leurs opérations au Québec.",
     "grants.sme.feature1": "Grants de croissance et d'expansion",
     "grants.sme.feature2": "Financement pour embauche et formation",
@@ -1638,7 +1638,7 @@ const translations = {
     "grants.entrepreneurs.feature2": "Programs for minorities and underrepresented founders",
     "grants.entrepreneurs.feature3": "Microfinancing and preferential rate loans",
 
-    "grants.sme.title": "Small Businesses & SMEs",
+    "grants.sme.title": "Small and Medium Enterprises",
     "grants.sme.description": "Financial support for small shops and SMEs looking to grow, hire, or optimize their operations in Quebec.",
     "grants.sme.feature1": "Growth and expansion grants",
     "grants.sme.feature2": "Hiring and workforce training funding",
