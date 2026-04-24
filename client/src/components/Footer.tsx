@@ -92,11 +92,19 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/30">
-          <p data-testid="text-copyright">
-            &copy; {new Date().getFullYear()} AudreyRH<span className="text-accent">.</span> {t("footer.rights")}
+        <div className="pt-8 border-t border-white/8 flex flex-col items-center gap-2 text-xs text-white/30">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 w-full">
+            <p data-testid="text-copyright">
+              &copy; {new Date().getFullYear()} AudreyRH<span className="text-accent">.</span> {t("footer.rights")}
+            </p>
+            <p>Consultation en relations industrielles</p>
+          </div>
+          <p>
+            Website built by{" "}
+            <a href="https://ntwebux.com" target="_blank" rel="noopener noreferrer" className="hover:text-white/60 transition-colors underline underline-offset-2">
+              ntwebux.com
+            </a>
           </p>
-          <p>Consultation en relations industrielles</p>
         </div>
       </div>
     </footer>
