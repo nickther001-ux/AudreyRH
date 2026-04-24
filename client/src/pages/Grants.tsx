@@ -690,7 +690,7 @@ export default function Grants() {
                   {isFr ? "Questions fréquentes" : "Frequently Asked"}
                 </p>
                 <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight mb-6">
-                  {isFr ? <>Tout ce que vous devez <em className="not-italic text-primary">savoir</em></> : <>Everything you need to <em className="not-italic text-primary">know</em></>}
+                  {isFr ? <>Tout ce que vous devez savoir</> : <>Everything you need to know</>}
                 </h2>
                 <p className="text-[14px] text-muted-foreground leading-relaxed mb-8">
                   {isFr ? "Des réponses claires sur le processus de subvention, les conditions d'admissibilité et l'accompagnement AudreyRH." : "Clear answers about the grant process, eligibility requirements, and AudreyRH's support."}
