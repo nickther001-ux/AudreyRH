@@ -16,15 +16,51 @@ export async function registerRoutes(
       const isFree = input.appointmentType === 'free_consultation';
       const isBusiness = input.appointmentType === 'business_consultation';
 
-      // For PAID bookings only: lock the slot atomically
-      if (!isFree && input.slotId) {
-        const bookedSlot = await storage.bookSlot(input.slotId);
-        if (!bookedSlot) {
-          return res.status(400).json({ message: 'Ce créneau n\'est plus disponible. Veuillez en choisir un autre.' });
+      // ── Step 1: Compute canonical date string for conflict checks ──
+      let dateStringForCheck: string | null = null;
+      if (input.date) {
+        const rawDate = new Date(input.date as unknown as string | Date);
+        if (!isNaN(rawDate.getTime())) {
+          const y = rawDate.getUTCFullYear();
+          const m = String(rawDate.getUTCMonth() + 1).padStart(2, "0");
+          const d = String(rawDate.getUTCDate()).padStart(2, "0");
+          dateStringForCheck = `${y}-${m}-${d}`;
         }
       }
 
-      const appointment = await storage.createAppointment(input);
+      // ── Step 2: Pre-booking conflict check (date + startTime) ──
+      // Catches double-bookings even if isBooked flag is stale or the slot
+      // was booked via a different path (free vs paid).
+      if (dateStringForCheck && input.startTime) {
+        const { rows: conflicts } = await pool.query(
+          `SELECT id FROM appointments
+           WHERE date = $1 AND start_time = $2 AND status != 'cancelled'
+           LIMIT 1`,
+          [dateStringForCheck, input.startTime]
+        );
+        if (conflicts.length > 0) {
+          return res.status(409).json({
+            message: 'Ce créneau vient d\'être réservé par quelqu\'un d\'autre. Veuillez choisir un autre horaire ou actualiser la page.',
+          });
+        }
+      }
+
+      // ── Step 3: Atomically lock the slot (paid AND free with a slotId) ──
+      if (input.slotId) {
+        const bookedSlot = await storage.bookSlot(input.slotId);
+        if (!bookedSlot) {
+          return res.status(409).json({ message: 'Ce créneau n\'est plus disponible. Veuillez en choisir un autre.' });
+        }
+      }
+
+      let appointment: Awaited<ReturnType<typeof storage.createAppointment>>;
+      try {
+        appointment = await storage.createAppointment(input);
+      } catch (createErr) {
+        // If appointment creation fails after slot was locked, release the slot
+        if (input.slotId) await storage.unbookSlot(input.slotId).catch(() => {});
+        throw createErr;
+      }
 
       // ── FREE CONSULTATION — send notification emails, no payment ──
       if (isFree) {
@@ -93,7 +129,7 @@ export async function registerRoutes(
           ],
           mode: 'payment',
           success_url: `${req.protocol}://${req.get('host')}/book?success=true&appointmentId=${appointment.id}&email=${encodeURIComponent(appointment.email)}&session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: `${req.protocol}://${req.get('host')}/book?canceled=true`,
+          cancel_url: `${req.protocol}://${req.get('host')}/book?canceled=true&appointmentId=${appointment.id}`,
           metadata: { appointmentId: appointment.id.toString(), language: (input.language ?? "fr") },
           customer_email: input.email,
         });
@@ -365,6 +401,34 @@ export async function registerRoutes(
     } catch (err) {
       console.error('Error rejecting appointment:', err);
       res.status(500).json({ message: 'Failed to reject appointment' });
+    }
+  });
+
+  // Client-initiated cancel — releases the slot so others can book it
+  app.post('/api/appointments/:id/cancel', async (req, res) => {
+    const id = parseInt(req.params.id);
+    if (isNaN(id)) return res.status(400).json({ message: 'Invalid ID' });
+    try {
+      const appointment = await storage.getAppointment(id);
+      if (!appointment) return res.status(404).json({ message: 'Appointment not found' });
+
+      // Guard: don't silently cancel a paid appointment this way
+      if (appointment.paymentStatus === 'paid') {
+        return res.status(400).json({ message: 'Paid appointments cannot be cancelled from this endpoint.' });
+      }
+
+      await storage.updateAppointmentStatus(id, 'cancelled');
+
+      // Release the availability slot so the time is available again
+      if (appointment.slotId) {
+        await storage.unbookSlot(appointment.slotId);
+        console.log(`[Cancel] Released slot ${appointment.slotId} for appointment ${id}`);
+      }
+
+      res.json({ success: true });
+    } catch (err: any) {
+      console.error('[Cancel] Error:', err.message);
+      res.status(500).json({ message: 'Failed to cancel appointment' });
     }
   });
 

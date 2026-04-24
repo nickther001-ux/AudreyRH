@@ -305,6 +305,12 @@ export default function Book() {
       }
     }
     if (params.get("canceled") === "true") {
+      const cancelledAppointmentId = params.get("appointmentId");
+      if (cancelledAppointmentId) {
+        // Release the locked slot so the time becomes available again
+        fetch(`/api/appointments/${cancelledAppointmentId}/cancel`, { method: "POST" })
+          .catch(console.error);
+      }
       setCanceled(true);
       window.history.replaceState({}, "", "/book");
     }

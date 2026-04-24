@@ -126,33 +126,42 @@ export class DatabaseStorage implements IStorage {
 
   async getAvailableSlots(): Promise<AvailabilitySlot[]> {
     const now = new Date();
-    // Format today as "yyyy-MM-dd" for comparison against the DATE column
     const y = now.getUTCFullYear();
     const m = String(now.getUTCMonth() + 1).padStart(2, "0");
     const d = String(now.getUTCDate()).padStart(2, "0");
     const todayString = `${y}-${m}-${d}`;
-
-    const slots = await db
-      .select()
-      .from(availabilitySlots)
-      .where(and(
-        isNotNull(availabilitySlots.date),
-        eq(availabilitySlots.isBooked, false),
-        gte(availabilitySlots.date, todayString)
-      ))
-      .orderBy(availabilitySlots.date);
-
-    // Convert HH:MM time string to minutes since midnight
-    const timeToMinutes = (time: string): number => {
-      const [hours, minutes] = time.split(":").map(Number);
-      return hours * 60 + minutes;
-    };
     const currentMinutes = now.getUTCHours() * 60 + now.getUTCMinutes();
 
-    return slots.filter(slot => {
-      // slot.date is "yyyy-MM-dd" — same-day check via string comparison
-      const isSameDay = slot.date === todayString;
-      if (isSameDay) {
+    // Cross-check against appointments table so that a slot with a stale
+    // isBooked flag (or booked by a free consultation that bypassed the flag)
+    // is still hidden from the frontend.
+    const { rows } = await pool.query<AvailabilitySlot>(`
+      SELECT
+        s.id,
+        s.date::text        AS date,
+        s.start_time        AS "startTime",
+        s.end_time          AS "endTime",
+        s.is_booked         AS "isBooked"
+      FROM availability_slots s
+      WHERE s.is_booked = false
+        AND s.date IS NOT NULL
+        AND s.date::text >= $1
+        AND NOT EXISTS (
+          SELECT 1 FROM appointments a
+          WHERE a.date        = s.date
+            AND a.start_time  = s.start_time
+            AND a.status     != 'cancelled'
+        )
+      ORDER BY s.date, s.start_time
+    `, [todayString]);
+
+    const timeToMinutes = (t: string): number => {
+      const [h, min] = t.split(":").map(Number);
+      return h * 60 + min;
+    };
+
+    return rows.filter(slot => {
+      if (slot.date === todayString) {
         return timeToMinutes(slot.startTime) > currentMinutes;
       }
       return true;
