@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
 import ics from 'ics';
 
-const FROM = '"AudreyRH" <info@audreyrh.com>';
+const FROM = '"Services RH" <info@audreyrh.com>';
 const REPLY_TO = 'info@audreyrh.com';
 const NOTIFY_TO = 'info@audreyrh.com';
 
