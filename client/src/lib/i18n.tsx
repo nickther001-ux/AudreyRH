@@ -734,7 +734,7 @@ const translations = {
     "business.cta.book": "Réserver une consultation",
 
     "grants.hero.rotating.1": "accélère",
-    "grants.hero.rotating.2": "catapulte",
+    "grants.hero.rotating.2": "propulse",
     "grants.hero.rotating.3": "transforme",
 
     "grants.badge": "Subventions & Financement",
