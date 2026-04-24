@@ -865,7 +865,7 @@ const translations = {
     "business.cta.badge": "Passez à l'action",
 
     "portal.individuals.label": "Pour les particuliers",
-    "portal.individuals.title": "Vous êtes un nouvel arrivant ?",
+    "portal.individuals.title": "Solutions RH pour candidat.e.s",
     "portal.individuals.desc": "Stratégie de carrière, reconnaissance des acquis et intégration au marché québécois — accompagné par une experte CRIA.",
     "portal.individuals.cta": "Accéder à l'espace Particuliers",
 
@@ -1729,7 +1729,7 @@ const translations = {
     "business.cta.badge": "Take Action",
 
     "portal.individuals.label": "For Individuals",
-    "portal.individuals.title": "Are you a newcomer?",
+    "portal.individuals.title": "HR Solutions for Candidates",
     "portal.individuals.desc": "Career strategy, credential recognition, and integration into the Quebec job market — guided by a CRIA-certified expert.",
     "portal.individuals.cta": "Enter Individual Space",
 
