@@ -870,7 +870,7 @@ const translations = {
     "portal.individuals.cta": "Accéder à l'espace Particuliers",
 
     "portal.business.label": "Pour les entreprises",
-    "portal.business.title": "Vous êtes une organisation ?",
+    "portal.business.title": "Accompagnement stratégique pour entreprises",
     "portal.business.desc": "Acquisition de talents, stratégie RH, subventions gouvernementales et conformité — des solutions sur mesure pour votre croissance.",
     "portal.business.cta": "Accéder à l'espace Entreprises",
   },
@@ -1734,7 +1734,7 @@ const translations = {
     "portal.individuals.cta": "Enter Individual Space",
 
     "portal.business.label": "For Businesses",
-    "portal.business.title": "Are you an organization?",
+    "portal.business.title": "Strategic support for organizations",
     "portal.business.desc": "Talent acquisition, HR strategy, government grants, and compliance — tailored solutions to fuel your growth.",
     "portal.business.cta": "Enter Business Space",
   },
