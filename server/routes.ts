@@ -209,6 +209,26 @@ export async function registerRoutes(
         console.error('Email send failed (non-fatal):', emailErr.message);
       }
 
+      // Sync to IONOS CalDAV calendar (non-blocking)
+      try {
+        if (appointment.date && appointment.startTime && appointment.endTime) {
+          const { syncToIonos } = await import('./ionos-sync');
+          await syncToIonos({
+            clientName: appointment.name,
+            clientEmail: appointment.email,
+            clientPhone: appointment.phone ?? null,
+            date: appointment.date,
+            startTime: appointment.startTime,
+            endTime: appointment.endTime,
+            platform: appointment.platform,
+            meetLink: appointment.meetLink ?? null,
+            reason: appointment.reason ?? null,
+          });
+        }
+      } catch (calErr: any) {
+        console.error('IONOS CalDAV sync failed (non-fatal):', calErr.message);
+      }
+
       res.json({ success: true });
     } catch (err) {
       console.error('Error confirming appointment:', err);
