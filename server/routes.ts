@@ -29,18 +29,21 @@ export async function registerRoutes(
       }
 
       // ── Step 2: Pre-booking conflict check (date + startTime) ──
-      // Catches double-bookings even if isBooked flag is stale or the slot
-      // was booked via a different path (free vs paid).
+      // Blocks the request immediately if any Pending or Confirmed booking
+      // already holds this date+time. Uses an IN allowlist so NULL-status
+      // legacy rows are never treated as free.
       if (dateStringForCheck && input.startTime) {
         const { rows: conflicts } = await pool.query(
           `SELECT id FROM appointments
-           WHERE date = $1 AND start_time = $2 AND status != 'cancelled'
+           WHERE date = $1
+             AND start_time = $2
+             AND status IN ('pending', 'confirmed', 'completed')
            LIMIT 1`,
           [dateStringForCheck, input.startTime]
         );
         if (conflicts.length > 0) {
           return res.status(409).json({
-            message: 'Ce créneau vient d\'être réservé par quelqu\'un d\'autre. Veuillez choisir un autre horaire ou actualiser la page.',
+            message: 'Ce créneau est déjà réservé (en attente ou confirmé). Veuillez choisir un autre horaire ou actualiser la page.',
           });
         }
       }

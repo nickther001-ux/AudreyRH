@@ -133,8 +133,9 @@ export class DatabaseStorage implements IStorage {
     const currentMinutes = now.getUTCHours() * 60 + now.getUTCMinutes();
 
     // Cross-check against appointments table so that a slot with a stale
-    // isBooked flag (or booked by a free consultation that bypassed the flag)
-    // is still hidden from the frontend.
+    // isBooked flag is still hidden from the frontend.
+    // Explicitly block slots that have a Pending OR Confirmed booking —
+    // using an IN allowlist so NULL-status legacy rows are never treated as free.
     const { rows } = await pool.query<AvailabilitySlot>(`
       SELECT
         s.id,
@@ -150,7 +151,7 @@ export class DatabaseStorage implements IStorage {
           SELECT 1 FROM appointments a
           WHERE a.date        = s.date
             AND a.start_time  = s.start_time
-            AND a.status     != 'cancelled'
+            AND a.status IN ('pending', 'confirmed', 'completed')
         )
       ORDER BY s.date, s.start_time
     `, [todayString]);
