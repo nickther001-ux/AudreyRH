@@ -175,11 +175,27 @@ export class DatabaseStorage implements IStorage {
     const m = String(now.getUTCMonth() + 1).padStart(2, "0");
     const d = String(now.getUTCDate()).padStart(2, "0");
     const todayString = `${y}-${m}-${d}`;
-    return db
-      .select()
-      .from(availabilitySlots)
-      .where(and(isNotNull(availabilitySlots.date), gte(availabilitySlots.date, todayString)))
-      .orderBy(availabilitySlots.date);
+    // Exclude slots that already have a pending, confirmed, or completed appointment
+    // so taken time slots are automatically removed from the admin calendar view.
+    const { rows } = await pool.query<AvailabilitySlot>(`
+      SELECT
+        s.id,
+        s.date::text  AS date,
+        s.start_time  AS "startTime",
+        s.end_time    AS "endTime",
+        s.is_booked   AS "isBooked"
+      FROM availability_slots s
+      WHERE s.date IS NOT NULL
+        AND s.date::text >= $1
+        AND NOT EXISTS (
+          SELECT 1 FROM appointments a
+          WHERE a.date       = s.date
+            AND a.start_time = s.start_time
+            AND a.status IN ('pending', 'confirmed', 'completed')
+        )
+      ORDER BY s.date, s.start_time
+    `, [todayString]);
+    return rows;
   }
 
   async getAvailabilitySlot(id: number): Promise<AvailabilitySlot | undefined> {

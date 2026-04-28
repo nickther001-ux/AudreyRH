@@ -485,6 +485,25 @@ export async function registerRoutes(
         return res.status(400).json({ message: `Valeur de date invalide: ${rawDate}`, field: "date" });
       }
       const input = api.availability.create.input.parse(req.body);
+
+      // Guard: reject if a pending/confirmed booking already exists for this date+time
+      const _y = parsedDate.getUTCFullYear();
+      const _m = String(parsedDate.getUTCMonth() + 1).padStart(2, "0");
+      const _d = String(parsedDate.getUTCDate()).padStart(2, "0");
+      const dateStr = `${_y}-${_m}-${_d}`;
+      const { rows: apptConflicts } = await pool.query(
+        `SELECT id FROM appointments
+         WHERE date = $1 AND start_time = $2
+           AND status IN ('pending', 'confirmed', 'completed')
+         LIMIT 1`,
+        [dateStr, input.startTime]
+      );
+      if (apptConflicts.length > 0) {
+        return res.status(409).json({
+          message: `Ce créneau (${dateStr} à ${input.startTime}) est déjà occupé par une réservation existante.`,
+        });
+      }
+
       console.log(`[Slots] Creating — date=${input.date instanceof Date ? input.date.toISOString() : input.date} start=${input.startTime} end=${input.endTime}`);
       const slot = await storage.createAvailabilitySlot(input);
       console.log(`[Slots] Created — id=${slot.id} date=${slot.date}`);
