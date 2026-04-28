@@ -72,15 +72,6 @@ export async function registerRoutes(
               })
             : '';
 
-          const ZOOM_LINK = 'https://us05web.zoom.us/j/3617510198?pwd=5Yto7YKwJpfF1TxIecDzSTJbiwaCZu.1';
-          const meetLink = appointment.platform !== 'google_meet'
-            ? ZOOM_LINK
-            : (process.env.GOOGLE_MEET_LINK ?? '');
-
-          if (meetLink) {
-            await storage.setMeetLink(appointment.id, meetLink);
-          }
-
           await sendFreeConsultationRequest({
             clientName: appointment.name,
             clientEmail: appointment.email,
@@ -91,7 +82,6 @@ export async function registerRoutes(
               : '',
             platform: appointment.platform,
             reason: appointment.reason,
-            meetLink,
           });
         } catch (emailErr: any) {
           console.error('Free consultation email failed (non-fatal):', emailErr.message);
@@ -209,25 +199,6 @@ export async function registerRoutes(
         console.error('Email send failed (non-fatal):', emailErr.message);
       }
 
-      // Sync to IONOS CalDAV calendar (non-blocking)
-      try {
-        if (appointment.date && appointment.startTime && appointment.endTime) {
-          const { syncToIonos } = await import('./ionos-sync');
-          await syncToIonos({
-            clientName: appointment.name,
-            clientEmail: appointment.email,
-            clientPhone: appointment.phone ?? null,
-            date: appointment.date,
-            startTime: appointment.startTime,
-            endTime: appointment.endTime,
-            platform: appointment.platform,
-            meetLink: appointment.meetLink ?? null,
-            reason: appointment.reason ?? null,
-          });
-        }
-      } catch (calErr: any) {
-        console.error('IONOS CalDAV sync failed (non-fatal):', calErr.message);
-      }
 
       res.json({ success: true });
     } catch (err) {
@@ -395,6 +366,26 @@ export async function registerRoutes(
         reason: appointment.reason,
         language: (appointment.language as "fr" | "en") || "fr",
       });
+
+      // Sync to IONOS CalDAV calendar after admin approval (non-blocking)
+      try {
+        if (appointment.date && appointment.startTime && appointment.endTime) {
+          const { syncToIonos } = await import('./ionos-sync');
+          await syncToIonos({
+            clientName: appointment.name,
+            clientEmail: appointment.email,
+            clientPhone: appointment.phone ?? null,
+            date: appointment.date,
+            startTime: appointment.startTime,
+            endTime: appointment.endTime,
+            platform: appointment.platform,
+            meetLink: meetLink ?? null,
+            reason: appointment.reason ?? null,
+          });
+        }
+      } catch (calErr: any) {
+        console.error('IONOS CalDAV sync failed (non-fatal):', calErr.message);
+      }
 
       const updated = await storage.getAppointment(id);
       res.json({ success: true, appointment: updated, meetLink });

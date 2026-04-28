@@ -183,15 +183,16 @@ export async function sendBookingConfirmation(data: AppointmentEmailData) {
   const amountDisplay = data.amount ?? '85.00';
   const stripeIdDisplay = data.stripeId ?? '—';
 
-  // 1 — Client confirmation
+  // 1 — Client receipt (payment confirmed, pending admin scheduling)
   const clientHtml = `${emailWrapperOpen(600)}
-${logoHeader('✓&nbsp;&nbsp;Paiement confirmé — Consultation réservée')}
+${logoHeader('✓&nbsp;&nbsp;Paiement reçu — En attente de confirmation')}
         <tr>
           <td style="padding:40px 48px;">
             <p style="margin:0 0 6px;font-size:23px;font-weight:700;color:#ffffff;">Bonjour ${data.clientName},</p>
             <p style="margin:0 0 28px;font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;">
               Merci pour votre paiement / Thank you for your payment.<br/>
-              Votre consultation avec <strong style="color:#ffffff;">Audrey Mondesir, CRIA</strong> est confirmée.
+              Votre demande de consultation a bien été reçue. <strong style="color:#ffffff;">Audrey Mondesir, CRIA</strong> vous confirmera la date dans les <strong style="color:#ffffff;">24 à 48 heures ouvrables</strong>.<br/>
+              <em style="color:rgba(255,255,255,0.35);">Your consultation request has been received. Audrey will confirm within 24 to 48 business hours.</em>
             </p>
 
             <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.10);border-radius:12px;">
@@ -201,6 +202,7 @@ ${logoHeader('✓&nbsp;&nbsp;Paiement confirmé — Consultation réservée')}
                   ${timeRange ? fieldRow('Heure / Time', timeRange) : ''}
                   ${fieldRow('Plateforme', platformLabel)}
                   ${data.reason ? fieldRow('Sujet / Subject', data.reason, true) : ''}
+                  ${fieldRow('Statut / Status', 'En attente de confirmation / Pending approval', true)}
                 </table>
               </td></tr>
             </table>
@@ -239,11 +241,20 @@ ${logoHeader('✓&nbsp;&nbsp;Paiement confirmé — Consultation réservée')}
 ${emailFooter('Tous les paiements sont finaux — aucun remboursement. · All payments are final — no refunds.')}
 ${emailWrapperClose}`;
 
-  // 2 — Internal notification to Audrey
+  // 2 — Admin notification: new paid booking awaiting approval
   const notifyHtml = `${emailWrapperOpen(500)}
-${compactHeader('AudreyRH · Paiement reçu', 'Nouveau paiement reçu')}
+${compactHeader('AudreyRH · Nouvelle réservation', 'Nouvelle réservation — Approbation requise')}
         <tr>
-          <td style="padding:28px 32px 32px;">
+          <td style="padding:16px 32px 18px;">
+            <table cellpadding="0" cellspacing="0" style="margin-bottom:18px;">
+              <tr><td style="background:rgba(255,200,50,0.12);border:1px solid rgba(255,200,50,0.3);border-radius:8px;padding:10px 18px;">
+                <p style="margin:0;font-size:12px;font-weight:600;color:rgba(255,220,100,0.95);">⏳ En attente — Veuillez approuver ou refuser cette demande dans le tableau de bord</p>
+              </td></tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:4px 32px 32px;">
             <div style="margin-bottom:14px;">
               <p style="margin:0 0 4px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;">Client</p>
               <p style="margin:0;font-size:15px;color:#ffffff;">
@@ -268,7 +279,7 @@ ${compactHeader('AudreyRH · Paiement reçu', 'Nouveau paiement reçu')}
               <code style="font-size:12px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);padding:4px 10px;border-radius:4px;color:#93c5fd;">${stripeIdDisplay}</code>
             </div>
             <hr style="border:0;border-top:1px solid rgba(255,255,255,0.08);margin:0 0 22px;"/>
-            ${ctaButton('https://audreyrh.com/admin', 'Voir dans le tableau de bord →')}
+            ${ctaButton('https://audreyrh.com/admin', '→ Approuver ou refuser dans le tableau de bord')}
           </td>
         </tr>
 ${emailFooter()}
@@ -276,8 +287,8 @@ ${emailWrapperClose}`;
 
   console.log('[Resend] Sending booking emails to:', data.clientEmail);
   const [r1, r2] = await Promise.all([
-    sendEmail(client, { from: FROM, to: data.clientEmail, subject: 'Confirmation de votre consultation — AudreyRH', html: clientHtml }),
-    sendEmail(client, { from: FROM, to: NOTIFY_TO, replyTo: data.clientEmail, subject: `Nouveau paiement : ${data.clientName} — $${amountDisplay} CAD`, html: notifyHtml }),
+    sendEmail(client, { from: FROM, to: data.clientEmail, subject: 'Demande de consultation reçue — AudreyRH', html: clientHtml }),
+    sendEmail(client, { from: FROM, to: NOTIFY_TO, replyTo: data.clientEmail, subject: `⏳ Nouvelle réservation à approuver : ${data.clientName} — $${amountDisplay} CAD`, html: notifyHtml }),
   ]);
   if (r1.error) console.error('[Resend] Booking client email error:', JSON.stringify(r1.error));
   else console.log('[Resend] Booking client email sent, id:', r1.data?.id);
@@ -296,24 +307,21 @@ export type FreeConsultationData = {
   preferredTime: string;
   platform: string;
   reason: string;
-  meetLink?: string;
 };
 
 export async function sendFreeConsultationRequest(data: FreeConsultationData) {
   const client = getClient();
   const platformLabel = data.platform === 'google_meet' ? 'Google Meet' : 'Zoom';
   const timeDisplay = data.preferredTime || '—';
-  const isZoom = data.platform !== 'google_meet';
-  const hasMeetLink = !!(data.meetLink && data.meetLink.startsWith('http'));
 
-  // 1 — Internal notification to Audrey (shows the link so she can reference it when confirming)
+  // 1 — Internal notification to Audrey: approval required
   const notifyHtml = `${emailWrapperOpen(520)}
-${compactHeader('AudreyRH · Demande de consultation', 'Nouvelle demande — À confirmer')}
+${compactHeader('AudreyRH · Nouvelle demande gratuite', 'Nouvelle demande — Approbation requise')}
         <tr>
-          <td style="padding:24px 32px 0;">
+          <td style="padding:16px 32px 18px;">
             <table cellpadding="0" cellspacing="0" style="margin-bottom:18px;">
-              <tr><td style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);border-radius:8px;padding:10px 18px;">
-                <p style="margin:0;font-size:12px;font-weight:600;color:rgba(255,255,255,0.8);">En attente — Veuillez confirmer ou refuser cette demande</p>
+              <tr><td style="background:rgba(255,200,50,0.12);border:1px solid rgba(255,200,50,0.3);border-radius:8px;padding:10px 18px;">
+                <p style="margin:0;font-size:12px;font-weight:600;color:rgba(255,220,100,0.95);">⏳ En attente — Veuillez approuver ou refuser cette demande dans le tableau de bord</p>
               </td></tr>
             </table>
           </td>
@@ -323,14 +331,13 @@ ${compactHeader('AudreyRH · Demande de consultation', 'Nouvelle demande — À 
             ${fieldBox('Client', `${data.clientName} &nbsp;<a href="mailto:${data.clientEmail}" style="color:#93c5fd;text-decoration:none;font-weight:600;">${data.clientEmail}</a>${data.phone ? ' &nbsp;· ' + data.phone : ''}`)}
             ${fieldBox('Date souhaitée', `${data.preferredDate} · ${timeDisplay}`)}
             ${fieldBox('Plateforme', platformLabel)}
-            ${hasMeetLink ? fieldBox('Lien de réunion (sera envoyé au client à la confirmation)', `<a href="${data.meetLink}" style="color:#4ade80;text-decoration:none;">${data.meetLink}</a>${isZoom ? '<br/><span style="font-size:11px;color:rgba(255,255,255,0.4);">Meeting ID: 361 751 0198 · Passcode: nTa2sG</span>' : ''}`) : ''}
             <table width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
               <tr><td style="background:rgba(255,255,255,0.05);border:1px solid rgba(147,197,253,0.2);border-left:3px solid #93c5fd;border-radius:0 10px 10px 0;padding:14px 18px;">
                 <p style="margin:0 0 6px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:1.2px;">Message</p>
                 <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.75);line-height:1.75;">${data.reason.replace(/\n/g, '<br/>')}</p>
               </td></tr>
             </table>
-            ${ctaButton(`mailto:${data.clientEmail}`, `Répondre à ${data.clientName} →`)}
+            ${ctaButton('https://audreyrh.com/admin', '→ Approuver ou refuser dans le tableau de bord')}
           </td>
         </tr>
 ${emailFooter()}
