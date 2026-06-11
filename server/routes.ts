@@ -295,7 +295,14 @@ export async function registerRoutes(
     if (!password || password !== adminPassword) {
       return res.status(401).json({ message: 'Mot de passe incorrect' });
     }
+    (req.session as any).isAdmin = true;
     res.json({ success: true });
+  });
+
+  app.post('/api/admin/logout', (req, res) => {
+    req.session.destroy(() => {
+      res.json({ success: true });
+    });
   });
 
   // Admin routes - get all appointments
@@ -474,6 +481,9 @@ export async function registerRoutes(
 
   // Availability routes
   app.post(api.availability.create.path, async (req, res) => {
+    if (!(req.session as any)?.isAdmin) {
+      return res.status(401).json({ message: "Non autorisé" });
+    }
     try {
       // Explicit date guard before Zod parsing
       const rawDate = req.body?.date;
@@ -635,6 +645,9 @@ export async function registerRoutes(
   });
 
   app.delete('/api/availability/:id', async (req, res) => {
+    if (!(req.session as any)?.isAdmin) {
+      return res.status(401).json({ message: "Non autorisé" });
+    }
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) {

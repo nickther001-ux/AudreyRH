@@ -1,4 +1,5 @@
 import express, { type Request, Response, NextFunction } from "express";
+import session from "express-session";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
@@ -150,6 +151,17 @@ async function initStripe() {
       }
     }
   );
+
+  app.use(session({
+    secret: process.env.SESSION_SECRET ?? "audreyrh-session-secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 8 * 60 * 60 * 1000, // 8 hours
+    },
+  }));
 
   app.use(
     express.json({
