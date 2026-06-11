@@ -62,6 +62,7 @@ import {
   ExternalLink,
   LogOut,
   Mail,
+  Download,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
@@ -626,7 +627,7 @@ function AppointmentCard({
             </DialogTitle>
           </DialogHeader>
           <p className="text-sm text-white/60 py-2">
-            Voulez-vous vraiment supprimer la réservation de <span className="text-white font-semibold">{appt.name}</span> ? Cette action est irréversible.
+            Voulez-vous archiver la réservation de <span className="text-white font-semibold">{appt.name}</span> ? Elle sera masquée du tableau de bord mais conservée dans la base de données.
           </p>
           <DialogFooter className="gap-2">
             <Button variant="ghost" onClick={() => setDeleteConfirmOpen(false)} className="text-white/60 hover:text-white hover:bg-white/5">
@@ -639,7 +640,7 @@ function AppointmentCard({
               data-testid={`button-confirm-delete-${appt.id}`}
             >
               {isDeleting ? <RefreshCw className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
-              Supprimer définitivement
+              Archiver
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -847,6 +848,16 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
                   </span>
                 )}
               </div>
+              <a
+                href="/api/admin/appointments/export/csv"
+                download
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1e3a5f]/70 hover:bg-[#2a4f7f]/80 border border-[#93c5fd]/20 text-[#93c5fd] text-xs font-semibold transition-colors"
+                data-testid="button-export-csv"
+                title="Télécharger toutes les réservations en CSV"
+              >
+                <Download className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Exporter CSV</span>
+              </a>
               <button
                 onClick={onLogout}
                 className="p-2 rounded-lg text-white/40 hover:text-white hover:bg-white/5 transition"

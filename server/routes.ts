@@ -590,6 +590,9 @@ export async function registerRoutes(
   });
 
   app.delete('/api/admin/appointments/:id', async (req, res) => {
+    if (!(req.session as any)?.isAdmin) {
+      return res.status(401).json({ message: "Non autorisé" });
+    }
     try {
       const id = parseInt(req.params.id);
       if (isNaN(id)) return res.status(400).json({ message: "Invalid ID" });
@@ -598,6 +601,36 @@ export async function registerRoutes(
     } catch (err: any) {
       console.error('Error deleting appointment:', err);
       res.status(500).json({ message: err?.message ?? 'Failed to delete appointment' });
+    }
+  });
+
+  // CSV export — admin only
+  app.get('/api/admin/appointments/export/csv', async (req, res) => {
+    if (!(req.session as any)?.isAdmin) {
+      return res.status(401).json({ message: "Non autorisé" });
+    }
+    try {
+      const { rows } = await pool.query(`
+        SELECT id, name, email, phone, date::text, start_time, end_time,
+               appointment_type, status, payment_status, platform,
+               meet_link, language, was_rescheduled, created_at::text
+        FROM appointments
+        WHERE deleted_at IS NULL
+        ORDER BY created_at DESC
+      `);
+      const headers = ['ID','Nom','Email','Téléphone','Date','Heure début','Heure fin','Type','Statut','Paiement','Plateforme','Lien réunion','Langue','Reprogrammé','Créé le'];
+      const escape = (v: any) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+      const lines = [
+        headers.map(escape).join(','),
+        ...rows.map(r => [r.id, r.name, r.email, r.phone, r.date, r.start_time, r.end_time, r.appointment_type, r.status, r.payment_status, r.platform, r.meet_link, r.language, r.was_rescheduled, r.created_at].map(escape).join(','))
+      ];
+      const csv = lines.join('\r\n');
+      const date = new Date().toISOString().slice(0,10);
+      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+      res.setHeader('Content-Disposition', `attachment; filename="reservations-${date}.csv"`);
+      res.send('\uFEFF' + csv); // BOM for Excel UTF-8
+    } catch (err: any) {
+      res.status(500).json({ message: err?.message ?? 'Export failed' });
     }
   });
 

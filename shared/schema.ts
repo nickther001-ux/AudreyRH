@@ -19,6 +19,7 @@ export const appointments = pgTable("appointments", {
   language: text("language"),
   wasRescheduled: boolean("was_rescheduled").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
+  deletedAt: timestamp("deleted_at"),
 });
 
 export const availabilitySlots = pgTable("availability_slots", {

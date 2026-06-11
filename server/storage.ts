@@ -83,10 +83,20 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getAllAppointments(): Promise<Appointment[]> {
-    return db
-      .select()
-      .from(appointments)
-      .orderBy(appointments.createdAt);
+    const { rows } = await pool.query<Appointment>(`
+      SELECT id, name, email, phone, reason, date::text AS date,
+        slot_id AS "slotId", start_time AS "startTime", end_time AS "endTime",
+        platform, appointment_type AS "appointmentType",
+        status, payment_status AS "paymentStatus",
+        stripe_payment_intent_id AS "stripePaymentIntentId",
+        meet_link AS "meetLink", language,
+        was_rescheduled AS "wasRescheduled",
+        created_at AS "createdAt"
+      FROM appointments
+      WHERE deleted_at IS NULL
+      ORDER BY created_at DESC
+    `);
+    return rows;
   }
 
   async updateAppointmentPayment(id: number, paymentIntentId: string): Promise<Appointment> {
@@ -207,7 +217,7 @@ export class DatabaseStorage implements IStorage {
   }
 
   async deleteAppointment(id: number): Promise<void> {
-    await pool.query('DELETE FROM appointments WHERE id = $1', [id]);
+    await pool.query('UPDATE appointments SET deleted_at = NOW() WHERE id = $1', [id]);
   }
 
   async deleteAvailabilitySlot(id: number): Promise<void> {
