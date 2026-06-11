@@ -212,9 +212,11 @@ function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
+        credentials: "include",
       });
       if (res.ok) {
         sessionStorage.setItem("admin_auth", "1");
+        sessionStorage.setItem("admin_token", password);
         onSuccess();
       } else {
         const data = await res.json().catch(() => ({}));
@@ -413,7 +415,7 @@ function AppointmentCard({
 
   const { mutate: deleteAppt, isPending: isDeleting } = useMutation({
     mutationFn: async () => {
-      const res = await apiRequest("DELETE", `/api/admin/appointments/${appt.id}`);
+      const res = await apiRequest("DELETE", `/api/admin/appointments/${appt.id}`, undefined, adminAuthHeader());
       return res.json();
     },
     onSuccess: () => {
@@ -690,7 +692,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
 
   const { mutate: deleteSlot, isPending: isDeleting } = useMutation({
-    mutationFn: (id: number) => apiRequest("DELETE", `/api/availability/${id}`),
+    mutationFn: (id: number) => apiRequest("DELETE", `/api/availability/${id}`, undefined, adminAuthHeader()),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/availability"] });
       queryClient.invalidateQueries({ queryKey: ["/api/availability"] });
@@ -772,7 +774,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
       setIsCreating(true);
       const res = await fetch("/api/availability", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", ...adminAuthHeader() },
         credentials: "include",
         body: JSON.stringify(payload),
       });
@@ -848,16 +850,28 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
                   </span>
                 )}
               </div>
-              <a
-                href="/api/admin/appointments/export/csv"
-                download
+              <button
+                onClick={async () => {
+                  const res = await fetch("/api/admin/appointments/export/csv", {
+                    headers: adminAuthHeader(),
+                    credentials: "include",
+                  });
+                  if (!res.ok) return;
+                  const blob = await res.blob();
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = `reservations-${new Date().toISOString().slice(0,10)}.csv`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#1e3a5f]/70 hover:bg-[#2a4f7f]/80 border border-[#93c5fd]/20 text-[#93c5fd] text-xs font-semibold transition-colors"
                 data-testid="button-export-csv"
                 title="Télécharger toutes les réservations en CSV"
               >
                 <Download className="h-3.5 w-3.5" />
                 <span className="hidden sm:inline">Exporter CSV</span>
-              </a>
+              </button>
               <button
                 onClick={onLogout}
                 className="p-2 rounded-lg text-white/40 hover:text-white hover:bg-white/5 transition"
@@ -1128,6 +1142,11 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
 /* ─── Exported page ───────────────────────────────────────────────────────── */
 
+function adminAuthHeader(): Record<string, string> {
+  const token = sessionStorage.getItem("admin_token");
+  return token ? { "Authorization": `Bearer ${token}` } : {};
+}
+
 export default function Admin() {
   const [isAuthenticated, setIsAuthenticated] = useState(
     () => sessionStorage.getItem("admin_auth") === "1"
@@ -1135,6 +1154,7 @@ export default function Admin() {
 
   function handleLogout() {
     sessionStorage.removeItem("admin_auth");
+    sessionStorage.removeItem("admin_token");
     setIsAuthenticated(false);
   }
 

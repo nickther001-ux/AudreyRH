@@ -285,6 +285,18 @@ export async function registerRoutes(
     }
   });
 
+  // Helper — accepts either a live session OR Authorization: Bearer <password>
+  function isAdminAuth(req: any): boolean {
+    if ((req.session as any)?.isAdmin) return true;
+    const auth = req.headers['authorization'] ?? '';
+    if (auth.startsWith('Bearer ')) {
+      const token = auth.slice(7);
+      const adminPassword = process.env.ADMIN_PASSWORD;
+      return !!adminPassword && token === adminPassword;
+    }
+    return false;
+  }
+
   // Admin login — validates against ADMIN_PASSWORD secret
   app.post('/api/admin/login', (req, res) => {
     const { password } = req.body ?? {};
@@ -481,7 +493,7 @@ export async function registerRoutes(
 
   // Availability routes
   app.post(api.availability.create.path, async (req, res) => {
-    if (!(req.session as any)?.isAdmin) {
+    if (!isAdminAuth(req)) {
       return res.status(401).json({ message: "Non autorisé" });
     }
     try {
@@ -600,7 +612,7 @@ export async function registerRoutes(
   });
 
   app.delete('/api/admin/appointments/:id', async (req, res) => {
-    if (!(req.session as any)?.isAdmin) {
+    if (!isAdminAuth(req)) {
       return res.status(401).json({ message: "Non autorisé" });
     }
     try {
@@ -616,7 +628,7 @@ export async function registerRoutes(
 
   // CSV export — admin only
   app.get('/api/admin/appointments/export/csv', async (req, res) => {
-    if (!(req.session as any)?.isAdmin) {
+    if (!isAdminAuth(req)) {
       return res.status(401).json({ message: "Non autorisé" });
     }
     try {
@@ -645,7 +657,7 @@ export async function registerRoutes(
   });
 
   app.delete('/api/availability/:id', async (req, res) => {
-    if (!(req.session as any)?.isAdmin) {
+    if (!isAdminAuth(req)) {
       return res.status(401).json({ message: "Non autorisé" });
     }
     try {
