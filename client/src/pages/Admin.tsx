@@ -1148,9 +1148,17 @@ function adminAuthHeader(): Record<string, string> {
 }
 
 export default function Admin() {
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    () => sessionStorage.getItem("admin_auth") === "1"
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    // Require both the auth flag AND the token — if token is missing,
+    // the user logged in before token-storage was added. Force re-login.
+    const hasAuth = sessionStorage.getItem("admin_auth") === "1";
+    const hasToken = !!sessionStorage.getItem("admin_token");
+    if (hasAuth && !hasToken) {
+      sessionStorage.removeItem("admin_auth");
+      return false;
+    }
+    return hasAuth && hasToken;
+  });
 
   function handleLogout() {
     sessionStorage.removeItem("admin_auth");
