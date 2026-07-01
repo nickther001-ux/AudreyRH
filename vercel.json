@@ -1,8 +1,16 @@
 {
-  "buildCommand": "npm install && npx vite build",
-  "outputDirectory": "dist/public",
-  "framework": "vite",
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+  "version": 2,
+  "buildCommand": "npm install && npm run build",
+  "builds": [
+    {
+      "src": "dist/index.cjs",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/index.cjs"
+    }
   ]
 }
