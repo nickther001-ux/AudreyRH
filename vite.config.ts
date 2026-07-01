@@ -5,20 +5,19 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const clientDir = path.resolve(__dirname, "client");
 
 export default defineConfig({
   plugins: [react()],
+  root: clientDir,
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "client/src"),
+      "@": path.resolve(clientDir, "src"),
       "@shared": path.resolve(__dirname, "shared"),
       "@assets": path.resolve(__dirname, "attached_assets"),
     },
   },
   build: {
-    rollupOptions: {
-      input: path.resolve(__dirname, "client/index.html"),
-    },
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
   },
