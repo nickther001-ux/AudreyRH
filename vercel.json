@@ -1,9 +1,14 @@
 {
-  "redirects": [
+  "buildCommand": "npm install && npm run build",
+  "outputDirectory": "dist/public",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://cria-connect.replit.app/api/:path*"
+    },
     {
       "source": "/(.*)",
-      "destination": "https://cria-connect.replit.app/$1",
-      "permanent": false
+      "destination": "/index.html"
     }
   ]
 }
