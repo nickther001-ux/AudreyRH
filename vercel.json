@@ -1,7 +1,6 @@
 {
   "buildCommand": "npm install && npx vite build --config vite.config.ts",
   "outputDirectory": "dist/public",
-  "framework": "vite",
   "rewrites": [
     {
       "source": "/api/:path*",
