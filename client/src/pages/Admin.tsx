@@ -213,7 +213,7 @@ function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
-        credentials: "include",
+        
       });
       if (res.ok) {
         sessionStorage.setItem("admin_auth", "1");
@@ -776,7 +776,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
       const res = await fetch(`${API_BASE}/api/availability`, {
         method: "POST",
         headers: { "Content-Type": "application/json", ...adminAuthHeader() },
-        credentials: "include",
+        
         body: JSON.stringify(payload),
       });
       const json = await res.json().catch(() => null);
@@ -855,7 +855,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
                 onClick={async () => {
                   const res = await fetch(`${API_BASE}/api/admin/appointments/export/csv`, {
                     headers: adminAuthHeader(),
-                    credentials: "include",
+                    
                   });
                   if (!res.ok) return;
                   const blob = await res.blob();

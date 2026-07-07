@@ -307,7 +307,9 @@ export async function registerRoutes(
     if (!password || password !== adminPassword) {
       return res.status(401).json({ message: 'Mot de passe incorrect' });
     }
+    // Session kept for backward compat
     (req.session as any).isAdmin = true;
+    res.json({ success: true, token: process.env.ADMIN_PASSWORD });
     res.json({ success: true });
   });
 
