@@ -13,13 +13,17 @@ import { runMigrationsOnStartup } from "./migrations";
 const app = express();
 app.use((req: any, res: any, next: any) => {
   const allowed = ["https://audreyrh.com", "https://www.audreyrh.com", "http://localhost:5173"];
-  const origin = req.headers.origin;
-  if (allowed.includes(origin)) res.setHeader("Access-Control-Allow-Origin", origin);
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
-  if (req.method === "OPTIONS") return res.sendStatus(200);
-  if (req.method === "OPTIONS") return res.sendStatus(200);
+  const origin = req.headers.origin as string;
+  if (allowed.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Credentials", "true");
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+  }
+  if (req.method === "OPTIONS") {
+    res.status(200).end();
+    return;
+  }
   next();
 });
 const httpServer = createServer(app);
