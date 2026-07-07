@@ -44,7 +44,7 @@ export default function Contact() {
     setLoading(true);
     setSubmissionError(false);
     try {
-      const res = await fetch(`${API_BASE}/api/contact-simple", {
+      const res = await fetch(`${API_BASE}/api/contact-simple`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
