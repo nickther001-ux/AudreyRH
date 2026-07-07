@@ -1,3 +1,4 @@
+import { API_BASE } from "@/lib/api";
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
 import { MessageCircle, X, Send, Loader2 } from "lucide-react";
@@ -183,7 +184,7 @@ export function AIChatWidget() {
       .map((m) => `${m.role === "user" ? "Visiteur" : "Assistante"}: ${m.content}`)
       .join("\n");
     try {
-      await fetch("/api/chat/lead", {
+      await fetch(`${API_BASE}/api/chat/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, summary, segment: detectedSegment, primary_goal: detectedGoal }),
