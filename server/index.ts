@@ -12,7 +12,7 @@ import { runMigrationsOnStartup } from "./migrations";
 
 const app = express();
 app.use((req: any, res: any, next: any) => {
-  const allowed = ["https://audreyrh.com", "http://localhost:5173"];
+  const allowed = ["https://audreyrh.com", "https://www.audreyrh.com", "http://localhost:5173"];
   const origin = req.headers.origin;
   if (allowed.includes(origin)) res.setHeader("Access-Control-Allow-Origin", origin);
   res.setHeader("Access-Control-Allow-Credentials", "true");
