@@ -11,7 +11,16 @@ import { processBooking } from "./booking";
 import { runMigrationsOnStartup } from "./migrations";
 
 const app = express();
-app.use(require("cors")({ origin: ["https://audreyrh.com", "http://localhost:5173"], credentials: true }));
+app.use((req: any, res: any, next: any) => {
+  const allowed = ["https://audreyrh.com", "http://localhost:5173"];
+  const origin = req.headers.origin;
+  if (allowed.includes(origin)) res.setHeader("Access-Control-Allow-Origin", origin);
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,PATCH,DELETE,OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
+  if (req.method === "OPTIONS") return res.sendStatus(200);
+  next();
+});
 const httpServer = createServer(app);
 
 declare module "http" {
