@@ -1,3 +1,4 @@
+import { API_BASE } from "@/lib/api";
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { AnimatePresence, motion } from "framer-motion";
@@ -154,7 +155,7 @@ export default function Grants() {
     if (!grantValid) return;
     setGrantLoading(true);
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch(`${API_BASE}/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(grantForm),

@@ -1,3 +1,4 @@
+import { API_BASE } from "@/lib/api";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
@@ -289,7 +290,7 @@ export default function Book() {
       if (emailParam) {
         setConfirmedEmail(decodeURIComponent(emailParam));
       } else if (sessionId) {
-        fetch(`/api/stripe/session-email?sessionId=${encodeURIComponent(sessionId)}`)
+        fetch(`${API_BASE}/api/stripe/session-email?sessionId=${encodeURIComponent(sessionId)}`)
           .then((r) => r.json())
           .then((data) => { if (data.email) setConfirmedEmail(data.email); })
           .catch(console.error);
@@ -299,7 +300,7 @@ export default function Book() {
       window.history.replaceState({}, "", "/book");
 
       if (appointmentId) {
-        fetch(`/api/appointments/${appointmentId}/confirm`, { method: "POST" })
+        fetch(`${API_BASE}/api/appointments/${appointmentId}/confirm`, { method: "POST" })
           .then((r) => r.json())
           .catch(console.error);
       }
@@ -308,7 +309,7 @@ export default function Book() {
       const cancelledAppointmentId = params.get("appointmentId");
       if (cancelledAppointmentId) {
         // Release the locked slot so the time becomes available again
-        fetch(`/api/appointments/${cancelledAppointmentId}/cancel`, { method: "POST" })
+        fetch(`${API_BASE}/api/appointments/${cancelledAppointmentId}/cancel`, { method: "POST" })
           .catch(console.error);
       }
       setCanceled(true);

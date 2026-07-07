@@ -11,6 +11,7 @@ import { processBooking } from "./booking";
 import { runMigrationsOnStartup } from "./migrations";
 
 const app = express();
+app.use(require("cors")({ origin: ["https://audreyrh.com", "http://localhost:5173"], credentials: true }));
 const httpServer = createServer(app);
 
 declare module "http" {

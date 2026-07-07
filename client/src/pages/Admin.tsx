@@ -1,3 +1,4 @@
+import { API_BASE } from "@/lib/api";
 import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -208,7 +209,7 @@ function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
     setError("");
     setIsPending(true);
     try {
-      const res = await fetch("/api/admin/login", {
+      const res = await fetch(`${API_BASE}/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
@@ -772,7 +773,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
 
       // ── 2. Call the API — strict error check ──
       setIsCreating(true);
-      const res = await fetch("/api/availability", {
+      const res = await fetch(`${API_BASE}/api/availability", {
         method: "POST",
         headers: { "Content-Type": "application/json", ...adminAuthHeader() },
         credentials: "include",
@@ -852,7 +853,7 @@ function AdminDashboard({ onLogout }: { onLogout: () => void }) {
               </div>
               <button
                 onClick={async () => {
-                  const res = await fetch("/api/admin/appointments/export/csv", {
+                  const res = await fetch(`${API_BASE}/api/admin/appointments/export/csv", {
                     headers: adminAuthHeader(),
                     credentials: "include",
                   });
