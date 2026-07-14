@@ -469,7 +469,7 @@ const translations = {
     "individuals.guide.interview.s9.title": "Montrez votre connaissance du marché québécois",
     "individuals.guide.interview.s9.desc": "Mentionnez des réalités locales : conventions collectives, Loi sur les normes du travail, culture d'équipe horizontale. Cela rassure les employeurs sur votre intégration réelle.",
 
-    "nav.individuals": "Particuliers",
+    "nav.individuals": "Subventions",
     "nav.business": "Entreprises",
     "nav.grants": "Solutions pour candidats RH",
     "nav.faq": "FAQ",
