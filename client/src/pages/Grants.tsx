@@ -552,19 +552,19 @@ export default function Grants() {
             variants={{ hidden: {}, show: { transition: { staggerChildren: 0.13, delayChildren: 0.2 } } }}
           >
             <motion.p className="text-[11px] text-white/40 uppercase tracking-[0.22em] mb-8" variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}>
-              {isFr ? "Solutions pour candidats RH" : "HR Candidate Solutions"}
+              {isFr ? "Subvention et Financement" : "Grants & Funding"}
             </motion.p>
             <motion.h1
               className="text-[clamp(3rem,8vw,6rem)] font-bold leading-[0.95] tracking-tighter text-white mb-8 max-w-4xl"
               variants={{ hidden: { opacity: 0, y: 28 }, show: { opacity: 1, y: 0, transition: { duration: 0.75, ease: [0.25,0.1,0.25,1] } } }}
               data-testid="text-grants-hero-title"
             >
-              {isFr ? "Solutions pour" : "Solutions for"}{" "}
+              {isFr ? "Le financement qui" : "The funding that"}{" "}
               <span key={wordIndex} className="inline-block text-[#93c5fd] animate-in fade-in slide-in-from-bottom-2 duration-300">
                 {rotatingWords[wordIndex]}
               </span>
               <br />
-              {isFr ? "candidats RH" : "HR candidates"}<span className="text-orange-400">.</span>
+              {isFr ? "votre projet" : "your project"}<span className="text-orange-400">.</span>
             </motion.h1>
             <motion.p className="text-white/60 text-lg max-w-xl leading-relaxed mb-12" variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0, transition: { duration: 0.65 } } }}>
               {isFr ? "AudreyRH identifie les subventions auxquelles vous êtes admissible et vous accompagne jusqu'à l'obtention du financement." : "AudreyRH identifies the grants you qualify for and guides you all the way to securing the funding."}
