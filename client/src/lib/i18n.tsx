@@ -471,7 +471,7 @@ const translations = {
 
     "nav.individuals": "Particuliers",
     "nav.business": "Entreprises",
-    "nav.grants": "Subventions",
+    "nav.grants": "Solutions pour candidats RH",
     "nav.faq": "FAQ",
     "nav.contact": "Contact",
 

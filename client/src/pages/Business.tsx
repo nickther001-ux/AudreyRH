@@ -364,7 +364,7 @@ export default function Business() {
                 <p className="text-muted-foreground text-[12px] leading-relaxed mb-4">
                   {t("business.grants.text" as any)}
                 </p>
-                <Link href="/grants" data-testid="grants-bubble-cta">
+                <Link href="/solutions-rh" data-testid="grants-bubble-cta">
                   <Button
                     size="sm"
                     className="w-full rounded-xl bg-[#1e3a5f] hover:bg-[#1e3a5f]/90 text-white text-[12px] font-semibold h-9"

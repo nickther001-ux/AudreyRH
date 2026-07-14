@@ -126,7 +126,7 @@ function Router() {
         <Route path="/book" component={Book} />
         <Route path="/admin" component={Admin} />
         <Route path="/terms" component={Terms} />
-        <Route path="/grants" component={Grants} />
+        <Route path="/solutions-rh" component={Grants} />
         <Route path="/faq" component={Faq} />
         <Route path="/contact" component={Contact} />
         <Route component={NotFound} />
