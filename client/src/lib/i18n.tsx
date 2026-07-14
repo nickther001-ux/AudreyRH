@@ -763,7 +763,7 @@ const translations = {
     "grants.categories.subtitle": "Des opportunités ciblées pour chaque type d'entrepreneur et créateur au Canada",
 
     "grants.artists.title": "Artistes & Créateurs",
-    "grants.artists.description": "Subventions dédiées aux artistes souhaitant développer leur pratique créative, constituer un portfolio et lancer des initiatives culturelles sur le marché canadien.",
+    "grants.artists.description": "Subventions dédiées aux artistes souhaitant développer leur pratique créative, constituer un portfolio et lancer des initiatives culturelles sur le marché canadien ou international.",
     "grants.artists.feature1": "Subventions pour projets créatifs multiculturels",
     "grants.artists.feature2": "Financement de portfolio et exposition",
     "grants.artists.feature3": "Résidences artistiques et bourses culturelles",
