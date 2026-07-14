@@ -1333,7 +1333,7 @@ const translations = {
     "individuals.guide.interview.s9.title": "Show your knowledge of the Quebec market",
     "individuals.guide.interview.s9.desc": "Reference local realities: collective agreements, the Act Respecting Labour Standards, flat team culture. This reassures employers about your genuine integration.",
 
-    "nav.individuals": "Individuals",
+    "nav.individuals": "Grants",
     "nav.business": "Businesses",
     "nav.grants": "Grants",
     "nav.faq": "FAQ",
