@@ -90,7 +90,7 @@ export default function Home() {
               variants={panelContent}
               className="text-[clamp(2.4rem,5vw,4.5rem)] font-bold text-white leading-[0.95] tracking-tighter mb-5"
             >
-              {isFr ? "Solutions pour" : "Solutions for"}{" "}
+              {isFr ? "Le financement qui" : "The funding that"}{" "}
               <span
                 key={wordIndex}
                 className="inline-block text-[#93c5fd] animate-in fade-in slide-in-from-bottom-2 duration-300"
@@ -98,7 +98,7 @@ export default function Home() {
                 {rotatingWords[wordIndex]}
               </span>
               <br />
-              {isFr ? "candidats RH" : "HR candidates"}<span className="text-orange-400">.</span>
+              {isFr ? "votre projet" : "your project"}<span className="text-orange-400">.</span>
             </motion.h2>
 
             <motion.p
