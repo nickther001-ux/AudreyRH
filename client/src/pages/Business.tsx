@@ -20,7 +20,7 @@ import svcComplianceImg from "@assets/stock_images/compliance_labour.jpg";
 
 const services = [
   { icon: Users,       key: "talent",     photo: svcTalentImg,     points: 4 },
-  { icon: TrendingUp,  key: "strategy",   photo: svcStrategyImg,   points: 3 },
+  { icon: TrendingUp,  key: "strategy",   photo: svcStrategyImg,   points: 4 },
   { icon: DollarSign,  key: "grants",     photo: svcGrantsImg,     points: 3 },
   { icon: ShieldCheck, key: "compliance", photo: svcComplianceImg, points: 3 },
 ];
