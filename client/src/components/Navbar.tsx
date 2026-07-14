@@ -18,9 +18,8 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    { href: "/individuals", label: t("nav.individuals") },
+    { href: "/solutions-rh", label: t("nav.individuals") },
     { href: "/business",   label: t("nav.business") },
-    { href: "/solutions-rh",     label: t("nav.grants") },
     { href: "/faq",        label: t("nav.faq") },
     { href: "/contact",    label: t("nav.contact") },
   ];

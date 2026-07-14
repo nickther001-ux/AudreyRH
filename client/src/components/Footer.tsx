@@ -55,9 +55,8 @@ export function Footer() {
             <ul className="space-y-3">
               {[
                 { href: "/",            label: t("nav.home"),        testid: "link-footer-home" },
-                { href: "/individuals", label: t("nav.individuals"), testid: "link-footer-individuals" },
+                { href: "/solutions-rh", label: t("nav.individuals"), testid: "link-footer-individuals" },
                 { href: "/business",    label: t("nav.business"),    testid: "link-footer-business" },
-                { href: "/solutions-rh",      label: t("nav.grants"),      testid: "link-footer-grants" },
                 { href: "/contact",     label: t("nav.contact"),     testid: "link-footer-contact" },
                 { href: "/book",        label: t("nav.book"),        testid: "link-footer-book" },
                 { href: "/terms",       label: t("footer.terms"),    testid: "link-footer-terms" },

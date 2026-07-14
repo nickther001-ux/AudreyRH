@@ -29,7 +29,7 @@ export default function Home() {
 
         {/* ── PARTICULIERS panel ── */}
         <Link
-          href="/individuals"
+          href="/solutions-rh"
           className="group relative flex-1 flex flex-col justify-end p-10 lg:p-16 overflow-hidden cursor-pointer min-h-[50vh] lg:min-h-0"
           data-testid="link-portal-individuals"
         >
