@@ -1,10 +1,12 @@
-import { Link } from "wouter";
-import { ArrowRight, Users, Building2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "wouter";
+import { ArrowRight, Building2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n";
 import { Navbar } from "@/components/Navbar";
-import particuliersPhoto from "@assets/stock_images/particuliers_hero_portrait.png";
+import { Button } from "@/components/ui/button";
 
+const SOLUTIONS_BG = "https://images.unsplash.com/photo-1565372195458-9de0b320ef04?w=1600&q=80";
 const BUSINESS_PHOTO = "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80";
 
 const panelContent = {
@@ -18,7 +20,21 @@ const stagger = {
 };
 
 export default function Home() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isFr = language === "fr";
+  const [, navigate] = useLocation();
+
+  const rotatingWords = isFr
+    ? ["accélère", "propulse", "transforme"]
+    : ["accelerates", "catapults", "transforms"];
+
+  const [wordIndex, setWordIndex] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setWordIndex((i) => (i + 1) % rotatingWords.length);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, [rotatingWords.length]);
 
   return (
     <div className="min-h-screen flex flex-col bg-foreground">
@@ -27,19 +43,19 @@ export default function Home() {
       {/* ── Portal: two full-height panels ── */}
       <div className="flex-1 flex flex-col lg:flex-row" style={{ minHeight: "calc(100vh - 60px)" }}>
 
-        {/* ── PARTICULIERS panel ── */}
-        <Link
-          href="/solutions-rh"
+        {/* ── SOLUTIONS POUR CANDIDATS RH panel ── */}
+        <div
+          onClick={() => navigate("/solutions-rh")}
           className="group relative flex-1 flex flex-col justify-end p-10 lg:p-16 overflow-hidden cursor-pointer min-h-[50vh] lg:min-h-0"
           data-testid="link-portal-individuals"
         >
-          {/* Close-up portrait — face centred in frame */}
+          {/* Orange cloudy sky background */}
           <motion.div
             className="absolute inset-0 bg-no-repeat"
             style={{
-              backgroundImage: `url(${particuliersPhoto})`,
+              backgroundImage: `url(${SOLUTIONS_BG})`,
               backgroundSize: "cover",
-              backgroundPosition: "center 15%",
+              backgroundPosition: "center center",
             }}
             initial={{ scale: 1.06 }}
             animate={{ scale: 1 }}
@@ -47,11 +63,11 @@ export default function Home() {
             whileHover={{ scale: 1.03 }}
           />
 
-          {/* Gradient: fully transparent over the face, dark only at the bottom 45% for text */}
+          {/* Dark gradient at bottom for text legibility */}
           <div
             className="absolute inset-0 transition-opacity duration-500"
             style={{
-              background: "linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.55) 35%, rgba(0,0,0,0.05) 60%, rgba(0,0,0,0) 100%)",
+              background: "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.15) 70%, rgba(0,0,0,0) 100%)",
             }}
           />
 
@@ -63,24 +79,60 @@ export default function Home() {
             initial="hidden"
             animate="show"
           >
-            <motion.div variants={panelContent} className="inline-flex items-center gap-2.5 bg-white/15 backdrop-blur-sm border border-white/25 px-4 py-2 mb-8">
-              <Users className="w-4 h-4 text-white" />
-              <span className="text-white text-[13px] font-semibold uppercase tracking-[0.18em]">{t("portal.individuals.label")}</span>
-            </motion.div>
-            <motion.h2 variants={panelContent} className="text-[clamp(2.4rem,5vw,4.5rem)] font-bold text-white leading-[1] tracking-tighter mb-5">
-              {t("portal.individuals.title")}
-            </motion.h2>
-            <motion.p variants={panelContent} className="text-white/80 text-[15px] leading-relaxed max-w-xs mb-10">
-              {t("portal.individuals.desc")}
+            <motion.p
+              variants={panelContent}
+              className="text-[11px] text-white/50 uppercase tracking-[0.22em] mb-6"
+            >
+              {isFr ? "Solutions pour candidats RH" : "HR Candidate Solutions"}
             </motion.p>
-            <motion.div variants={panelContent} className="inline-flex items-center gap-3 text-white font-semibold text-[13px] uppercase tracking-wider border-b border-white/40 pb-1 group-hover:gap-5 group-hover:border-white transition-all duration-300">
-              {t("portal.individuals.cta")}
-              <ArrowRight className="w-4 h-4" />
+
+            <motion.h2
+              variants={panelContent}
+              className="text-[clamp(2.4rem,5vw,4.5rem)] font-bold text-white leading-[0.95] tracking-tighter mb-5"
+            >
+              {isFr ? "Solutions pour" : "Solutions for"}{" "}
+              <span
+                key={wordIndex}
+                className="inline-block text-[#93c5fd] animate-in fade-in slide-in-from-bottom-2 duration-300"
+              >
+                {rotatingWords[wordIndex]}
+              </span>
+              <br />
+              {isFr ? "candidats RH" : "HR candidates"}<span className="text-orange-400">.</span>
+            </motion.h2>
+
+            <motion.p
+              variants={panelContent}
+              className="text-white/70 text-[15px] leading-relaxed max-w-xs mb-10"
+            >
+              {isFr
+                ? "AudreyRH identifie les subventions auxquelles vous êtes admissible et vous accompagne jusqu'à l'obtention du financement."
+                : "AudreyRH identifies the grants you qualify for and guides you all the way to securing the funding."}
+            </motion.p>
+
+            <motion.div variants={panelContent} className="flex flex-wrap gap-3">
+              <Link href="/contact" onClick={(e) => e.stopPropagation()} data-testid="link-portal-individuals-apply">
+                <Button
+                  size="sm"
+                  className="bg-white text-foreground hover:bg-white/90 rounded-none px-6 h-10 text-[12px] font-semibold"
+                >
+                  {isFr ? "Soumettre une demande" : "Submit an Application"} <ArrowRight className="ml-2 w-3.5 h-3.5" />
+                </Button>
+              </Link>
+              <Link href="/solutions-rh#categories" onClick={(e) => e.stopPropagation()} data-testid="link-portal-individuals-explore">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="rounded-none px-6 h-10 text-[12px] border-white/30 text-white hover:bg-white/10 bg-transparent"
+                >
+                  {isFr ? "Voir les catégories" : "Explore Categories"}
+                </Button>
+              </Link>
             </motion.div>
           </motion.div>
-        </Link>
+        </div>
 
-        {/* ── ENTREPRISES panel ── */}
+        {/* ── ENTREPRISES panel — unchanged ── */}
         <Link
           href="/business"
           className="group relative flex-1 flex flex-col justify-end p-10 lg:p-16 overflow-hidden cursor-pointer min-h-[50vh] lg:min-h-0"
