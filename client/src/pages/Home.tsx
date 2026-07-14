@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { ArrowRight, Building2 } from "lucide-react";
+import { ArrowRight, Building2, Banknote } from "lucide-react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n";
 import { Navbar } from "@/components/Navbar";
-import { Button } from "@/components/ui/button";
 
 const SOLUTIONS_BG = "https://images.unsplash.com/photo-1565372195458-9de0b320ef04?w=1600&q=80";
 const BUSINESS_PHOTO = "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80";
@@ -115,16 +114,16 @@ export default function Home() {
             initial="hidden"
             animate="show"
           >
-            <motion.p
-              variants={panelContent}
-              className="text-[11px] text-white/50 uppercase tracking-[0.22em] mb-6"
-            >
-              {isFr ? "Solutions pour candidats RH" : "HR Candidate Solutions"}
-            </motion.p>
+            <motion.div variants={panelContent} className="inline-flex items-center gap-2.5 bg-white/15 backdrop-blur-sm border border-white/25 px-4 py-2 mb-8">
+              <Banknote className="w-4 h-4 text-white" />
+              <span className="text-white text-[13px] font-semibold uppercase tracking-[0.18em]">
+                {isFr ? "Subvention et Financement" : "Grants & Funding"}
+              </span>
+            </motion.div>
 
             <motion.h2
               variants={panelContent}
-              className="text-[clamp(2.4rem,5vw,4.5rem)] font-bold text-white leading-[0.95] tracking-tighter mb-5"
+              className="text-[clamp(2.4rem,5vw,4.5rem)] font-bold text-white leading-[1] tracking-tighter mb-5"
             >
               {isFr ? "Le financement qui" : "The funding that"}{" "}
               <span
@@ -137,33 +136,15 @@ export default function Home() {
               {isFr ? "votre projet" : "your project"}<span className="text-orange-400">.</span>
             </motion.h2>
 
-            <motion.p
-              variants={panelContent}
-              className="text-white/70 text-[15px] leading-relaxed max-w-xs mb-10"
-            >
+            <motion.p variants={panelContent} className="text-white/75 text-[15px] leading-relaxed max-w-xs mb-10">
               {isFr
                 ? "AudreyRH identifie les subventions auxquelles vous êtes admissible et vous accompagne jusqu'à l'obtention du financement."
                 : "AudreyRH identifies the grants you qualify for and guides you all the way to securing the funding."}
             </motion.p>
 
-            <motion.div variants={panelContent} className="flex flex-wrap gap-3">
-              <Link href="/contact" onClick={(e) => e.stopPropagation()} data-testid="link-portal-individuals-apply">
-                <Button
-                  size="sm"
-                  className="bg-white text-foreground hover:bg-white/90 rounded-none px-6 h-10 text-[12px] font-semibold"
-                >
-                  {isFr ? "Soumettre une demande" : "Submit an Application"} <ArrowRight className="ml-2 w-3.5 h-3.5" />
-                </Button>
-              </Link>
-              <Link href="/solutions-rh#categories" onClick={(e) => e.stopPropagation()} data-testid="link-portal-individuals-explore">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="rounded-none px-6 h-10 text-[12px] border-white/30 text-white hover:bg-white/10 bg-transparent"
-                >
-                  {isFr ? "Voir les catégories" : "Explore Categories"}
-                </Button>
-              </Link>
+            <motion.div variants={panelContent} className="inline-flex items-center gap-3 text-white font-semibold text-[13px] uppercase tracking-wider border-b border-white/40 pb-1 group-hover:gap-5 group-hover:border-white transition-all duration-300">
+              {isFr ? "Accéder aux subventions" : "Explore Funding"}
+              <ArrowRight className="w-4 h-4" />
             </motion.div>
           </motion.div>
         </div>
