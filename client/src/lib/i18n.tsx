@@ -872,7 +872,7 @@ const translations = {
 
     "portal.business.label": "Pour les entreprises",
     "portal.business.title": "Accompagnement stratégique pour entreprises",
-    "portal.business.desc": "Acquisition de talents, stratégie RH, planification stratégique gouvernementale et conformité — des solutions sur mesure pour votre croissance.",
+    "portal.business.desc": "Acquisition de talents, stratégie RH, planification stratégique, conformité, gestion de la rémunération globale et bien plus. Des solutions sur mesure pour votre croissance.",
     "portal.business.cta": "Accéder à l'espace Entreprises",
   },
   en: {
