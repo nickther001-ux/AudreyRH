@@ -39,6 +39,7 @@ import Contact from "@/pages/Contact";
 import Individuals from "@/pages/Individuals";
 import Business from "@/pages/Business";
 import Faq from "@/pages/Faq";
+import Essentials from "@/pages/Essentials";
 
 function useScrollReveal() {
   const [location] = useLocation();
@@ -127,6 +128,7 @@ function Router() {
         <Route path="/admin" component={Admin} />
         <Route path="/terms" component={Terms} />
         <Route path="/solutions-rh" component={Grants} />
+        <Route path="/essentiels" component={Essentials} />
         <Route path="/faq" component={Faq} />
         <Route path="/contact" component={Contact} />
         <Route component={NotFound} />

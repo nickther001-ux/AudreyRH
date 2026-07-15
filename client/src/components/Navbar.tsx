@@ -20,6 +20,7 @@ export function Navbar() {
   const navLinks = [
     { href: "/business",     label: t("nav.business") },
     { href: "/solutions-rh", label: t("nav.individuals") },
+    { href: "/essentiels",   label: t("nav.essentials") },
     { href: "/faq",        label: t("nav.faq") },
     { href: "/contact",    label: t("nav.contact") },
   ];

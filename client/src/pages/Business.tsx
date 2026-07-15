@@ -26,10 +26,10 @@ const services = [
 ];
 
 const WHO_CARDS = [
-  { type: "sme",       Icon: Factory,   image: whoSmeBg },
-  { type: "startup",   Icon: Rocket,    image: whoStartupBg },
-  { type: "corporate", Icon: Building2, image: whoCorporateBg },
-  { type: "nonprofit", Icon: Heart,     image: whoNonprofitBg },
+  { type: "sme",       image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80" },
+  { type: "startup",   image: whoStartupBg },
+  { type: "corporate", image: whoCorporateBg },
+  { type: "nonprofit", image: whoNonprofitBg },
 ];
 
 const reasons = [
@@ -216,7 +216,7 @@ export default function Business() {
             </FadeUp>
 
             <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/8">
-              {WHO_CARDS.map(({ type, Icon, image }) => (
+              {WHO_CARDS.map(({ type, image }) => (
                 <StaggerItem key={type} variant="fadeUp" className="relative overflow-hidden group" data-testid={`card-business-who-${type}`}>
                   {/* Background photo */}
                   <img
@@ -228,9 +228,6 @@ export default function Business() {
                   <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(5,10,25,0.3) 0%, rgba(5,10,25,0.75) 45%, rgba(5,10,25,0.97) 100%)" }} />
                   {/* Content pinned to bottom */}
                   <div className="relative z-10 p-10 flex flex-col justify-end h-full min-h-[540px]">
-                    <div className="w-10 h-10 bg-white/15 flex items-center justify-center mb-5">
-                      <Icon className="w-5 h-5 text-white" />
-                    </div>
                     <h3 className="font-bold text-white text-xl mb-3">{t(`business.who.${type}.title` as any)}</h3>
                     <p className="text-white/85 text-[14px] leading-relaxed mb-5">{t(`business.who.${type}.desc` as any)}</p>
                     <ul className="space-y-2.5 border-t border-white/20 pt-4">
