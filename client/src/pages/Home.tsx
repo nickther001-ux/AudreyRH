@@ -39,26 +39,33 @@ export default function Home() {
     <div className="min-h-screen flex flex-col bg-foreground">
       <Navbar />
 
-      {/* ── Portal: two full-height panels ── */}
-      <div className="flex-1 flex flex-col lg:flex-row" style={{ minHeight: "calc(100vh - 60px)" }}>
+      {/* ── Portal: unified background, two panels ── */}
+      <motion.div
+        className="flex-1 relative flex flex-col lg:flex-row overflow-hidden"
+        style={{ minHeight: "calc(100vh - 60px)" }}
+      >
+        {/* Single shared background */}
+        <motion.div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url(${BUSINESS_PHOTO})` }}
+          initial={{ scale: 1.06 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 1.6, ease: [0.25, 0.1, 0.25, 1] }}
+        />
+        {/* Unified dark overlay */}
+        <div className="absolute inset-0 bg-black/55" />
 
         {/* ── ENTREPRISES panel — LEFT ── */}
         <Link
           href="/business"
-          className="group relative flex-1 flex flex-col justify-end p-10 lg:p-16 overflow-hidden cursor-pointer min-h-[50vh] lg:min-h-0"
+          className="group relative flex-1 flex flex-col justify-end p-10 lg:p-16 cursor-pointer min-h-[50vh] lg:min-h-0 z-10"
           data-testid="link-portal-business"
         >
-          <motion.div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${BUSINESS_PHOTO})` }}
-            initial={{ scale: 1.08 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 1.4, ease: [0.25, 0.1, 0.25, 1], delay: 0.1 }}
-            whileHover={{ scale: 1.04 }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-black/20 group-hover:from-black/70 transition-all duration-500" />
+          {/* per-panel bottom gradient for legibility */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent group-hover:from-black/55 transition-all duration-500" />
 
-          <div className="hidden lg:block absolute top-0 right-0 w-px h-full bg-white/10 z-10" />
+          {/* vertical divider */}
+          <div className="hidden lg:block absolute top-0 right-0 w-px h-full bg-white/15 z-10" />
 
           <motion.div
             className="relative z-10"
@@ -83,26 +90,13 @@ export default function Home() {
           </motion.div>
         </Link>
 
-        {/* ── SOLUTIONS POUR CANDIDATS RH panel — RIGHT ── */}
+        {/* ── FINANCEMENT ET SUBVENTION panel — RIGHT ── */}
         <div
           onClick={() => navigate("/solutions-rh")}
-          className="group relative flex-1 flex flex-col justify-end p-10 lg:p-16 overflow-hidden cursor-pointer min-h-[50vh] lg:min-h-0"
+          className="group relative flex-1 flex flex-col justify-end p-10 lg:p-16 cursor-pointer min-h-[50vh] lg:min-h-0 z-10"
           data-testid="link-portal-individuals"
         >
-          <motion.div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: `url(${BUSINESS_PHOTO})` }}
-            initial={{ scale: 1.06 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 1.4, ease: [0.25, 0.1, 0.25, 1] }}
-            whileHover={{ scale: 1.03 }}
-          />
-          <div
-            className="absolute inset-0 transition-opacity duration-500"
-            style={{
-              background: "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.15) 70%, rgba(0,0,0,0) 100%)",
-            }}
-          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent group-hover:from-black/55 transition-all duration-500" />
 
           <motion.div
             className="relative z-10"
@@ -138,7 +132,7 @@ export default function Home() {
             </motion.div>
           </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {/* ── Footer strip ── */}
       <motion.div
