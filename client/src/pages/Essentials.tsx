@@ -78,9 +78,10 @@ export default function Essentials() {
         {/* HERO */}
         <section className="bg-foreground min-h-[85vh] flex flex-col justify-end pb-24 pt-40 overflow-hidden relative" data-testid="section-essentials-hero">
           <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-12"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
             style={{ backgroundImage: "url(https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&q=80)" }}
           />
+          <div className="absolute inset-0 bg-black/60" />
           <motion.div
             className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 w-full"
             initial="hidden" animate="show"
