@@ -26,10 +26,10 @@ const services = [
 ];
 
 const WHO_CARDS = [
-  { type: "sme",       image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80" },
-  { type: "startup",   image: whoStartupBg },
-  { type: "corporate", image: whoCorporateBg },
-  { type: "nonprofit", image: whoNonprofitBg },
+  { type: "sme",       image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80", titleOnly: true },
+  { type: "startup",   image: whoStartupBg,    titleOnly: false },
+  { type: "corporate", image: whoCorporateBg,  titleOnly: false },
+  { type: "nonprofit", image: whoNonprofitBg,  titleOnly: false },
 ];
 
 const reasons = [
@@ -216,28 +216,31 @@ export default function Business() {
             </FadeUp>
 
             <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/8">
-              {WHO_CARDS.map(({ type, image }) => (
+              {WHO_CARDS.map(({ type, image, titleOnly }) => (
                 <StaggerItem key={type} variant="fadeUp" className="relative overflow-hidden group" data-testid={`card-business-who-${type}`}>
-                  {/* Background photo */}
                   <img
                     src={image}
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  {/* Gradient — clear at top, very dark at bottom for text */}
                   <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(5,10,25,0.3) 0%, rgba(5,10,25,0.75) 45%, rgba(5,10,25,0.97) 100%)" }} />
-                  {/* Content pinned to bottom */}
-                  <div className="relative z-10 p-10 flex flex-col justify-end h-full min-h-[540px]">
-                    <h3 className="font-bold text-white text-xl mb-3">{t(`business.who.${type}.title` as any)}</h3>
-                    <p className="text-white/85 text-[14px] leading-relaxed mb-5">{t(`business.who.${type}.desc` as any)}</p>
-                    <ul className="space-y-2.5 border-t border-white/20 pt-4">
-                      {[1, 2, 3].map((i) => (
-                        <li key={i} className="flex items-start gap-2.5 text-[13px] text-white/80">
-                          <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#93c5fd] mt-1.5" />
-                          {t(`business.who.${type}.point${i}` as any)}
-                        </li>
-                      ))}
-                    </ul>
+                  <div className={`relative z-10 p-10 flex flex-col h-full min-h-[540px] ${titleOnly ? "justify-center items-center text-center" : "justify-end"}`}>
+                    <h3 className={`font-bold text-white mb-3 ${titleOnly ? "text-[clamp(2.4rem,5vw,4rem)] leading-tight tracking-tighter" : "text-xl"}`}>
+                      {t(`business.who.${type}.title` as any)}
+                    </h3>
+                    {!titleOnly && (
+                      <>
+                        <p className="text-white/85 text-[14px] leading-relaxed mb-5">{t(`business.who.${type}.desc` as any)}</p>
+                        <ul className="space-y-2.5 border-t border-white/20 pt-4">
+                          {[1, 2, 3].map((i) => (
+                            <li key={i} className="flex items-start gap-2.5 text-[13px] text-white/80">
+                              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#93c5fd] mt-1.5" />
+                              {t(`business.who.${type}.point${i}` as any)}
+                            </li>
+                          ))}
+                        </ul>
+                      </>
+                    )}
                   </div>
                 </StaggerItem>
               ))}
