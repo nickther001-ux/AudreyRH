@@ -117,7 +117,7 @@ export default function Home() {
             <motion.div variants={panelContent} className="inline-flex items-center gap-2.5 bg-white/15 backdrop-blur-sm border border-white/25 px-4 py-2 mb-8">
               <Banknote className="w-4 h-4 text-white" />
               <span className="text-white text-[13px] font-semibold uppercase tracking-[0.18em]">
-                {isFr ? "Subvention et Financement" : "Grants & Funding"}
+                {isFr ? "Ingénierie Financière" : "Financial Engineering"}
               </span>
             </motion.div>
 
