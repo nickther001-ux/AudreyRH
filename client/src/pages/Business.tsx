@@ -217,17 +217,24 @@ export default function Business() {
 
             <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/8">
               {WHO_CARDS.map(({ type, image, titleOnly }) => (
-                <StaggerItem key={type} variant="fadeUp" className="relative overflow-hidden group" data-testid={`card-business-who-${type}`}>
+                <StaggerItem key={type} variant="fadeUp" className="relative overflow-hidden group cursor-pointer" data-testid={`card-business-who-${type}`}>
+                  {/* Full-card clickable overlay */}
+                  <Link href="/solutions-rh" className="absolute inset-0 z-20" aria-label={t(`business.who.${type}.title` as any)} />
                   <img
                     src={image}
                     alt=""
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(5,10,25,0.3) 0%, rgba(5,10,25,0.75) 45%, rgba(5,10,25,0.97) 100%)" }} />
+                  <div className="absolute inset-0 transition-all duration-500" style={{ background: "linear-gradient(to bottom, rgba(5,10,25,0.3) 0%, rgba(5,10,25,0.75) 45%, rgba(5,10,25,0.97) 100%)" }} />
                   <div className={`relative z-10 p-10 flex flex-col h-full min-h-[540px] ${titleOnly ? "justify-center items-center text-center" : "justify-end"}`}>
-                    <h3 className={`font-bold text-white mb-3 ${titleOnly ? "text-[clamp(2.4rem,5vw,4rem)] leading-tight tracking-tighter" : "text-xl"}`}>
+                    <h3 className={`font-bold text-white mb-3 transition-opacity duration-300 group-hover:opacity-90 ${titleOnly ? "text-[clamp(2.4rem,5vw,4rem)] leading-tight tracking-tighter" : "text-xl"}`}>
                       {t(`business.who.${type}.title` as any)}
                     </h3>
+                    {titleOnly && (
+                      <p className="text-white/50 text-[13px] uppercase tracking-widest mt-2 group-hover:text-white/80 transition-colors duration-300">
+                        {language === "fr" ? "Vérifier l'admissibilité →" : "Check eligibility →"}
+                      </p>
+                    )}
                     {!titleOnly && (
                       <>
                         <p className="text-white/85 text-[14px] leading-relaxed mb-5">{t(`business.who.${type}.desc` as any)}</p>
