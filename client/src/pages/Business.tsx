@@ -27,9 +27,9 @@ const services = [
 
 const WHO_CARDS = [
   { type: "sme",       image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80", titleOnly: true },
-  { type: "startup",   image: whoStartupBg,    titleOnly: false },
-  { type: "corporate", image: whoCorporateBg,  titleOnly: false },
-  { type: "nonprofit", image: whoNonprofitBg,  titleOnly: false },
+  { type: "startup",   image: whoStartupBg,    titleOnly: true },
+  { type: "corporate", image: whoCorporateBg,  titleOnly: true },
+  { type: "nonprofit", image: whoNonprofitBg,  titleOnly: true },
 ];
 
 const reasons = [
