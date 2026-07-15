@@ -35,7 +35,7 @@ export function Navbar() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         solid
           ? "bg-white shadow-[0_1px_0_0_hsl(var(--border))]"
-          : "bg-transparent"
+          : "bg-black/30 backdrop-blur-sm"
       )}
       data-testid="navbar"
     >
