@@ -27,7 +27,8 @@ export function Navbar() {
 
   const toggleLanguage = () => setLanguage(language === "fr" ? "en" : "fr");
 
-  const solid = isScrolled;
+  const isHome = location === "/";
+  const solid = isScrolled || !isHome;
 
   return (
     <nav
