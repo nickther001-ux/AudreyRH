@@ -30,7 +30,7 @@ export function Navbar() {
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 bg-white transition-shadow duration-300",
+        "fixed top-0 left-0 right-0 z-50 bg-white/75 backdrop-blur-md transition-shadow duration-300",
         isScrolled ? "shadow-[0_1px_0_0_hsl(var(--border))]" : ""
       )}
       data-testid="navbar"
@@ -112,7 +112,7 @@ export function Navbar() {
 
       {/* Mobile drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 bg-white border-t border-border shadow-lg py-3 flex flex-col animate-in slide-in-from-top-2">
+        <div className="lg:hidden absolute top-full left-0 right-0 bg-white/90 backdrop-blur-md border-t border-border shadow-lg py-3 flex flex-col animate-in slide-in-from-top-2">
           {navLinks.map((link) => (
             <Link
               key={link.href}
