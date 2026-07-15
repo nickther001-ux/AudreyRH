@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/lib/i18n";
 import { Navbar } from "@/components/Navbar";
 
-const BUSINESS_PHOTO  = "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80";
+const BUSINESS_PHOTO  = "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600&q=80";
 const FINANCIAL_PHOTO = "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&q=80";
 
 const item = {
