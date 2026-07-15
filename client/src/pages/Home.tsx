@@ -138,8 +138,8 @@ export default function Home() {
 
             <motion.p variants={panelContent} className="text-white/75 text-[15px] leading-relaxed max-w-xs mb-10">
               {isFr
-                ? "Le financement qui propulse votre projet."
-                : "The funding that propels your project."}
+                ? "Ingénierie Financière"
+                : "Financial Engineering"}
             </motion.p>
 
             <motion.div variants={panelContent} className="inline-flex items-center gap-3 text-white font-semibold text-[13px] uppercase tracking-wider border-b border-white/40 pb-1 group-hover:gap-5 group-hover:border-white transition-all duration-300">
