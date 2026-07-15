@@ -26,10 +26,10 @@ const services = [
 ];
 
 const WHO_CARDS = [
-  { type: "sme",       image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80", titleOnly: true },
-  { type: "startup",   image: whoStartupBg,    titleOnly: true },
-  { type: "corporate", image: whoCorporateBg,  titleOnly: true },
-  { type: "nonprofit", image: whoNonprofitBg,  titleOnly: true },
+  { type: "sme",       image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80", titleOnly: true, diagnostic: "artists" },
+  { type: "startup",   image: whoStartupBg,    titleOnly: true, diagnostic: "entrepreneurs" },
+  { type: "corporate", image: whoCorporateBg,  titleOnly: true, diagnostic: "sme" },
+  { type: "nonprofit", image: whoNonprofitBg,  titleOnly: true, diagnostic: null },
 ];
 
 const reasons = [
@@ -216,10 +216,10 @@ export default function Business() {
             </FadeUp>
 
             <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/8">
-              {WHO_CARDS.map(({ type, image, titleOnly }) => (
+              {WHO_CARDS.map(({ type, image, titleOnly, diagnostic }) => (
                 <StaggerItem key={type} variant="fadeUp" className="relative overflow-hidden group cursor-pointer" data-testid={`card-business-who-${type}`}>
                   {/* Full-card clickable overlay */}
-                  <Link href="/solutions-rh" className="absolute inset-0 z-20" aria-label={t(`business.who.${type}.title` as any)} />
+                  <Link href={diagnostic ? `/solutions-rh?diagnostic=${diagnostic}` : "/solutions-rh"} className="absolute inset-0 z-20" aria-label={t(`business.who.${type}.title` as any)} />
                   <img
                     src={image}
                     alt=""

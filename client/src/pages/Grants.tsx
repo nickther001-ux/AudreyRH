@@ -182,6 +182,14 @@ export default function Grants() {
     setDiagnosticCategory(category); setStep(0); setAnswers([]);
     setShowQuestionnaire(false); setGrantForm(GRANT_EMPTY); setGrantSubmitted(false);
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const d = params.get("diagnostic") as DiagnosticCategory;
+    if (d && ["artists", "entrepreneurs", "sme"].includes(d as string)) {
+      openDiagnostic(d);
+    }
+  }, []);
   const closeDiagnostic = () => {
     setDiagnosticCategory(null);
     setShowQuestionnaire(false); setGrantForm(GRANT_EMPTY); setGrantSubmitted(false);
