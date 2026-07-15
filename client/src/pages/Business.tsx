@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, Users, TrendingUp, Award, CheckCircle, Briefcase, Target, Building2, DollarSign, ShieldCheck, Palette, Lightbulb, X } from "lucide-react";
+import { ArrowRight, Users, TrendingUp, Award, CheckCircle, Briefcase, Target, Building2, DollarSign, ShieldCheck, Rocket, Heart, Factory, X } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -26,10 +26,10 @@ const services = [
 ];
 
 const WHO_CARDS = [
-  { type: "artists",      Icon: Palette,   image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80" },
-  { type: "entrepreneurs",Icon: Lightbulb, image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&q=80" },
-  { type: "sme",          Icon: Building2, image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80" },
-  { type: "corporate",    Icon: Briefcase, image: "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&q=80" },
+  { type: "sme",       Icon: Factory,   image: whoSmeBg },
+  { type: "startup",   Icon: Rocket,    image: whoStartupBg },
+  { type: "corporate", Icon: Building2, image: whoCorporateBg },
+  { type: "nonprofit", Icon: Heart,     image: whoNonprofitBg },
 ];
 
 const reasons = [
@@ -231,13 +231,13 @@ export default function Business() {
                     <div className="w-10 h-10 bg-white/15 flex items-center justify-center mb-5">
                       <Icon className="w-5 h-5 text-white" />
                     </div>
-                    <h3 className="font-bold text-white text-xl mb-3">{t(`grants.${type}.title` as any)}</h3>
-                    <p className="text-white/85 text-[14px] leading-relaxed mb-5">{t(`grants.${type}.description` as any)}</p>
+                    <h3 className="font-bold text-white text-xl mb-3">{t(`business.who.${type}.title` as any)}</h3>
+                    <p className="text-white/85 text-[14px] leading-relaxed mb-5">{t(`business.who.${type}.desc` as any)}</p>
                     <ul className="space-y-2.5 border-t border-white/20 pt-4">
                       {[1, 2, 3].map((i) => (
                         <li key={i} className="flex items-start gap-2.5 text-[13px] text-white/80">
                           <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#93c5fd] mt-1.5" />
-                          {t(`grants.${type}.feature${i}` as any)}
+                          {t(`business.who.${type}.point${i}` as any)}
                         </li>
                       ))}
                     </ul>
