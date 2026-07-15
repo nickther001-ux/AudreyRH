@@ -21,17 +21,21 @@ export function Navbar() {
     { href: "/business",     label: t("nav.business") },
     { href: "/solutions-rh", label: t("nav.individuals") },
     { href: "/essentiels",   label: t("nav.essentials") },
-    { href: "/faq",        label: t("nav.faq") },
-    { href: "/contact",    label: t("nav.contact") },
+    { href: "/faq",          label: t("nav.faq") },
+    { href: "/contact",      label: t("nav.contact") },
   ];
 
   const toggleLanguage = () => setLanguage(language === "fr" ? "en" : "fr");
 
+  const solid = isScrolled;
+
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 bg-white/75 backdrop-blur-md transition-shadow duration-300",
-        isScrolled ? "shadow-[0_1px_0_0_hsl(var(--border))]" : ""
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        solid
+          ? "bg-white shadow-[0_1px_0_0_hsl(var(--border))]"
+          : "bg-transparent"
       )}
       data-testid="navbar"
     >
@@ -44,7 +48,9 @@ export function Navbar() {
             className="text-[1.3rem] font-bold tracking-tight flex-shrink-0"
             data-testid="link-logo"
           >
-            <span style={{ color: "#1e3a5f" }}>Audrey</span><span className="text-foreground">RH</span><span className="text-accent">.</span>
+            <span style={{ color: solid ? "#1e3a5f" : "#ffffff" }}>Audrey</span>
+            <span className={solid ? "text-foreground" : "text-white"}>RH</span>
+            <span className="text-accent">.</span>
           </Link>
 
           {/* Desktop Nav */}
@@ -55,9 +61,13 @@ export function Navbar() {
                 href={link.href}
                 className={cn(
                   "text-[13px] font-medium transition-colors duration-150",
-                  location === link.href
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
+                  solid
+                    ? location === link.href
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                    : location === link.href
+                      ? "text-white"
+                      : "text-white/70 hover:text-white"
                 )}
                 data-testid={`link-nav-${link.href.replace("/", "") || "home"}`}
               >
@@ -72,7 +82,10 @@ export function Navbar() {
               variant="ghost"
               size="sm"
               onClick={toggleLanguage}
-              className="flex items-center gap-1.5 text-[13px] font-medium text-muted-foreground hover:text-foreground hover:bg-transparent px-2"
+              className={cn(
+                "flex items-center gap-1.5 text-[13px] font-medium hover:bg-transparent px-2",
+                solid ? "text-muted-foreground hover:text-foreground" : "text-white/70 hover:text-white"
+              )}
               data-testid="button-language-toggle"
             >
               <Globe className="w-4 h-4" />
@@ -80,7 +93,12 @@ export function Navbar() {
             </Button>
 
             <Link href="/book" data-testid="link-book-consultation">
-              <Button className="text-white rounded-none px-5 h-9 text-[13px] font-medium" style={{ backgroundColor: "#1e3a5f" }} onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#162d4a")} onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#1e3a5f")}>
+              <Button
+                className="text-white rounded-none px-5 h-9 text-[13px] font-medium"
+                style={{ backgroundColor: "#1e3a5f" }}
+                onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#162d4a")}
+                onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#1e3a5f")}
+              >
                 {t("nav.book")}
               </Button>
             </Link>
@@ -92,7 +110,7 @@ export function Navbar() {
               variant="ghost"
               size="icon"
               onClick={toggleLanguage}
-              className="text-muted-foreground hover:text-foreground"
+              className={solid ? "text-muted-foreground hover:text-foreground" : "text-white/70 hover:text-white"}
               data-testid="button-language-toggle-mobile"
             >
               <Globe className="w-5 h-5" />
@@ -101,7 +119,7 @@ export function Navbar() {
               variant="ghost"
               size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-muted-foreground hover:text-foreground"
+              className={solid ? "text-muted-foreground hover:text-foreground" : "text-white/70 hover:text-white"}
               data-testid="button-mobile-menu"
             >
               {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
@@ -112,26 +130,26 @@ export function Navbar() {
 
       {/* Mobile drawer */}
       {mobileMenuOpen && (
-        <div className="lg:hidden absolute top-full left-0 right-0 bg-white/90 backdrop-blur-md border-t border-border shadow-lg py-3 flex flex-col animate-in slide-in-from-top-2">
+        <div className="lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-md border-t border-border shadow-lg py-3 flex flex-col animate-in slide-in-from-top-2">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
               className={cn(
-                "block py-3 px-6 text-[14px] font-medium transition-colors",
+                "px-6 py-2.5 text-[14px] font-medium transition-colors",
                 location === link.href
-                  ? "text-foreground bg-muted/40"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               )}
-              data-testid={`link-mobile-${link.href.replace("/", "") || "home"}`}
+              onClick={() => setMobileMenuOpen(false)}
+              data-testid={`link-nav-mobile-${link.href.replace("/", "") || "home"}`}
             >
               {link.label}
             </Link>
           ))}
-          <div className="px-6 pt-4 pb-3 border-t border-border mt-2">
-            <Link href="/book" onClick={() => setMobileMenuOpen(false)} data-testid="link-mobile-book">
-              <Button className="w-full text-white rounded-none font-medium text-[13px] h-10" style={{ backgroundColor: "#1e3a5f" }}>
+          <div className="px-6 pt-3 pb-1 border-t border-border mt-1">
+            <Link href="/book" onClick={() => setMobileMenuOpen(false)}>
+              <Button className="w-full text-white rounded-none text-[13px]" style={{ backgroundColor: "#1e3a5f" }}>
                 {t("nav.book")}
               </Button>
             </Link>
