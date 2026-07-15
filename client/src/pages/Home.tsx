@@ -123,7 +123,7 @@ export default function Home() {
             >
               {isFr ? "Ingénierie" : "Financial"}
               <br />
-              <span className="text-[#93c5fd]">{isFr ? "Financière" : "Engineering"}</span><span className="text-orange-400">.</span>
+              <span className="text-white">{isFr ? "Financière" : "Engineering"}</span>
             </motion.h2>
 
             <motion.p variants={panelContent} className="text-white/75 text-[15px] leading-relaxed max-w-xs mb-10">
