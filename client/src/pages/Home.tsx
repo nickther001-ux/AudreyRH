@@ -53,7 +53,7 @@ export default function Home() {
         {/* ── LEFT — Entreprises ── */}
         <Link
           href="/business"
-          className="group relative flex-1 flex flex-col justify-end p-10 lg:p-16 overflow-hidden cursor-pointer min-h-[50vh] lg:min-h-0"
+          className="group relative flex-1 flex flex-col justify-center p-10 lg:p-16 overflow-hidden cursor-pointer min-h-[50vh] lg:min-h-0"
           data-testid="link-portal-business"
         >
           {/* Background */}
@@ -71,26 +71,22 @@ export default function Home() {
           {/* Divider */}
           <div className="hidden lg:block absolute top-0 right-0 w-px h-full bg-white/15 z-10" />
 
-          {/* Badge — pinned top-left */}
-          <motion.div
-            className="absolute top-10 lg:top-14 left-10 lg:left-16 z-20 inline-flex items-center gap-2.5 bg-white/15 backdrop-blur-sm border border-white/25 px-4 py-2"
-            initial="hidden"
-            animate="show"
-            variants={badgeAnim}
-          >
-            <Building2 className="w-4 h-4 text-white" />
-            <span className="text-white text-[13px] font-semibold uppercase tracking-[0.18em]">
-              {t("portal.business.label")}
-            </span>
-          </motion.div>
-
-          {/* Bottom content */}
+          {/* Content — badge + heading + desc + CTA centered */}
           <motion.div
             className="relative z-10"
             variants={stagger}
             initial="hidden"
             animate="show"
           >
+            <motion.div
+              variants={badgeAnim}
+              className="inline-flex items-center gap-2.5 bg-white/15 backdrop-blur-sm border border-white/25 px-4 py-2 mb-8"
+            >
+              <Building2 className="w-4 h-4 text-white" />
+              <span className="text-white text-[13px] font-semibold uppercase tracking-[0.18em]">
+                {t("portal.business.label")}
+              </span>
+            </motion.div>
             <motion.h2
               variants={item}
               className="text-[clamp(2.2rem,4.5vw,4rem)] font-bold text-white leading-[1.05] tracking-tighter mb-5"
@@ -116,7 +112,7 @@ export default function Home() {
         {/* ── RIGHT — Financement & Subvention ── */}
         <div
           onClick={() => navigate("/solutions-rh")}
-          className="group relative flex-1 flex flex-col justify-end p-10 lg:p-16 overflow-hidden cursor-pointer min-h-[50vh] lg:min-h-0"
+          className="group relative flex-1 flex flex-col justify-center p-10 lg:p-16 overflow-hidden cursor-pointer min-h-[50vh] lg:min-h-0"
           data-testid="link-portal-individuals"
         >
           {/* Distinct financial/corporate background */}
@@ -131,26 +127,22 @@ export default function Home() {
           <div className="absolute inset-0 bg-[#0a1628]/70 group-hover:bg-[#0a1628]/60 transition-all duration-500" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
 
-          {/* Badge — pinned top-left, same height as left panel */}
-          <motion.div
-            className="absolute top-10 lg:top-14 left-10 lg:left-16 z-20 inline-flex items-center gap-2.5 bg-white/15 backdrop-blur-sm border border-white/25 px-4 py-2"
-            initial="hidden"
-            animate="show"
-            variants={badgeAnim}
-          >
-            <Banknote className="w-4 h-4 text-white" />
-            <span className="text-white text-[13px] font-semibold uppercase tracking-[0.18em]">
-              {isFr ? "Financement et Subvention" : "Funding & Grants"}
-            </span>
-          </motion.div>
-
-          {/* Bottom content */}
+          {/* Content — badge + heading + desc + CTA centered */}
           <motion.div
             className="relative z-10"
             variants={stagger}
             initial="hidden"
             animate="show"
           >
+            <motion.div
+              variants={badgeAnim}
+              className="inline-flex items-center gap-2.5 bg-white/15 backdrop-blur-sm border border-white/25 px-4 py-2 mb-8"
+            >
+              <Banknote className="w-4 h-4 text-white" />
+              <span className="text-white text-[13px] font-semibold uppercase tracking-[0.18em]">
+                {isFr ? "Financement et Subvention" : "Funding & Grants"}
+              </span>
+            </motion.div>
             <motion.h2
               variants={item}
               className="text-[clamp(2.2rem,4.5vw,4rem)] font-bold text-white leading-[1.05] tracking-tighter mb-5"
