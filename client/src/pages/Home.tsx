@@ -125,21 +125,15 @@ export default function Home() {
               variants={panelContent}
               className="text-[clamp(2.4rem,5vw,4.5rem)] font-bold text-white leading-[1] tracking-tighter mb-5"
             >
-              {isFr ? "Le financement qui" : "The funding that"}{" "}
-              <span
-                key={wordIndex}
-                className="inline-block text-[#93c5fd] animate-in fade-in slide-in-from-bottom-2 duration-300"
-              >
-                {rotatingWords[wordIndex]}
-              </span>
+              {isFr ? "Ingénierie" : "Financial"}
               <br />
-              {isFr ? "votre projet" : "your project"}<span className="text-orange-400">.</span>
+              <span className="text-[#93c5fd]">{isFr ? "Financière" : "Engineering"}</span><span className="text-orange-400">.</span>
             </motion.h2>
 
             <motion.p variants={panelContent} className="text-white/75 text-[15px] leading-relaxed max-w-xs mb-10">
               {isFr
-                ? "Ingénierie Financière"
-                : "Financial Engineering"}
+                ? "Identification et obtention de subventions, structuration du financement et accompagnement jusqu'au déblocage des fonds."
+                : "Grant identification, funding structuring, and full support until funds are secured."}
             </motion.p>
 
             <motion.div variants={panelContent} className="inline-flex items-center gap-3 text-white font-semibold text-[13px] uppercase tracking-wider border-b border-white/40 pb-1 group-hover:gap-5 group-hover:border-white transition-all duration-300">
