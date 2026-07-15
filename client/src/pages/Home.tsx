@@ -90,12 +90,8 @@ export default function Home() {
           data-testid="link-portal-individuals"
         >
           <motion.div
-            className="absolute inset-0 bg-no-repeat"
-            style={{
-              backgroundImage: `url(${SOLUTIONS_BG})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center center",
-            }}
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{ backgroundImage: `url(${BUSINESS_PHOTO})` }}
             initial={{ scale: 1.06 }}
             animate={{ scale: 1 }}
             transition={{ duration: 1.4, ease: [0.25, 0.1, 0.25, 1] }}
