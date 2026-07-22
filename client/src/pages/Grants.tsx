@@ -74,7 +74,7 @@ const FAQS = [
   {
     qFr: "Qui peut faire une demande de subvention ?",
     qEn: "Who can apply for a grant?",
-    aFr: "Les artistes, entrepreneurs, moyennes entreprises, OBNL et OBE établis au Québec peuvent faire une demande. Certains programmes s'adressent spécifiquement aux nouvelles arrivantes et nouveaux arrivants, aux minorités visibles ou aux femmes entrepreneures.",
+    aFr: "Les artistes, entrepreneurs, PME, OBNL et OBE établis au Québec sont admissibles. De plus, plusieurs programmes ciblent spécifiquement la relève, les femmes entrepreneures ainsi que les diversités et minorités.",
     aEn: "Artists, entrepreneurs, SMEs, nonprofits (OBNL) and volunteer organizations (OBE) based in Quebec can apply. Some programs specifically target newcomers, visible minorities, or women entrepreneurs.",
   },
   {
