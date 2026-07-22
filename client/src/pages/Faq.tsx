@@ -12,7 +12,7 @@ type Category = "general" | "business";
 
 const CATEGORIES: { key: Category; num: string; skip?: number[] }[] = [
   { key: "general",  num: "01", skip: [7, 8, 9, 10] },
-  { key: "business", num: "02" },
+  { key: "business", num: "02", skip: [7, 9, 10] },
 ];
 
 const FAQ_COUNT = 10;
