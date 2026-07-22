@@ -112,7 +112,7 @@ export default function Contact() {
                 <p className="text-white/45 text-[11px] uppercase tracking-[0.12em] mb-4">CRIA · Conseillère agréée</p>
                 <p className="text-white/60 text-[13px] leading-relaxed">
                   {isFr
-                    ? "Audrey met son expertise au service des organisations, entrepreneurs et artistes en les accompagnant dans la structuration de leurs projets, l'optimisation de leurs pratiques et l'accès stratégique aux subventions des bailleurs de fonds."
+                    ? "Conseillère en relations industrielles agréée avec 16 ans d'expérience. Audrey aide les particuliers et les organisations à atteindre leurs objectifs professionnels."
                     : "Certified Industrial Relations Advisor with 16+ years of experience. Audrey helps individuals and organizations achieve their professional goals."}
                 </p>
               </div>
