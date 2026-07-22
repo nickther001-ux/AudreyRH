@@ -610,7 +610,7 @@ export default function Grants() {
             <FadeUp className="mb-16">
               <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{isFr ? "Programmes disponibles" : "Available Programs"}</p>
               <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-                <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight max-w-sm" data-testid="text-grants-categories-title">
+                <h2 className="text-5xl md:text-7xl font-black text-foreground leading-[1.05] tracking-tighter" data-testid="text-grants-categories-title">
                   {isFr ? <>Qui accompagnons-nous&nbsp;?</> : <>Who Do We Support?</>}
                 </h2>
                 <p className="text-[14px] text-muted-foreground leading-relaxed max-w-sm">
