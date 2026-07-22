@@ -665,7 +665,7 @@ const translations = {
 
     "business.services.badge": "Nos services aux entreprises",
     "business.services.title": "Des solutions RH adaptées à votre réalité",
-    "business.services.subtitle": "Toutes les entreprises et OBNL dans leur département RH — un accompagnement stratégique pour transformer le capital humain et offrir un service axé sur vos gens.",
+    "business.services.subtitle": "De la stratégie à l'humain : offrez à vos équipes et à votre organisation un accompagnement RH à la hauteur de vos ambitions.",
 
     "business.service.talent.title": "Acquisition de talents",
     "business.service.talent.desc": "Accédez à un bassin de candidats internationaux qualifiés, rigoureusement évalués pour correspondre aux besoins spécifiques de votre entreprise.",
@@ -1556,7 +1556,7 @@ const translations = {
 
     "business.services.badge": "Our Business Services",
     "business.services.title": "HR Solutions Tailored to Your Reality",
-    "business.services.subtitle": "All businesses and nonprofits in their HR department — strategic support to transform human capital and deliver people-focused services.",
+    "business.services.subtitle": "From strategy to people: give your teams and your organization the HR support that matches your ambitions.",
 
     "business.service.talent.title": "Talent Acquisition",
     "business.service.talent.desc": "Access a pool of qualified international candidates, rigorously assessed to match your organization's specific needs and culture.",
