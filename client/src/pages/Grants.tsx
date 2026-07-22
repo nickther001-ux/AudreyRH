@@ -608,15 +608,13 @@ export default function Grants() {
         <section id="categories" className="py-28 bg-white" data-testid="section-grant-categories">
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
             <FadeUp className="mb-16">
-              <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-4">{isFr ? "Programmes disponibles" : "Available Programs"}</p>
-              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-                <h2 className="text-5xl md:text-7xl font-black text-foreground leading-[1.05] tracking-tighter" data-testid="text-grants-categories-title">
-                  {isFr ? <>Qui accompagnons-nous&nbsp;?</> : <>Who Do We Support?</>}
-                </h2>
-                <p className="text-[14px] text-muted-foreground leading-relaxed max-w-sm">
-                  {isFr ? "Des opportunités ciblées pour chaque type d'entrepreneur, créateur et organisation au Canada." : "Targeted opportunities for every type of entrepreneur, creator and organization in Canada."}
-                </p>
-              </div>
+              <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-6">{isFr ? "Programmes disponibles" : "Available Programs"}</p>
+              <h2 className="text-5xl md:text-7xl font-black text-foreground leading-[1.05] tracking-tighter mb-6" data-testid="text-grants-categories-title">
+                {isFr ? <>Qui accompagnons-nous&nbsp;?</> : <>Who Do We Support?</>}
+              </h2>
+              <p className="text-[14px] text-muted-foreground leading-relaxed max-w-lg">
+                {isFr ? "Des opportunités ciblées pour chaque type d'entrepreneur, créateur et organisation au Canada." : "Targeted opportunities for every type of entrepreneur, creator and organization in Canada."}
+              </p>
             </FadeUp>
 
             <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border">
