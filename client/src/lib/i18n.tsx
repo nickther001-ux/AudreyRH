@@ -493,7 +493,7 @@ const translations = {
     "faq.general.q2": "Qu'est-ce qu'un CRIA ?",
     "faq.general.a2": "Un CRIA (Conseiller en Relations Industrielles Agréé) est un professionnel de la gestion des ressources humaines et des relations de travail au Québec, dont le titre est délivré par l'Ordre des conseillers en ressources humaines agréés (CRHA). Cette désignation atteste d'une formation rigoureuse, d'une solide expérience de terrain et du respect de normes d'éthique strictes, garantissant une pratique fiable et conforme au cadre réglementaire en vigueur.",
     "faq.general.q3": "Dans quelle ville opérez-vous ?",
-    "faq.general.a3": "Nos services sont basés à Montréal, Québec, mais nous accompagnons des clients partout au Canada grâce à nos consultations en ligne via Zoom ou Google Meet. Que vous soyez à Québec, Toronto, Calgary ou Vancouver, notre accompagnement s'adapte à votre réalité géographique.",
+    "faq.general.a3": "Nos services sont basés à Montréal, Québec, mais nous accompagnons des clients partout au Canada et ailleurs grâce à nos consultations en ligne via Zoom ou Google Meet. Que vous soyez à Québec, Toronto, Calgary ou Vancouver, notre accompagnement s'adapte à votre réalité géographique.",
     "faq.general.q4": "AudreyRH est-il bilingue ?",
     "faq.general.a4": "Oui, tous nos services sont disponibles en français et en anglais. Notre équipe pleinement bilingue nous permet d'accompagner aussi bien les francophones que les anglophones, et de répondre aux besoins spécifiques des nouveaux arrivants de toutes origines culturelles.",
     "faq.general.q5": "Quelles sont vos heures de disponibilité ?",
