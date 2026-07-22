@@ -489,7 +489,7 @@ const translations = {
     "faq.category.business": "Entreprises",
 
     "faq.general.q1": "Qu'est-ce qu'AudreyRH ?",
-    "faq.general.a1": "AudreyRH est un cabinet de conseil en ressources humaines fondé par Audrey Mondesir, CRIA, forte de plus de 16 ans d'expérience terrain. Nous aidons les nouveaux arrivants au Québec à naviguer le marché du travail canadien grâce à des stratégies concrètes et personnalisées. Nous accompagnons également les entreprises — PME, startups, grandes corporations et OBNL — dans leur stratégie RH, l'acquisition de talents qualifiés et l'accès aux subventions gouvernementales.",
+    "faq.general.a1": "AudreyRH est un cabinet de conseil en ressources humaines fondé par Audrey Mondesir, CRIA, forte de plus de 16 ans d'expérience terrain. Nous accompagnons les particuliers, les professionnels et les organisations — PME, startups, grandes corporations et OBNL — dans leur stratégie RH, l'acquisition de talents qualifiés et l'accès aux subventions gouvernementales.",
     "faq.general.q2": "Qu'est-ce qu'un CRIA ?",
     "faq.general.a2": "Le titre de Conseiller en Relations Industrielles Agréé (CRIA) est la plus haute désignation professionnelle en ressources humaines au Québec, délivrée par l'Ordre des conseillers en ressources humaines agréés (CRHA). Pour l'obtenir, il faut satisfaire à des exigences strictes de formation, d'expérience et d'éthique. Ce titre garantit une pratique rigoureuse, indépendante et conforme aux normes les plus élevées de la profession au Canada.",
     "faq.general.q3": "Dans quelle ville opérez-vous ?",
@@ -1380,7 +1380,7 @@ const translations = {
     "faq.category.business": "Businesses",
 
     "faq.general.q1": "What is AudreyRH?",
-    "faq.general.a1": "AudreyRH is a human resources consulting firm founded by Audrey Mondesir, CRIA, with over 16 years of field experience. We help newcomers to Quebec navigate the Canadian job market through concrete, personalized strategies. We also support organizations — SMEs, startups, large corporations, and nonprofits — in their HR strategy, qualified talent acquisition, and access to government funding.",
+    "faq.general.a1": "AudreyRH is a human resources consulting firm founded by Audrey Mondesir, CRIA, with over 16 years of field experience. We support individuals, professionals and organizations — SMEs, startups, large corporations, and nonprofits — in their HR strategy, qualified talent acquisition, and access to government funding.",
     "faq.general.q2": "What does CRIA mean?",
     "faq.general.a2": "CRIA stands for Certified Industrial Relations Advisor (Conseiller en Relations Industrielles Agréé) — the highest professional designation in human resources in Quebec, issued by the Order of Certified Human Resources Advisors (CRHA). Earning it requires meeting strict standards of education, experience, and ethics. It guarantees rigorous, independent, and high-standard professional practice.",
     "faq.general.q3": "Where are you based?",
