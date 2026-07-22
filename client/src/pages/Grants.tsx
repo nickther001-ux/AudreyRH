@@ -23,7 +23,7 @@ const diagnosticQuestions: Record<string, Question[]> = {
   entrepreneurs: [
     { fr: "Votre entreprise est-elle officiellement enregistrée (Registraire des entreprises du Québec) ?", en: "Is your business officially registered (Quebec business registry)?" },
     { fr: "Cherchez-vous un financement de démarrage ou de prédémarrage ?", en: "Are you looking for startup or pre-startup funding?" },
-    { fr: "Recherchez-vous un financement de démarrage de moins de 50 000 $ ?", en: "Are you seeking startup funding of less than $50,000?" },
+    { fr: "Êtes-vous déjà en activité commerciale ?", en: "Are you already operating commercially?" },
   ],
   sme: [
     { fr: "Votre entreprise compte-t-elle 5 employés ou plus ?", en: "Does your business have 5 or more employees?" },
