@@ -669,13 +669,13 @@ export default function Grants() {
             <FadeUp className="mb-16">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{isFr ? "Notre approche" : "Our Approach"}</p>
               <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight max-w-xl">
-                {isFr ? "Comment ça fonctionne" : "How It Works"}
+                {isFr ? "Comment ça fonctionne ?" : "How It Works?"}
               </h2>
             </FadeUp>
             <Stagger className="grid grid-cols-1 md:grid-cols-4 gap-px bg-white/10">
               {[
                 { titleFr: "Évaluation initiale", textFr: "Analyse de votre profil, statut et projet pour identifier les subventions auxquelles vous êtes admissible.", titleEn: "Initial Assessment", textEn: "Analysis of your profile, status and project to identify eligible grants." },
-                { titleFr: "Identification des opportunités", textFr: "Sélection des programmes les mieux adaptés parmi des centaines d'options fédérales et provinciales.", titleEn: "Identify Opportunities", textEn: "Selection of the best-fit programs from hundreds of federal and provincial options." },
+                { titleFr: "Identification des opportunités", textFr: "Sélection des programmes les mieux adaptés parmi des centaines d'options fédérales, provinciales et autres.", titleEn: "Identify Opportunities", textEn: "Selection of the best-fit programs from hundreds of federal, provincial and other options." },
                 { titleFr: "Préparation du dossier", textFr: "Accompagnement dans la rédaction d'un dossier de demande solide, maximisant vos chances.", titleEn: "Application Prep", textEn: "Guided preparation of a strong application file, maximizing your approval odds." },
                 { titleFr: "Soumission & Suivi", textFr: "Soumission du dossier et suivi stratégique jusqu'à l'obtention de votre financement.", titleEn: "Submit & Follow-up", textEn: "Filing and strategic follow-up until your funding is secured." },
               ].map((step, i) => (
