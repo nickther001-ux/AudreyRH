@@ -489,9 +489,9 @@ const translations = {
     "faq.category.business": "Entreprises",
 
     "faq.general.q1": "Qu'est-ce qu'AudreyRH ?",
-    "faq.general.a1": "AudreyRH est un cabinet de conseil en ressources humaines fondé par Audrey Mondesir, CRIA, forte de plus de 16 ans d'expérience terrain. Nous accompagnons les particuliers, les professionnels et les organisations — PME, startups, grandes corporations et OBNL — dans leur stratégie RH, l'acquisition de talents qualifiés et l'accès aux subventions gouvernementales.",
+    "faq.general.a1": "Fondé par Audrey Mondesir, CRIA, forte de plus de 16 ans d'expérience de terrain, Audrey RH est un cabinet de conseil spécialisé en stratégie de capital humain et en optimisation des leviers financiers. Nous accompagnons les organisations, qu'il s'agisse de PME, de startups, d'OBNL ou de créateurs, dans la structuration de leurs projets innovants, l'acquisition de talents et l'accès stratégique aux subventions des bailleurs de fonds. Notre mission : propulser chaque initiative avec rigueur et pragmatisme.",
     "faq.general.q2": "Qu'est-ce qu'un CRIA ?",
-    "faq.general.a2": "Le titre de Conseiller en Relations Industrielles Agréé (CRIA) est la plus haute désignation professionnelle en ressources humaines au Québec, délivrée par l'Ordre des conseillers en ressources humaines agréés (CRHA). Pour l'obtenir, il faut satisfaire à des exigences strictes de formation, d'expérience et d'éthique. Ce titre garantit une pratique rigoureuse, indépendante et conforme aux normes les plus élevées de la profession au Canada.",
+    "faq.general.a2": "Un CRIA (Conseiller en Relations Industrielles Agréé) est un professionnel de la gestion des ressources humaines et des relations de travail au Québec, dont le titre est délivré par l'Ordre des conseillers en ressources humaines agréés (CRHA). Cette désignation atteste d'une formation rigoureuse, d'une solide expérience de terrain et du respect de normes d'éthique strictes, garantissant une pratique fiable et conforme au cadre réglementaire en vigueur.",
     "faq.general.q3": "Dans quelle ville opérez-vous ?",
     "faq.general.a3": "Nos services sont basés à Montréal, Québec, mais nous accompagnons des clients partout au Canada grâce à nos consultations en ligne via Zoom ou Google Meet. Que vous soyez à Québec, Toronto, Calgary ou Vancouver, notre accompagnement s'adapte à votre réalité géographique.",
     "faq.general.q4": "AudreyRH est-il bilingue ?",
@@ -1380,9 +1380,9 @@ const translations = {
     "faq.category.business": "Businesses",
 
     "faq.general.q1": "What is AudreyRH?",
-    "faq.general.a1": "AudreyRH is a human resources consulting firm founded by Audrey Mondesir, CRIA, with over 16 years of field experience. We support individuals, professionals and organizations — SMEs, startups, large corporations, and nonprofits — in their HR strategy, qualified talent acquisition, and access to government funding.",
+    "faq.general.a1": "Founded by Audrey Mondesir, CRIA, with over 16 years of field experience, Audrey RH is a consulting firm specializing in human capital strategy and financial leverage optimization. We support organizations — SMEs, startups, nonprofits and creators — in structuring innovative projects, acquiring talent, and strategically accessing grants and funding. Our mission: propel every initiative with rigor and pragmatism.",
     "faq.general.q2": "What does CRIA mean?",
-    "faq.general.a2": "CRIA stands for Certified Industrial Relations Advisor (Conseiller en Relations Industrielles Agréé) — the highest professional designation in human resources in Quebec, issued by the Order of Certified Human Resources Advisors (CRHA). Earning it requires meeting strict standards of education, experience, and ethics. It guarantees rigorous, independent, and high-standard professional practice.",
+    "faq.general.a2": "A CRIA (Conseiller en Relations Industrielles Agréé) is a professional in human resources management and labour relations in Quebec, holding a designation issued by the Order of Certified Human Resources Advisors (CRHA). This title attests to rigorous training, solid field experience, and adherence to strict ethical standards, guaranteeing reliable practice in compliance with the applicable regulatory framework.",
     "faq.general.q3": "Where are you based?",
     "faq.general.a3": "Our services are based in Montreal, Quebec, but we work with clients across Canada through online consultations via Zoom or Google Meet. Whether you're in Quebec City, Toronto, Calgary, or Vancouver, our support adapts to your geographic reality.",
     "faq.general.q4": "Is AudreyRH bilingual?",
