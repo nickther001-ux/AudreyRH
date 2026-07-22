@@ -225,11 +225,11 @@ export default function Business() {
                   >
                     <div className="flex items-center gap-6 min-w-0">
                       <span className="text-[11px] text-black/30 font-mono w-6 flex-shrink-0">{String(index + 1).padStart(2, "0")}</span>
-                      <h3 className="text-2xl md:text-3xl font-bold text-black tracking-tight group-hover:text-[#239b56] transition-colors duration-200">
+                      <h3 className="text-2xl md:text-3xl font-bold text-black tracking-tight group-hover:text-[#1e3a5f] transition-colors duration-200">
                         {t(`business.who.${type}.title` as any)}
                       </h3>
                     </div>
-                    <span className="flex-shrink-0 text-[12px] font-semibold uppercase tracking-widest text-black/35 group-hover:text-[#239b56] transition-colors duration-200 flex items-center gap-2">
+                    <span className="flex-shrink-0 text-[12px] font-semibold uppercase tracking-widest text-black/35 group-hover:text-[#1e3a5f] transition-colors duration-200 flex items-center gap-2">
                       {language === "fr" ? "Réserver" : "Book"}
                       <ArrowRight className="w-3.5 h-3.5" />
                     </span>
