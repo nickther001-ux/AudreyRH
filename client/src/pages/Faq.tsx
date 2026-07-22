@@ -8,13 +8,12 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/i18n";
 import { FadeUp } from "@/lib/animations";
 
-type Category = "general" | "booking" | "individuals" | "business";
+type Category = "general" | "booking" | "business";
 
 const CATEGORIES: { key: Category; num: string }[] = [
-  { key: "general",     num: "01" },
-  { key: "booking",     num: "02" },
-  { key: "individuals", num: "03" },
-  { key: "business",    num: "04" },
+  { key: "general",  num: "01" },
+  { key: "booking",  num: "02" },
+  { key: "business", num: "03" },
 ];
 
 const FAQ_COUNT = 10;
