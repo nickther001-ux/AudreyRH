@@ -1,0 +1,31 @@
+Je vais te fournir le contenu d'une FAQ. Ta tâche consiste à repérer les passages exacts listés sous "Texte à remplacer" et à les substituer par le "Nouveau texte" correspondant. Tu ne dois absolument rien modifier d'autre dans le document.
+
+Remplacement 1 :
+
+    Texte à remplacer : Cela dépend de l'utilisation de la subvention. Si les conditions du programme ne sont pas respectées, il est possible que des montants doivent être remboursés. AudreyRH vous accompagne pour assurer la conformité tout au long du processus.
+
+    Nouveau texte : En principe, non, puisqu'il s'agit d'une aide financière non remboursable. Toutefois, un non-respect des conditions d'octroi peut entraîner des exigences de restitution. Audrey RH vous offre un suivi rigoureux et un encadrement stratégique pour garantir la conformité de votre projet du début à la fin.
+
+Remplacement 2 :
+
+    Texte à remplacer : En général, de 3 à 4 semaines selon le programme. AudreyRH prépare votre dossier efficacement, puis les délais de traitement varient selon l'organisme financeur.
+
+    Nouveau texte : En règle générale, le montage et la préparation du dossier par Audrey RH prennent de 2 à 4 semaines. Les délais de traitement par la suite dépendent entièrement du calendrier et des procédures de chaque bailleur de fonds.
+
+Remplacement 3 :
+
+    Texte à remplacer : Ça va dépendre des demandes. Un guide vous sera envoyé pour bien vous préparer au processus et vous assurer d'avoir tous les éléments requis.
+
+    Nouveau texte : La composition du dossier dépend du programme visé. Un guide détaillé vous sera fourni pour vous accompagner pas à pas dans la préparation et vous garantir un processus fluide et rigoureux.
+
+Remplacement 4 :
+
+    Texte à remplacer : Selon les restrictions en vigueur. AudreyRH identifie tous les programmes auxquels vous êtes admissible et évalue la compatibilité entre les demandes pour optimiser votre stratégie de financement.
+
+    Nouveau texte : Oui, à condition de respecter les restrictions de cumul des différents bailleurs de fonds. Audrey RH identifie l'ensemble des leviers auxquels vous avez droit et orchestre un calendrier de dépôt stratégique pour sécuriser un maximum de financement.
+
+Remplacement 5 :
+
+    Texte à remplacer : Une consultation initiale de 85 $ permet de faire le point sur votre situation et d'identifier vos opportunités. Les frais d'accompagnement pour la préparation de dossier sont discutés lors de cette consultation.
+
+    Nouveau texte : Une rencontre exploratoire de 15 minutes permet de faire rapidement le point sur votre situation et de valider notre synergie. Si nos services répondent à vos attentes, nous vous ferons parvenir une offre de service et un contrat sur mesure.

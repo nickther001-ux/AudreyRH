@@ -80,31 +80,31 @@ const FAQS = [
   {
     qFr: "Est-ce que je dois rembourser la subvention ?",
     qEn: "Do I have to repay the grant?",
-    aFr: "Cela dépend de l'utilisation de la subvention. Si les conditions du programme ne sont pas respectées, il est possible que des montants doivent être remboursés. AudreyRH vous accompagne pour assurer la conformité tout au long du processus.",
+    aFr: "En principe, non, puisqu'il s'agit d'une aide financière non remboursable. Toutefois, un non-respect des conditions d'octroi peut entraîner des exigences de restitution. Audrey RH vous offre un suivi rigoureux et un encadrement stratégique pour garantir la conformité de votre projet du début à la fin.",
     aEn: "It depends on how the grant was used. If the program conditions are not respected, it may be possible that amounts have to be reimbursed. AudreyRH guides you to ensure compliance throughout the process.",
   },
   {
     qFr: "Combien de temps prend le processus de demande ?",
     qEn: "How long does the application process take?",
-    aFr: "En général, de 3 à 4 semaines selon le programme. AudreyRH prépare votre dossier efficacement, puis les délais de traitement varient selon l'organisme financeur.",
+    aFr: "En règle générale, le montage et la préparation du dossier par Audrey RH prennent de 2 à 4 semaines. Les délais de traitement par la suite dépendent entièrement du calendrier et des procédures de chaque bailleur de fonds.",
     aEn: "Generally 3 to 4 weeks depending on the program. AudreyRH prepares your file efficiently; processing times then vary by funding body.",
   },
   {
     qFr: "Quels documents sont nécessaires pour une demande ?",
     qEn: "What documents are required for an application?",
-    aFr: "Ça va dépendre des demandes. Un guide vous sera envoyé pour bien vous préparer au processus et vous assurer d'avoir tous les éléments requis.",
+    aFr: "La composition du dossier dépend du programme visé. Un guide détaillé vous sera fourni pour vous accompagner pas à pas dans la préparation et vous garantir un processus fluide et rigoureux.",
     aEn: "It will depend on the applications. A guide will be sent to you to help you prepare properly for the process and ensure you have all the required elements.",
   },
   {
     qFr: "Puis-je faire plusieurs demandes en même temps ?",
     qEn: "Can I apply for multiple grants at once?",
-    aFr: "Selon les restrictions en vigueur. AudreyRH identifie tous les programmes auxquels vous êtes admissible et évalue la compatibilité entre les demandes pour optimiser votre stratégie de financement.",
+    aFr: "Oui, à condition de respecter les restrictions de cumul des différents bailleurs de fonds. Audrey RH identifie l'ensemble des leviers auxquels vous avez droit et orchestre un calendrier de dépôt stratégique pour sécuriser un maximum de financement.",
     aEn: "Subject to applicable restrictions. AudreyRH identifies all programs you qualify for and assesses compatibility between applications to optimize your funding strategy.",
   },
   {
     qFr: "Quel est le coût de l'accompagnement AudreyRH ?",
     qEn: "What is the cost of AudreyRH's support?",
-    aFr: "Une consultation initiale de 85 $ permet de faire le point sur votre situation et d'identifier vos opportunités. Les frais d'accompagnement pour la préparation de dossier sont discutés lors de cette consultation.",
+    aFr: "Une rencontre exploratoire de 15 minutes permet de faire rapidement le point sur votre situation et de valider notre synergie. Si nos services répondent à vos attentes, nous vous ferons parvenir une offre de service et un contrat sur mesure.",
     aEn: "An initial $85 consultation allows us to assess your situation and identify your opportunities. Coaching fees for application preparation are discussed during this consultation.",
   },
 ];
