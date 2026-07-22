@@ -126,7 +126,7 @@ const translations = {
     "book.calendly.title": "Choisissez votre créneau via Calendly",
     "book.title": "Réserver une consultation",
     "book.subtitle": "Choisissez un créneau disponible pour votre consultation personnalisée avec AudreyRH, CRIA.",
-    "book.badge": "Consultation stratégique",
+    "book.badge": "Rencontre découverte",
     "book.price": "85$ CAD",
     "book.duration": "Consultation de 30 à 45 minutes",
     "book.perSession": "par séance",
