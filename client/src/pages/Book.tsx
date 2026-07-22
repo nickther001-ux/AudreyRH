@@ -17,7 +17,7 @@ import { format } from "date-fns";
 import { fr, enUS } from "date-fns/locale";
 import {
   CreditCard, Loader2, CheckCircle2, XCircle, Clock, Video,
-  FileText, CalendarDays, Shield, User, Mail, Phone,
+  FileText, CalendarDays, Shield, ShieldCheck, User, Mail, Phone,
   MessageSquare, Sparkles, Inbox, Send, HourglassIcon, Briefcase
 } from "lucide-react";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -652,8 +652,8 @@ export default function Book() {
 
                         {mode === "free" && (
                           <p className="text-sm text-muted-foreground mb-4 flex items-start gap-2">
-                            <HourglassIcon className="w-4 h-4 text-[#1e3a5f] mt-0.5 flex-shrink-0" />
-                            <span>{t("book.free.note")}</span>
+                            <ShieldCheck className="w-4 h-4 text-[#239b56] mt-0.5 flex-shrink-0" />
+                            <span>{t("book.free.formNote")}</span>
                           </p>
                         )}
 
