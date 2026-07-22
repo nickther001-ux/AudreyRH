@@ -480,7 +480,7 @@ const translations = {
     "faq.hero.title2": "vous devez",
     "faq.hero.title3": "savoir",
     "faq.cta.title": "Prêt à passer à l'action ?",
-    "faq.cta.subtitle": "Réservez une consultation initiale de 60 minutes avec Audrey Mondesir, CRIA, et obtenez un plan d'action personnalisé.",
+    "faq.cta.subtitle": "Réservez une rencontre exploratoire de 15 minutes avec un membre de notre équipe, pour faire rapidement le point sur votre situation et identifier vos opportunités.",
     "faq.cta.button": "Réserver une consultation",
 
     "faq.category.general": "Général",
@@ -1371,7 +1371,7 @@ const translations = {
     "faq.hero.title2": "you need",
     "faq.hero.title3": "to know",
     "faq.cta.title": "Ready to take action?",
-    "faq.cta.subtitle": "Book a 60-minute initial consultation with Audrey Mondesir, CRIA, and get a personalized action plan tailored to your goals.",
+    "faq.cta.subtitle": "Book a 15-minute exploratory call with a member of our team to quickly assess your situation and identify your opportunities.",
     "faq.cta.button": "Book a consultation",
 
     "faq.category.general": "General",
