@@ -659,7 +659,7 @@ const translations = {
     "business.hero.rotating.3": "émergentes",
     "business.hero.rotating.4": "déterminées",
     "business.hero.title": "Solutions RH pour entreprises ambitieuses",
-    "business.hero.description": "AudreyRH accompagne les PME, startups et grandes entreprises dans leur stratégie RH, l'acquisition de talents qualifiés et l'accès aux subventions gouvernementales.",
+    "business.hero.description": "Audrey RH accompagne les entreprises, les startups et les OBNL/OBE dans leur stratégie RH et leur structuration organisationnelle.",
     "business.hero.cta": "Nous contacter",
     "business.hero.book": "Réserver une consultation",
 
@@ -1550,7 +1550,7 @@ const translations = {
     "business.hero.rotating.3": "Emerging",
     "business.hero.rotating.4": "Determined",
     "business.hero.title": "HR Solutions for Ambitious Organizations",
-    "business.hero.description": "AudreyRH supports SMEs, startups, and large corporations in their HR strategy, acquisition of qualified talent, and access to government funding programs.",
+    "business.hero.description": "Audrey RH supports businesses, startups, and NPOs/NGOs in their HR strategy and organizational structuring.",
     "business.hero.cta": "Contact Us",
     "business.hero.book": "Book a consultation",
 
