@@ -694,7 +694,7 @@ const translations = {
     "business.service.compliance.point3": "Audit et optimisation des processus de conformité",
 
     "business.who.title": "Qui accompagnons-nous ?",
-    "business.who.subtitle": "Nos services s'adressent à tous les types d'organisations souhaitant optimiser leur stratégie de capital humain.",
+    "business.who.subtitle": "À toute organisation prête à transformer sa gestion des ressources humaines et à structurer son avenir.",
     "business.who.sme.title": "Artistes & Créateurs",
     "business.who.sme.desc": "Structurez vos RH, accédez aux talents et aux subventions gouvernementales pour accélérer votre croissance.",
     "business.who.sme.point1": "Rédaction de politiques RH, contrats et manuels d'employé",
@@ -1585,7 +1585,7 @@ const translations = {
     "business.service.compliance.point3": "Audit and optimization of compliance processes",
 
     "business.who.title": "Who We Support?",
-    "business.who.subtitle": "Our services are designed for all types of organizations looking to optimize their human capital strategy.",
+    "business.who.subtitle": "To any organization ready to transform its human resources management and structure its future.",
     "business.who.sme.title": "Artists & Creators",
     "business.who.sme.desc": "Structure your HR, access talent, and leverage government grants to accelerate your growth.",
     "business.who.sme.point1": "HR policies, employment contracts, and employee handbooks",
