@@ -693,7 +693,7 @@ const translations = {
     "business.service.compliance.point2": "LNT (Loi sur les Normes du Travail)",
     "business.service.compliance.point3": "Audit et optimisation des processus de conformité",
 
-    "business.who.title": "Qui nous accompagnons ?",
+    "business.who.title": "Qui accompagnons-nous ?",
     "business.who.subtitle": "Nos services s'adressent à tous les types d'organisations souhaitant optimiser leur stratégie de capital humain.",
     "business.who.sme.title": "Artistes & Créateurs",
     "business.who.sme.desc": "Structurez vos RH, accédez aux talents et aux subventions gouvernementales pour accélérer votre croissance.",
