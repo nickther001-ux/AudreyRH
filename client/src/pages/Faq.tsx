@@ -10,9 +10,9 @@ import { FadeUp } from "@/lib/animations";
 
 type Category = "general" | "booking" | "business";
 
-const CATEGORIES: { key: Category; num: string }[] = [
-  { key: "general",  num: "01" },
-  { key: "booking",  num: "02" },
+const CATEGORIES: { key: Category; num: string; skip?: number[] }[] = [
+  { key: "general",  num: "01", skip: [9, 10] },
+  { key: "booking",  num: "02", skip: [7] },
   { key: "business", num: "03" },
 ];
 
@@ -73,7 +73,7 @@ export default function Faq() {
               {t("faq.badge" as any)} — {FAQ_COUNT * CATEGORIES.length} {t("faq.hero.title3" as any)}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
-              {CATEGORIES.map(({ key, num }) => (
+              {CATEGORIES.map(({ key, num, skip }) => (
                 <div key={key}>
                   <div className="flex items-center gap-3 mb-5">
                     <span className="text-[10px] font-black text-[#93c5fd] uppercase tracking-[0.2em]">{num}</span>
@@ -82,7 +82,7 @@ export default function Faq() {
                     </h3>
                   </div>
                   <ul className="space-y-2">
-                    {Array.from({ length: FAQ_COUNT }, (_, i) => i + 1).map((n) => {
+                    {Array.from({ length: FAQ_COUNT }, (_, i) => i + 1).filter(n => !skip?.includes(n)).map((n) => {
                       const id = `${key}-${n}`;
                       return (
                         <li key={id}>
@@ -109,7 +109,7 @@ export default function Faq() {
         {/* ── ALL FAQ SECTIONS — accordions ── */}
         <section className="bg-[#1e3a5f] py-20" data-testid="section-faq-content">
           <div className="max-w-5xl mx-auto px-6 lg:px-8 space-y-20">
-            {CATEGORIES.map(({ key, num }) => (
+            {CATEGORIES.map(({ key, num, skip }) => (
               <div key={key} data-testid={`section-faq-${key}`}>
 
                 {/* Category header */}
@@ -122,7 +122,7 @@ export default function Faq() {
 
                 {/* Questions */}
                 <div className="divide-y divide-white/10">
-                  {Array.from({ length: FAQ_COUNT }, (_, i) => i + 1).map((n) => {
+                  {Array.from({ length: FAQ_COUNT }, (_, i) => i + 1).filter(n => !skip?.includes(n)).map((n) => {
                     const id = `${key}-${n}`;
                     const isOpen = openFaq === id;
                     return (
