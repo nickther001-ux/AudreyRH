@@ -609,12 +609,14 @@ export default function Grants() {
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
             <FadeUp className="mb-16">
               <p className="text-[11px] text-muted-foreground uppercase tracking-[0.2em] mb-6">{isFr ? "Programmes disponibles" : "Available Programs"}</p>
-              <h2 className="text-5xl md:text-7xl font-black text-foreground leading-[1.05] tracking-tighter mb-6" data-testid="text-grants-categories-title">
-                {isFr ? <>Qui accompagnons-nous&nbsp;?</> : <>Who Do We Support?</>}
-              </h2>
-              <p className="text-[14px] text-muted-foreground leading-relaxed max-w-lg">
-                {isFr ? "Des opportunités de financement sur mesure pour chaque projet innovant au pays et ailleurs." : "Tailored funding opportunities for every innovative project, here and abroad."}
-              </p>
+              <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+                <h2 className="text-4xl md:text-5xl font-bold text-foreground leading-tight" data-testid="text-grants-categories-title">
+                  {isFr ? <>Qui accompagnons-nous&nbsp;?</> : <>Who Do We Support?</>}
+                </h2>
+                <p className="text-[14px] text-muted-foreground leading-relaxed max-w-sm">
+                  {isFr ? "Des opportunités de financement sur mesure pour chaque projet innovant au pays et ailleurs." : "Tailored funding opportunities for every innovative project, here and abroad."}
+                </p>
+              </div>
             </FadeUp>
 
             <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border border border-border">
