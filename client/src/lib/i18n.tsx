@@ -187,7 +187,7 @@ const translations = {
     "book.free.sideTitle": "Consultation Gratuite",
     "book.free.sideDesc": "Échangez brièvement avec Audrey pour clarifier vos besoins. Aucun paiement requis.",
     "book.free.duration": "15 – 20 minutes",
-    "book.free.note": "Votre demande sera transmise à Audrey. Elle vous contactera dans les 24 à 48h ouvrables pour confirmer la date.",
+    "book.free.note": "Votre demande sera transmise à un membre de notre équipe. Elle vous contactera dans les 24 à 48h ouvrables pour confirmer la date.",
     "book.free.selectTitle": "Indiquer une date et heure souhaitées",
     "book.free.submit": "Envoyer ma demande",
     "book.free.submitting": "Envoi en cours…",
