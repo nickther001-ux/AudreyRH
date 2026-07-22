@@ -215,40 +215,25 @@ export default function Business() {
               </div>
             </FadeUp>
 
-            <Stagger className="grid grid-cols-1 md:grid-cols-2 gap-px bg-black/8">
-              {WHO_CARDS.map(({ type, image, titleOnly, diagnostic }) => (
-                <StaggerItem key={type} variant="fadeUp" className="relative overflow-hidden group cursor-pointer" data-testid={`card-business-who-${type}`}>
-                  {/* Full-card clickable overlay */}
-                  <Link href={diagnostic ? `/solutions-rh?diagnostic=${diagnostic}` : "/solutions-rh"} className="absolute inset-0 z-20" aria-label={t(`business.who.${type}.title` as any)} />
-                  <img
-                    src={image}
-                    alt=""
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 transition-all duration-500" style={{ background: "linear-gradient(to bottom, rgba(5,10,25,0.3) 0%, rgba(5,10,25,0.75) 45%, rgba(5,10,25,0.97) 100%)" }} />
-                  <div className={`relative z-10 p-10 flex flex-col h-full min-h-[540px] ${titleOnly ? "justify-center items-center text-center" : "justify-end"}`}>
-                    <h3 className={`font-bold text-white mb-3 transition-opacity duration-300 group-hover:opacity-90 ${titleOnly ? "text-[clamp(2.4rem,5vw,4rem)] leading-tight tracking-tighter" : "text-xl"}`}>
-                      {t(`business.who.${type}.title` as any)}
-                    </h3>
-                    {titleOnly && (
-                      <p className="text-white/50 text-[13px] uppercase tracking-widest mt-2 group-hover:text-white/80 transition-colors duration-300">
-                        {language === "fr" ? "Vérifier l'admissibilité →" : "Check eligibility →"}
-                      </p>
-                    )}
-                    {!titleOnly && (
-                      <>
-                        <p className="text-white/85 text-[14px] leading-relaxed mb-5">{t(`business.who.${type}.desc` as any)}</p>
-                        <ul className="space-y-2.5 border-t border-white/20 pt-4">
-                          {[1, 2, 3].map((i) => (
-                            <li key={i} className="flex items-start gap-2.5 text-[13px] text-white/80">
-                              <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#93c5fd] mt-1.5" />
-                              {t(`business.who.${type}.point${i}` as any)}
-                            </li>
-                          ))}
-                        </ul>
-                      </>
-                    )}
-                  </div>
+            <Stagger className="divide-y divide-black/10 border-t border-black/10">
+              {WHO_CARDS.map(({ type }, index) => (
+                <StaggerItem key={type} variant="fadeUp" data-testid={`card-business-who-${type}`}>
+                  <Link
+                    href="/book"
+                    className="group flex items-center justify-between gap-6 py-7 hover:bg-black/[0.02] transition-colors duration-200 px-2 -mx-2"
+                    data-testid={`link-business-who-book-${type}`}
+                  >
+                    <div className="flex items-center gap-6 min-w-0">
+                      <span className="text-[11px] text-black/30 font-mono w-6 flex-shrink-0">{String(index + 1).padStart(2, "0")}</span>
+                      <h3 className="text-2xl md:text-3xl font-bold text-black tracking-tight group-hover:text-[#239b56] transition-colors duration-200">
+                        {t(`business.who.${type}.title` as any)}
+                      </h3>
+                    </div>
+                    <span className="flex-shrink-0 text-[12px] font-semibold uppercase tracking-widest text-black/35 group-hover:text-[#239b56] transition-colors duration-200 flex items-center gap-2">
+                      {language === "fr" ? "Réserver" : "Book"}
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
+                  </Link>
                 </StaggerItem>
               ))}
             </Stagger>
