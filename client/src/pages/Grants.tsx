@@ -494,7 +494,7 @@ export default function Grants() {
                               <div className="inline-block bg-[#1e3a5f] text-white text-[11px] font-bold px-3 py-1 uppercase tracking-widest mb-3">
                                 {isFr ? "Correspondance élevée" : "High Match"}
                               </div>
-                              <h3 className="text-xl font-bold text-foreground mb-2">{isFr ? "Vous êtes admissible !" : "You're eligible!"}</h3>
+                              <h3 className="text-xl font-bold text-foreground mb-2">{isFr ? "Vous pourrez être admissible !" : "You could be eligible!"}</h3>
                               <p className="text-slate-500 text-sm leading-relaxed mb-5">
                                 {isFr ? "Votre profil correspond aux critères. Complétez le questionnaire pour qu'Audrey identifie vos subventions." : "Your profile meets the criteria. Complete the questionnaire so Audrey can identify your grants."}
                               </p>
