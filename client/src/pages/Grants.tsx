@@ -677,7 +677,7 @@ export default function Grants() {
                 { titleFr: "Évaluation initiale", textFr: "Analyse de votre profil, statut et projet pour identifier les subventions auxquelles vous êtes admissible.", titleEn: "Initial Assessment", textEn: "Analysis of your profile, status and project to identify eligible grants." },
                 { titleFr: "Identification des opportunités", textFr: "Sélection des programmes les mieux adaptés parmi des centaines d'options fédérales, provinciales et autres.", titleEn: "Identify Opportunities", textEn: "Selection of the best-fit programs from hundreds of federal, provincial and other options." },
                 { titleFr: "Préparation du dossier", textFr: "Accompagnement dans la rédaction d'un dossier de demande solide, maximisant vos chances.", titleEn: "Application Prep", textEn: "Guided preparation of a strong application file, maximizing your approval odds." },
-                { titleFr: "Soumission & Suivi", textFr: "Soumission du dossier et suivi stratégique jusqu'à l'obtention de votre financement.", titleEn: "Submit & Follow-up", textEn: "Filing and strategic follow-up until your funding is secured." },
+                { titleFr: "Soumission & Suivi", textFr: "Soumission du dossier et suivi stratégique jusqu'à l'obtention de votre financement. Reddition de compte possible.", titleEn: "Submit & Follow-up", textEn: "Filing and strategic follow-up until your funding is secured." },
               ].map((step, i) => (
                 <StaggerItem key={i} variant="fadeUp" className="bg-white/5 border border-white/10 p-8" data-testid={`step-process-${i + 1}`}>
                   <h3 className="font-bold text-white text-[16px] mb-3">{isFr ? step.titleFr : step.titleEn}</h3>
