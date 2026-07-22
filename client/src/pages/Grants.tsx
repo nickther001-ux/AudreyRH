@@ -613,7 +613,7 @@ export default function Grants() {
                 {isFr ? <>Qui accompagnons-nous&nbsp;?</> : <>Who Do We Support?</>}
               </h2>
               <p className="text-[14px] text-muted-foreground leading-relaxed max-w-lg">
-                {isFr ? "Des opportunités ciblées pour chaque type d'entrepreneur, créateur et organisation au Canada." : "Targeted opportunities for every type of entrepreneur, creator and organization in Canada."}
+                {isFr ? "Des opportunités de financement sur mesure pour chaque projet innovant au pays et ailleurs." : "Tailored funding opportunities for every innovative project, here and abroad."}
               </p>
             </FadeUp>
 
