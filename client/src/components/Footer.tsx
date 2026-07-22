@@ -18,7 +18,7 @@ export function Footer() {
               <span className="text-accent">.</span>
             </h3>
             <p className="text-white/55 max-w-sm leading-relaxed text-base">
-              Conseillère en relations industrielles agréée (CRIA). Experte en stratégie d'employabilité pour les nouveaux arrivants au Canada.
+              Consultante indépendante — RH | Ingénierie de subventions | Structuration organisationnelle
             </p>
             <div className="flex gap-3 pt-2 flex-wrap">
               <a
