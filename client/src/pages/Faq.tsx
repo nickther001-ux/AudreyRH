@@ -11,7 +11,7 @@ import { FadeUp } from "@/lib/animations";
 type Category = "general" | "booking" | "business";
 
 const CATEGORIES: { key: Category; num: string; skip?: number[] }[] = [
-  { key: "general",  num: "01", skip: [9, 10] },
+  { key: "general",  num: "01", skip: [7, 8, 9, 10] },
   { key: "booking",  num: "02", skip: [7] },
   { key: "business", num: "03" },
 ];
