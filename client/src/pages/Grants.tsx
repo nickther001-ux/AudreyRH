@@ -668,8 +668,8 @@ export default function Grants() {
           <div className="max-w-6xl mx-auto px-6 lg:px-8">
             <FadeUp className="mb-16">
               <p className="text-[11px] text-white/35 uppercase tracking-[0.2em] mb-4">{isFr ? "Notre approche" : "Our Approach"}</p>
-              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight max-w-xl">
-                {isFr ? "Comment ça fonctionne ?" : "How It Works?"}
+              <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+                {isFr ? "Comment ça fonctionne\u00a0?" : "How It Works?"}
               </h2>
             </FadeUp>
             <Stagger className="grid grid-cols-1 md:grid-cols-4 gap-px bg-white/10">
